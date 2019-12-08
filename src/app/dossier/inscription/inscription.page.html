@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <div class="ion-padding">
+    <ion-button expand="block" [routerLink]="['/insc-ecg']">
+      <ion-button expand="block" (click)="submitform()"> 
+      Valider <ion-icon slot="end" name="create"></ion-icon>
+    </ion-button>
+  </div> -->
+  <form [formGroup]="insciptionDossier" (ngSubmit)="submitform()">
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+          <div class="ion-text-center">
+            <h3>Création du dossier</h3>
+          </div>
+          <div class="ion-padding">
+            <ion-item>
+              <ion-label position="floating">Nom</ion-label>
+              <ion-input autocapitalize inputmode="text" formControlName="nom">
+              </ion-input>
+            </ion-item>
+            <div *ngFor="let error of errorMessages.nom">
+              <ng-container *ngIf="nom.hasError(error.type) && (nom.dirty || nom.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+            <ion-item>
+              <ion-label position="floating">Prénom</ion-label>
+              <ion-input autocapitalize inputmode="text" formControlName="prenom">
+              </ion-input>
+            </ion-item>
+            <div *ngFor="let error of errorMessages.prenom">
+              <ng-container *ngIf="prenom.hasError(error.type) && (prenom.dirty || prenom.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+            <!-- 
+            <ion-item>
+              <ion-label>Date de naissance</ion-label>
+              <ion-datetime
+                value=""
+                placeholder="Selectionner la Date"
+                formControlName="dateNaissance"
+              ></ion-datetime>
+            </ion-item> -->
+          </div>
+
+          <ion-list>
+            <ion-radio-group formControlName="genre">
+              <ion-list-header>
+                Civilité
+              </ion-list-header>
+
+              <ion-item>
+                <ion-label>Femme</ion-label>
+                <ion-radio checked value="1"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Homme</ion-label>
+                <ion-radio value="2"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+          <div *ngFor="let error of errorMessages.civilite">
+            <ng-container *ngIf="civilite.hasError(error.type) && (civilite.dirty || civilite.touched)">
+              <small class="error-message">{{error.message}}</small>
+            </ng-container>
+          </div>
+          <div class="ion-padding">
+            <ion-button [disabled]="!insciptionDossier.valid" type="submit" expand="block"  class="ion-margin-top btn" >Valider <ion-icon slot="end"
+                name="create"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="isPatient">
+        <ion-col>
+          <ion-list>
+            <ion-list-header>
+              Liste patients
+            </ion-list-header>
+
+            <ion-item *ngFor="let item of listePatientExist"
+              (click)="GoToEcgInfos(item.nom,item.prenom,item.dateNaissance,item.idPatient)">
+              <ion-button>
+                <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" name="pulse"></ion-icon>
+              </ion-button>
+              <ion-label>
+                <h2>{{item.nom}} {{item.prenom}}</h2>
+                <h3>{{item.dateNaissance}}</h3>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

@@ -1,0 +1,227 @@
+/* @font-face {
+  font-family: 'icomoon-cardio';
+  src:  url('../fonts/icomoon-cardio.eot');
+  src:  url('..fonts/icomoon-cardio.eot') format('embedded-opentype'),
+    url('../fonts/icomoon-cardio.ttf') format('truetype'),
+    url('../fonts/icomoon-cardio.woff') format('woff'),
+    url('../fonts/icomoon-cardio.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+} */
+
+
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon-cardio' !important;
+  /* speak: none; */
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  margin-right:0.8rem ;
+  font-size: 1.2rem;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-aplus-outline:before {
+  content: "\e900";
+ /* color: #4d5867;*/
+}
+.icon-camera:before {
+  content: "\e901";
+ /* color: #4d5867;*/
+}
+.icon-camera-outline-box:before {
+  content: "\e902";
+ /* color: #4d5867;*/
+}
+.icon-conditions:before {
+  content: "\e903";
+ /* color: #4d5867;*/
+}
+.icon-cr:before {
+  content: "\e904";
+ /* color: #4d5867;*/
+}
+.icon-cr-orientation:before {
+  content: "\e905";
+ /* color: #4d5867;*/
+}
+.icon-cudt:before {
+  content: "\e906";
+ /* color: #4d5867;*/
+}
+.icon-cudt-box:before {
+  content: "\e907";
+ /* color: #4d5867;*/
+}
+.icon-cudt-box-2:before {
+  content: "\e908";
+ /* color: #4d5867;*/
+}
+.icon-diagnostic:before {
+  content: "\e909";
+ /* color: #4d5867;*/
+}
+.icon-doctor_status-1:before {
+  content: "\e90a";
+ /* color: #4d5867;*/
+}
+.icon-doctor-men-1:before {
+  content: "\e90b";
+ /* color: #4d5867;*/
+}
+.icon-doctor-men-2:before {
+  content: "\e90c";
+ /* color: #4d5867;*/
+}
+.icon-doctor-men3:before {
+  content: "\e90d";
+ /* color: #4d5867;*/
+}
+.icon-doctor-sos:before {
+  content: "\e90e";
+ /* color: #4d5867;*/
+}
+.icon-doctor-sos-2:before {
+  content: "\e90f";
+ /* color: #4d5867;*/
+}
+.icon-doctor-sos3:before {
+  content: "\e910";
+ /* color: #4d5867;*/
+}
+.icon-doctor-status:before {
+  content: "\e911";
+ /* color: #4d5867;*/
+}
+.icon-doctor-women1:before {
+  content: "\e912";
+ /* color: #4d5867;*/
+}
+.icon-doctor-women-2:before {
+  content: "\e913";
+ /* color: #4d5867;*/
+}
+.icon-doss-add:before {
+  content: "\e914";
+ /* color: #4d5867;*/
+}
+.icon-doss-create:before {
+  content: "\e915";
+ /* color: #4d5867;*/
+}
+.icon-doss-current:before {
+  content: "\e916";
+ /* color: #4d5867;*/
+}
+.icon-doss-edit:before {
+  content: "\e917";
+ /* color: #4d5867;*/
+}
+.icon-doss-patient:before {
+  content: "\e918";
+ /* color: #4d5867;*/
+}
+.icon-doss-sent:before {
+  content: "\e919";
+ /* color: #4d5867;*/
+}
+.icon-drogs:before {
+  content: "\e91a";
+ /* color: #4d5867;*/
+}
+.icon-drugs-2:before {
+  content: "\e91b";
+ /* color: #4d5867;*/
+}
+.icon-ecg-outline:before {
+  content: "\e91c";
+ /* color: #4d5867;*/
+}
+.icon-ecg-outline-box:before {
+  content: "\e91d";
+ /* color: #4d5867;*/
+}
+.icon-file:before {
+  content: "\e91e";
+ /* color: #4d5867;*/
+}
+.icon-heart:before {
+  content: "\e91f";
+ /* color: #4d5867;*/
+}
+.icon-heart-checked:before {
+  content: "\e920";
+ /* color: #4d5867;*/
+}
+.icon-heart-outline-box:before {
+  content: "\e921";
+ /* color: #4d5867;*/
+}
+.icon-heart-st:before {
+  content: "\e922";
+ /* color: #4d5867;*/
+}
+.icon-loock:before {
+  content: "\e923";
+ /* color: #4d5867;*/
+}
+.icon-notification-outline:before {
+  content: "\e924";
+ /* color: #4d5867;*/
+}
+.icon-notification-outline-bod:before {
+  content: "\e925";
+ /* color: #4d5867;*/
+}
+.icon-patient-add-outline-box:before {
+  content: "\e926";
+ /* color: #4d5867;*/
+}
+.icon-patient-historic:before {
+  content: "\e927";
+ /* color: #4d5867;*/
+}
+.icon-print:before {
+  content: "\e928";
+ /* color: #4d5867;*/
+}
+.icon-search:before {
+  content: "\e929";
+ /* color: #4d5867;*/
+}
+.icon-serach-result:before {
+  content: "\e92a";
+ /* color: #4d5867;*/
+}
+.icon-thrombolyse:before {
+  content: "\e92b";
+ /* color: #4d5867;*/
+}
+.icon-user:before {
+  content: "\e92c";
+ /* color: #4d5867;*/
+}
+.icon-user-2:before {
+  content: "\e92d";
+ /* color: #4d5867;*/
+}
+.icon-user-add:before {
+  content: "\e92e";
+ /* color: #4d5867;*/
+}
+.icon-user-checked:before {
+  content: "\e92f";
+ /* color: #4d5867;*/
+}
+.icon-user-delete:before {
+  content: "\e930";
+ /* color: #4d5867;*/
+}

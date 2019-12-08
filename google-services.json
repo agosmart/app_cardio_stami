@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "505299560993",
+    "firebase_url": "https://cardio-477a6.firebaseio.com",
+    "project_id": "cardio-477a6",
+    "storage_bucket": "cardio-477a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505299560993:android:ab7dae272a84b8f5271160",
+        "android_client_info": {
+          "package_name": "com.cardio.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505299560993-av673aqgebt03sdbada3qmvak6jkl4tm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDN-v7LuGT3cluCE4iiPkpCpMoTFymVMIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505299560993-av673aqgebt03sdbada3qmvak6jkl4tm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

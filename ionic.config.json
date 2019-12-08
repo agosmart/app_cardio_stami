@@ -1,0 +1,7 @@
+{
+  "name": "cardio",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

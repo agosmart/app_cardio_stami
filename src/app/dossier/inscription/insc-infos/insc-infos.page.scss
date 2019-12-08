@@ -1,0 +1,112 @@
+:host {
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+
+  /* Show background if class is active */
+  // .show-background {
+  //     border-style: none;
+  //     background: var(--ion-color-primary);
+  // }
+
+  /* Remove bottom border on md */
+  .header-md::after {
+    background-image: none;
+  }
+
+  /* Remove bottom border on ios */
+  .header-ios ion-toolbar:last-child {
+    --border-width: 0;
+  }
+  .ion-bt-padding {
+    --padding-start: 5px;
+    --padding-end: 5px;
+  }
+
+  ion-icon.i-card {
+    color: #929eaa;
+  }
+  button.button-native {
+    padding: 0 5px !important;
+  }
+ 
+}
+
+.insc-infos {
+  
+
+  // Toolbar transparent
+  /* Transparent standard */
+
+  // Title header
+  .icon-header {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.8rem;
+    color: #fff;
+  }
+  .title-header {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+
+  // Bloc Header fixed
+  .header-card-fix {
+    height: 215px;
+    position: absolute;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 8;
+    background: #01258e;
+    // background: linear-gradient(
+    //   236deg,
+    //   rgba(1, 37, 142, 0.9) 0%,
+    //   rgba(7, 133, 239, 0.75) 70%,
+    //   rgba(4, 230, 247, 0.3)
+    // );
+    background: #516bf0;
+    background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+    
+  }
+
+  .form-bloc {
+    margin-top: 220px;
+  }
+
+  ion-card-content.md.card-content-md.hydrated {
+    //padding: 10px 24px 10px 10px;
+    padding: 10px;
+  }
+
+  ion-list.info ion-note {
+    font-size: 0.9em;
+    margin: 0;
+    padding-left: 0;
+
+  }
+  ion-list.info ion-label {
+    font-size: 0.9rem;
+  }
+
+  /* Custom Skeleton Line Height and Margin */
+  .custom-skeleton ion-skeleton-text {
+    line-height: 13px;
+  }
+
+  .custom-skeleton ion-skeleton-text:last-child {
+    margin-bottom: 5px;
+  }
+  ion-list-header.ios.hydrated,
+  ion-list-header.md.hydrated {
+    font-size: 0.9rem;
+    color: rgba(63, 131, 199);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}

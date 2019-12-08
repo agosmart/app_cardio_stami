@@ -1,0 +1,185 @@
+:host {
+  background: url(../../../assets/images/medical1.jpg) no-repeat right 0;
+  background-size: auto 100%, cover;
+
+  ion-content {
+    //background: rgb(7,0,120);
+    // background: linear-gradient(62deg, rgba(7, 0, 120, 0.85) 0%, rgba(9, 9, 121, 0.7) 35%, rgba(0, 212, 255, 0.55) 100%);
+    //background: linear-gradient(62deg, rgba(255, 255, 255, 0.85) 0%, #c2e6ffb8 35%, rgba(0, 212, 255, 0.53) 100%);
+
+    // background: rgb(1, 37, 142);
+    // background: linear-gradient(
+    //   236deg,
+    //   rgba(1, 37, 142, 0.9) 0%,
+    //   rgba(7, 133, 239, 0.75) 70%,
+    //   rgba(4, 230, 247, 0.3)
+    // );
+    // background: #01258e;
+    //background: #01258e;
+   // background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
+    //background:linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
+    background: #516bf0;
+    background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+  }
+
+ 
+  // .cercle-design-A{    
+  //   width: 400px;
+  //   height: 400px;
+  //   position: absolute;
+  //   background: rgba(255, 255, 255, 0.15);
+  //   top: -244px;
+  //   left: -140px;
+  //   border-radius: 100%;
+  // }
+  // .cercle-design-B{    
+  //   width: 200px;
+  //   height: 208px;
+  //   position: absolute;
+  //   background: rgba(255, 255, 255, 0.1);
+  //   top: -150px;
+  //   left: 180px;
+  //   border-radius: 100%;
+    
+  // }
+
+
+
+  // ion-button{
+  //   height: 48px;
+  //   font-size: 0.9em;
+  //   --border-radius: 24px;
+
+  // }
+
+
+  // ion-content main.inner-scroll.scroll-y {
+  //   background-color: #f32051;
+  // }
+
+  ion-grid {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  ion-grid,
+  ion-row,
+  ion-list {
+    background: transparent !important;
+  }
+  ion-img {
+    height: 125px;
+  }
+
+  ion-icon {
+    margin-right: 5px;
+    font-size: 20px;
+    float: left;
+  }
+
+  // margin: 0 5%;
+  .list-form {
+    padding: 0;
+    margin-bottom: 0;
+
+    ion-select {
+      color: #ffe69e;
+      font-weight: 700;
+    }
+
+    ion-item {
+      --ion-item-background: transparent;
+      // background: none;
+      background: rgba(149, 231, 255, 0.2);
+      //border-radius: 12px;
+      padding: 0;
+      
+      --border-width: 0 0 2px 0;
+      --ion-border-color: #fff;
+
+      &:first-child {
+        border-top: none;
+        //border-bottom: 2px solid #fff;
+      }
+
+      &:after {
+        display: none;
+      }
+
+      ion-label {
+        font-size: 1em;
+        color: #fff;
+      }
+
+      input {
+        color: #fff;
+      }
+      ion-input.sc-ion-input-md-h.sc-ion-input-md-s.md.hydrated.ng-touched.ng-dirty.has-value.ng-valid.ion-touched.ion-dirty.ion-valid {
+        color: #fff;
+        //  background-color: transparent;
+      }
+      // ion-input.native-input.sc-ion-input-md{
+      //   color: #fff;
+      // }
+      ion-input.sc-ion-input-md-h {
+        color: #fff !important;
+      }
+
+      //--highlight-color-focused: #3880ff;
+      //----------- IOS Style ------
+      .item-label-floating.sc-ion-input-ios-h,
+      .item-label-floating .sc-ion-input-ios-h,
+      .item-label-stacked.sc-ion-input-ios-h,
+      .item-label-stacked .sc-ion-input-ios-h {
+        padding: 0;
+        // --padding-bottom: 8px;
+        // --padding-start: 0px;
+      }
+
+
+     
+    }
+  }
+  h3 {
+    padding: 0;
+    margin: 0;
+  }
+
+  .info-message {
+    margin: 8px 0;
+    //background: dodgerblue;
+    background: rgba(54, 59, 123, 0.35);
+    display: inline-block;
+    border: 1px solid #fff;
+    height: 42px;
+    vertical-align: middle;
+    padding: 8px 16px;
+    color: white;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 0.9em;
+  }
+  .info-message span {
+    vertical-align: middle;
+  }
+
+  .error-message {
+    background: #f32051;
+  }
+
+  .message {
+    color: white;
+    //background: #f32051;
+    border-radius: 8px;
+    width: 100%;
+    display: inline-block;
+    margin-top: 5px;
+    padding: 2px 10px;
+    height: 24px;
+    vertical-align: middle;
+    line-height: 20px;
+    font-size: 0.9em;
+    height: auto;
+  }
+
+  //-------------------------------
+}

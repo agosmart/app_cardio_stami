@@ -1,0 +1,240 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+
+
+@import "./assets/css/style.css";
+@font-face {
+  font-family: 'icomoon-cardio';
+  src:  url('./assets/fonts/icomoon-cardio.eot');
+  src:  url('./assets/fonts/icomoon-cardio.eot') format('embedded-opentype'),
+    url('./assets/fonts/icomoon-cardio.ttf') format('truetype'),
+    url('./assets/fonts/icomoon-cardio.woff') format('woff'),
+    url('./assets/fonts/icomoon-cardio.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+
+
+.logo-header{
+  width: 40%;
+  margin: 6px auto;
+  text-align: center!important;
+}
+ 
+ion-button.btn{
+  height: 48px;
+  font-size: 0.9em;
+  --border-radius: 24px;
+
+}
+
+.bg-white {
+  background-color: #fff;
+}
+  
+  .bg-light {
+    //background-color: #dce3ea;
+    background-color:#ecf0f4
+  }
+  
+  .bg-dark {
+      background-color: var(--ion-color-dark);
+  }
+  
+  .bg-primary {
+      background-color: var(--ion-color-primary);
+  }
+  
+  .bg-secondary {
+      background-color: var(--ion-color-secondary);
+  }
+  
+  .bg-tertiary {
+      background-color: var(--ion-color-tertiary);
+  }
+  
+  .bg-profile {
+    background-image: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary))
+  }
+  
+  .bg-main {
+      background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
+  }
+// Helpers //
+.p-10 {
+  padding: 10px;
+}
+.p-0-10 {
+  padding: 0 10px;
+}
+.w100 {
+  width: 100%;
+}
+.fw400 {
+    font-weight: 400 !important;
+  }
+.bold,
+.fw500 {
+  font-weight: 500 !important;
+}
+
+.fw700 {
+  font-weight: 700 !important;
+}
+
+
+// ---- Font size vlue => em
+.fsize-10em{
+  font-size: 1em!important;
+}
+.fsize-14em{
+  font-size: 1.4em!important;
+}
+.fsize-15em{
+  font-size: 1.5em!important;
+}
+.fsize-16em{
+  font-size: 1.6em!important;
+}
+.fsize-18em{
+  font-size: 1.8em!important;
+}
+.fsize-20em{
+  font-size: 2em!important;
+}
+.fsize-22em{
+  font-size: 2.2em!important;
+}
+.fsize-24em{
+  font-size: 2.4em!important;
+}
+.fsize-25em{
+  font-size: 2.5em!important;
+}
+.fsize-28em{
+  font-size: 2.8em!important;
+}
+.fsize-30em{
+  font-size: 3em!important;
+}
+.fsize-40em{
+  font-size: 4em!important;
+}
+
+.fsize-50em{
+  font-size: 5em!important;
+}
+
+// ---- Font size vlue => rem
+.text08 {
+  font-size: 0.8rem;
+}
+.text09 {
+  font-size: 0.9rem;
+}
+
+.text10 {
+  font-size: 1rem !important;
+}
+
+.text12 {
+  font-size: 1.2rem;
+}
+
+.text14 {
+  font-size: 1.4rem;
+}
+.text16 {
+  font-size: 1.6rem;
+}
+.text20 {
+  font-size: 2rem;
+}
+.text21 {
+  font-size: 2.1rem;
+}
+.text22 {
+  font-size: 2.2rem;
+}
+
+.text-white {
+  color: #fff;
+}
+.text-gray50{
+ color: #d1d4d6;
+}
+.text-gray300{
+  color: #768188
+}
+
+.text-primary {
+  color: var(--ion-color-primary);
+}
+
+.text-secondary {
+  color: var(--ion-color-secondary);
+}
+
+.text-dark {
+  color: var(--ion-color-dark);
+}
+
+.border-dotted-top{
+    border-top: 2px dotted #58bbfdb7;
+    
+}
+.text-shadow{
+    text-shadow: 1px 1px 3px #051f5675
+}
+.box-shadow{
+  box-shadow: 1px 1px 3px #051f5675;
+}
+
+
+.back-light{
+  background-color: #eff2f7;
+  color: #435667;
+  display: block;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 12px 0 0;
+  width: 100%;
+}
+.small-border{
+  width: auto;
+  border-top: 5px solid #bbc3cc;
+  display: block;
+  //margin: 10px 45% 0px 45%;
+  margin: 5px 45% 0px 45%
+
+}
