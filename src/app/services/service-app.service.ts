@@ -73,15 +73,15 @@ export class ServiceAppService {
       .catch(error => console.log('Une erreur est survenue ' + error));
   }
 
-  public pays(offset): any {
-    const url = `${this.BaseUrl}pays.php?&apiKey=${this.apiKey}`;
+  // public pays(offset): any {
+  //   const url = `${this.BaseUrl}pays.php?&apiKey=${this.apiKey}`;
 
-    return this.http
-      .get(url)
-      .toPromise()
-      .then(response => response.json() as StandarReturnModel)
-      .catch(error => console.log('Une erreur est survenue ' + error));
-  }
+  //   return this.http
+  //     .get(url)
+  //     .toPromise()
+  //     .then(response => response.json() as StandarReturnModel)
+  //     .catch(error => console.log('Une erreur est survenue ' + error));
+  // }
 
   public getPatient(form): any {
     const url = `${this.BaseUrl}getpatient.php?nom=${form.nom}&genre=${form.genre}&datenaissance=${form.dateNaissance}&apiKey=${this.apiKey}`;

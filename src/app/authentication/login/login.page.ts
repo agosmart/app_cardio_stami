@@ -7,6 +7,7 @@ import { StandarReturnModel } from '../../models/StandarReturnMdel';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginPage implements OnInit {
     public loadingController: LoadingController,
     private formBuilder: FormBuilder,
     private srv: ServiceAppService,
-    public navcrtl: NavController,
+    private router: Router,
     private nat: NativeStorage,
     private sglob: GlobalvarsService,
     private fcm: FCM
@@ -59,8 +60,8 @@ export class LoginPage implements OnInit {
         [
           Validators.required,
           Validators.maxLength(50),
-          Validators.minLength(3),         
-        //  Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
+          Validators.minLength(3),
+          //  Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
 
         ]
       ],
@@ -70,12 +71,11 @@ export class LoginPage implements OnInit {
           Validators.required,
           Validators.maxLength(50),
           Validators.minLength(3),
-           // Validators.pattern('^[A-Za-z]+$')
+          // Validators.pattern('^[A-Za-z]+$')
         ]
       ]
     });
   }
-
 
   showEyeIcon() {
     this.showEye = !this.showEye;
@@ -94,9 +94,9 @@ export class LoginPage implements OnInit {
         this.getTokenFcm();
         this.loading.hideLoader();
         this.sglob.presentToast(
-          'authnetification faites avec succès...bienvenus'
+          'authentification faites avec succès...bienvenus'
         );
-        this.navcrtl.navigateRoot('home');
+        this.router.navigate(['home']);
       } else {
         this.loading.hideLoader();
         this.sglob.presentToast('Veuillez vérifier vos identifiants');
