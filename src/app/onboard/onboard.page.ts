@@ -1,47 +1,49 @@
-import { Component, OnInit } from "@angular/core";
-import { NativeStorage } from "@ionic-native/native-storage/ngx";
-import { Platform, NavController } from "@ionic/angular";
-import { GlobalvarsService } from "../services/globalvars.service";
+import { Component, OnInit } from '@angular/core';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { Platform, NavController } from '@ionic/angular';
+import { GlobalvarsService } from '../services/globalvars.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-onboard",
-  templateUrl: "./onboard.page.html",
-  styleUrls: ["./onboard.page.scss"]
+  selector: 'app-onboard',
+  templateUrl: './onboard.page.html',
+  styleUrls: ['./onboard.page.scss']
 })
 export class OnboardPage implements OnInit {
   affichePub: boolean;
   constructor(
     public navcrtl: NavController,
     private nat: NativeStorage,
-    private p1: Platform,
-    private sglob: GlobalvarsService
+    private plt: Platform,
+    private sglob: GlobalvarsService,
+    private router: Router
   ) {
-    // this.DeleteStore();
+    // this.deleteStore();
     this.affichePub = false;
-    this.p1.ready().then(() => {
-      this.GetItems();
+    this.plt.ready().then(() => {
+      this.getItems();
     });
   }
 
   ngOnInit() {}
 
   public skiping() {}
-  GetItems() {
-    this.nat.getItem("cardio").then(
-      data => this.GoToHome(data),
+  getItems() {
+    this.nat.getItem('cardio').then(
+      data => this.goToHome(data),
       error => (this.affichePub = true)
     );
   }
-  GoToLogin() {
-    this.navcrtl.navigateRoot("login");
+  goToLogin() {
+    this.router.navigate(['login']);
   }
 
-  GoToHome(data) {
-    this.sglob.update_IdUser(data.IdUser);
-    this.navcrtl.navigateRoot("home");
+  goToHome( data: any) {
+    this.sglob.updateIdUser(data.IdUser);
+    this.router.navigate(['home']);
   }
 
-  DeleteStore() {
-    this.nat.remove("cardio");
+  deleteStore() {
+    this.nat.remove('cardio');
   }
 }
