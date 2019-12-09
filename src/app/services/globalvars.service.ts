@@ -1,23 +1,23 @@
-import { Injectable } from "@angular/core";
-import { ToastController } from "@ionic/angular";
+import { Injectable } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class GlobalvarsService {
-  public IdUser = 0;
-  constructor(private toastController: ToastController) {}
+  public idUser = 0;
+  constructor(private toastController: ToastController) { }
 
-  public update_IdUser(IdUser) {
-    this.IdUser = IdUser;
+  public updateIdUser( idUser ) {
+    this.idUser = idUser;
   }
 
   public get_IdUser() {
-    return this.IdUser;
+    return this.idUser;
   }
-  async presentToast(text) {
+  async presentToast( text ) {
     const toast = await this.toastController.create({
       message: text,
-      position: "bottom",
+      position: 'bottom',
       duration: 3000
     });
     toast.present();

@@ -8,6 +8,10 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/api/api.service';
+// ------------------------------
+
+
 
 @Component({
   selector: 'app-login',
@@ -15,13 +19,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
-  IdUser = 0;
+  idUser = 0;
   ReturnLogin: StandarReturnModel = new StandarReturnModel();
   showEye = false;
-
   loginForm: FormGroup;
 
-
+  dataReturnService: any;
+  // ------------- CONSTRUCTOR ----------------------------
   constructor(
     public loading: LoadingService,
     public loadingController: LoadingController,
@@ -30,8 +34,10 @@ export class LoginPage implements OnInit {
     private router: Router,
     private nat: NativeStorage,
     private sglob: GlobalvarsService,
-    private fcm: FCM
+    private fcm: FCM,
+    private apiService: ApiService,
   ) { }
+  // --------------------------------------------
   get username() {
     return this.loginForm.get('username');
   }
@@ -77,24 +83,69 @@ export class LoginPage implements OnInit {
     });
   }
 
+  // ----- Action to Show/Hide icon - Password /Text type
+
   showEyeIcon() {
     this.showEye = !this.showEye;
   }
 
+  // ------ Api service login ---------------
   submitLogin() {
+    // ----- Show loader ------
+    this.loading.showLoader('Connexion en cours');
+    // const username = this.loginForm.value.username;
+    // const password = this.loginForm.value.password;
+
+    const params = { username: this.loginForm.value.username, password: this.loginForm.value.password };
+  // ---- Call Login function
+    this.apiService.loginDoctor(params).subscribe(
+      (dataReturnFromService) => {
+        this.dataReturnService = JSON.stringify(dataReturnFromService);
+        console.log('Return login >>>>> ', this.dataReturnService);
+        if (this.dataReturnService === 200) {
+          console.log('::: You are connected :::');
+          this.idUser = this.dataReturnService.data['id'];
+          // ----- Set storage Data -----
+          this.SetStorage();
+          // -----  Update id Doctor value -----
+          this.sglob.updateIdUser(this.idUser);
+          // ----- Retrive a value of Token -----
+          this.getTokenFcm();
+          // ----- Hide loader ------
+          this.loading.hideLoader();
+          // ----- Toast ------------
+          this.sglob.presentToast('Authentification réussie, bienvenus à STAMI');
+          // ----- Redirection to Home page ------------
+          this.router.navigate(['home']);
+
+        } else {
+          // ----- Hide loader ------
+          this.loading.hideLoader();
+          // ----- Toast ------------
+          this.sglob.presentToast('La connexion a échoué ! Veuillez vérifier vos identifiants');
+          console.log('::: No connected ::: ');
+
+        }
+      }
+    );
+
+  }
+
+
+  submitLogin_() {
     this.loading.showLoader('Connexion en cours');
     this.srv.login(this.loginForm.value).then(newsFetched => {
       this.ReturnLogin = newsFetched;
       console.log('return login', this.ReturnLogin);
       if (this.ReturnLogin.code === 200) {
         console.log('ok');
-        this.IdUser = this.ReturnLogin.IdUser;
+        this.idUser = this.ReturnLogin.idUser;
         this.SetStorage();
-        this.sglob.update_IdUser(this.IdUser);
+        this.sglob.updateIdUser(this.idUser);
         this.getTokenFcm();
         this.loading.hideLoader();
         this.sglob.presentToast(
-          'authentification faites avec succès...bienvenus'
+          'Authentification réussi, bienvenus sur STAMI'
         );
         this.router.navigate(['home']);
       } else {
@@ -106,8 +157,8 @@ export class LoginPage implements OnInit {
   }
 
   SetStorage() {
-    this.nat.setItem('cardio', { IdUser: this.IdUser }).then(
-      () => console.log('Stored item!', this.IdUser),
+    this.nat.setItem('cardio', { idUser: this.idUser }).then(
+      () => console.log('Stored item!', this.idUser),
       error => console.error('Error storing item', error)
     );
   }
@@ -115,7 +166,7 @@ export class LoginPage implements OnInit {
   getTokenFcm() {
     this.fcm.getToken().then(token => {
       console.log('constructeur token is', token);
-      this.srv.AddToken(token, this.IdUser).then(newsFetched => {
+      this.srv.addToken(token, this.idUser).then(newsFetched => {
         this.ReturnLogin = newsFetched;
       });
     });

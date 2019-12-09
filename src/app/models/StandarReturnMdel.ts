@@ -1,7 +1,7 @@
 import { DataListeEtab } from './data_liste_etab';
 export class StandarReturnModel {
     code: number;
-    IdUser: number;
+    idUser: number;
     paysId: number;
     nomPays: string;
     items: DataListeEtab;

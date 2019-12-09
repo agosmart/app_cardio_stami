@@ -3,9 +3,10 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ServiceAppService } from 'src/app/services/service-app.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { StandarReturnModel } from '../../models/StandarReturnMdel';
-import {  LoadingController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/api/api.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -21,15 +22,18 @@ export class RegisterPage implements OnInit {
   passwordMatch = true;
 
   registrationForm: FormGroup;
-
   genders: Array<string>;
+
+  dataReturnService: any;
+
 
   constructor(
     public loading: LoadingService,
     private formBuilder: FormBuilder,
     private srv: ServiceAppService,
     public router: Router,
-    private sglob: GlobalvarsService
+    private sglob: GlobalvarsService,
+    private apiService: ApiService,
   ) {
     this.srv.getListeCR().then((newsFetched: any) => {
       this.retunListeCR = newsFetched;
@@ -153,7 +157,7 @@ export class RegisterPage implements OnInit {
           [
             Validators.required,
             Validators.maxLength(50),
-            Validators.minLength(3),         
+            Validators.minLength(3),
             Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
           ]
         ],
@@ -183,14 +187,37 @@ export class RegisterPage implements OnInit {
         validators: this.matchingPasswords.bind(this)
       }
     );
+  }
+  public submit() {
+    // ----- Show loader ------
+    this.loading.showLoader('inscription en cours... ');
+    console.log(this.registrationForm.value);
+    const params = this.registrationForm.value;
+    // ---- Call registration function
+    this.apiService.registerDoctor(params).subscribe(
 
+      (dataReturnFromService) => {
+        this.dataReturnService = JSON.stringify(dataReturnFromService);
+        console.log('Return Rgister >>>>> ', this.dataReturnService);
+        if (this.dataReturnService === 200) {
+          console.log('::: You are registred :::');
+          // ----- Hide loader ------
+          this.loading.hideLoader();
+          // ----- Toast ------------
+          this.sglob.presentToast('Félicitation! Vous êtes inscrit à STAMI');
+          this.router.navigate(['./login']);
 
-
+        } else {
+          // ----- Hide loader ------
+          this.loading.hideLoader();
+          // ----- Toast ------------
+          this.sglob.presentToast('problème dìnscription');
+        }
+      });
   }
 
 
-
-  public submit() {
+  public submit___() {
     this.loading.showLoader('inscription en cours... ');
     console.log(this.registrationForm.value);
     this.srv.Inscription(this.registrationForm.value).then(newsFetched => {
