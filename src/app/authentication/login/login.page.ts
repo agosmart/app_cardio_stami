@@ -9,6 +9,7 @@ import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/api/api.service';
+
 // ------------------------------
 
 
@@ -23,8 +24,6 @@ export class LoginPage implements OnInit {
   ReturnLogin: StandarReturnModel = new StandarReturnModel();
   showEye = false;
   loginForm: FormGroup;
-
-  dataReturnService: any;
   // ------------- CONSTRUCTOR ----------------------------
   constructor(
     public loading: LoadingService,
@@ -96,38 +95,47 @@ export class LoginPage implements OnInit {
     // const username = this.loginForm.value.username;
     // const password = this.loginForm.value.password;
 
-    const params = { username: this.loginForm.value.username, password: this.loginForm.value.password };
-  // ---- Call Login function
+    const params = { email: this.loginForm.value.username, password: this.loginForm.value.password };
+    // ---- Call Login function
     this.apiService.loginDoctor(params).subscribe(
-      (dataReturnFromService) => {
-        this.dataReturnService = JSON.stringify(dataReturnFromService);
-        console.log('Return login >>>>> ', this.dataReturnService);
-        if (this.dataReturnService === 200) {
-          console.log('::: You are connected :::');
-          this.idUser = this.dataReturnService.data['id'];
-          // ----- Set storage Data -----
-          this.SetStorage();
-          // -----  Update id Doctor value -----
-          this.sglob.updateIdUser(this.idUser);
-          // ----- Retrive a value of Token -----
-          this.getTokenFcm();
+      (resp: StandarReturnModel) => {
+        // this.dataReturnService = JSON.stringify(resp);
+        console.log('Response >>>>> ', resp.code);
+        if ( +resp.code ===  200) {
           // ----- Hide loader ------
           this.loading.hideLoader();
-          // ----- Toast ------------
-          this.sglob.presentToast('Authentification réussie, bienvenus à STAMI');
-          // ----- Redirection to Home page ------------
-          this.router.navigate(['home']);
+          console.log('::: You are connected :::');
+          // this.idUser = this.dataReturnService.data['id'];
+          // // ----- Set storage Data -----
+          // this.SetStorage();
+          // // -----  Update id Doctor value -----
+          // this.sglob.updateIdUser(this.idUser);
+          // // ----- Retrive a value of Token -----
+          // this.getTokenFcm();
+          // // ----- Toast ------------
+          // this.sglob.presentToast('Authentification réussie, bienvenus à STAMI');
+          // // ----- Redirection to Home page ------------
+          // this.router.navigate(['home']);
 
         } else {
           // ----- Hide loader ------
           this.loading.hideLoader();
           // ----- Toast ------------
-          this.sglob.presentToast('La connexion a échoué ! Veuillez vérifier vos identifiants');
+         // this.sglob.presentToast('L\'authentification a échouée ! Veuillez vérifier vos identifiants');
           console.log('::: No connected ::: ');
 
         }
+      },
+
+      (err) => {
+        this.loading.hideLoader();
+        if (err.status === 422) {
+          console.log('L\'authentification a échouée, êtes-vous sûr de vos identifiants ? ');
+        }
       }
+
     );
+
 
   }
 
