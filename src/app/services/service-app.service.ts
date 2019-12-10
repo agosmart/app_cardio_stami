@@ -13,6 +13,7 @@ export class ServiceAppService {
     'b5e584c61-**--d@060357f33036@6412d16b30d1?cf47828f7f07fd6015a60d7';
 
   constructor(private http: Http) {}
+
   extras: any;
   public setExtras(data) {
     this.extras = data;
@@ -21,10 +22,23 @@ export class ServiceAppService {
   public getExtras() {
     return this.extras;
   }
+
   public login(form): any {
     const md5 = new Md5();
     const md5Password = md5.appendStr(form.password).end();
     const url = `${this.BaseUrl}login.php?password=${md5Password}&username=${form.username}&apiKey=${this.apiKey}`;
+
+    return this.http
+      .get(url)
+      .toPromise()
+      .then(response => response.json() as StandarReturnModel)
+      .catch(error => console.log('Une erreur est survenue ' + error));
+  }
+
+  public Inscription( registrationForm): any {
+    const md5 = new Md5();
+    const md5Password = md5.appendStr(registrationForm.password).end();
+    const url = `${this.BaseUrl}inscription.php?nom=${registrationForm.nom}&prenom=${registrationForm.prenom}&mobile=${registrationForm.mobile}&password=${md5Password}&username=${registrationForm.username}&cr=${registrationForm.cr}&cudt=${registrationForm.cudt}&gender=${registrationForm.civilite}&apiKey=${this.apiKey}`;
 
     return this.http
       .get(url)
@@ -61,17 +75,7 @@ export class ServiceAppService {
       .catch(error => console.log('Une erreur est survenue ' + error));
   }
 
-  public Inscription( registrationForm): any {
-    const md5 = new Md5();
-    const md5Password = md5.appendStr(registrationForm.password).end();
-    const url = `${this.BaseUrl}inscription.php?nom=${registrationForm.nom}&prenom=${registrationForm.prenom}&mobile=${registrationForm.mobile}&password=${md5Password}&username=${registrationForm.username}&cr=${registrationForm.cr}&cudt=${registrationForm.cudt}&gender=${registrationForm.civilite}&apiKey=${this.apiKey}`;
-
-    return this.http
-      .get(url)
-      .toPromise()
-      .then(response => response.json() as StandarReturnModel)
-      .catch(error => console.log('Une erreur est survenue ' + error));
-  }
+ 
 
   public getPatient(form): any {
     const url = `${this.BaseUrl}getpatient.php?nom=${form.nom}&genre=${form.genre}&datenaissance=${form.dateNaissance}&apiKey=${this.apiKey}`;

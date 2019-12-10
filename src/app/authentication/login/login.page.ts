@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController } from '@ionic/angular';
 import { ServiceAppService } from 'src/app/services/service-app.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { StandarReturnModel } from '../../models/StandarReturnMdel';
@@ -8,7 +8,11 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/api/api.service';
+
+
+import { ApiService, AuthResponseData } from 'src/app/api/api.service';
+import { Observable } from 'rxjs';
+import { UserModel } from 'src/app/models/user.model';
 
 // ------------------------------
 
@@ -21,9 +25,12 @@ import { ApiService } from 'src/app/api/api.service';
 })
 export class LoginPage implements OnInit {
   idUser = 0;
-  ReturnLogin: StandarReturnModel = new StandarReturnModel();
+  ReturnLogin: StandarReturnModel;//= new StandarReturnModel();
   showEye = false;
   loginForm: FormGroup;
+
+  isLoading = false;
+  isLogin = true;
   // ------------- CONSTRUCTOR ----------------------------
   constructor(
     public loading: LoadingService,
@@ -35,6 +42,8 @@ export class LoginPage implements OnInit {
     private sglob: GlobalvarsService,
     private fcm: FCM,
     private apiService: ApiService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) { }
   // --------------------------------------------
   get username() {
@@ -66,7 +75,7 @@ export class LoginPage implements OnInit {
           Validators.required,
           Validators.maxLength(50),
           Validators.minLength(3),
-          //  Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
+          Validators.pattern('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$')
 
         ]
       ],
@@ -90,79 +99,113 @@ export class LoginPage implements OnInit {
 
   // ------ Api service login ---------------
   submitLogin() {
-    // ----- Show loader ------
-    this.loading.showLoader('Connexion en cours');
     // const username = this.loginForm.value.username;
     // const password = this.loginForm.value.password;
+    this.isLoading = true;
+    this.loadingCtrl.create(
+      { keyboardClose: true, message: 'Connexion en cours...' }
+    ).then((loadingEl) => {
+      loadingEl.present();
 
-    const params = { email: this.loginForm.value.username, password: this.loginForm.value.password };
-    // ---- Call Login function
-    this.apiService.loginDoctor(params).subscribe(
-      (resp: StandarReturnModel) => {
-        // this.dataReturnService = JSON.stringify(resp);
-        console.log('Response >>>>> ', resp.code);
-        if ( +resp.code ===  200) {
+      const params = { email: this.loginForm.value.username, password: this.loginForm.value.password };
+      const authObs: Observable<AuthResponseData> = this.apiService.loginDoctor(params);
+      let message = '';
+      // ---- Call Login function
+      authObs.subscribe(
+        // :::::::::::: ON RESULT ::::::::::
+        (resData) => {
+          this.isLoading = false;
+         // const dataResponse: UserModel = JSON.stringify(resData.data);
+          const dataResponse: UserModel = resData.data;
+          console.log('Response >>>>> ', resData);
           // ----- Hide loader ------
-          this.loading.hideLoader();
-          console.log('::: You are connected :::');
-          // this.idUser = this.dataReturnService.data['id'];
-          // // ----- Set storage Data -----
-          // this.SetStorage();
-          // // -----  Update id Doctor value -----
-          // this.sglob.updateIdUser(this.idUser);
-          // // ----- Retrive a value of Token -----
-          // this.getTokenFcm();
-          // // ----- Toast ------------
-          // this.sglob.presentToast('Authentification réussie, bienvenus à STAMI');
-          // // ----- Redirection to Home page ------------
-          // this.router.navigate(['home']);
+          loadingEl.dismiss();
 
-        } else {
+          if (+resData.code === 200) {
+            message = 'Authentification réussie, bienvenus Docteur ' + dataResponse.nom + ' sur STAMI';
+            this.idUser = dataResponse.id;
+            // ----- Set storage Data -----
+            this.SetStorage();
+            // -----  Update id Doctor value -----
+            this.sglob.updateIdUser(this.idUser);
+            // ----- Retrive a value of Token -----
+            this.getTokenFcm();
+            // ----- Toast ------------
+            this.sglob.presentToast(message);
+            // ----- Redirection to Home page ------------
+            this.router.navigate(['home']);
+
+          } else if (+resData.code === 201) {
+            message = ' Félicitation Docteur, votre compte a été créée avec succès';
+            // ----- Toast ------------
+            this.sglob.presentToast(message);
+            // console.log('::: Félicitation Docteur, votre compte a été créée avec succès ::: ');
+
+          } else {
+            message = 'L\'authentification a échouée,erreur inconu !';
+            // --------- Show Alert --------
+            this.showAlert(message);
+          }
+        },
+
+        // ::::::::::::  ON ERROR ::::::::::::
+        (errRes) => {
           // ----- Hide loader ------
-          this.loading.hideLoader();
-          // ----- Toast ------------
-         // this.sglob.presentToast('L\'authentification a échouée ! Veuillez vérifier vos identifiants');
-          console.log('::: No connected ::: ');
+          loadingEl.dismiss();
 
-        }
-      },
+          if (errRes.status === 422) {
+            message = 'L\'authentification a échouée, êtes-vous sûr de vos identifiants ? ';
 
-      (err) => {
-        this.loading.hideLoader();
-        if (err.status === 422) {
-          console.log('L\'authentification a échouée, êtes-vous sûr de vos identifiants ? ');
-        }
-      }
-
-    );
-
-
-  }
-
-
-  submitLogin_() {
-    this.loading.showLoader('Connexion en cours');
-    this.srv.login(this.loginForm.value).then(newsFetched => {
-      this.ReturnLogin = newsFetched;
-      console.log('return login', this.ReturnLogin);
-      if (this.ReturnLogin.code === 200) {
-        console.log('ok');
-        this.idUser = this.ReturnLogin.idUser;
-        this.SetStorage();
-        this.sglob.updateIdUser(this.idUser);
-        this.getTokenFcm();
-        this.loading.hideLoader();
-        this.sglob.presentToast(
-          'Authentification réussi, bienvenus sur STAMI'
-        );
-        this.router.navigate(['home']);
-      } else {
-        this.loading.hideLoader();
-        this.sglob.presentToast('Veuillez vérifier vos identifiants');
-        console.log('no');
-      }
+          } else if (errRes.status === 401 || errRes.status === 403) {
+            message = ' Accès à la ressource refusé ';
+          } else if (errRes.status === 404) {
+            message = ' Document non trouvé ';
+          } else if (errRes.status === 105 || errRes.status === 106 || errRes.status === 511) {
+            message = ' Prblème d\'accès au réseau, veillez vérifier votre connexion ';
+          } else {
+            message = 'L\'authentification a échouée,erreur inconu ! ';
+          }
+          // --------- Show Alert --------
+          this.showAlert(message);
+        });
     });
   }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: 'Résultat d\'authentication',
+        message: message,
+        cssClass: 'alert-css',
+        buttons: ['Okay']
+      })
+      .then(alertEl => alertEl.present());
+  }
+
+
+  // submitLogin_() {
+  //   this.loading.showLoader('Connexion en cours');
+  //   this.srv.login(this.loginForm.value).then(newsFetched => {
+  //     this.ReturnLogin = newsFetched;
+  //     console.log('return login', this.ReturnLogin);
+  //     if (this.ReturnLogin.code === 200) {
+  //       console.log('ok');
+  //       this.idUser = this.ReturnLogin.idUser;
+  //       this.SetStorage();
+  //       this.sglob.updateIdUser(this.idUser);
+  //       this.getTokenFcm();
+  //       this.loading.hideLoader();
+  //       this.sglob.presentToast(
+  //         'Authentification réussi, bienvenus sur STAMI'
+  //       );
+  //       this.router.navigate(['home']);
+  //     } else {
+  //       this.loading.hideLoader();
+  //       this.sglob.presentToast('Veuillez vérifier vos identifiants');
+  //       console.log('no');
+  //     }
+  //   });
+  // }
 
   SetStorage() {
     this.nat.setItem('cardio', { idUser: this.idUser }).then(
@@ -173,7 +216,7 @@ export class LoginPage implements OnInit {
 
   getTokenFcm() {
     this.fcm.getToken().then(token => {
-      console.log('constructeur token is', token);
+      console.log('constructeur token is ::::: ', token);
       this.srv.addToken(token, this.idUser).then(newsFetched => {
         this.ReturnLogin = newsFetched;
       });

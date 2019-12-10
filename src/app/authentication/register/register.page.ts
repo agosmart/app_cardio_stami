@@ -3,10 +3,12 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ServiceAppService } from 'src/app/services/service-app.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { StandarReturnModel } from '../../models/StandarReturnMdel';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/api/api.service';
+import { ApiService, AuthResponseData } from 'src/app/api/api.service';
+import { Observable } from 'rxjs';
+import { UserModel } from 'src/app/models/user.model';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -16,15 +18,19 @@ export class RegisterPage implements OnInit {
   ChoixCR = 0;
   itermsCR: any;
   itemsCudt: any;
-  retunListeCR: StandarReturnModel = new StandarReturnModel();
-  retunListeCUDT: StandarReturnModel = new StandarReturnModel();
-  returnInscription: StandarReturnModel = new StandarReturnModel();
+  retunListeCR: StandarReturnModel;
+  retunListeCUDT: StandarReturnModel;
+  returnInscription: StandarReturnModel;
   passwordMatch = true;
 
   registrationForm: FormGroup;
   genders: Array<string>;
 
   dataReturnService: any;
+
+
+  isLoading = false;
+  isLogin = true;
 
 
   constructor(
@@ -34,6 +40,8 @@ export class RegisterPage implements OnInit {
     public router: Router,
     private sglob: GlobalvarsService,
     private apiService: ApiService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {
     this.srv.getListeCR().then((newsFetched: any) => {
       this.retunListeCR = newsFetched;
@@ -188,52 +196,92 @@ export class RegisterPage implements OnInit {
       }
     );
   }
-  public submit() {
-    // ----- Show loader ------
-    this.loading.showLoader('inscription en cours... ');
-    console.log(this.registrationForm.value);
-    const params = this.registrationForm.value;
-    // ---- Call registration function
-    this.apiService.registerDoctor(params).subscribe(
 
-      (dataReturnFromService) => {
-        this.dataReturnService = JSON.stringify(dataReturnFromService);
-        console.log('Return Rgister >>>>> ', this.dataReturnService);
-        if (this.dataReturnService === 200) {
-          console.log('::: You are registred :::');
+  // ------ Api service login ---------------
+  submitRgister() {
+    // const username = this.loginForm.value.username;
+    // const password = this.loginForm.value.password;
+    this.isLoading = true;
+    this.loadingCtrl.create(
+      { keyboardClose: true, message: 'Inscription en cours...' }
+    ).then((loadingEl) => {
+      loadingEl.present();
+      const params = this.registrationForm.value;
+      const authObs: Observable<AuthResponseData> = this.apiService.registerDoctor(params);
+      let message = '';
+      // ---- Call Login function
+      authObs.subscribe(
+        // :::::::::::: ON RESULT ::::::::::
+        (resData) => {
+          this.isLoading = false;
+          // const dataResponse: UserModel = JSON.stringify(resData.data);
+          const dataResponse: UserModel = resData.data;
+          console.log('Response >>>>> ', resData);
           // ----- Hide loader ------
-          this.loading.hideLoader();
-          // ----- Toast ------------
-          this.sglob.presentToast('Félicitation! Vous êtes inscrit à STAMI');
-          this.router.navigate(['./login']);
+          loadingEl.dismiss();
 
-        } else {
+          if (+resData.code === 201) {
+            message = 'Félicitation Docteur, votre compte a été créée avec succès';
+            // ------- Reset Form -------
+            this.registrationForm.reset();
+            // ----- Toast ------------
+            this.sglob.presentToast(message);
+            // ----- Redirection to login page ------------
+            this.router.navigate(['./login']);
+
+          } else {
+
+            message = 'L\'authentification a échouée,erreur inconu !';
+            // --------- Show Alert --------
+            this.showAlert(message);
+          }
+        },
+
+        // ::::::::::::  ON ERROR ::::::::::::
+        (errRes) => {
           // ----- Hide loader ------
-          this.loading.hideLoader();
-          // ----- Toast ------------
-          this.sglob.presentToast('problème dìnscription');
-        }
-      });
-  }
-
-
-  public submit___() {
-    this.loading.showLoader('inscription en cours... ');
-    console.log(this.registrationForm.value);
-    this.srv.Inscription(this.registrationForm.value).then(newsFetched => {
-      this.returnInscription = newsFetched;
-      console.log('return inscription', this.returnInscription);
-      if (this.returnInscription.code === 200) {
-        this.loading.hideLoader();
-        this.sglob.presentToast('inscription avec succès...bienvenus');
-        // -------Redirect to login page -------
-        this.router.navigate(['./login']);
-      } else {
-        this.loading.hideLoader();
-        this.sglob.presentToast('problème dìnscription');
-      }
+          loadingEl.dismiss();
+          if (errRes.status === 422) {
+            message = 'La création de votre compte a échouée, veillez vérifier votre connexion  ';
+          } else if (errRes.status === 401 || errRes.status === 403) {
+            message = ' Accès à la ressource refusé ';
+          } else if (errRes.status === 404) {
+            message = ' Document non trouvé ';
+          } else if (errRes.status === 105 || errRes.status === 106 || errRes.status === 511) {
+            message = ' Prblème d\'accès au réseau, veillez vérifier votre connecxion ';
+          } else {
+            message = 'La création de votre compte a échouée, erreur inconu ! ';
+          }
+          // --------- Show Alert --------
+          this.showAlert(message);
+        });
     });
   }
+
+  // data {"id": 62,
+  //       "nom": "sam",
+  //       "prenom": "ali",
+  //       "gender": "2",
+  //       "date_naissance": null,
+  //       "email": "test@gmail.com",
+  //       "mobile": "0560114888",
+  //       "etablissement_id": "5",
+  //       "api_token": "L4sQdTWIifdO5kOi3IkCmOp3KFePF6JdvXQaoPpTrtU5ogMhIaIo5OUNKcdb"
+  //      }
+
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: 'Résultat d\'authentication',
+        message: message,
+        cssClass: 'alert-css',
+        buttons: ['Okay']
+      })
+      .then(alertEl => alertEl.present());
+  }
+
+
 
   OnChangeCR(event: any) {
     this.ChoixCR = 1;
@@ -266,4 +314,52 @@ export class RegisterPage implements OnInit {
   readTerms() {
     console.log(' :::::::::::  Lire les conditions générales d\'utilisation ::::::::: ');
   }
+
+  // public submit() {
+  //   // ----- Show loader ------
+  //   this.loading.showLoader('inscription en cours... ');
+  //   console.log(this.registrationForm.value);
+  //   const params = this.registrationForm.value;
+  //   // ---- Call registration function
+  //   this.apiService.registerDoctor(params).subscribe(
+
+  //     (dataReturnFromService) => {
+  //       this.dataReturnService = JSON.stringify(dataReturnFromService);
+  //       console.log('Return Rgister >>>>> ', this.dataReturnService);
+  //       if (this.dataReturnService === 200) {
+  //         console.log('::: You are registred :::');
+  //         // ----- Hide loader ------
+  //         this.loading.hideLoader();
+  //         // ----- Toast ------------
+  //         this.sglob.presentToast('Félicitation! Vous êtes inscrit à STAMI');
+  //         this.router.navigate(['./login']);
+
+  //       } else {
+  //         // ----- Hide loader ------
+  //         this.loading.hideLoader();
+  //         // ----- Toast ------------
+  //         this.sglob.presentToast('problème dìnscription');
+  //       }
+  //     });
+  // }
+
+
+  // public submit___() {
+  //   this.loading.showLoader('inscription en cours... ');
+  //   console.log(this.registrationForm.value);
+  //   this.srv.Inscription(this.registrationForm.value).then(newsFetched => {
+  //     this.returnInscription = newsFetched;
+  //     console.log('return inscription', this.returnInscription);
+  //     if (this.returnInscription.code === 200) {
+  //       this.loading.hideLoader();
+  //       this.sglob.presentToast('inscription avec succès...bienvenus');
+  //       // -------Redirect to login page -------
+  //       this.router.navigate(['./login']);
+  //     } else {
+  //       this.loading.hideLoader();
+  //       this.sglob.presentToast('problème dìnscription');
+  //     }
+  //   });
+  // }
+
 }

@@ -42,6 +42,31 @@
 }
 
 
+ //---- css class for alert compounent
+.alert-css {
+  .alert-title.sc-ion-alert-md {
+    font-size: 20px;
+    color: #fd5f60;
+    font-weight: 500;
+    font-size: 1.3em;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+  div#alert-2-msg{
+    font-size: 1.2em;
+  }
+}
+
+// ion-alert
+// {
+//     --background        : #2c3e50 !important;
+//     --ion-text-color    : white !important;
+//     --ion-color-step-550: white !important;
+// }
+
+
+
 
 .logo-header{
   width: 40%;
