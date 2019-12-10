@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { Platform, NavController } from '@ionic/angular';
-import { GlobalvarsService } from '../services/globalvars.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+import { Platform, NavController } from "@ionic/angular";
+import { GlobalvarsService } from "../services/globalvars.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-onboard',
-  templateUrl: './onboard.page.html',
-  styleUrls: ['./onboard.page.scss']
+  selector: "app-onboard",
+  templateUrl: "./onboard.page.html",
+  styleUrls: ["./onboard.page.scss"]
 })
 export class OnboardPage implements OnInit {
   affichePub: boolean;
@@ -29,21 +29,21 @@ export class OnboardPage implements OnInit {
 
   public skiping() {}
   getItems() {
-    this.nat.getItem('cardio').then(
+    this.nat.getItem("cardio").then(
       data => this.goToHome(data),
       error => (this.affichePub = true)
     );
   }
   goToLogin() {
-    this.router.navigate(['login']);
+    this.router.navigate(["login"]);
   }
 
-  goToHome( data: any) {
-    this.sglob.updateIdUser(data.IdUser);
-    this.router.navigate(['home']);
+  goToHome(data: any) {
+    this.sglob.updateInfoUser(data.IdUser, data.token);
+    this.router.navigate(["home"]);
   }
 
   deleteStore() {
-    this.nat.remove('cardio');
+    this.nat.remove("cardio");
   }
 }

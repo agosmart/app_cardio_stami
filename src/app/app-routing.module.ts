@@ -1,20 +1,20 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: "", redirectTo: "login", pathMatch: "full" },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    path: "home",
+    loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
   },
 
   /**********************************************
                   - INTRO APP
   ************************************************/
   {
-    path: 'onboard',
+    path: "onboard",
     loadChildren: () =>
-      import('./onboard/onboard.module').then(m => m.OnboardPageModule)
+      import("./onboard/onboard.module").then(m => m.OnboardPageModule)
   },
 
   /**********************************************
@@ -22,23 +22,23 @@ const routes: Routes = [
   ************************************************/
   // # LOGIN USER
   {
-    path: 'login',
+    path: "login",
     loadChildren: () =>
-      import('./authentication/login/login.module').then(m => m.LoginPageModule)
+      import("./authentication/login/login.module").then(m => m.LoginPageModule)
   },
   // # REGISTER USER
   {
-    path: 'register',
+    path: "register",
     loadChildren: () =>
-      import('./authentication/register/register.module').then(
+      import("./authentication/register/register.module").then(
         m => m.RegisterPageModule
       )
   },
   // # RESET PASSWORD
   {
-    path: 'reset',
+    path: "reset",
     loadChildren: () =>
-      import('./authentication/reset/reset.module').then(m => m.ResetPageModule)
+      import("./authentication/reset/reset.module").then(m => m.ResetPageModule)
   },
 
   /**********************************************
@@ -46,28 +46,28 @@ const routes: Routes = [
   ************************************************/
   // # 1 - INSCRIPTION INITIALE
   {
-    path: 'inscription',
+    path: "inscription",
     loadChildren: () =>
-      import('./dossier/inscription/inscription.module').then(
+      import("./dossier/inscription/inscription.module").then(
         m => m.InscriptionPageModule
       )
   },
   // # 2 - INSCRIPTION ECG
   {
-    path: '',
+    path: "",
     children: [
       {
-        path: 'insc-ecg',
+        path: "insc-ecg",
         loadChildren: () =>
-          import('./dossier/inscription/insc-ecg/insc-ecg.module').then(
+          import("./dossier/inscription/insc-ecg/insc-ecg.module").then(
             m => m.InscEcgPageModule
           )
       },
       {
         // path: 'insc-infos/:objetInsc',
-        path: 'insc-infos/:idDossier',
+        path: "insc-infos/:idDossier",
         loadChildren: () =>
-          import('./dossier/inscription/insc-infos/insc-infos.module').then(
+          import("./dossier/inscription/insc-infos/insc-infos.module").then(
             m => m.InscInfosPageModule
           )
       }
@@ -75,25 +75,24 @@ const routes: Routes = [
   },
   // # 3 - DIAGNOSTIC
   {
-    path: 'diagnostic/:dataPatientObj',
+    path: "diagnostic/:dataPatientObj",
     loadChildren: () =>
-      import('./dossier/diagnostic/diagnostic.module').then(
+      import("./dossier/diagnostic/diagnostic.module").then(
         m => m.DiagnosticPageModule
       )
   },
   // # 4 - ORIENTATION
   {
-    path: 'orientation',
+    path: "orientation",
     loadChildren: () =>
-      import('./dossier/orientation/orientation.module').then(
+      import("./dossier/orientation/orientation.module").then(
         m => m.OrientationPageModule
       )
-  },
+  }
   // {
   //   path: 'dossier-detail/:idPatient',
   //   loadChildren: () => import('./dossier/dossier-detail/dossier-detail.module').then( m => m.DossierDetailPageModule)
   // }
-
 ];
 
 @NgModule({
@@ -102,4 +101,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

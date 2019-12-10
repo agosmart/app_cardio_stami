@@ -1,36 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center"  ><div  class="logo-header"  ><ion-img type="image/svg+xml" src="../../../assets/images/logo-color.svg" ></ion-img></div> </ion-title>
-    
+    <ion-title class="ion-text-center"
+      ><div class="logo-header">
+        <ion-img
+          type="image/svg+xml"
+          src="../../../assets/images/logo-color.svg"
+        ></ion-img>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-no-padding  ion-no-margin ion-text-center home-page">
-
   <!-- <ion-button size="medium" (click)="goToAddDossier()"
     >Ajouter un nouveau dossier</ion-button
   > -->
   <ion-grid class="ion-no-padding">
-    <ion-row class=" bg-light  ion-padding " >
+    <ion-row class=" bg-light  ion-padding ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
-        <ion-button size="medium"  shape="round" [routerLink]="['../inscription']">
-
+        <ion-button
+          size="medium"
+          shape="round"
+          [routerLink]="['../inscription']"
+        >
           <span class="icon-doss-add fsize-30em"></span>
-          <p class="fseiz-12em"> Nouveau dossier</p>
-          <ion-icon name="add-circle-outline" slot="end" class="fsize-20em"> </ion-icon>
-
+          <p class="fseiz-12em">Nouveau dossier</p>
+          <ion-icon name="add-circle-outline" slot="end" class="fsize-20em">
+          </ion-icon>
         </ion-button>
       </ion-col>
     </ion-row>
-
 
     <!-- NOT_EXIST PATIENT -->
     <ion-row *ngIf="!isExistDossier">
       <ion-col>
         <ion-card class="ion-margin">
           <ion-card-content class="ion-padding ion-margin text-gray300">
-              <span class="icon-diagnostic  fsize-40em"></span>
-           <h3 class='fsize-12em'>Vous n'avez aucun patient en attente de diagnostic</h3> 
+            <span class="icon-diagnostic  fsize-40em"></span>
+            <h3 class="fsize-12em">
+              Vous n'avez aucun patient en attente de diagnostic
+            </h3>
           </ion-card-content>
         </ion-card>
       </ion-col>
@@ -41,21 +50,23 @@
       <ion-col>
         <ion-list>
           <ion-list-header>
-            Patients similaires
+            Patients en cours
           </ion-list-header>
 
           <div *ngFor="let patient of objectPatient">
-              <ion-item detail >
-  
-                <ion-label>
-                  <h2>{{patient.lastName}} {{patient.firsName}}</h2>
-                  <ion-note slot="end" color="primary" class="text08">{{patient.birthday}}</ion-note>
-                </ion-label>
-  
-                <ion-note slot="end" color="danger" class="text10">{{patient.countDossier}}</ion-note>
-  
-              </ion-item>
-            </div>
+            <ion-item detail>
+              <ion-label>
+                <h2>{{patient.lastName}} {{patient.firsName}}</h2>
+                <ion-note slot="end" color="primary" class="text08"
+                  >{{patient.birthday}}</ion-note
+                >
+              </ion-label>
+
+              <ion-note slot="end" color="danger" class="text10"
+                >{{patient.countDossier}}</ion-note
+              >
+            </ion-item>
+          </div>
 
           <!-- <ion-item>
             <ion-button>

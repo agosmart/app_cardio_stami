@@ -1,8 +1,7 @@
-export class DataListeEtab {
-    // idEtab: number;
-    // nomEtab: string;
-
-    etab_id: number;
-    longitude: string; 
-    latitude: string;
+export interface DataListeEtab {
+  id: number;
+  type: number;
+  nom: string;
+  longitude: string;
+  latitude: string;
 }
