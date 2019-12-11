@@ -1,40 +1,42 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/login"></ion-back-button>
     </ion-buttons>
-    <ion-title class="ion-text-left">Inscription - CUDT</ion-title>
+    <!-- <ion-title class="ion-text-left">Inscription - CUDT</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding " color="white">
-  <form
-    [formGroup]="registrationForm"
-    (ngSubmit)="submitRgister()"
-    class="list-form"
-  >
+
+<ion-content fullscreen class=" register-init ion-no-padding" color="white">
+<!-- 
+  <div class=" overly-image">
+    <div class="overly-gradian">image</div>
+  </div> -->
+
+
+  <ion-grid fixed class="ion-no-padding  header-card-fix overly-gradian-header box-shadow ">
+    <ion-row class="ion-no-padding ">
+      <ion-col size="12" class="icon-header">
+        <span class="icon-user text-white text20"></span>
+      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">INSCRIPTION CUDT</ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <form [formGroup]="registrationForm" (ngSubmit)="submitRgister()" class="list-form">
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col
-          class="ion-align-self-center"
-          size-md="6"
-          size-lg="5"
-          size-xs="12"
-        >
+        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
           <div>
             <!-- Nom -->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Nom</ion-label>
-              <ion-input
-                autocapitalize
-                inputmode="text"
-                formControlName="lastName"
-              ></ion-input>
+              <ion-input autocapitalize inputmode="text" formControlName="lastName"></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.lastName">
-              <ng-container
-                *ngIf="lastName.hasError(error.type) && (lastName.dirty || lastName.touched)"
-              >
+              <ng-container *ngIf="lastName.hasError(error.type) && (lastName.dirty || lastName.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -43,18 +45,12 @@
             </div>
 
             <!-- Prénom -->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Prénom</ion-label>
-              <ion-input
-                autocapitalize
-                inputmode="text"
-                formControlName="firstName"
-              ></ion-input>
+              <ion-input autocapitalize inputmode="text" formControlName="firstName"></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.firstName">
-              <ng-container
-                *ngIf="firstName.hasError(error.type) && (firstName.dirty || firstName.touched)"
-              >
+              <ng-container *ngIf="firstName.hasError(error.type) && (firstName.dirty || firstName.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -63,18 +59,12 @@
             </div>
 
             <!--  Numéro de Téléphone-->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Mobile</ion-label>
-              <ion-input
-                inputmode="text"
-                placeholder="0XX123123"
-                formControlName="mobile"
-              ></ion-input>
+              <ion-input inputmode="numeric" placeholder="0XX123123" formControlName="mobile"></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.mobile">
-              <ng-container
-                *ngIf="mobile.hasError(error.type) && (mobile.dirty || mobile.touched)"
-              >
+              <ng-container *ngIf="mobile.hasError(error.type) && (mobile.dirty || mobile.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -83,21 +73,14 @@
             </div>
 
             <!-- Nom d'utilisateur - Email-->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Nom utilisateur</ion-label>
-              <ion-input
-                autocapitalize
-                inputmode="email"
-                placeholder="email@domaine.com"
-                formControlName="username"
-              >
+              <ion-input autocapitalize inputmode="email" placeholder="email@domaine.com" formControlName="username">
               </ion-input>
             </ion-item>
 
             <div *ngFor="let error of errorMessages.username">
-              <ng-container
-                *ngIf="username.hasError(error.type) && (username.dirty || username.touched)"
-              >
+              <ng-container *ngIf="username.hasError(error.type) && (username.dirty || username.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -107,19 +90,12 @@
 
             <!-- Mot de passe cmoparaison-->
             <!-- 1 - password -->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Mot de passe</ion-label>
-              <ion-input
-                autocapitalize
-                inputmode="text"
-                formControlName="password"
-                value=""
-              ></ion-input>
+              <ion-input autocapitalize inputmode="text" formControlName="password" value=""></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.password">
-              <ng-container
-                *ngIf="password.hasError(error.type) && (password.dirty || password.touched)"
-              >
+              <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -127,18 +103,12 @@
               </ng-container>
             </div>
             <!-- 2 - password confirmation-->
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">Confirmation...</ion-label>
-              <ion-input
-                autocapitalize
-                inputmode="text"
-                formControlName="passwordc"
-              ></ion-input>
+              <ion-input autocapitalize inputmode="text" formControlName="passwordc"></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.passwordc">
-              <ng-container
-                *ngIf="passwordc.hasError(error.type) && (passwordc.dirty || passwordc.touched)"
-              >
+              <ng-container *ngIf="passwordc.hasError(error.type) && (passwordc.dirty || passwordc.touched)">
                 <small class="message  error-message ">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -154,19 +124,11 @@
             </ng-container>
             <!-- Civilité -->
 
-            <ion-item class="ion-margin-top">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating" color="primary">Gender</ion-label>
-              <ion-select
-                formControlName="gender"
-                cancelText="Cancel"
-                okText="OK"
-              >
-                <ion-select-option
-                  *ngFor="let gender of genders"
-                  [value]="gender"
-                  color="light"
-                  >{{gender}}</ion-select-option
-                >
+              <ion-select formControlName="gender" cancelText="Cancel" okText="OK">
+                <ion-select-option *ngFor="let gender of genders" [value]="gender" color="light">{{gender}}
+                </ion-select-option>
               </ion-select>
             </ion-item>
 
@@ -201,14 +163,8 @@
             <ion-list class="ion-margin-top">
               <ion-item>
                 <ion-label>Votre CR</ion-label>
-                <ion-select
-                  formControlName="cr"
-                  (ionChange)="OnChangeCR($event)"
-                >
-                  <ion-select-option
-                    *ngFor="let item of itemsCR"
-                    value="{{item.id}}"
-                    >{{item.nom}}
+                <ion-select formControlName="cr" (ionChange)="OnChangeCR($event)">
+                  <ion-select-option *ngFor="let item of itemsCR" value="{{item.id}}">{{item.nom}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -218,10 +174,7 @@
               <ion-item>
                 <ion-label>Votre CUDT</ion-label>
                 <ion-select formControlName="cudt">
-                  <ion-select-option
-                    *ngFor="let item of itemsCudt"
-                    value="{{item.idEtab}}"
-                    >{{item.nomEtab}}
+                  <ion-select-option *ngFor="let item of itemsCudt" value="{{item.idEtab}}">{{item.nomEtab}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -229,20 +182,12 @@
 
             <!-- Conditions-->
             <ion-item class="ion-margin-top" lines="full">
-              <ion-label color="primary"
-                >J'accepte les conditions d'utilisations</ion-label
-              >
-              <ion-checkbox
-                color="primary"
-                checked="true"
-                formControlName="terms"
-              ></ion-checkbox>
+              <ion-label color="primary">J'accepte les conditions d'utilisations</ion-label>
+              <ion-checkbox color="primary" checked="true" formControlName="terms"></ion-checkbox>
             </ion-item>
 
             <div *ngFor="let error of errorMessages.terms">
-              <ng-container
-                *ngIf="terms.hasError(error.type) && (terms.dirty || terms.touched)"
-              >
+              <ng-container *ngIf="terms.hasError(error.type) && (terms.dirty || terms.touched)">
                 <small class="message  error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
@@ -254,12 +199,8 @@
               Lire les conditions générales d'utilisation
             </small>
 
-            <ion-button
-              [disabled]="!registrationForm.valid"
-              type="submit"
-              expand="block"
-              class="ion-margin-top btn"
-              >Submit
+            <ion-button [disabled]="!registrationForm.valid" type="submit" expand="block" class="ion-margin-top btn">
+              Submit
             </ion-button>
           </div>
         </ion-col>

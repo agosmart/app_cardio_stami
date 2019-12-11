@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
     private router: Router
   ) {
     this.isExistDossier = true;
-    this.IdUser = this.sglob.get_IdUser();
+    this.IdUser = this.sglob.getIdUser();
     console.log("user med", this.IdUser);
   }
 

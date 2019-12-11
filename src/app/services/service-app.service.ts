@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthResponseData } from "../models/auth.response";
 import { DataListeEtab } from "../models/data_liste_etab";
 
-export interface ResponseEtab {
+interface ResponseEtab {
   code: number;
   data: DataListeEtab;
   message: string;

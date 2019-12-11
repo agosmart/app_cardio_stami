@@ -16,14 +16,13 @@
     // );
     // background: #01258e;
     //background: #01258e;
-   // background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
+    // background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
     //background:linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
     background: #516bf0;
     background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
   }
 
- 
-  // .cercle-design-A{    
+  // .cercle-design-A{
   //   width: 400px;
   //   height: 400px;
   //   position: absolute;
@@ -32,7 +31,7 @@
   //   left: -140px;
   //   border-radius: 100%;
   // }
-  // .cercle-design-B{    
+  // .cercle-design-B{
   //   width: 200px;
   //   height: 208px;
   //   position: absolute;
@@ -40,10 +39,8 @@
   //   top: -150px;
   //   left: 180px;
   //   border-radius: 100%;
-    
+
   // }
-
-
 
   // ion-button{
   //   height: 48px;
@@ -52,10 +49,41 @@
 
   // }
 
-
   // ion-content main.inner-scroll.scroll-y {
   //   background-color: #f32051;
   // }
+
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+    
+  }
+  ion-icon {
+    margin-right: 5px;
+    font-size: 1.4em;
+    float: left;
+  }
+  .overly-gradian-header{
+    background: #516bf0!important;
+    background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6))!important;
+    width: 100%;
+    height: 92px;
+    // height: 91px;
+    // z-index: 0;
+   
+  }
+  .header-md::after {
+    background-image: none;
+  }
+
+  /* Remove bottom border on ios */
+  .header-ios ion-toolbar:last-child {
+    --border-width: 0;
+  }
+  .ion-bt-padding {
+    --padding-start: 5px;
+    --padding-end: 5px;
+  }
 
   ion-grid {
     padding-top: 0;
@@ -69,17 +97,41 @@
   ion-img {
     height: 125px;
   }
-
-  ion-icon {
-    margin-right: 5px;
-    font-size: 20px;
-    float: left;
+  
+  .register-init {
+    .icon-header {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 1.8rem;
+      color: #fff;
+    }
+    .title-header {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.2em;
+      letter-spacing: 0.1em;
+      text-align: center;
+    }
+    // Bloc Header fixed
+  .header-card-fix {
+    height: 104px;
+    padding-top: 16px;
+    position: absolute;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 8;
+    background: #516bf0;
+    background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+    
+  }
   }
 
   // margin: 0 5%;
   .list-form {
     padding: 0;
     margin-bottom: 0;
+    padding-top: 100px;
 
     ion-select {
       color: #ffe69e;
@@ -92,7 +144,7 @@
       background: rgba(149, 231, 255, 0.2);
       //border-radius: 12px;
       padding: 0;
-      
+
       --border-width: 0 0 2px 0;
       --ion-border-color: #fff;
 
@@ -110,19 +162,20 @@
         color: #fff;
       }
 
-      input {
-        color: #fff;
-      }
-      ion-input.sc-ion-input-md-h.sc-ion-input-md-s.md.hydrated.ng-touched.ng-dirty.has-value.ng-valid.ion-touched.ion-dirty.ion-valid {
-        color: #fff;
-        //  background-color: transparent;
-      }
-      // ion-input.native-input.sc-ion-input-md{
+      // input {
       //   color: #fff;
       // }
-      ion-input.sc-ion-input-md-h {
-        color: #fff !important;
+      ion-input {
+        --padding-top: 0;
+        --color: #fff;
       }
+      // ion-input.sc-ion-input-md-h.sc-ion-input-md-s.md.hydrated.ng-touched.ng-dirty.has-value.ng-valid.ion-touched.ion-dirty.ion-valid {
+      //   color: #fff;
+      //  }
+
+      // ion-input.sc-ion-input-md-h {
+      //   color: #fff !important;
+      // }
 
       //--highlight-color-focused: #3880ff;
       //----------- IOS Style ------
@@ -134,9 +187,6 @@
         // --padding-bottom: 8px;
         // --padding-start: 0px;
       }
-
-
-     
     }
   }
   h3 {
@@ -146,11 +196,10 @@
 
   .info-message {
     margin: 8px 0;
-    //background: dodgerblue;
     background: rgba(54, 59, 123, 0.35);
-    display: inline-block;
+    display: inline-flex;
     border: 1px solid #fff;
-    height: 42px;
+    height: auto;
     vertical-align: middle;
     padding: 8px 16px;
     color: white;
@@ -168,12 +217,12 @@
 
   .message {
     color: white;
-    //background: #f32051;
+    background: #f32051;
     border-radius: 8px;
     width: 100%;
-    display: inline-block;
+    display: inline-flex;
     margin-top: 5px;
-    padding: 2px 10px;
+    padding: 8px 10px;
     height: 24px;
     vertical-align: middle;
     line-height: 20px;

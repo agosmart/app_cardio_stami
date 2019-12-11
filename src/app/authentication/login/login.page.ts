@@ -1,23 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, Validators, FormGroup } from "@angular/forms";
-import { LoadingController, AlertController } from "@ionic/angular";
-import { ServiceAppService } from "src/app/services/service-app.service";
-import { LoadingService } from "src/app/services/loading.service";
-import { NativeStorage } from "@ionic-native/native-storage/ngx";
-import { GlobalvarsService } from "src/app/services/globalvars.service";
-import { FCM } from "@ionic-native/fcm/ngx";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { ServiceAppService } from 'src/app/services/service-app.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { GlobalvarsService } from 'src/app/services/globalvars.service';
+import { FCM } from '@ionic-native/fcm/ngx';
+import { Router } from '@angular/router';
 
-import { Observable } from "rxjs";
-import { UserModel } from "src/app/models/user.model";
-import { AuthResponseData } from "src/app/models/auth.response";
+import { Observable } from 'rxjs';
+import { UserModel } from 'src/app/models/user.model';
+import { AuthResponseData } from 'src/app/models/auth.response';
 
 // ------------------------------
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.page.html",
-  styleUrls: ["./login.page.scss"]
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss']
 })
 export class LoginPage implements OnInit {
   idUser = 0;
@@ -39,43 +39,43 @@ export class LoginPage implements OnInit {
     private fcm: FCM,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController
-  ) {}
+  ) { }
   // --------------------------------------------
   get username() {
-    return this.loginForm.get("username");
+    return this.loginForm.get('username');
   }
   get password() {
-    return this.loginForm.get("password");
+    return this.loginForm.get('password');
   }
   public errorMessages = {
     username: [
-      { type: "required", message: "le nom d'utilisateur est requis" },
-      { type: "maxlength", message: "50 caractères au max" },
-      { type: "minLength", message: "3 caractères au min" },
-      { type: "pattern", message: "Adresse email non valide" }
+      { type: 'required', message: 'le nom d\'utilisateur est requis' },
+      { type: 'maxlength', message: 'Votre saisie ne doit pas dépasser 50 caractères.' },
+      { type: 'minLength', message: 'Votre saisie doit comporter au moins 3 caractères.' },
+      { type: 'pattern', message: 'Addresse email non valide' }
     ],
     password: [
-      { type: "required", message: "le mot de passe est requis" },
-      { type: "maxlength", message: "50 caractères au maximum" },
-      { type: "minLength", message: "6 caractères au minimum" }
+      { type: 'required', message: 'le mot de passe est requis' },
+      { type: 'maxlength', message: 'Votre saisie ne doit pas dépasser 50 caractères.' },
+      { type: 'minLength', message: 'Votre saisie doit comporter au moins 6 caractères.' }
     ]
   };
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: [
-        "",
+        '',
         [
           Validators.required,
           Validators.maxLength(50),
           Validators.minLength(3),
           Validators.pattern(
-            "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$"
+            '^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$'
           )
         ]
       ],
       password: [
-        "",
+        '',
         [
           Validators.required,
           Validators.maxLength(50),
@@ -98,7 +98,7 @@ export class LoginPage implements OnInit {
     // const password = this.loginForm.value.password;
     this.isLoading = true;
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "Connexion en cours..." })
+      .create({ keyboardClose: true, message: 'Connexion en cours...' })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -116,7 +116,7 @@ export class LoginPage implements OnInit {
             this.isLoading = false;
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             const dataResponse: UserModel = resData.data;
-            console.log("Response >>>>> ", resData);
+            console.log('Response >>>>> ', resData);
             // ----- Hide loader ------
             loadingEl.dismiss();
 
@@ -133,7 +133,7 @@ export class LoginPage implements OnInit {
               // ----- Toast ------------
               this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
-              this.router.navigate(["home"]);
+              this.router.navigate(['home']);
             } else {
               // --------- Show Alert --------
               this.showAlert(resData.message);
@@ -150,25 +150,25 @@ export class LoginPage implements OnInit {
               this.showAlert(errRes.error.errors.email);
             } else {
               this.showAlert(
-                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
               );
             }
             // if (errRes.status === 422) {
             //   message =
-            //     "L'authentification a échouée, êtes-vous sûr de vos identifiants6v6v6v6vv ? ";
+            //     'L'authentification a échouée, êtes-vous sûr de vos identifiants6v6v6v6vv ? ';
             // } else if (errRes.status === 401 || errRes.status === 403) {
-            //   message = " Accès à la ressource refusé ";
+            //   message = ' Accès à la ressource refusé ';
             // } else if (errRes.status === 404) {
-            //   message = " Document non trouvé ";
+            //   message = ' Document non trouvé ';
             // } else if (
             //   errRes.status === 105 ||
             //   errRes.status === 106 ||
             //   errRes.status === 511
             // ) {
             //   message =
-            //     " Prblème d'accès au réseau, veillez vérifier votre connexion ";
+            //     ' Prblème d'accès au réseau, veillez vérifier votre connexion ';
             // } else {
-            //   message = "L'authentification a échouée,erreur inconu ! ";
+            //   message = 'L'authentification a échouée,erreur inconu ! ';
             // }
           }
         );
@@ -178,24 +178,24 @@ export class LoginPage implements OnInit {
   private showAlert(message: string) {
     this.alertCtrl
       .create({
-        header: "Résultat d'authentication",
+        header: 'Résultat d\'authentication',
         message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
+        cssClass: 'alert-css',
+        buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
   }
 
   SetStorage() {
-    this.nat.setItem("cardio", { idUser: this.idUser, token: this.token }).then(
-      () => console.log("Stored item!", this.idUser),
-      error => console.error("Error storing item", error)
+    this.nat.setItem('cardio', { idUser: this.idUser, token: this.token }).then(
+      () => console.log('Stored item!', this.idUser),
+      error => console.error('Error storing item', error)
     );
   }
 
   getTokenFcm() {
     this.fcm.getToken().then(token => {
-      console.log("constructeur token is ::::: ", token);
+      console.log('constructeur token is ::::: ', token);
       // this.srv.addToken(token, this.idUser, this.mobile).then(newsFetched => {
       //   this.ReturnLogin = newsFetched;
       // });

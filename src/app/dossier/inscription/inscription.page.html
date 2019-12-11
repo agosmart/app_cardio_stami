@@ -1,37 +1,48 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>inscription</ion-title>
+    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- <div class="ion-padding">
-    <ion-button expand="block" [routerLink]="['/insc-ecg']">
-      <ion-button expand="block" (click)="submitform()"> 
-      Valider <ion-icon slot="end" name="create"></ion-icon>
-    </ion-button>
-  </div> -->
+<ion-content fullscreen class="insc-init ion-no-padding " >
+    <div class="overly-gradian">&nbsp;</div>
+  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <ion-row class="ion-no-padding ">
+      <ion-col size="12" class="icon-header">
+        <span class="icon-doss-create text-white text20"></span>
+      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
+    </ion-row>
+  </ion-grid>
+
   <form [formGroup]="insciptionDossier" (ngSubmit)="submitform()">
-    <ion-grid>
+    <ion-grid class="ion-margin-top">
       <ion-row class="ion-justify-content-center">
         <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-          <div class="ion-text-center">
-            <h3>Création du dossier</h3>
-          </div>
+
           <div class="ion-padding">
             <ion-item>
               <ion-label position="floating">Nom</ion-label>
               <ion-input autocapitalize inputmode="text" formControlName="nom">
               </ion-input>
             </ion-item>
+
             <div *ngFor="let error of errorMessages.nom">
               <ng-container *ngIf="nom.hasError(error.type) && (nom.dirty || nom.touched)">
-                <small class="error-message">{{error.message}}</small>
+                <small class="error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon> {{error.message}}
+                </small>
               </ng-container>
             </div>
+
+
+
+
+
+
             <ion-item>
               <ion-label position="floating">Prénom</ion-label>
               <ion-input autocapitalize inputmode="text" formControlName="prenom">
@@ -39,18 +50,16 @@
             </ion-item>
             <div *ngFor="let error of errorMessages.prenom">
               <ng-container *ngIf="prenom.hasError(error.type) && (prenom.dirty || prenom.touched)">
-                <small class="error-message">{{error.message}}</small>
+                <small class="error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon> {{error.message}}
+                </small>
               </ng-container>
             </div>
-            <!-- 
+
             <ion-item>
               <ion-label>Date de naissance</ion-label>
-              <ion-datetime
-                value=""
-                placeholder="Selectionner la Date"
-                formControlName="dateNaissance"
-              ></ion-datetime>
-            </ion-item> -->
+              <ion-datetime value="" placeholder="Selectionner la Date" formControlName="dateNaissance"></ion-datetime>
+            </ion-item>
           </div>
 
           <ion-list>
@@ -72,12 +81,14 @@
           </ion-list>
           <div *ngFor="let error of errorMessages.civilite">
             <ng-container *ngIf="civilite.hasError(error.type) && (civilite.dirty || civilite.touched)">
-              <small class="error-message">{{error.message}}</small>
+              <small class="error-message">
+                <ion-icon name="information-circle-outline"></ion-icon> {{error.message}}
+              </small>
             </ng-container>
           </div>
           <div class="ion-padding">
-            <ion-button [disabled]="!insciptionDossier.valid" type="submit" expand="block"  class="ion-margin-top btn" >Valider <ion-icon slot="end"
-                name="create"></ion-icon>
+            <ion-button [disabled]="!insciptionDossier.valid" type="submit" expand="block" class="ion-margin-top btn">
+              Valider <ion-icon slot="end" name="create"></ion-icon>
             </ion-button>
           </div>
         </ion-col>
@@ -112,4 +123,5 @@
 
     </ion-grid>
   </form>
+
 </ion-content>

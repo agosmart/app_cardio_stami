@@ -13,7 +13,7 @@ export class GlobalvarsService {
     this.token = token;
   }
 
-  public get_IdUser() {
+  public getIdUser() {
     return this.idUser;
   }
   async presentToast(text) {

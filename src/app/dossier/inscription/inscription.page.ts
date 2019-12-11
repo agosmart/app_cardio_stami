@@ -31,7 +31,7 @@ export class InscriptionPage implements OnInit {
     private router: Router
   ) {
     this.isPatient = false;
-    this.IdUser = this.sglob.get_IdUser();
+    this.IdUser = this.sglob.getIdUser();
   }
 
   get nom() {
@@ -43,26 +43,26 @@ export class InscriptionPage implements OnInit {
   get genre() {
     return this.insciptionDossier.get('genre');
   }
-  // get dateNaissance() {
-  //   return this.insciptionDossier.get('dateNaissance');
-  // }
+  get dateNaissance() {
+    return this.insciptionDossier.get('dateNaissance');
+  }
   public errorMessages = {
     nom: [
-      { type: 'required', message: 'le nom d`utilisateur est obligatoire' },
-      { type: 'maxlength', message: '50 characters au max' },
-      { type: 'minLength', message: '3 characters au min' },
-      { type: 'pattern', message: 'caractères alphabitéque seulement' }
+      { type: 'required', message: 'Le nom d\'utilisateur est requis.' },
+      { type: 'maxlength', message: 'Votre saisie ne doit pas dépasser 50 caractères.' },
+      { type: 'minLength', message: 'Votre saisie doit comporter au moins 3 caractères.' },
+      { type: 'pattern', message: 'Votre saisie doit comporter uniquement des caractères alphabitéque.' }
     ],
     prenom: [
-      { type: 'required', message: 'le prenom d`utilisateur est obligatoire' },
-      { type: 'maxlength', message: '50 characters au max' },
-      { type: 'minLength', message: '3 characters au min' },
-      { type: 'pattern', message: 'caractères alphabitéque seulement' }
+      { type: 'required', message: 'Le prénom d\'utilisateur est requis.' },
+      { type: 'maxlength', message: 'Votre saisie ne doit pas dépasser 50 caractères.' },
+      { type: 'minLength', message: 'Votre saisie doit comporter au moins 3 caractères.' },
+      { type: 'pattern', message: 'Votre saisie doit comporter uniquement des caractères alphabitéque' }
     ],
-    genre: [{ type: 'required', message: 'le mot de passe est obligatoire' }]
-    // dateNaissance: [
-    //   { type: 'required', message: 'la date de naissance est obligatoire' }
-    // ]
+    genre: [{ type: 'required', message: 'Le mot de passe est requis.' }],
+    dateNaissance: [
+      { type: 'required', message: 'La date de naissance est requise.' }
+    ]
   };
   insciptionDossier = this.formBuilder.group({
     nom: [
@@ -87,13 +87,13 @@ export class InscriptionPage implements OnInit {
         Validators.pattern('^[A-Za-z]+$')
       ]
     ],
-    genre: ['', [Validators.required]]
-    //dateNaissance: ['', [Validators.required]]
+    genre: ['', [Validators.required]],
+    dateNaissance: ['', [Validators.required]]
   });
 
-  ngOnInit() {}
+  ngOnInit() { }
   submitform() {
-    this.loading.showLoader('recherche en cours');
+    this.loading.showLoader('Recherche en cours...');
     console.log(this.insciptionDossier.value);
     this.srv.getPatient(this.insciptionDossier.value).then(newsFetched => {
       this.returnSearchPatient = newsFetched;
@@ -108,7 +108,7 @@ export class InscriptionPage implements OnInit {
           0
         );
         this.sglob.presentToast(
-          'le patient nèxiste pas il est ajouté dans la base'
+          'Le patient vient d\'étre enregistrer dans le système.'
         );
       } else {
         this.loading.hideLoader();
@@ -116,7 +116,7 @@ export class InscriptionPage implements OnInit {
         console.log('existe---***', this.returnSearchPatient.items);
         this.listePatientExist = this.returnSearchPatient.items;
         this.sglob.presentToast(
-          'le patient existe veuillez le sélectionner dans la lsite ci-dessous'
+          'le patient existe déja dans le système, veuillez en séléctionner un de la lsite ci-dessous.'
         );
       }
     });

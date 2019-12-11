@@ -3,13 +3,11 @@
     --background: transparent;
     --ion-color-base: transparent !important;
   }
-
-  /* Show background if class is active */
-  // .show-background {
-  //     border-style: none;
-  //     background: var(--ion-color-primary);
-  // }
-
+  ion-icon {
+    margin-right: 5px;
+    font-size: 1.4em;
+    float: left;
+  }
   /* Remove bottom border on md */
   .header-md::after {
     background-image: none;
@@ -23,7 +21,20 @@
     --padding-start: 5px;
     --padding-end: 5px;
   }
-
+  .error-message {
+    // color: white;
+    // background: #f32051;
+    // border-radius: 8px;
+    // width: 100%;
+    // display: inline-flex;
+    // margin-top: 5px;
+    // padding: 8px 10px;
+    // height: 24px;
+    // vertical-align: middle;
+    // line-height: 20px;
+    // font-size: 1em;
+    // height: auto;
+  }
   ion-icon.i-card {
     color: #929eaa;
   }
@@ -33,13 +44,8 @@
  
 }
 
-.insc-infos {
-  
-
-  // Toolbar transparent
-  /* Transparent standard */
-
-  // Title header
+.insc-infos {  
+  // Toolbar transparent  
   .icon-header {
     text-align: center;
     margin-top: 10px;
@@ -60,6 +66,8 @@
     position: absolute;
     position: fixed;
     width: 100%;
+    padding-top: 16px;
+    padding-bottom: 16px;
     top: 0;
     z-index: 8;
     background: #01258e;
