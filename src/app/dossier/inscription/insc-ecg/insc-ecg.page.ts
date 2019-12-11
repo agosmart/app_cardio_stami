@@ -1,29 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ServiceAppService } from 'src/app/services/service-app.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { WebView } from '@ionic-native/ionic-webview/ngx';
-import { LoadingService } from 'src/app/services/loading.service';
-import { GlobalvarsService } from 'src/app/services/globalvars.service';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ServiceAppService } from "src/app/services/service-app.service";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { LoadingService } from "src/app/services/loading.service";
+import { GlobalvarsService } from "src/app/services/globalvars.service";
 import {
   FileTransfer,
   FileUploadOptions,
   FileTransferObject
-} from '@ionic-native/file-transfer/ngx';
+} from "@ionic-native/file-transfer/ngx";
 
 @Component({
-  selector: 'app-insc-ecg',
-  templateUrl: './insc-ecg.page.html',
-  styleUrls: ['./insc-ecg.page.scss']
+  selector: "app-insc-ecg",
+  templateUrl: "./insc-ecg.page.html",
+  styleUrls: ["./insc-ecg.page.scss"]
 })
 export class InscEcgPage implements OnInit {
   firstName: string;
   lastName: string;
-  dateNaissance: string;
+  birthday: string;
+  gender: number;
   idPatient: number;
-  idUser: number;
+  IdUser: number;
+  idEtab: number;
+  token: string;
   idMed: number;
   idDossier: number;
   data: any;
@@ -45,57 +48,61 @@ export class InscEcgPage implements OnInit {
     private transfer: FileTransfer,
     private webview: WebView
   ) {
+    this.IdUser = this.sglob.getIdUser();
+    this.idEtab = this.sglob.getidEtab();
+    this.token = this.sglob.getToken();
     this.data = srv.getExtras();
     if (this.data) {
-      this.idUser = this.data.idMed;
-      this.firstName = this.data.firsName;
+      this.firstName = this.data.firstName;
       this.lastName = this.data.lastName;
-      this.dateNaissance = this.data.birthday;
+      this.birthday = this.data.birthday;
+      this.gender = this.data.gender;
       this.idPatient = this.data.idPatient;
-      this.idMed = this.data.idMed;
-      this.idDossier = this.data.idDossier;
     }
 
+    console.log("data", this.data);
+    console.log("IdUser", this.IdUser);
+    console.log("token", this.token);
     this.isEcg = false;
   }
 
   get poids() {
-    return this.EcgForm.get('poids');
+    return this.EcgForm.get("poids");
   }
   get dThorasic() {
-    return this.EcgForm.get('poids');
+    return this.EcgForm.get("poids");
   }
   public errorMessages = {
     poids: [
-      { type: 'required', message: 'le poids d\'utilisateur est obligatoire' },
-      { type: 'maxlength', message: '3 characters au max' },
-      { type: 'minLength', message: '2 characters au min' },
-      { type: 'pattern', message: 'caractères numéric seulement' }
+      { type: "required", message: "le poids d'utilisateur est obligatoire" },
+      { type: "maxlength", message: "3 characters au max" },
+      { type: "minLength", message: "2 characters au min" },
+      { type: "pattern", message: "caractères numéric seulement" }
     ],
-    dThorasic: [{ type: 'required', message: 'veuillez faire un choix' }]
+    dThorasic: [{ type: "required", message: "veuillez faire un choix" }]
   };
   EcgForm = this.formBuilder.group({
     poids: [
-      '',
+      "",
       [
         Validators.required,
         Validators.maxLength(3),
         Validators.required,
         Validators.minLength(2),
-        Validators.pattern('^[0-9]+$')
+        Validators.pattern("^[0-9]+$")
       ]
     ],
-    dThorasic: ['', [Validators.required]]
+    dThorasic: ["", [Validators.required]]
   });
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   submitEcg() {
     if (this.isEcg) {
-      console.log('===== ok pour lenvoi====');
+      console.log("===== ok pour lenvoi====");
       this.upload();
     } else {
-      console.log('===== veuiller faire un ECG====');
+      console.log("===== veuiller faire un ECG====");
     }
   }
 
@@ -104,14 +111,14 @@ export class InscEcgPage implements OnInit {
   }
 
   async upload() {
-    this.loading.showLoader('Envoi de données  en cours');
+    this.loading.showLoader("Envoi de données  en cours");
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     const fileName = this.createFileName();
 
     const options1: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'fileName',
+      fileKey: "file",
+      fileName: "fileName",
       headers: {}
     };
 
@@ -128,7 +135,7 @@ export class InscEcgPage implements OnInit {
     fileTransfer
       .upload(
         this.imageData,
-        'http://41.110.24.164/cooffa/sante/u.php',
+        "http://41.110.24.164/cooffa/sante/u.php",
         options1
       )
       .then(
@@ -139,7 +146,7 @@ export class InscEcgPage implements OnInit {
           // this.idPatient = data.response.idPatient;
           // alert(this.data.response);
           // console.log('retour upload', data);
-          console.log('retour upload', data.response);
+          console.log("retour upload", data.response);
           this.objetInsc = {
             firsName: this.firstName,
             lastName: this.lastName,
@@ -148,24 +155,24 @@ export class InscEcgPage implements OnInit {
             idDossier: this.idDossier,
             idMed: this.idUser,
             dThorasic: this.EcgForm.value.dThorasic,
-            idPatient: this.idPatient,
+            idPatient: this.idPatient
           };
           this.loading.hideLoader();
-          this.sglob.presentToast('Données envoyés avec succès.');
+          this.sglob.presentToast("Données envoyés avec succès.");
           this.srv.setExtras(this.objetInsc);
-          this.router.navigate(['./insc-infos', this.idDossier]);
+          this.router.navigate(["./insc-infos", this.idDossier]);
         },
         err => {
           // error
           this.loading.hideLoader();
-          this.sglob.presentToast('Erreur d\'envois de données');
-          alert('error' + JSON.stringify(err));
+          this.sglob.presentToast("Erreur d'envois de données");
+          alert("error" + JSON.stringify(err));
         }
       );
   }
 
   takePicture() {
-    console.log('======n0=======');
+    console.log("======n0=======");
     const options: CameraOptions = {
       quality: 100,
       sourceType: this.camera.PictureSourceType.CAMERA,
@@ -184,12 +191,12 @@ export class InscEcgPage implements OnInit {
   }
 
   pathForImage(img: any) {
-    console.log('img', img);
+    console.log("img", img);
     if (img === null) {
-      return '';
+      return "";
     } else {
       const converted = this.webview.convertFileSrc(img);
-      console.log('converted', converted);
+      console.log("converted", converted);
       return converted;
     }
   }
@@ -197,7 +204,7 @@ export class InscEcgPage implements OnInit {
   createFileName() {
     const d = new Date(),
       n = d.getTime(),
-      newFileName = n + '.jpg';
+      newFileName = n + ".jpg";
     return newFileName;
   }
 }

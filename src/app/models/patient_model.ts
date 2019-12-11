@@ -1,5 +1,8 @@
-import { DataDetailPatient } from './data_detail_patient';
-export class PatientModel {
-    code: number;
-    items: DataDetailPatient;
+export interface PatientModel {
+  id: number;
+  nom: string;
+  prenom: string;
+  gender: number;
+  birthday: string;
+  qrcode: string;
 }

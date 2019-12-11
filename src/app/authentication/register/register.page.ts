@@ -65,14 +65,14 @@ export class RegisterPage implements OnInit {
   get mobile() {
     return this.registrationForm.get("mobile");
   }
-  get username() {
-    return this.registrationForm.get("username");
+  get email() {
+    return this.registrationForm.get("email");
   }
   get password() {
     return this.registrationForm.get("password");
   }
-  get passwordc() {
-    return this.registrationForm.get("passwordc");
+  get password_confirmation() {
+    return this.registrationForm.get("password_confirmation");
   }
   get gender() {
     return this.registrationForm.get("gender");
@@ -80,8 +80,8 @@ export class RegisterPage implements OnInit {
   get cr() {
     return this.registrationForm.get("cr");
   }
-  get cudt() {
-    return this.registrationForm.get("cudt");
+  get cudtId() {
+    return this.registrationForm.get("cudtId");
   }
   get terms() {
     return this.registrationForm.get("terms");
@@ -104,7 +104,7 @@ export class RegisterPage implements OnInit {
       { type: "required", message: "le numéro de téléphone est requis" },
       { type: "pattern", message: "le numéro n`est pas valide" }
     ],
-    username: [
+    email: [
       { type: "required", message: "le nom d'utilisateur est requis" },
       { type: "maxlength", message: "50 caractères au max" },
       { type: "minLength", message: "3 caractères au min" },
@@ -113,21 +113,21 @@ export class RegisterPage implements OnInit {
     password: [
       { type: "required", message: "le mot de passe est requis" },
       { type: "maxlength", message: "50 caractères au max" },
-      { type: "minLength", message: "6 caractères au min" },
+      { type: "minLength", message: "8 caractères au min" },
       { type: "pattern", message: "caractères alphabitéque seulement" }
     ],
-    passwordc: [
+    password_confirmation: [
       {
         type: "required",
         message: "la confirmation du mot de passe est requise"
       },
       { type: "maxlength", message: "50 caractères au max" },
-      { type: "minLength", message: "6 caractères au min" }
+      { type: "minLength", message: "8 caractères au min" }
       // { type: 'pattern', message: 'caractères alphabitéque seulement' }
     ],
     gender: [{ type: "required", message: "Votre civilité est requise" }],
     cr: [{ type: "required", message: "Le nom du CR est required" }],
-    cudt: [{ type: "required", message: "Le nom du CUDT est requis" }],
+    cudtId: [{ type: "required", message: "Le nom du CUDT est requis" }],
     terms: [
       {
         type: "pattern",
@@ -166,7 +166,7 @@ export class RegisterPage implements OnInit {
             Validators.pattern("^(00213|213|0)(5|6|7)[0-9]{8}$")
           ]
         ],
-        username: [
+        email: [
           "",
           [
             Validators.required,
@@ -184,22 +184,22 @@ export class RegisterPage implements OnInit {
             Validators.required,
             Validators.maxLength(50),
             Validators.required,
-            Validators.minLength(6)
+            Validators.minLength(8)
             // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
           ]
         ],
-        passwordc: [
+        password_confirmation: [
           "",
           [
             Validators.required,
             Validators.maxLength(50),
-            Validators.minLength(6)
+            Validators.minLength(8)
           ]
         ],
 
         gender: [this.genders[0], [Validators.required]],
         cr: ["", [Validators.required]],
-        cudt: ["", [Validators.required]],
+        cudtId: ["", [Validators.required]],
         terms: [true, [Validators.pattern("true")]]
       },
       {
@@ -217,6 +217,7 @@ export class RegisterPage implements OnInit {
       .create({ keyboardClose: true, message: "Inscription en cours..." })
       .then(loadingEl => {
         loadingEl.present();
+
         const params = this.registrationForm.value;
         console.log("params register : ", params);
         const authObs: Observable<AuthResponseData> = this.srv.registerDoctor(
@@ -233,62 +234,36 @@ export class RegisterPage implements OnInit {
             console.log("Response >>>>> ", resData);
             // ----- Hide loader ------
             loadingEl.dismiss();
-            resData.code = 201;
             if (+resData.code === 201) {
-              message =
-                "Félicitation Docteur, votre compte a été créée avec succès";
               // ------- Reset Form -------
               this.registrationForm.reset();
               // ----- Toast ------------
-              this.sglob.presentToast(message);
+              this.sglob.presentToast(resData.message);
               // ----- Redirection to login page ------------
-              // this.router.navigate(["./login"]);
+              this.router.navigate(["./login"]);
             } else {
-              message = "L'authentification a échouée,erreur inconu !";
               // --------- Show Alert --------
-              this.showAlert(message);
+              this.showAlert(resData.message);
             }
           },
 
           // ::::::::::::  ON ERROR ::::::::::::
           errRes => {
+            console.log(errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
-            if (errRes.status === 422) {
-              message =
-                "La création de votre compte a échouée, veillez vérifier votre connexion  ";
-            } else if (errRes.status === 401 || errRes.status === 403) {
-              message = " Accès à la ressource refusé ";
-            } else if (errRes.status === 404) {
-              message = " Document non trouvé ";
-            } else if (
-              errRes.status === 105 ||
-              errRes.status === 106 ||
-              errRes.status === 511
-            ) {
-              message =
-                " Prblème d'accès au réseau, veillez vérifier votre connecxion ";
-            } else {
-              message =
-                "La création de votre compte a échouée, erreur inconu ! ";
-            }
             // --------- Show Alert --------
-            this.showAlert(message);
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
           }
         );
       });
   }
-
-  // data {"id": 62,
-  //       "nom": "sam",
-  //       "prenom": "ali",
-  //       "gender": "2",
-  //       "date_naissance": null,
-  //       "email": "test@gmail.com",
-  //       "mobile": "0560114888",
-  //       "etablissement_id": "5",
-  //       "api_token": "L4sQdTWIifdO5kOi3IkCmOp3KFePF6JdvXQaoPpTrtU5ogMhIaIo5OUNKcdb"
-  //      }
 
   private showAlert(message: string) {
     this.alertCtrl
@@ -302,28 +277,28 @@ export class RegisterPage implements OnInit {
   }
 
   OnChangeCR(event: any) {
-    // this.ChoixCR = 1;
-    // console.log("values forms", this.registrationForm.value.cr);
-    // this.srv
-    //   .getListeCudtByCR(this.registrationForm.value.cr)
-    //   .then((newsFetched: any) => {
-    //     this.retunListeCUDT = newsFetched;
-    //     console.log("return liste cudt", this.retunListeCUDT);
-    //     if (this.retunListeCUDT.code === 200) {
-    //       console.log("ok");
-    //       this.itemsCudt = this.retunListeCUDT;
-    //       console.log("nom etab cudt", this.itemsCR[0]["nomEtab"]);
-    //     } else {
-    //       console.log("no");
-    //     }
-    //   });
+    this.ChoixCR = 1;
+    console.log("cr", this.registrationForm.value.cr);
+    this.srv
+      .getListeCudtByCR(this.registrationForm.value.cr)
+      .subscribe((resp: any) => {
+        this.retunListeCUDT = resp;
+        //console.log("return liste cr", this.retunListeCR);
+        this.retunListeCUDT.code = 200; // a enlever
+        if (this.retunListeCUDT.code === 200) {
+          this.itemsCudt = this.retunListeCUDT.data;
+          console.log("nom etab cudt", this.itemsCudt);
+        } else {
+          console.log("no");
+        }
+      });
   }
 
   matchingPasswords(formGroup: FormGroup) {
     const password = formGroup.get("password").value;
-    const passwordc = formGroup.get("passwordc").value;
-    if (passwordc.length > 0) {
-      return password === passwordc
+    const password_confirmation = formGroup.get("password_confirmation").value;
+    if (password_confirmation.length > 0) {
+      return password === password_confirmation
         ? (this.passwordMatch = true)
         : (this.passwordMatch = false);
     }

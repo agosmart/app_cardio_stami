@@ -1,7 +1,9 @@
 export class DataDetailPatient {
-  idPatient: number;
-  lastName: string;
-  firsName: string;
+  id: number;
+  nom: string;
+  prenom: string;
   birthday: string;
+  gender: number;
   countDossier: number;
+  qrcode: string;
 }

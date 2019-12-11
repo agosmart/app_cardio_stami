@@ -1,0 +1,91 @@
+:host {
+  ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+  }
+  ion-icon {
+    margin-right: 5px;
+    font-size: 1.4em;
+    float: left;
+  }
+  /* Remove bottom border on md */
+  .overly-gradian {
+    background: linear-gradient(
+      202deg,
+      #e40002f2 0%,
+      #516bf0e8 70%,
+      rgba(4, 230, 247, 0.6)
+    );
+    width: 100%;
+    height: 91px;
+    z-index: 0;
+    position: absolute;
+  }
+  .header-md::after {
+    background-image: none;
+  }
+
+  /* Remove bottom border on ios */
+  .header-ios ion-toolbar:last-child {
+    --border-width: 0;
+  }
+  .ion-bt-padding {
+    --padding-start: 5px;
+    --padding-end: 5px;
+  }
+  .error-message {
+    color: white;
+    background: #f32051;
+    border-radius: 8px;
+    width: 100%;
+    display: inline-flex;
+    margin-top: 5px;
+    padding: 8px 10px;
+    height: 24px;
+    vertical-align: middle;
+    line-height: 20px;
+    font-size: 1em;
+    height: auto;
+  }
+  ion-icon.i-card {
+    color: #929eaa;
+  }
+  button.button-native {
+    padding: 0 5px !important;
+  }
+}
+
+.insc-ecg {
+  // Toolbar transparent
+  .icon-header {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 1.8rem;
+    color: #fff;
+  }
+  .title-header {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  // Bloc Header fixed
+  .header-card-fix {
+    height: auto;
+    padding-bottom: 16px;
+    // position: absolute;
+    // position: fixed;
+    // top: 0;
+    // z-index: 8;
+    width: 100%;
+    // background: linear-gradient(
+    //   236deg,
+    //   rgba(1, 37, 142, 0.9) 0%,
+    //   rgba(7, 133, 239, 0.75) 70%,
+    //   rgba(4, 230, 247, 0.3)
+    // );
+    //background: #516bf0;
+    // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+  }
+}

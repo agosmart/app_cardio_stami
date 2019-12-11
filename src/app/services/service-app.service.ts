@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
-import { PatientModel } from "../models/patient_model";
+import { PatientResponseData } from "../models/patient.response";
 import { Md5 } from "ts-md5/dist/md5";
 //import { Observable } from'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -59,6 +59,21 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
+  public getPatient(params: object, token: string): any {
+    console.log("token service ===>", token);
+    const apiUrl = this.baseUrl + "/search";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    console.log("myHeaders service ===>", myHeaders);
+    const myBody: any = params; // nom / genre datenaissance
+    return this.http.post<PatientResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
   /*************************************** */
   // public login(form): any {
   //   const md5 = new Md5();
@@ -107,8 +122,19 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
   // onchange
-  public getListeCudtByCR(idCr): any {
+  getListeCudtByCR(params: number) {
+    const apiUrl = this.baseUrl + "/cudt/" + params;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json"
+    });
+    const myBody: any = params; // username / password
+    return this.http.get<ResponseEtab>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+  public getListeCudtByCR1(idCr): any {
     /*    const url = `${this.baseUrl}liste_cudt.php?idCr=${idCr}&apiKey=${this.apiKey}`;
 
     return this.http
@@ -117,15 +143,5 @@ export class ServiceAppService {
       .then(response => response.json() as StandarReturnModel)
       .catch(error => console.log("Une erreur est survenue" + error));
       */
-  }
-
-  public getPatient(form): any {
-    // const url = `${this.baseUrl}getpatient.php?nom=${form.nom}&genre=${form.genre}&datenaissance=${form.dateNaissance}&apiKey=${this.apiKey}`;
-    // console.log("url ==>", url);
-    // return this.http
-    //   .get(url)
-    //   .toPromise()
-    //   .then(response => response.json() as PatientModel)
-    //   .catch(error => console.log("Une erreur est survenue" + error));
   }
 }

@@ -4,17 +4,26 @@ import { ToastController } from "@ionic/angular";
   providedIn: "root"
 })
 export class GlobalvarsService {
-  public idUser;
-  public token;
+  private idUser;
+  private token;
+  private idEtab;
   constructor(private toastController: ToastController) {}
 
-  public updateInfoUser(idUser, token) {
+  public updateInfoUser(idUser, token, idEtab) {
     this.idUser = idUser;
     this.token = token;
   }
 
   public getIdUser() {
     return this.idUser;
+  }
+
+  public getToken() {
+    return this.token;
+  }
+
+  public getidEtab() {
+    return this.idEtab;
   }
   async presentToast(text) {
     const toast = await this.toastController.create({

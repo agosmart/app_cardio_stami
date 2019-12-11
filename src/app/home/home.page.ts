@@ -11,6 +11,8 @@ import { DataDetailPatient } from "../models/data_detail_patient";
 })
 export class HomePage implements OnInit {
   IdUser: number;
+  idEtab: number;
+  token: string;
   isExistDossier: boolean;
   objectPatient: Array<DataDetailPatient>;
 
@@ -21,6 +23,8 @@ export class HomePage implements OnInit {
   ) {
     this.isExistDossier = true;
     this.IdUser = this.sglob.getIdUser();
+    this.token = this.sglob.getToken();
+    this.idEtab = this.sglob.getidEtab();
     console.log("user med", this.IdUser);
   }
 

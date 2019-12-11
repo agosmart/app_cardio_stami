@@ -1,10 +1,26 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>insc_ecg</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inscription"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen class="insc-ecg ion-no-padding ">
+  <div class="overly-gradian">&nbsp;</div>
+  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <ion-row class="ion-no-padding ">
+      <ion-col size="12" class="icon-header">
+        <span class="icon-doss-create text-white text20"></span>
+      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >CREATION DU DOSSIER</ion-col
+      >
+    </ion-row>
+  </ion-grid>
+
+  <!---->
   <form [formGroup]="EcgForm" (ngSubmit)="submitEcg()" class="list-form">
     <ion-row>
       <ion-col>
@@ -27,7 +43,7 @@
             </ion-button>
             <ion-label>
               <h2>{{lastName}} {{firstName}}</h2>
-              <h3>{{dateNaissance}}</h3>
+              <h3>{{birthday}}</h3>
             </ion-label>
           </ion-item>
           <ion-item class="ion-margin-top">
