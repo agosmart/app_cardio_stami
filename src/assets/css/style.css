@@ -26,6 +26,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-notification2:before {
+  content: "\e937";
+  
+}
+.icon-weight:before {
+  content: "\e936";
+ 
+}
+
+.icon-calander:before {
+  content: "\e935";
+ 
+}
+.icon-woman:before {
+  content: "\e933";
+  /* color: #4d5867; */
+}
+.icon-man:before {
+  content: "\e934";
+  /* color: #4d5867; */
+}
 .icon-aplus-outline:before {
   content: "\e900";
   /* color: #4d5867;*/

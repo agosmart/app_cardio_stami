@@ -14,7 +14,7 @@ export class InscInfosPage implements OnInit {
   // annee: number;
 
   // ----------------------------
-  IdUser: number;
+  idUser: number;
   objectInsc: Array<object>;
   dataPatient: object;
   idDossierToGet: any;
@@ -75,11 +75,11 @@ export class InscInfosPage implements OnInit {
 
     // ----- GET_DATA_FROM_SERVEICE -------
     /*
-    this.IdUser = this.sglob.get_IdUser();
+    this.idUser = this.sglob.get_idUser();
     this.objectInsc = this.srvApp.getExtras();
     */
 
-    this.IdUser = 29;
+    this.idUser = 29;
     this.idDossierToGet = '128';
 
     this.objectInsc = [
@@ -151,7 +151,7 @@ export class InscInfosPage implements OnInit {
   }
 
   submitFormInfos() {
-    // this.dataPatient =  this.getDataPatient( this.IdUser);
+    // this.dataPatient =  this.getDataPatient( this.idUser);
     console.log('RESULT PATIENT INFOS! :::::', this.dataPatient);
     console.log('RESULT FORM INFOS! :::::BEFORE', this.inscriptionFormInfos.value);
     // ================ Redirection to DIAGNOSTIC page =============================

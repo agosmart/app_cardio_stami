@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "../services/service-app.service";
 import { GlobalvarsService } from "../services/globalvars.service";
 import { Router } from "@angular/router";
-import { DataDetailPatient } from "../models/data_detail_patient";
+import { PatientModel } from "../models/patient.model";
 
 @Component({
   selector: "app-home",
@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
   idEtab: number;
   token: string;
   isExistDossier: boolean;
-  objectPatient: Array<DataDetailPatient>;
+  objectPatient: Array<PatientModel>;
 
   constructor(
     private srv: ServiceAppService,
@@ -31,19 +31,27 @@ export class HomePage implements OnInit {
   ngOnInit() {
     if (this.isExistDossier) {
       this.objectPatient = [
+
+
         {
-          idPatient: 1,
-          firsName: "Mohamed",
-          lastName: "Mouallem",
+          id: 1,
+          nom: "Mohamed",
+          prenom: "Mouallem",
+          gender: 2,
           birthday: "14-07-1974",
-          countDossier: 3
+          qrcode: null,
+          cudt: "kouba",
+
+
         },
         {
-          idPatient: 2,
-          firsName: "Mohamed",
-          lastName: "Moualem",
-          birthday: "14-07-1974",
-          countDossier: 1
+          id: 2,
+          nom: "Maachi",
+          prenom: "halim",
+          birthday: "14-07-1960",
+          gender: 2,
+          qrcode: "998877665544332211",
+          cudt: "H.day",
         }
       ];
       console.log("objectPatient :::>", this.objectPatient);

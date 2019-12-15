@@ -56,15 +56,15 @@
           <div *ngFor="let patient of objectPatient">
             <ion-item detail>
               <ion-label>
-                <h2>{{patient.lastName}} {{patient.firsName}}</h2>
+                <h2>{{patient.nom}} {{patient.prenom}}</h2>
                 <ion-note slot="end" color="primary" class="text08"
                   >{{patient.birthday}}</ion-note
                 >
               </ion-label>
 
-              <ion-note slot="end" color="danger" class="text10"
+              <!-- <ion-note slot="end" color="danger" class="text10"
                 >{{patient.countDossier}}</ion-note
-              >
+              > -->
             </ion-item>
           </div>
 

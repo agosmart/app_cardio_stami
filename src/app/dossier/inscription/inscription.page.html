@@ -7,120 +7,97 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="insc-init ion-no-padding ">
-  <div class="overly-gradian">&nbsp;</div>
+<ion-content _fullscreen class="insc-init ion-no-padding ">
+
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <div class="overly-gradian">&nbsp;</div>
     <ion-row class="ion-no-padding ">
-      <ion-col size="12" class="icon-header">
+      <ion-col size="12" class="icon-header ion-padding-top">
         <span class="icon-doss-create text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >CREATION DU DOSSIER</ion-col
-      >
+      <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf="!isPatient">
+
+  
+  <div *ngIf="isPatient">
     <form [formGroup]="insciptionDossier" (ngSubmit)="submitform()">
       <ion-grid class="ion-margin-top">
         <ion-row class="ion-justify-content-center">
-          <ion-col
-            class="ion-align-self-center"
-            size-md="6"
-            size-lg="5"
-            size-xs="12"
-          >
+          <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
             <div class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Nom</ion-label>
-                <ion-input
-                  autocapitalize
-                  inputmode="text"
-                  formControlName="nom"
-                >
+                <ion-input autocapitalize inputmode="text" formControlName="nom">
                 </ion-input>
               </ion-item>
 
               <div *ngFor="let error of errorMessages.nom">
-                <ng-container
-                  *ngIf="nom.hasError(error.type) && (nom.dirty || nom.touched)"
-                >
-                  <small class="error-message">
-                    <ion-icon name="information-circle-outline"></ion-icon>
-                    {{error.message}}
+                <ng-container *ngIf="nom.hasError(error.type) && (nom.dirty || nom.touched)">
+                  <small class="error-message ">
+                    <ion-icon name="information-circle-outline"  ></ion-icon>
+                    <p>{{error.message}}</p>
                   </small>
                 </ng-container>
               </div>
 
               <ion-item>
                 <ion-label position="floating">Prénom</ion-label>
-                <ion-input
-                  autocapitalize
-                  inputmode="text"
-                  formControlName="prenom"
-                >
+                <ion-input autocapitalize inputmode="text" formControlName="prenom">
                 </ion-input>
               </ion-item>
               <div *ngFor="let error of errorMessages.prenom">
-                <ng-container
-                  *ngIf="prenom.hasError(error.type) && (prenom.dirty || prenom.touched)"
-                >
+                <ng-container *ngIf="prenom.hasError(error.type) && (prenom.dirty || prenom.touched)">
                   <small class="error-message">
                     <ion-icon name="information-circle-outline"></ion-icon>
-                    {{error.message}}
+                    <p>{{error.message}}</p>
                   </small>
                 </ng-container>
               </div>
 
               <ion-item>
                 <ion-label>Date de naissance</ion-label>
-                <ion-datetime
-                  displayFormat="YYYY-MMM-DD"
-                  value="YYYY-MM-DD"
-                  picker-format="YYYY-MMM-DD"
+                <ion-datetime displayFormat="YYYY-MMM-DD" value="YYYY-MM-DD" picker-format="YYYY-MMM-DD"
                   monthShortNames="JAN, FEV, MAR, AVR, MAI, JUN, JUL, AOU, SEP, OCT, NOV, DEC"
-                  placeholder="Selectionner la Date"
-                  formControlName="dateNaissance"
-                ></ion-datetime>
+                  placeholder="Selectionner la Date" formControlName="dateNaissance"></ion-datetime>
               </ion-item>
             </div>
 
-            <ion-list>
+            <ion-list class="ion-padding-left">
               <ion-radio-group formControlName="genre">
                 <ion-list-header>
                   Civilité
                 </ion-list-header>
 
-                <ion-item>
+
+                <ion-item  >
                   <ion-label>Femme</ion-label>
-                  <ion-radio value="1"></ion-radio>
+                  <ion-radio slot="start" value="1"></ion-radio>
                 </ion-item>
 
-                <ion-item>
+                <ion-item  >
                   <ion-label>Homme</ion-label>
-                  <ion-radio value="2"></ion-radio>
+                  <ion-radio slot="start" value="2"></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-list>
             <!-- <div *ngFor="let error of errorMessages.genre">
-              <ng-container
-                *ngIf="genre.hasError(error.type) && (genre.dirty || genre.touched)"
-              >
-                <small class="error-message">
-                  <ion-icon name="information-circle-outline"></ion-icon>
-                  {{error.message}}
-                </small>
-              </ng-container>
-            </div> -->
+                <ng-container
+                  *ngIf="genre.hasError(error.type) && (genre.dirty || genre.touched)"
+                >
+                  <small class="error-message">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    {{error.message}}
+                  </small>
+                </ng-container>
+              </div> -->
             <div class="ion-padding">
-              <ion-button
-                [disabled]="!insciptionDossier.valid"
-                type="submit"
-                expand="block"
-                class="ion-margin-top btn"
-              >
+              <ion-button [disabled]="!insciptionDossier.valid" type="submit" expand="block" class="ion-margin-top btn">
+                
                 Valider <ion-icon slot="end" name="create"></ion-icon>
               </ion-button>
             </div>
+
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -128,18 +105,16 @@
   </div>
 
   <!-- -->
-  <ion-row *ngIf="isPatient">
+  <ion-row *ngIf="!isPatient">
     <ion-col>
-      <ion-list>
-        <ion-list-header>
-          Liste patients
+      <ion-list class="ion-margin-top ion-padding-top">
+        <ion-list-header class="ion-margin-top ion-padding-top">
+          Liste patients similaires
         </ion-list-header>
 
-        <ion-item
-          *ngFor="let item of returnSearchPatient"
-          (click)="goToEcgInfos(item.nom,item.prenom,item.birthday,item.gender,item.id)"
-        >
-          <ion-button>
+        <ion-item *ngFor="let item of returnSearchPatient"
+          (click)="goToEcgInfos(item.nom,item.prenom,item.birthday,item.gender,item.id)">
+          <!-- <ion-button>
             <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
           </ion-button>
           <ion-button>
@@ -147,10 +122,15 @@
           </ion-button>
           <ion-button>
             <ion-icon slot="icon-only" name="pulse"></ion-icon>
-          </ion-button>
+          </ion-button> -->
+          <ion-avatar slot="start">
+            
+              <span class='{{ item.gender === 2 ? "icon-man fsize-18em" : "icon-woman fsize-18em" }}' ></span>
+            </ion-avatar>
+
           <ion-label>
             <h2>{{item.nom}} {{item.prenom}}</h2>
-            <h3>{{item.birthday}}</h3>
+            <h3>{{item.birthday}}</h3>           
           </ion-label>
         </ion-item>
       </ion-list>

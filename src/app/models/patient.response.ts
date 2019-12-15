@@ -1,4 +1,4 @@
-import { PatientModel } from "./patient_model";
+import { PatientModel } from "./patient.model";
 // ----------- RESPONSE MODEL-------------------
 export interface PatientResponseData {
   code: number;

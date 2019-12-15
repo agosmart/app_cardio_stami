@@ -5,4 +5,5 @@ export interface PatientModel {
   gender: number;
   birthday: string;
   qrcode: string;
+  cudt: string;
 }

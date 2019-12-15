@@ -25,20 +25,26 @@
               <ion-col size="10" class="ion-no-padding">
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <ion-icon class="i-card" name="person"></ion-icon> {{dataPatient['firsName']}}
+                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
+                    <span class="icon-man text-dark  text10"></span>
+                    {{dataPatient['firsName']}}
                     {{dataPatient['lastName']}}
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <ion-icon class="i-card" name="calendar"></ion-icon> {{dataPatient['birthday']}} <ion-badge
-                      color="medium" mode="md"> 45 ans </ion-badge>
-                  </ion-col>
+                      <span class="icon-calander  text-dark  text10"></span>
+                      <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                   {{dataPatient['birthday']}} 
+                   <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+                   </ion-col>
 
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <ion-icon class="i-card" name="speedometer"></ion-icon> {{dataPatient['weight'] + ' KG'}}
+                      <span class="icon-weight  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
+                    {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
 
@@ -49,18 +55,7 @@
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                 </ion-col>
-                <!--  
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
-                    <ion-button (click)="onShowEcg()" color="danger">
-                      <ion-icon slot="icon-only" class="_p10" name="pulse"></ion-icon>
-                    </ion-button>
-                  </ion-col>
-                  <ion-col size="12" class="ion-no-padding" >
-                    <ion-badge color="medium" mode="md"> 45 ans </ion-badge>
-                  </ion-col>
-                </ion-row>
-                  -->
+            
               </ion-col>
             </ion-row>
 
@@ -134,8 +129,12 @@
                 <ion-label>Diabète</ion-label>
               </ion-list-header>
               <ion-item>
+                <ion-label>Non</ion-label>
+                <ion-radio slot="start" color="primary" value="0" ></ion-radio>
+              </ion-item>
+              <ion-item>
                 <ion-label>Type1</ion-label>
-                <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+                <ion-radio slot="start" color="primary" value="1" ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Type2</ion-label>
@@ -318,7 +317,7 @@
             <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" [disabled]="!inscriptionFormInfos.valid"
               type="submit">
               Valider
-              <ion-icon slot="end" name="create"></ion-icon>
+              <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
             </ion-button>
           </div>
         </ion-col>

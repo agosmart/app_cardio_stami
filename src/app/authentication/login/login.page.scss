@@ -1,6 +1,6 @@
 :host {
 
-  background: url(../../../assets/images/medical1.jpg) no-repeat right 0;
+  background:#6b37e4 url(../../../assets/images/bg1.jpg) no-repeat right 0;
   background-size: auto 100%, cover;
 
   ion-content {
@@ -19,8 +19,10 @@
     //background: #01258e;
     //background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
      //background:linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
-    background: #516bf0;
-    background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+
+     
+    // background: #516bf0;
+    // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
     
       
 
@@ -122,7 +124,7 @@
     //    padding-bottom: 0!important;
     //  }
     ion-input {
-      --padding-top:0;
+     // --padding-top:0;
       --color :#fff;
     }
     

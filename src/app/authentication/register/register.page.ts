@@ -90,14 +90,14 @@ export class RegisterPage implements OnInit {
   errorMessages = {
     lastName: [
       { type: "required", message: "le nom est requis" },
-      { type: "maxlength", message: "50 caractères au max" },
       { type: "minLength", message: "3 caractères au min" },
+      { type: "maxlength", message: "50 caractères au max" },
       { type: "pattern", message: "caractères alphabitéque seulement " }
     ],
     firstName: [
       { type: "required", message: "le prénom est requis" },
-      { type: "maxlength", message: "50 caractères au max" },
       { type: "minLength", message: "3 caractères au min" },
+      { type: "maxlength", message: "50 caractères au max" },
       { type: "pattern", message: "caractères alphabitéque seulement" }
     ],
     mobile: [
@@ -112,17 +112,17 @@ export class RegisterPage implements OnInit {
     ],
     password: [
       { type: "required", message: "le mot de passe est requis" },
-      { type: "maxlength", message: "50 caractères au max" },
       { type: "minLength", message: "8 caractères au min" },
-      { type: "pattern", message: "caractères alphabitéque seulement" }
+      { type: "maxlength", message: "50 caractères au max" },
+      { type: "pattern", message: "Caractères alphabitéque seulement" }
     ],
     password_confirmation: [
       {
         type: "required",
         message: "la confirmation du mot de passe est requise"
       },
+      { type: "minLength", message: "8 caractères au min" },
       { type: "maxlength", message: "50 caractères au max" },
-      { type: "minLength", message: "8 caractères au min" }
       // { type: 'pattern', message: 'caractères alphabitéque seulement' }
     ],
     gender: [{ type: "required", message: "Votre civilité est requise" }],
@@ -131,7 +131,7 @@ export class RegisterPage implements OnInit {
     terms: [
       {
         type: "pattern",
-        message: "vous devez accepter les conditions générales pour continuer"
+        message: "Vous devez accepter les conditions générales pour continuer"
       }
     ]
   };
@@ -147,16 +147,16 @@ export class RegisterPage implements OnInit {
             Validators.required,
             Validators.minLength(3),
             Validators.maxLength(50),
-            Validators.pattern("^[A-Za-z]+$")
+            Validators.pattern("^[a-zA-ZÀÂÉÊÈËÌÏÎÔÙÛÇÆŒàâéêèëìïîôùûçæœ '-]+$")
           ]
         ],
         firstName: [
           "",
           [
             Validators.required,
-            Validators.maxLength(50),
             Validators.minLength(3),
-            Validators.pattern("^[A-Za-z]+$")
+            Validators.maxLength(50),
+            Validators.pattern("^[a-zA-ZÀÂÉÊÈËÌÏÎÔÙÛÇÆŒàâéêèëìïîôùûçæœ '-]+$")
           ]
         ],
         mobile: [
@@ -170,8 +170,8 @@ export class RegisterPage implements OnInit {
           "",
           [
             Validators.required,
-            Validators.maxLength(50),
             Validators.minLength(3),
+            Validators.maxLength(50),
             Validators.pattern(
               "^[a-z0-9]+(.[_a-z0-9]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,15})$"
             )
@@ -181,10 +181,9 @@ export class RegisterPage implements OnInit {
           "",
           [
             Validators.required,
-            Validators.required,
+            Validators.minLength(8),
             Validators.maxLength(50),
-            Validators.required,
-            Validators.minLength(8)
+
             // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
           ]
         ],
@@ -192,8 +191,9 @@ export class RegisterPage implements OnInit {
           "",
           [
             Validators.required,
+            Validators.minLength(8),
             Validators.maxLength(50),
-            Validators.minLength(8)
+           
           ]
         ],
 

@@ -10,7 +10,7 @@ import {
   LoadingController,
   AlertController
 } from "@ionic/angular";
-import { PatientModel } from "../../models/patient_model";
+import { PatientModel } from "../../models/patient.model";
 import { Router, RouterModule, NavigationExtras } from "@angular/router";
 import { Observable } from "rxjs";
 @Component({
@@ -46,7 +46,7 @@ export class InscriptionPage implements OnInit {
     this.isPatient = false;
     this.IdUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
-    this.token = this.sglob.getToken();
+    this.token = '7OuwiOOEDipawwDjLNT4aU9yUtgbawaDeGtnXhZ7dZLDi3JEIY6XnIB572Lq';//this.sglob.getToken();
 
     console.log("token inscription===>", this.token);
   }
@@ -81,7 +81,7 @@ export class InscriptionPage implements OnInit {
       }
     ],
     prenom: [
-      { type: "required", message: "Le prénom d'utilisateur est requis." },
+      { type: "required", message: "Le prénom est requis." },
       {
         type: "maxlength",
         message: "Votre saisie ne doit pas dépasser 50 caractères."
@@ -106,29 +106,46 @@ export class InscriptionPage implements OnInit {
       "",
       [
         Validators.required,
-        Validators.required,
         Validators.maxLength(50),
-        Validators.required,
         Validators.minLength(3),
-        Validators.pattern("^[A-Za-z]+$")
+        Validators.pattern("^[a-zA-ZÀÂÉÊÈËÌÏÎÔÙÛÇÆŒàâéêèëìïîôùûçæœ '-]+$")
       ]
     ],
     prenom: [
       "",
       [
         Validators.required,
-        Validators.required,
         Validators.maxLength(50),
-        Validators.required,
         Validators.minLength(3),
-        Validators.pattern("^[A-Za-z]+$")
+        Validators.pattern("^[a-zA-ZÀÂÉÊÈËÌÏÎÔÙÛÇÆŒàâéêèëìïîôùûçæœ '-]+$")
       ]
     ],
     genre: ["", [Validators.required]],
     dateNaissance: ["", [Validators.required]]
   });
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.returnSearchPatient = [{
+      id: 8,
+      nom: "Mamadou",
+      prenom: "Touré",
+      gender: 2,
+      birthday: "1960-02-15",
+      qrcode: "998877665544332211",
+      cudt: "hai El-badre",
+
+    },
+    {
+      id: 50,
+      nom: "Mamadou",
+      prenom: "Touré",
+      gender: 2,
+      birthday: "1960-02-15",
+      qrcode: null,
+      cudt: "Rouiba",
+    }];
+  }
   submitform() {
     // const url = `${this.baseUrl}getpatient.php?nom=${form.nom}&genre=${form.genre}&datenaissance=${form.dateNaissance}&apiKey=${this.apiKey}`;
     // ------ Api service login ---------------
@@ -142,7 +159,7 @@ export class InscriptionPage implements OnInit {
           nom: this.insciptionDossier.value.nom,
           prenom: this.insciptionDossier.value.prenom,
           genre: this.insciptionDossier.value.genre,
-          dateNaissance: this.insciptionDossier.value.dateNaissance
+          dateNaissance: '1960-02-15',// this.insciptionDossier.value.dateNaissance
         };
         console.log("paramls===>", params);
         const authObs: Observable<PatientResponseData> = this.srv.getPatient(
@@ -156,6 +173,8 @@ export class InscriptionPage implements OnInit {
             this.isLoading = false;
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             this.returnSearchPatient = resData.data;
+
+
             console.log("status >>>>> ", resData);
             console.log("resData >>>>> ", resData);
             // ----- Hide loader ------
@@ -236,6 +255,8 @@ export class InscriptionPage implements OnInit {
       gender: genre,
       idPatient: idPatient
     };
+
+
     console.log("objetInsc---***", this.objetInsc);
     this.srv.setExtras(this.objetInsc);
     this.router.navigate(["./insc-ecg"]);

@@ -69,14 +69,20 @@
 
 
 .logo-header{
-  width: 40%;
-  margin: 6px auto;
-  text-align: center!important;
+  // width: 40%;
+  // margin: 6px auto;
+  // text-align: center!important;
+
+  width: 100px;
+    margin: 6px auto;
+    text-align: center !important;
+    padding: 0;
 }
  
 ion-button.btn{
   height: 48px;
   font-size: 0.9em;
+ //font-size: 1.4rem;
   --border-radius: 24px;
 
 }
@@ -114,6 +120,9 @@ ion-button.btn{
       background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
   }
 // Helpers //
+.p-2{
+  padding: 2px 2px;
+}
 .p-10 {
   padding: 10px;
 }
@@ -211,9 +220,6 @@ ion-button.btn{
 }
 
 
-.text-dark{ 
-  color: #435667;
-}
 .text-white {
   color: #fff;
 }
@@ -222,6 +228,10 @@ ion-button.btn{
 }
 .text-gray300{
   color: #768188
+}
+
+.text-gray400{ 
+  color: #4f606e;
 }
 
 
