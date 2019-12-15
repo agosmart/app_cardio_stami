@@ -25,21 +25,18 @@
     padding: 0 5px !important;
   }
   ion-card {
-    ion-col{
+    ion-col {
       padding: 2px 2px;
     }
-   
   }
- 
 }
 
-.insc-infos {  
-
+.insc-infos {
   .form-bloc {
     margin-top: 220px;
   }
-  // Toolbar transparent  
- 
+  // Toolbar transparent
+
   .icon-header {
     text-align: center;
     margin-top: 10px;
@@ -71,13 +68,13 @@
     //   rgba(7, 133, 239, 0.75) 70%,
     //   rgba(4, 230, 247, 0.3)
     // );
-    background: #516bf0;
-   // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-    background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+    // background: #516bf0;
+    // // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+    // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
 
+    background: #3853de;
+    background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
   }
-
-  
 
   ion-card-content.md.card-content-md.hydrated {
     //padding: 10px 24px 10px 10px;
@@ -88,7 +85,6 @@
     font-size: 0.9em;
     margin: 0;
     padding-left: 0;
-
   }
   ion-list.info ion-label {
     font-size: 0.9rem;

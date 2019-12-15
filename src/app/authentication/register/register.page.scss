@@ -18,7 +18,7 @@
     //background: #01258e;
     // background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
     //background:linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
-   /* background: #516bf0;
+    /* background: #516bf0;
     background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));*/
   }
 
@@ -56,26 +56,26 @@
   ion-toolbar {
     --background: transparent;
     --ion-color-base: transparent !important;
-    
   }
   ion-icon {
     margin-right: 5px;
     font-size: 1.4em;
     float: left;
   }
-  .overly-gradian-header{
-    // background: #516bf0!important;
-    // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6))!important;
-    // background: #516bf0;  
-    // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+  .overly-gradian-header {
+    // background: #516bf0;
+    // background: linear-gradient(538deg, #6b37e4 0%, #6446e4 60%, #5875ed)!important;
+
+    // background: #516bf0;
+    // background: linear-gradient(200deg, #516bf0 0%, #25b0d8 60%, #28c385);
+
     background: #516bf0;
-    background: linear-gradient(538deg, #6b37e4 0%, #6446e4 60%, #5875ed)!important;
+    background: linear-gradient(200deg, #516bf0 0%, #25b0d8 60%, #28c385);
 
     width: 100%;
     height: 92px;
     // height: 91px;
     // z-index: 0;
-   
   }
   .header-md::after {
     background-image: none;
@@ -102,7 +102,7 @@
   ion-img {
     height: 125px;
   }
-  
+
   .register-init {
     .icon-header {
       text-align: center;
@@ -118,22 +118,29 @@
       text-align: center;
     }
     // Bloc Header fixed
-  .header-card-fix {
-    height: 104px;
-    padding-top: 16px;
-    position: absolute;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 8;
-    // background: #516bf0;
-    // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-    // background: #516bf0;  
-    // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
-    background: #516bf0;
-    background: linear-gradient(538deg, #6b37e4 0%, #6446e4 60%, #5875ed);
+    .header-card-fix {
+      height: 104px;
+      padding-top: 16px;
+      position: absolute;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 8;
+      // background: #516bf0;
+      // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+      // background: #516bf0;
+      // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+      // background: #516bf0;
+      // background: linear-gradient(538deg, #6b37e4 0%, #6446e4 60%, #5875ed);
 
-  }
+      background: #3853de;
+      background: linear-gradient(
+        500deg,
+        #3853de 0%,
+        #0d9bc3 60%,
+        #32ca8d
+      ) !important;
+    }
   }
 
   // margin: 0 5%;
