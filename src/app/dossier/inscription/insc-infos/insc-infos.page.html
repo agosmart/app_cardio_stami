@@ -8,13 +8,14 @@
 </ion-header>
 
 <ion-content fullscreen class="insc-infos ion-no-padding">
-  
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-doss-create text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >CREATION DU DOSSIER</ion-col
+      >
     </ion-row>
 
     <ion-row>
@@ -27,41 +28,47 @@
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['firsName']}}
-                    {{dataPatient['lastName']}}
+                    {{dataPatient['nom_patient']}}
+                    {{dataPatient['prenom_patient']}}
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                      <span class="icon-calander  text-dark  text10"></span>
-                      <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
-                   {{dataPatient['birthday']}} 
-                   <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
-                   </ion-col>
-
+                    <span class="icon-calander  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                    {{dataPatient['naissance_patient']}}
+                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+                  </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                      <span class="icon-weight  text-dark  text10"></span>
+                    <span class="icon-weight  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
-                    {{dataPatient['weight'] + ' KG'}}
+                    {{dataPatient['poids'] + ' KG'}}
                   </ion-col>
                 </ion-row>
-
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-weight  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
+                    <ion-img [src]="ecgTmp"></ion-img>
+                  </ion-col>
+                </ion-row>
               </ion-col>
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-button (click)="onShowEcg()" color="danger" class="ion-bt-padding ">
+                  <ion-button
+                    (click)="onShowEcg()"
+                    color="danger"
+                    class="ion-bt-padding "
+                  >
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                 </ion-col>
-            
               </ion-col>
             </ion-row>
-
           </ion-card-content>
         </ion-card>
-
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -69,7 +76,6 @@
   <!----- FORM ----->
   <form [formGroup]="inscriptionFormInfos" (ngSubmit)="submitFormInfos()">
     <ion-grid fixed class="form-bloc">
-
       <ion-row class="ion-no-margin">
         <ion-col size="12" class="ion-no-padding">
           <ion-list class="ion-no-padding info ">
@@ -83,12 +89,18 @@
 
             <ion-item lines="full">
               <ion-label>Douleurs Thoraciques au moment </ion-label>
-              <ion-note slot="end" color="{{dataPatient['dThorasic']? 'danger':'secondary' }}">
-                <b>{{dataPatient['dThorasic']?'OUI' :'NON' }}</b></ion-note>
+              <ion-note
+                slot="end"
+                color="{{dataPatient['dThorasic']? 'danger':'secondary' }}"
+              >
+                <b
+                  >{{dataPatient['douleur_thoracique']?'OUI' :'NON' }}</b
+                ></ion-note
+              >
             </ion-item>
             <ion-item lines="full">
               <ion-label>Heure de début </ion-label>
-              <ion-note slot="end"> {{dataPatient['startTime']}} </ion-note>
+              <ion-note slot="end"> {{dataPatient['start_at']}} </ion-note>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -104,7 +116,10 @@
           </ion-item>
           <ion-item>
             <ion-label>Tabac</ion-label>
-            <ion-checkbox checked="false" formControlName="tobacco"></ion-checkbox>
+            <ion-checkbox
+              checked="false"
+              formControlName="tobacco"
+            ></ion-checkbox>
           </ion-item>
           <!--== MESSAGE ==-->
           <!-- <div *ngFor="let error of errorMessages.tobacco">
@@ -116,7 +131,6 @@
 
           <!--Diabet -->
           <ion-list class="ion-no-padding">
-
             <ion-list-header class="ion-no-padding">
               <div class="ion-text-center back-light">
                 Facteurs de risque
@@ -130,11 +144,11 @@
               </ion-list-header>
               <ion-item>
                 <ion-label>Non</ion-label>
-                <ion-radio slot="start" color="primary" value="0" ></ion-radio>
+                <ion-radio slot="start" color="primary" value="0"></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Type1</ion-label>
-                <ion-radio slot="start" color="primary" value="1" ></ion-radio>
+                <ion-radio slot="start" color="primary" value="1"></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Type2</ion-label>
@@ -143,20 +157,27 @@
             </ion-radio-group>
             <!--== MESSAGE ==-->
             <div *ngFor="let error of errorMessages.diabetes">
-              <ng-container *ngIf="diabetes.hasError(error.type) && (diabetes.dirty || diabetes.touched)">
+              <ng-container
+                *ngIf="diabetes.hasError(error.type) && (diabetes.dirty || diabetes.touched)"
+              >
                 <small class="error-message">{{error.message}}</small>
               </ng-container>
             </div>
             <!--====-->
 
             <!--DYSLIPIDIMIE--->
-            <ion-radio-group formControlName='dyslip'>
+            <ion-radio-group formControlName="dyslip">
               <ion-list-header>
                 <ion-label>DYSLIPIDIMIE</ion-label>
               </ion-list-header>
               <ion-item>
                 <ion-label>Poids</ion-label>
-                <ion-radio slot="start" color="primary" checked value="1"></ion-radio>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  checked
+                  value="1"
+                ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>Taille</ion-label>
@@ -165,24 +186,21 @@
             </ion-radio-group>
             <!--== MESSAGE ==-->
             <div *ngFor="let error of errorMessages.dyslip">
-              <ng-container *ngIf="dyslip.hasError(error.type) && (dyslip.dirty || dyslip.touched)">
+              <ng-container
+                *ngIf="dyslip.hasError(error.type) && (dyslip.dirty || dyslip.touched)"
+              >
                 <small class="error-message">{{error.message}}</small>
               </ng-container>
             </div>
             <!--====-->
-
-
-
           </ion-list>
         </ion-col>
       </ion-row>
 
       <!---ANTECEDENTS CARDIOLOGIQUE-->
       <ion-row class="ion-no-padding">
-
         <ion-col size="12" class="ion-no-padding">
           <ion-list class="ion-no-padding">
-
             <ion-list-header class="ion-no-padding ion-margin-top">
               <div class="ion-text-center back-light">
                 Antécédents cardiologiques
@@ -192,7 +210,10 @@
 
             <ion-item>
               <ion-label>Insuffisance Cardiaque</ion-label>
-              <ion-checkbox checked="false" formControlName='insCardiaque'></ion-checkbox>
+              <ion-checkbox
+                checked="false"
+                formControlName="insCardiaque"
+              ></ion-checkbox>
             </ion-item>
             <!--== MESSAGE ==-->
             <!-- <div *ngFor="let error of errorMessages.insCardiaque">
@@ -204,7 +225,10 @@
 
             <ion-item>
               <ion-label>Cardiopathie ischémique stable </ion-label>
-              <ion-checkbox checked="false" formControlName='cardIscStable'></ion-checkbox>
+              <ion-checkbox
+                checked="false"
+                formControlName="cardIscStable"
+              ></ion-checkbox>
             </ion-item>
             <!--== MESSAGE ==-->
             <!-- <div *ngFor="let error of errorMessages.cardIscStable">
@@ -214,22 +238,31 @@
               </ng-container>
             </div> -->
             <!--====-->
-
           </ion-list>
         </ion-col>
         <!----->
         <ion-col size="12">
-          <ion-radio-group formControlName='sca'>
+          <ion-radio-group formControlName="sca">
             <ion-list-header>
               <ion-label>SCA</ion-label>
             </ion-list-header>
             <ion-item>
               <ion-label>Non</ion-label>
-              <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+              <ion-radio
+                slot="start"
+                color="primary"
+                value="1"
+                checked
+              ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>ST-</ion-label>
-              <ion-radio slot="start" color="primary" value="2" checked></ion-radio>
+              <ion-radio
+                slot="start"
+                color="primary"
+                value="2"
+                checked
+              ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>ST+</ion-label>
@@ -238,7 +271,9 @@
           </ion-radio-group>
           <!--== MESSAGE ==-->
           <div *ngFor="let error of errorMessages.sca">
-            <ng-container *ngIf="sca.hasError(error.type) && (sca.dirty || sca.touched)">
+            <ng-container
+              *ngIf="sca.hasError(error.type) && (sca.dirty || sca.touched)"
+            >
               <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
@@ -249,8 +284,14 @@
         <ion-col size="12">
           <ion-item>
             <ion-label>Année de diagnostic</ion-label>
-            <ion-datetime displayFormat="YYYY" value="YYYY" picker-format="YYYY" value=""
-              placeholder="Selectionner l'année" formControlName='daignoDate'></ion-datetime>
+            <ion-datetime
+              displayFormat="YYYY"
+              value="YYYY"
+              picker-format="YYYY"
+              value=""
+              placeholder="Selectionner l'année"
+              formControlName="daignoDate"
+            ></ion-datetime>
           </ion-item>
           <!--== MESSAGE ==-->
           <!-- <div *ngFor="let error of errorMessages.daignoDate">
@@ -261,17 +302,27 @@
           <!--====-->
 
           <!-- -->
-          <ion-radio-group formControlName='angioCoran'>
+          <ion-radio-group formControlName="angioCoran">
             <ion-list-header>
               <ion-label>ANGIOPLASTIE CORONAIRE</ion-label>
             </ion-list-header>
             <ion-item>
               <ion-label>Non</ion-label>
-              <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+              <ion-radio
+                slot="start"
+                color="primary"
+                value="1"
+                checked
+              ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>TCG-</ion-label>
-              <ion-radio slot="start" color="primary" value="2" checked></ion-radio>
+              <ion-radio
+                slot="start"
+                color="primary"
+                value="2"
+                checked
+              ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>IVA</ion-label>
@@ -288,7 +339,9 @@
           </ion-radio-group>
           <!--== MESSAGE ==-->
           <div *ngFor="let error of errorMessages.angioCoran">
-            <ng-container *ngIf="angioCoran.hasError(error.type) && (angioCoran.dirty || angioCoran.touched)">
+            <ng-container
+              *ngIf="angioCoran.hasError(error.type) && (angioCoran.dirty || angioCoran.touched)"
+            >
               <small class="error-message">{{error.message}}</small>
             </ng-container>
           </div>
@@ -297,8 +350,14 @@
           <!-- -->
           <ion-item>
             <ion-label>Année de l’ATL </ion-label>
-            <ion-datetime displayFormat="YYYY" value="YYYY" picker-format="YYYY" value=""
-              placeholder="Selectionner l'année" formControlName='atlDate'></ion-datetime>
+            <ion-datetime
+              displayFormat="YYYY"
+              value="YYYY"
+              picker-format="YYYY"
+              value=""
+              placeholder="Selectionner l'année"
+              formControlName="atlDate"
+            ></ion-datetime>
           </ion-item>
           <!--== MESSAGE ==-->
           <!-- <div *ngFor="let error of errorMessages.atlDate">
@@ -307,15 +366,20 @@
             </ng-container>
           </div> -->
           <!--====-->
-
         </ion-col>
       </ion-row>
       <!-- Button Submit-->
       <ion-row>
         <ion-col size="12">
           <div class="ion-margin-top">
-            <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" [disabled]="!inscriptionFormInfos.valid"
-              type="submit">
+            <ion-button
+              shape="round"
+              expand="block"
+              class="ion-margin-top btn"
+              color="dark"
+              [disabled]="!inscriptionFormInfos.valid"
+              type="submit"
+            >
               Valider
               <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
             </ion-button>
@@ -324,5 +388,4 @@
       </ion-row>
     </ion-grid>
   </form>
-
 </ion-content>

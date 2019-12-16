@@ -6,6 +6,7 @@ import { Md5 } from "ts-md5/dist/md5";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthResponseData } from "../models/auth.response";
 import { DataListeEtab } from "../models/data_liste_etab";
+import { DossierResponseData } from "../models/dossier.response";
 
 interface ResponseEtab {
   code: number;
@@ -31,6 +32,7 @@ export class ServiceAppService {
   public getExtras() {
     return this.extras;
   }
+
   //********************************** */
 
   constructor(public http: HttpClient) {}
@@ -59,7 +61,6 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
-
   public getPatient(params: object, token: string): any {
     console.log("token service ===>", token);
     const apiUrl = this.baseUrl + "/search";
@@ -74,6 +75,25 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
+  public listingDossier(params: number, token: string, idEtab: number): any {
+    // console.log("token service ===>", token);
+    const apiUrl = this.baseUrl + "/dossiers/" + idEtab + "/" + params;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    //console.log("myHeaders service ===>", myHeaders);
+    const myBody: any = params; // nom / genre datenaissance
+    // return this.http.get<DossierResponseData>(apiUrl, myBody, {
+    //   headers: myHeaders
+    // });
+    return this.http.get<DossierResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
   /*************************************** */
   // public login(form): any {
   //   const md5 = new Md5();

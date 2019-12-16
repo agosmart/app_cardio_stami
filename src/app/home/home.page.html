@@ -54,36 +54,36 @@
           </ion-list-header>
 
           <div *ngFor="let patient of objectPatient">
-            <ion-item detail>
+            <!-- <ion-item detail>
               <ion-label>
-                <h2>{{patient.nom}} {{patient.prenom}}</h2>
+                <h2>{{patient.nom_patient}} {{patient.prenom_patient}}</h2>
                 <ion-note slot="end" color="primary" class="text08"
-                  >{{patient.birthday}}</ion-note
+                  >{{patient.naissance_patient}}</ion-note
                 >
               </ion-label>
 
-              <!-- <ion-note slot="end" color="danger" class="text10"
-                >{{patient.countDossier}}</ion-note
-              > -->
+            </ion-item> -->
+
+            <ion-item detail>
+              <ion-button>
+                <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon
+                  slot="icon-only"
+                  name="notifications-outline"
+                ></ion-icon>
+              </ion-button>
+              <ion-button>
+                <ion-icon slot="icon-only" name="pulse"></ion-icon>
+              </ion-button>
+              <ion-label (click)="goToDiag(patient.id_dossier)">
+                <h2>{{patient.nom_patient}} {{patient.prenom_patient}}</h2>
+                <h3>{{patient.naissance_patient}}</h3>
+                <p>Status: RAS</p>
+              </ion-label>
             </ion-item>
           </div>
-
-          <!-- <ion-item>
-            <ion-button>
-              <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
-            </ion-button>
-            <ion-button>
-              <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
-            </ion-button>
-            <ion-button>
-              <ion-icon slot="icon-only" name="pulse"></ion-icon>
-            </ion-button>
-            <ion-label>
-              <h2>MOUALLEM Mohamed</h2>
-              <h3>14.05.2019</h3>
-              <p>Status: RAS</p>
-            </ion-label>
-          </ion-item> -->
         </ion-list>
       </ion-col>
     </ion-row>

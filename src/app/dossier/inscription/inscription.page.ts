@@ -46,7 +46,7 @@ export class InscriptionPage implements OnInit {
     this.isPatient = false;
     this.IdUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
-    this.token = '7OuwiOOEDipawwDjLNT4aU9yUtgbawaDeGtnXhZ7dZLDi3JEIY6XnIB572Lq';//this.sglob.getToken();
+    this.token = this.sglob.getToken();
 
     console.log("token inscription===>", this.token);
   }
@@ -125,29 +125,26 @@ export class InscriptionPage implements OnInit {
   });
 
   ngOnInit() {
-
-    this.returnSearchPatient = [{
-      id: 8,
-      nom: "Mamadou",
-      prenom: "Touré",
-      gender: 2,
-      birthday: "1960-02-15",
-      qrcode: "998877665544332211",
-      cudt: "hai El-badre",
-
-    },
-    {
-      id: 50,
-      nom: "Mamadou",
-      prenom: "Touré",
-      gender: 2,
-      birthday: "1960-02-15",
-      qrcode: null,
-      cudt: "Rouiba",
-    }];
+    // this.returnSearchPatient = [{
+    //   id: 8,
+    //   nom: "Mamadou",
+    //   prenom: "Touré",
+    //   gender: 2,
+    //   birthday: "1960-02-15",
+    //   qrcode: "998877665544332211",
+    //   cudt: "hai El-badre",
+    // },
+    // {
+    //   id: 50,
+    //   nom: "Mamadou",
+    //   prenom: "Touré",
+    //   gender: 2,
+    //   birthday: "1960-02-15",
+    //   qrcode: null,
+    //   cudt: "Rouiba",
+    // }];
   }
   submitform() {
-    // const url = `${this.baseUrl}getpatient.php?nom=${form.nom}&genre=${form.genre}&datenaissance=${form.dateNaissance}&apiKey=${this.apiKey}`;
     // ------ Api service login ---------------
     this.isLoading = true;
     this.loadingCtrl
@@ -159,7 +156,7 @@ export class InscriptionPage implements OnInit {
           nom: this.insciptionDossier.value.nom,
           prenom: this.insciptionDossier.value.prenom,
           genre: this.insciptionDossier.value.genre,
-          dateNaissance: '1960-02-15',// this.insciptionDossier.value.dateNaissance
+          dateNaissance: this.insciptionDossier.value.dateNaissance
         };
         console.log("paramls===>", params);
         const authObs: Observable<PatientResponseData> = this.srv.getPatient(
@@ -173,7 +170,6 @@ export class InscriptionPage implements OnInit {
             this.isLoading = false;
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             this.returnSearchPatient = resData.data;
-
 
             console.log("status >>>>> ", resData);
             console.log("resData >>>>> ", resData);
@@ -255,7 +251,6 @@ export class InscriptionPage implements OnInit {
       gender: genre,
       idPatient: idPatient
     };
-
 
     console.log("objetInsc---***", this.objetInsc);
     this.srv.setExtras(this.objetInsc);

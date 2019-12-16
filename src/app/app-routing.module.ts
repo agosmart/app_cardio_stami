@@ -65,7 +65,8 @@ const routes: Routes = [
       },
       {
         // path: 'insc-infos/:objetInsc',
-        path: "insc-infos/:idDossier",
+        //path: "insc-infos/:idDossier",
+        path: "insc-infos/:idDossier/:dataPatientObj",
         loadChildren: () =>
           import("./dossier/inscription/insc-infos/insc-infos.module").then(
             m => m.InscInfosPageModule
@@ -75,7 +76,7 @@ const routes: Routes = [
   },
   // # 3 - DIAGNOSTIC
   {
-    path: "diagnostic/:dataPatientObj",
+    path: "diagnostic/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./dossier/diagnostic/diagnostic.module").then(
         m => m.DiagnosticPageModule

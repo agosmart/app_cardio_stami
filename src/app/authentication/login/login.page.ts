@@ -142,6 +142,7 @@ export class LoginPage implements OnInit {
               this.token = dataResponse.api_token;
               this.idEtab = dataResponse.etablissment[0].etab_id;
               console.log("token login===>", this.token);
+              console.log("idEtab login===>", this.idEtab);
               // ----- Set storage Data -----
               this.SetStorage();
               // -----  Update id Doctor value -----

@@ -9,14 +9,15 @@
 
 <ion-content fullscreen class="diag-info ion-no-padding">
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
-
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <!-- icon -->
         <span class="icon-diagnostic text-white text20"></span>
         <!---->
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">DIAGNOSTIC</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >DIAGNOSTIC</ion-col
+      >
     </ion-row>
 
     <ion-row>
@@ -29,86 +30,82 @@
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['firsName']}}
-                    {{dataPatient['lastName']}}
+                    {{dataPatient['nom_patient']}}
+                    {{dataPatient['prenom_patient']}}
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                      <span class="icon-calander  text-dark  text10"></span>
-                      <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
-                   {{dataPatient['birthday']}} 
-                   <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
-                   </ion-col>
-
+                    <span class="icon-calander  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                    {{dataPatient['naissance_patient']}}
+                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+                  </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                      <span class="icon-weight  text-dark  text10"></span>
+                    <span class="icon-weight  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
-                    {{dataPatient['weight'] + ' KG'}}
+                    {{dataPatient['poids'] + ' KG'}}
                   </ion-col>
                 </ion-row>
-
               </ion-col>
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-button (click)="onShowEcg()" color="danger" class="ion-bt-padding ">
+                  <ion-button
+                    (click)="onShowEcg()"
+                    color="danger"
+                    class="ion-bt-padding "
+                  >
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
-                </ion-col>            
+                </ion-col>
               </ion-col>
             </ion-row>
-
           </ion-card-content>
         </ion-card>
-
       </ion-col>
     </ion-row>
-
   </ion-grid>
   <!-- ------------------- -->
   <ion-grid fixed class="diagnostic ion-margin-top ion-padding-top">
-     <!-- ***************  -->
+    <!-- ***************  -->
     <ion-row>
       <ion-col size="12">
         <ion-grid class="diagno-btn-group">
-        <ion-row>
-         
-          <ion-col size="4">
-              <ion-button  expand="block"fill="solid" class="st" >
-                  <div>
-                    <h3><span class="icon-heart-st fsize-20em"></span></h3>
-                 <ion-text color="_primary">
-                   ST 
-                 </ion-text>
-               </div>
-               </ion-button>
-            
-          </ion-col>
-          <ion-col size="4">
-              <ion-button  expand="block"fill="solid" class="sos" >
-                  <div>
-                    <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
-                 <ion-text color="_primary">
-                   SOS
-                 </ion-text>
-               </div>
-               </ion-button>
-          
-          </ion-col>
-          <ion-col size="4">
-              <ion-button  expand="block" fill="solid" class="ras" >
-                 <div>
-                   <h3><span class="icon-heart-checked fsize-20em"></span></h3>
-                <ion-text color="_primary">
-                  RAS 
-                </ion-text>
-              </div>
+          <ion-row>
+            <ion-col size="4">
+              <ion-button expand="block" fill="solid" class="st">
+                <div>
+                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    ST
+                  </ion-text>
+                </div>
               </ion-button>
             </ion-col>
-        </ion-row>
-      </ion-grid>
+            <ion-col size="4">
+              <ion-button expand="block" fill="solid" class="sos">
+                <div>
+                  <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
+                  <ion-text color="_primary">
+                    SOS
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button expand="block" fill="solid" class="ras">
+                <div>
+                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    RAS
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>

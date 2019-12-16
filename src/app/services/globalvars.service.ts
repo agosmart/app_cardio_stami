@@ -12,6 +12,7 @@ export class GlobalvarsService {
   public updateInfoUser(idUser, token, idEtab) {
     this.idUser = idUser;
     this.token = token;
+    this.idEtab = idEtab;
   }
 
   public getIdUser() {
