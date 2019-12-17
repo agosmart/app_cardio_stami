@@ -4,6 +4,9 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
+import { LoadingController, AlertController } from "@ionic/angular";
+import { Observable } from "rxjs";
+import { DossierResponseData } from "src/app/models/dossier.response";
 
 @Component({
   selector: "app-insc-infos",
@@ -15,17 +18,17 @@ export class InscInfosPage implements OnInit {
 
   // ----------------------------
   idUser: number;
+  idEtab: number;
+  token: string;
+  idDossier: number;
   objectInsc: Array<object>;
-  dataPatient: object;
+  dataPatient: DossierModel;
   idDossierToGet: any;
   dataPatients: Array<DossierModel>;
   ecgTmp: string;
-  // newDataPatient: object;
-  // get startTime() {
-  //   //console.log('start:::', this.inscriptionFormInfos.get('startTime'));
-  //   return this.inscriptionFormInfos.get('startTime');
-  // }
-  // FACTEURS_DE RISQUES
+  isLoading = false;
+  returnAddInfoDossier: Array<DossierModel>;
+
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
   }
@@ -87,67 +90,15 @@ export class InscInfosPage implements OnInit {
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
-    private router: Router
-  ) {
-    /* ----- GEt YEAR From Dat Object------
-     const noel = new Date();
-     this.annee = noel.getFullYear();
-    */
-
-    // ----- GET_DATA_FROM_SERVEICE -------
-    /*
-    this.idUser = this.sglob.get_idUser();
-    this.objectInsc = this.srvApp.getExtras();
-    */
-
-    this.idUser = 29;
-    this.idDossierToGet = "128";
-
-    this.objectInsc = [
-      {
-        firsName: "Salim",
-        lastName: "Maachi",
-        birthday: "14-07-1970",
-        idPatient: "3",
-        idMed: "98",
-        weight: "79",
-        imgEcg: "../../assets/images",
-        idDossier: "128",
-        dThorasic: "1",
-        startTime: "13:25:00"
-      }
-      // {
-      //   idPatient: '2',
-      //   firsName: 'Mohamed',
-      //   lastName: 'Mouallem',
-      //   birthday: '14-07-1974',
-      //   dossiers: [
-      //     {
-      //       idDossier: '125',
-      //       idMed: '41',
-      //       weight: '79',
-      //       imgEcg: '../../assets/images',
-      //       dThorasic: '1',
-      //       startTime: '11:25:50'
-      //     },
-      //     {
-      //       idDossier: '300',
-      //       idMed: '42',
-      //       weight: '81',
-      //       imgEcg: '../../assets/images',
-      //       dThorasic: '1',
-      //       startTime: '9:00:00'
-      //     }
-      //   ]
-      // },
-    ];
-  }
+    private router: Router,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {
-    //this.dataPatient = this.getDataPatient(this.idDossierToGet);
-    // this.newDataPatient = this.inscriptionFormInfos.value;
-    console.log(" DATA:::", this.dataPatient);
-
+    this.idUser = this.sglob.getIdUser();
+    this.idEtab = this.sglob.getidEtab();
+    this.token = this.sglob.getToken();
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================
@@ -155,8 +106,8 @@ export class InscInfosPage implements OnInit {
        =========================================== */
         this.router.navigate(["/home"]);
       } else {
-        this.dataPatients = JSON.parse(paramMap.get("dataPatientObj"));
-        console.log(" moha dataPatients:::", this.dataPatients);
+        this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
+        console.log("===== dataPatient recu infos  ===", this.dataPatient);
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -165,12 +116,7 @@ export class InscInfosPage implements OnInit {
        =========================================== */
         this.router.navigate(["/home"]);
       } else {
-        const id = +paramMap.get("idDossier");
-        /* ========================================
-                  Data Patient dossier
-        =========================================== */
-        this.dataPatient = this.getDataPatient(id);
-        console.log(" dataPatient:::", this.dataPatient);
+        this.idDossier = +paramMap.get("idDossier");
         this.ecgTmp = this.dataPatient["ecgTmp"];
       }
     });
@@ -182,15 +128,65 @@ export class InscInfosPage implements OnInit {
   }
 
   submitFormInfos() {
-    // this.dataPatient =  this.getDataPatient( this.idUser);
-    console.log("RESULT PATIENT INFOS! :::::", this.dataPatient);
-    console.log(
-      "RESULT FORM INFOS! :::::BEFORE",
-      this.inscriptionFormInfos.value
-    );
-    // ================ Redirection to DIAGNOSTIC page =============================
+    this.isLoading = true;
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "ajout  en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
 
-    this.router.navigate(["./diagnostic", JSON.stringify(this.dataPatient)]);
+        const params = {
+          dossierId: this.idDossier,
+          diabetes: this.inscriptionFormInfos.value.diabetes,
+          dyslip: this.inscriptionFormInfos.value.dyslip,
+          sca: this.inscriptionFormInfos.value.sca,
+          angioCoran: this.inscriptionFormInfos.value.angioCoran,
+          hta: this.inscriptionFormInfos.value.hta,
+          tobacco: this.inscriptionFormInfos.value.tobacco,
+          insCardiaque: this.inscriptionFormInfos.value.insCardiaque,
+          cardIscStable: this.inscriptionFormInfos.value.cardIscStable,
+          daignoDate: this.inscriptionFormInfos.value.daignoDate.substr(0, 4),
+          atlDate: this.inscriptionFormInfos.value.atlDate.substr(0, 4)
+        };
+
+        const authObs: Observable<DossierResponseData> = this.srvApp.addInfoDossier(
+          params,
+          this.token
+        );
+        authObs.subscribe(
+          resData => {
+            this.isLoading = false;
+            this.returnAddInfoDossier = resData.data;
+            console.log("envoie vers diag >>>>> ", this.dataPatient);
+            loadingEl.dismiss();
+            if (+resData.code === 201) {
+              this.router.navigate([
+                "./diagnostic",
+                this.idDossier,
+                JSON.stringify([this.dataPatient])
+              ]);
+            } else {
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+            }
+          },
+
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+          }
+        );
+      });
   }
 
   // ======== SERVICES  FUNCTIONS ===============
@@ -199,7 +195,6 @@ export class InscInfosPage implements OnInit {
   }
 
   getDataPatient(id: number) {
-    console.log("************id==>", id);
     return {
       ...this.dataPatients.find(dossier => {
         return dossier["id_dossier"] === id;
@@ -207,26 +202,14 @@ export class InscInfosPage implements OnInit {
     };
   }
 
-  /*
-  for (const key in this.newDataPatient) {
-    const value = this.newDataPatient[key];
-
-    console.log('VALUE::', key, ' : ', value);
-    console.log('VALUE length::', value.toString().length);
-
-    if (
-      value === '' ||
-      value.toString().length === 0 ||
-      value.toString() === 'false' ||
-      value.isNullOrUndefined
-    ) {
-      //console.log(key);
-      this.newDataPatient[key] = 0;
-    } else if (value.toString() === 'true') {
-      this.newDataPatient[key] = 1;
-    }
-    // return  this.newDataPatient;
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
   }
-  console.log('RESULT FORM INFOS! :::::AFTER ', this.newDataPatient);
-  */
 }

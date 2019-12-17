@@ -21,7 +21,7 @@
   </ion-grid>
 
   <div *ngIf="!isPatient">
-    <form [formGroup]="insciptionDossier" (ngSubmit)="submitform()">
+    <form [formGroup]="inscriptionDossier" (ngSubmit)="submitform()">
       <ion-grid class="ion-margin-top">
         <ion-row class="ion-justify-content-center">
           <ion-col
@@ -114,7 +114,7 @@
               </div> -->
             <div class="ion-padding">
               <ion-button
-                [disabled]="!insciptionDossier.valid"
+                [disabled]="!inscriptionDossier.valid"
                 type="submit"
                 expand="block"
                 class="ion-margin-top btn"
@@ -138,7 +138,7 @@
 
         <ion-item
           *ngFor="let item of returnSearchPatient"
-          (click)="goToEcgInfos(item.nom,item.prenom,item.birthday,item.gender,item.id)"
+          (click)="goToEcgInfos(item.firstName,item.lastName,item.birthDay,item.gender,item.patientId)"
         >
           <!-- <ion-button>
             <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
@@ -151,13 +151,13 @@
           </ion-button> -->
           <ion-avatar slot="start">
             <span
-              class='{{ item.gender === 2 ? "icon-man fsize-18em" : "icon-woman fsize-18em" }}'
+              class='{{ item.gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }}'
             ></span>
           </ion-avatar>
 
           <ion-label>
-            <h2>{{item.nom}} {{item.prenom}}</h2>
-            <h3>{{item.birthday}}</h3>
+            <h2>{{item.lastName}} {{item.firstName}}</h2>
+            <h3>{{item.birthDay}}</h3>
           </ion-label>
         </ion-item>
       </ion-list>

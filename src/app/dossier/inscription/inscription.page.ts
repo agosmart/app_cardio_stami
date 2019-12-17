@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { LoadingService } from "src/app/services/loading.service";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { PatientResponseData } from "../../models/patient.response";
+
 //import {PatientModel} from '../../models'
 import {
   NavController,
@@ -22,8 +23,8 @@ export class InscriptionPage implements OnInit {
   IdUser: number;
   idEtab: number;
   token: string;
-  idPatient;
-  objetInsc: any;
+  idPatient = 0;
+  dataPatientObj: PatientModel;
   listePatientExist: any;
   isPatient: boolean;
   existFirstName: string;
@@ -52,16 +53,16 @@ export class InscriptionPage implements OnInit {
   }
 
   get nom() {
-    return this.insciptionDossier.get("nom");
+    return this.inscriptionDossier.get("nom");
   }
   get prenom() {
-    return this.insciptionDossier.get("prenom");
+    return this.inscriptionDossier.get("prenom");
   }
   get genre() {
-    return this.insciptionDossier.get("genre");
+    return this.inscriptionDossier.get("genre");
   }
   get dateNaissance() {
-    return this.insciptionDossier.get("dateNaissance");
+    return this.inscriptionDossier.get("dateNaissance");
   }
   public errorMessages = {
     nom: [
@@ -101,7 +102,7 @@ export class InscriptionPage implements OnInit {
       { type: "required", message: "La date de naissance est requise." }
     ]
   };
-  insciptionDossier = this.formBuilder.group({
+  inscriptionDossier = this.formBuilder.group({
     nom: [
       "",
       [
@@ -145,6 +146,7 @@ export class InscriptionPage implements OnInit {
     // }];
   }
   submitform() {
+    console.log(this.inscriptionDossier.value.dateNaissance);
     // ------ Api service login ---------------
     this.isLoading = true;
     this.loadingCtrl
@@ -152,13 +154,19 @@ export class InscriptionPage implements OnInit {
       .then(loadingEl => {
         loadingEl.present();
 
+        // res = str.toLowerCase();
         const params = {
-          nom: this.insciptionDossier.value.nom,
-          prenom: this.insciptionDossier.value.prenom,
-          genre: this.insciptionDossier.value.genre,
-          dateNaissance: this.insciptionDossier.value.dateNaissance
+          lastName: this.inscriptionDossier.value.nom,
+          firstName: this.inscriptionDossier.value.prenom,
+          gender: this.inscriptionDossier.value.genre,
+          birthDay: this.inscriptionDossier.value.dateNaissance.substr(0, 10)
         };
+
         console.log("paramls===>", params);
+        console.log(
+          "DATA NAISSANCE >>>>> ",
+          this.inscriptionDossier.value.dateNaissance.substr(0, 10)
+        );
         const authObs: Observable<PatientResponseData> = this.srv.getPatient(
           params,
           this.token
@@ -171,25 +179,24 @@ export class InscriptionPage implements OnInit {
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             this.returnSearchPatient = resData.data;
 
-            console.log("status >>>>> ", resData);
             console.log("resData >>>>> ", resData);
             // ----- Hide loader ------
             loadingEl.dismiss();
 
-            if (+resData.data.length > 0) {
+            if (resData.data.length > 0) {
               console.log("code  >>>>> ", +resData.code);
               this.isPatient = true;
             } else {
-              this.idPatient = 0;
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+
               this.goToEcgInfos(
-                this.insciptionDossier.value.nom,
-                this.insciptionDossier.value.prenom,
-                this.insciptionDossier.value.dateNaissance,
-                this.insciptionDossier.value.genre,
+                this.inscriptionDossier.value.nom,
+                this.inscriptionDossier.value.prenom,
+                this.inscriptionDossier.value.dateNaissance,
+                this.inscriptionDossier.value.genre,
                 this.idPatient
               );
-              // --------- Show Alert --------
-              //this.showAlert("resData.code");
             }
           },
 
@@ -198,6 +205,7 @@ export class InscriptionPage implements OnInit {
             console.log(errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
+
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
               this.showAlert(errRes.error.errors.email);
@@ -211,50 +219,19 @@ export class InscriptionPage implements OnInit {
       });
   }
 
-  // _submitform1() {
-  //   this.loading.showLoader("Recherche en cours...");
-  //   console.log(this.insciptionDossier.value);
-  //   this.srv
-  //     .getPatient(this.insciptionDossier.value, this.token)
-  //     .then(newsFetched => {
-  //       this.returnSearchPatient = newsFetched;
-  //       console.log("return inscription", this.returnSearchPatient);
-
-  //       if (this.returnSearchPatient.code === 201) {
-  //         this.loading.hideLoader();
-  //         this.goToEcgInfos(
-  //           this.insciptionDossier.value.nom,
-  //           this.insciptionDossier.value.prenom,
-  //           this.insciptionDossier.value.dateNaissance,
-  //           0
-  //         );
-  //         this.sglob.presentToast(
-  //           "Le patient vient d'étre enregistrer dans le système."
-  //         );
-  //       } else {
-  //         this.loading.hideLoader();
-  //         this.isPatient = true;
-  //         console.log("existe---***", this.returnSearchPatient.items);
-  //         this.listePatientExist = this.returnSearchPatient.items;
-  //         this.sglob.presentToast(
-  //           "le patient existe déja dans le système, veuillez en séléctionner un de la lsite ci-dessous."
-  //         );
-  //       }
-  //     });
-  // }
-
   goToEcgInfos(nom, prenom, dateNaissance, genre, idPatient) {
-    this.objetInsc = {
+    this.dataPatientObj = {
       firstName: prenom,
       lastName: nom,
-      birthday: dateNaissance,
+      birthDay: dateNaissance,
       gender: genre,
-      idPatient: idPatient
+      patientId: idPatient
     };
 
-    console.log("objetInsc---***", this.objetInsc);
-    this.srv.setExtras(this.objetInsc);
-    this.router.navigate(["./insc-ecg"]);
+    console.log("objetInsc---***", this.dataPatientObj);
+    // this.srv.setExtras(this.objetInsc);
+    this.inscriptionDossier.reset();
+    this.router.navigate(["./insc-ecg", JSON.stringify(this.dataPatientObj)]);
   }
   private showAlert(message: string) {
     this.alertCtrl

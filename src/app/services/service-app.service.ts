@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthResponseData } from "../models/auth.response";
 import { DataListeEtab } from "../models/data_liste_etab";
 import { DossierResponseData } from "../models/dossier.response";
+import { DossierModel } from "../models/dossier.model";
 
 interface ResponseEtab {
   code: number;
@@ -61,6 +62,7 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
   public getPatient(params: object, token: string): any {
     console.log("token service ===>", token);
     const apiUrl = this.baseUrl + "/search";
@@ -90,6 +92,21 @@ export class ServiceAppService {
     //   headers: myHeaders
     // });
     return this.http.get<DossierResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+  addInfoDossier(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/dossiers_infos";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    const myBody: object = params;
+    console.log("PARAMS :::", myBody);
+    return this.http.post<DossierResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }

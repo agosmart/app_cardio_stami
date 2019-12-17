@@ -139,8 +139,8 @@ export class LoginPage implements OnInit {
             if (+resData.code === 200) {
               this.idUser = dataResponse.id;
               this.mobile = dataResponse.mobile;
-              this.token = dataResponse.api_token;
-              this.idEtab = dataResponse.etablissment[0].etab_id;
+              this.token = dataResponse.apiToken;
+              this.idEtab = dataResponse.etablissment[0].etabId;
               console.log("token login===>", this.token);
               console.log("idEtab login===>", this.idEtab);
               // ----- Set storage Data -----

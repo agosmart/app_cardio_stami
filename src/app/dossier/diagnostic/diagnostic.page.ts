@@ -14,16 +14,15 @@ export class DiagnosticPage implements OnInit {
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
   dataPatient: object;
+  ecgTmp: string;
+  idDossier: number;
 
   constructor(
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
     private router: Router
-  ) {
-    this.idDossierToGet = 128;
-    this.hasHistoric = true;
-  }
+  ) {}
 
   ngOnInit() {
     this.activatedroute.paramMap.subscribe(paramMap => {
@@ -31,26 +30,18 @@ export class DiagnosticPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatients = JSON.parse(dataObj);
-        //this.objectInsc = JSON.parse(dataObj);
-        console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatients);
+        this.dataPatient = JSON.parse(dataObj)[0];
         console.log(
-          " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatients[0]["firstName"]
+          " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
+          this.dataPatient
         );
       }
 
       if (!paramMap.has("idDossier")) {
         this.router.navigate(["/home"]);
       } else {
-        const idDossier = +paramMap.get("idDossier");
-
-        console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", idDossier);
-        this.dataPatient = this.getDataPatient(idDossier);
-        console.log(
-          " DIAGNOSTIC >>>>> getDataPatient() ::: ",
-          this.dataPatient
-        );
+        this.idDossier = +paramMap.get("idDossier");
+        this.ecgTmp = this.dataPatient["ecgTmp"];
       }
     });
   }
@@ -59,22 +50,20 @@ export class DiagnosticPage implements OnInit {
   onShowEcg() {
     console.log("::::::: Show Image ECG :::::::");
   }
+  ras() {
+    this.router.navigate([
+      "./ras",
+      this.idDossier,
+      JSON.stringify(this.dataPatient)
+    ]);
+  }
 
   // getDataPatient(id: number) {
-  //   console.log("id==>", id);
+  //   console.log("************id==>", id);
   //   return {
-  //     ...this.dataPatients.find((dossier: DossierModel) => {
-  //       return dossier.id_dossier;
+  //     ...this.dataPatients.find(dossier => {
+  //       return dossier["id_dossier"] === id;
   //     })
   //   };
   // }
-
-  getDataPatient(id: number) {
-    console.log("************id==>", id);
-    return {
-      ...this.dataPatients.find(dossier => {
-        return dossier["id_dossier"] === id;
-      })
-    };
-  }
 }

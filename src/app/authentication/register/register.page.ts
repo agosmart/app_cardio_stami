@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { UserModel } from "src/app/models/user.model";
 import { AuthResponseData } from "src/app/models/auth.response";
+import { EtabResponseData } from "src/app/models/etab.response";
 @Component({
   selector: "app-register",
   templateUrl: "./register.page.html",
@@ -19,8 +20,8 @@ export class RegisterPage implements OnInit {
   ChoixCR = 0;
   itemsCR: any;
   itemsCudt: any;
-  retunListeCR: AuthResponseData;
-  retunListeCUDT: AuthResponseData;
+  retunListeCR: EtabResponseData;
+  retunListeCUDT: EtabResponseData;
   returnInscription: UserModel;
   passwordMatch = true;
 
@@ -45,9 +46,10 @@ export class RegisterPage implements OnInit {
     //1 c les CR  2 CUDT
     this.srv.getListeCR(1).subscribe((resp: any) => {
       this.retunListeCR = resp;
-      //console.log("return liste cr", this.retunListeCR);
-      this.retunListeCR.code = 200; // a enlever
-      if (this.retunListeCR.code === 200) {
+      console.log("return liste cr", this.retunListeCR);
+      console.log("return liste code", this.retunListeCR.code);
+      // this.retunListeCR.code = 200; // a enlever
+      if (+this.retunListeCR.code === 200) {
         this.itemsCR = this.retunListeCR.data;
         console.log("nom etab cr", this.retunListeCR.data);
       } else {
@@ -122,7 +124,7 @@ export class RegisterPage implements OnInit {
         message: "la confirmation du mot de passe est requise"
       },
       { type: "minLength", message: "8 caractères au min" },
-      { type: "maxlength", message: "50 caractères au max" },
+      { type: "maxlength", message: "50 caractères au max" }
       // { type: 'pattern', message: 'caractères alphabitéque seulement' }
     ],
     gender: [{ type: "required", message: "Votre civilité est requise" }],
@@ -182,7 +184,7 @@ export class RegisterPage implements OnInit {
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.maxLength(50),
+            Validators.maxLength(50)
 
             // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
           ]
@@ -192,8 +194,7 @@ export class RegisterPage implements OnInit {
           [
             Validators.required,
             Validators.minLength(8),
-            Validators.maxLength(50),
-           
+            Validators.maxLength(50)
           ]
         ],
 
@@ -232,11 +233,12 @@ export class RegisterPage implements OnInit {
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             const dataResponse: UserModel = resData.data;
             console.log("Response >>>>> ", resData);
+            console.log("Response code >>>>> ", resData.code);
             // ----- Hide loader ------
             loadingEl.dismiss();
             if (+resData.code === 201) {
               // ------- Reset Form -------
-              this.registrationForm.reset();
+              //this.registrationForm.reset();
               // ----- Toast ------------
               this.sglob.presentToast(resData.message);
               // ----- Redirection to login page ------------
@@ -309,50 +311,4 @@ export class RegisterPage implements OnInit {
       " :::::::::::  Lire les conditions générales d'utilisation ::::::::: "
     );
   }
-
-  // public submit() {
-  //   // ----- Show loader ------
-  //   this.loading.showLoader('inscription en cours... ');
-  //   console.log(this.registrationForm.value);
-  //   const params = this.registrationForm.value;
-  //   // ---- Call registration function
-  //   this.apiService.registerDoctor(params).subscribe(
-
-  //     (dataReturnFromService) => {
-  //       this.dataReturnService = JSON.stringify(dataReturnFromService);
-  //       console.log('Return Rgister >>>>> ', this.dataReturnService);
-  //       if (this.dataReturnService === 200) {
-  //         console.log('::: You are registred :::');
-  //         // ----- Hide loader ------
-  //         this.loading.hideLoader();
-  //         // ----- Toast ------------
-  //         this.sglob.presentToast('Félicitation! Vous êtes inscrit à STAMI');
-  //         this.router.navigate(['./login']);
-
-  //       } else {
-  //         // ----- Hide loader ------
-  //         this.loading.hideLoader();
-  //         // ----- Toast ------------
-  //         this.sglob.presentToast('problème dìnscription');
-  //       }
-  //     });
-  // }
-
-  // public submit___() {
-  //   this.loading.showLoader('inscription en cours... ');
-  //   console.log(this.registrationForm.value);
-  //   this.srv.Inscription(this.registrationForm.value).then(newsFetched => {
-  //     this.returnInscription = newsFetched;
-  //     console.log('return inscription', this.returnInscription);
-  //     if (this.returnInscription.code === 200) {
-  //       this.loading.hideLoader();
-  //       this.sglob.presentToast('inscription avec succès...bienvenus');
-  //       // -------Redirect to login page -------
-  //       this.router.navigate(['./login']);
-  //     } else {
-  //       this.loading.hideLoader();
-  //       this.sglob.presentToast('problème dìnscription');
-  //     }
-  //   });
-  // }
 }

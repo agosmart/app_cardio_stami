@@ -1,6 +1,6 @@
 export interface DataListeEtab {
   id: number;
-  etab_id: number;
+  etabId: number;
   type: number;
   nom: string;
   longitude: string;

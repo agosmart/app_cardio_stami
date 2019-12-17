@@ -1,9 +1,8 @@
 export interface PatientModel {
-  id: number;
-  nom: string;
-  prenom: string;
+  patientId: number;
+  lastName: string;
+  firstName: string;
   gender: number;
-  birthday: string;
-  qrcode: string;
-  cudt: string;
+  birthDay: string;
+  qrCode?: string;
 }

@@ -2,13 +2,13 @@ import { DataListeEtab } from "./data_liste_etab";
 
 export interface UserModel {
   id: number;
-  api_token: string;
-  date_naissance: string;
+  apiToken: string;
+  birthDay: string;
   email: string;
   gender: string;
   mobile: string;
-  nom: string;
-  prenom: string;
+  lastName: string;
+  firstName: string;
   uid: string;
   etablissement_id: number;
   etablissment: Array<DataListeEtab>;

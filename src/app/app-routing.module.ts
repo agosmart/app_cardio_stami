@@ -57,7 +57,7 @@ const routes: Routes = [
     path: "",
     children: [
       {
-        path: "insc-ecg",
+        path: "insc-ecg/:dataPatientObj",
         loadChildren: () =>
           import("./dossier/inscription/insc-ecg/insc-ecg.module").then(
             m => m.InscEcgPageModule
@@ -89,7 +89,13 @@ const routes: Routes = [
       import("./dossier/orientation/orientation.module").then(
         m => m.OrientationPageModule
       )
+  },
+  {
+    path: "ras/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./cloture/ras/ras.module").then(m => m.RasPageModule)
   }
+
   // {
   //   path: 'dossier-detail/:idPatient',
   //   loadChildren: () => import('./dossier/dossier-detail/dossier-detail.module').then( m => m.DossierDetailPageModule)

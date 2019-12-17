@@ -30,15 +30,14 @@
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['nom_patient']}}
-                    {{dataPatient['prenom_patient']}}
+                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
-                    {{dataPatient['naissance_patient']}}
+                    {{dataPatient['birthDay']}}
                     <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
@@ -46,7 +45,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
-                    {{dataPatient['poids'] + ' KG'}}
+                    {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -57,7 +56,8 @@
                     color="danger"
                     class="ion-bt-padding "
                   >
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                    <!-- <ion-icon slot="icon-only" name="pulse"></ion-icon> -->
+                    <ion-img [src]="ecgTmp"></ion-img>
                   </ion-button>
                 </ion-col>
               </ion-col>
@@ -94,7 +94,7 @@
                 </div>
               </ion-button>
             </ion-col>
-            <ion-col size="4">
+            <ion-col size="4" (click)="ras()">
               <ion-button expand="block" fill="solid" class="ras">
                 <div>
                   <h3><span class="icon-heart-checked fsize-20em"></span></h3>

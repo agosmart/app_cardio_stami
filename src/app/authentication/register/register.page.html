@@ -200,8 +200,8 @@
                 >
                   <ion-select-option
                     *ngFor="let item of itemsCR"
-                    value="{{item.id}}"
-                    >{{item.nom}}
+                    value="{{item.etabId}}"
+                    >{{item.etabName}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
@@ -213,8 +213,8 @@
                 <ion-select formControlName="cudtId">
                   <ion-select-option
                     *ngFor="let item of itemsCudt"
-                    value="{{item.id}}"
-                    >{{item.nom}}
+                    value="{{item.etabId}}"
+                    >{{item.etabName}}
                   </ion-select-option>
                 </ion-select>
               </ion-item>
