@@ -108,7 +108,7 @@ export class InscEcgPage implements OnInit {
 
   submitEcg() {
     if (!this.isEcg) {
-      this.idDossier = 109;
+      this.idDossier = 115;
       this.imageData = "file:/";
       this.ecgAfficher = "http:/";
       // create object

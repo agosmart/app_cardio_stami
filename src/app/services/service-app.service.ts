@@ -8,6 +8,7 @@ import { AuthResponseData } from "../models/auth.response";
 import { DataListeEtab } from "../models/data_liste_etab";
 import { DossierResponseData } from "../models/dossier.response";
 import { DossierModel } from "../models/dossier.model";
+import { ClotureResponseData } from "../models/cloture.response";
 
 interface ResponseEtab {
   code: number;
@@ -107,6 +108,21 @@ export class ServiceAppService {
     const myBody: object = params;
     console.log("PARAMS :::", myBody);
     return this.http.post<DossierResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
+  clotureDossier(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/cloture";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    const myBody: object = params;
+    console.log("PARAMS :::", myBody);
+    return this.http.post<ClotureResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }
