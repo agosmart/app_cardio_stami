@@ -107,10 +107,10 @@ export class InscEcgPage implements OnInit {
   }
 
   submitEcg() {
-    if (this.isEcg) {
-      // this.idDossier = 107;
-      // this.imageData = "file:/";
-      // this.ecgAfficher = "http:/";
+    if (!this.isEcg) {
+      this.idDossier = 109;
+      this.imageData = "file:/";
+      this.ecgAfficher = "http:/";
       // create object
       this.dataPatient.dossierId = this.idDossier;
       this.dataPatient.weight = this.EcgForm.value.poids;
@@ -125,13 +125,14 @@ export class InscEcgPage implements OnInit {
       console.log("===== dataPatient envoye ===", this.dataPatient);
       this.sglob.presentToast("Données envoyés avec succès.");
       //this.srv.setExtras(this.dataPatientObj);
-      // this.router.navigate([
-      //   "./insc-infos",
-      //   this.idDossier,
-      //   JSON.stringify(this.dataPatient)
-      // ]);
+      this.router.navigate([
+        "./insc-infos",
+        this.idDossier,
+        JSON.stringify(this.dataPatient)
+      ]);
       //this.upload();
-      this.uploadImageData();
+      //this.uploadImageData();
+      //this.uploadold();
     } else {
       console.log("===== veuiller faire un ECG====");
     }
@@ -304,6 +305,77 @@ export class InscEcgPage implements OnInit {
               "Prblème d'accès au réseau, veillez vérifier votre connexion"
             );
           }
+        }
+      );
+  }
+
+  async uploadold() {
+    this.loading.showLoader("Envoi de données  en cours");
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    const fileName = this.createFileName();
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + this.token
+    });
+
+    const options1: FileUploadOptions = {
+      fileKey: "file",
+      fileName: "ecg_image",
+      headers: { myHeaders }
+    };
+
+    const params = {
+      poids: this.EcgForm.value.poids,
+      id_medecin: this.idMed,
+      prenom: this.firstName,
+      nom: this.lastName,
+      dateNaissance: this.birthDay,
+      id_etab: this.idEtab,
+      douleur: this.EcgForm.value.dThorasic,
+      id_patient: this.idPatient
+    };
+    options1.params = params;
+
+    fileTransfer
+      .upload(
+        this.imageData,
+        "http://cardio.cooffa.shop/api/dossiers",
+        options1
+      )
+      .then(
+        data => {
+          // success
+          console.log(" moha retour upload", data);
+          // this.dataPatientObj = [
+          //   {
+          //     firsName: this.firstName,
+          //     lastName: this.lastName,
+          //     birthday: this.birthDay,
+          //     weight: this.EcgForm.value.poids,
+          //     idDossier: this.idDossier,
+          //     idMed: this.idUser,
+          //     dThorasic: this.EcgForm.value.dThorasic,
+          //     idPatient: this.idPatient,
+          //     imgEcg: this.imageData,
+          //     startTime: "13:25:00"
+          //   }
+          // ];
+          this.loading.hideLoader();
+          // this.sglob.presentToast("Données envoyés avec succès.");
+          // //this.srv.setExtras(this.dataPatientObj);
+          // this.router.navigate([
+          //   "./insc-infos",
+          //   this.idDossier,
+          //   JSON.stringify(this.dataPatientObj)
+          // ]);
+        },
+        err => {
+          // error
+          this.loading.hideLoader();
+          this.sglob.presentToast("Erreur d'envois de données");
+          alert("error" + JSON.stringify(err));
         }
       );
   }
