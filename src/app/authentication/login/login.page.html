@@ -1,56 +1,76 @@
 <ion-content class=" ion-no-padding auth-page" fullsrceen color="white">
+  <div class="cercle-design-A">&nbsp;</div>
+  <div class="cercle-design-B">&nbsp;</div>
 
-<div class="cercle-design-A">&nbsp;</div>
-<div class="cercle-design-B">&nbsp;</div>
-
-  <ion-grid fixed class="ion-padding" >
+  <ion-grid fixed class="ion-padding">
     <ion-row>
       <ion-col size="6" offset="3">
-        <ion-img type="image/svg+xml" src="../../../assets/images/logo-white.svg"></ion-img>
+        <ion-img
+          type="image/svg+xml"
+          src="../../../assets/images/logo-white.svg"
+        ></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <hr/>
+  <hr />
 
-  <form [formGroup]="loginForm" (ngSubmit)="submitLogin()" class="list-form ion-padding ion-margin">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="submitLogin()"
+    class="list-form ion-padding ion-margin"
+  >
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-
+        <ion-col
+          class="ion-align-self-center"
+          size-md="6"
+          size-lg="5"
+          size-xs="12"
+        >
           <div class="ion-text-center">
             <h3 class="fw700 text-white shadow title-header "> <span class="icon-loock text12 text-white"></span>Connexion</h3>
           </div>
 
           <div>
-            <ion-item class="ion-margin-top"  lines="none">
+            <ion-item class="ion-margin-top" lines="none">
               <ion-label position="floating">
                 <!-- <ion-icon name="person" item-start></ion-icon> -->
                 <span class="icon-user"></span>
-                Nom utilisateur</ion-label>
+                Nom utilisateur</ion-label
+              >
 
-              <ion-input autocapitalize inputmode="email" placeholder="email@domaine.com" formControlName="username"
-                value='' >
+              <ion-input
+                inputmode="text"
+                placeholder="email@domaine.com"
+                formControlName="username"
+                value=""
+              >
               </ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.username">
-              <ng-container *ngIf="username.hasError(error.type) && (username.dirty || username.touched)">
+              <ng-container
+                *ngIf="username.hasError(error.type) && (username.dirty || username.touched)"
+              >
                 <small class="error-message">
-                  <ion-icon name="information-circle-outline"></ion-icon> {{error.message}}
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{error.message}}
                 </small>
               </ng-container>
             </div>
 
-
             <ion-item class="ion-margin-top" lines="none">
-
               <ng-container *ngIf="!showEye">
-                <span class="icon-eye-hide ion-text-right fsize-16em  icon-pass" (click)=showEyeIcon()></span>
+                <span
+                  class="icon-eye-hide ion-text-right fsize-16em  icon-pass"
+                  (click)="showEyeIcon()"
+                ></span>
               </ng-container>
-              <ng-container *ngIf="showEye" (click)=showEyeIcon()>
-                <span class="icon-eye-show ion-text-right fsize-16em  icon-pass" (click)=showEyeIcon()></span>
+              <ng-container *ngIf="showEye" (click)="showEyeIcon()">
+                <span
+                  class="icon-eye-show ion-text-right fsize-16em  icon-pass"
+                  (click)="showEyeIcon()"
+                ></span>
               </ng-container>
-
-
 
               <ion-label position="floating">
                 <!-- <ion-icon name="lock" item-start></ion-icon> -->
@@ -58,14 +78,18 @@
                 Mot de passe
               </ion-label>
 
-              <ion-input type="{{showEye?'text': 'password'}}" formControlName="password"></ion-input>
-
-
+              <ion-input
+                type="{{showEye?'text': 'password'}}"
+                formControlName="password"
+              ></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.password">
-              <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
+              <ng-container
+                *ngIf="password.hasError(error.type) && (password.dirty || password.touched)"
+              >
                 <small class="error-message">
-                  <ion-icon name="information-circle-outline"></ion-icon> {{error.message}}
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{error.message}}
                 </small>
               </ng-container>
             </div>
@@ -74,7 +98,13 @@
           </div>
 
           <div class="ion-margin-top">
-            <ion-button  color="dark"  type="submit" expand="block" class="ion-margin-top btn" [disabled]="!loginForm.valid"  >
+            <ion-button
+              color="dark"
+              type="submit"
+              expand="block"
+              class="ion-margin-top btn"
+              [disabled]="!loginForm.valid"
+            >
               Connexion
               <!-- <ion-icon slot="end" name="create"></ion-icon> -->
             </ion-button>
@@ -88,15 +118,26 @@
 
       <!-- Other links -->
       <ion-row class="ion-margin-top border-dotted-top">
-        <ion-col  size-md="12"  size-lg="12" size-xs="12" class="text-white fw400 ion-text-center text08 ion-margin-top ion-no-padding">Vous n’avez pas
-          encore créé votre compte ?</ion-col>
-        <ion-col size-md="12"  size-lg="12" size-xs="12" >
-          <ion-button size="medium" shape="round" expand="block" fill="outline" color="light" class="btn"
-            [routerLink]="['/register']">
+        <ion-col
+          size-md="12"
+          size-lg="12"
+          size-xs="12"
+          class="text-white fw400 ion-text-center text08 ion-margin-top ion-no-padding"
+          >Vous n’avez pas encore créé votre compte ?</ion-col
+        >
+        <ion-col size-md="12" size-lg="12" size-xs="12">
+          <ion-button
+            size="medium"
+            shape="round"
+            expand="block"
+            fill="outline"
+            color="light"
+            class="btn"
+            [routerLink]="['/register']"
+          >
             <span class="icon-aplus-outline"></span>
             Créer votre compte
             <!-- <ion-icon slot="end" name="create"></ion-icon> -->
-
           </ion-button>
         </ion-col>
       </ion-row>

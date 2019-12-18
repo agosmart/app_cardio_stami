@@ -105,38 +105,18 @@ export class HomePage implements OnInit {
   }
 
   getDataPatient(id: any) {
-    return [
-      {
-        ...this.objectPatient.find(dossier => {
-          return dossier["id_dossier"] === id;
-        })
-      }
-    ];
+    return this.objectPatient.find(dossier => {
+      return dossier["dossierId"] === id;
+    });
   }
 
   goToDiag(idDossier) {
-    console.log("idDossier==>", idDossier);
     this.dataPatient = this.getDataPatient(idDossier);
-    console.log("dataPatient===>", this.dataPatient);
-    // this.dataPatientObj = [
-    //   {
-    //     firstName: this.dataPatient["prenom_patient"],
-    //     lastName: this.dataPatient["nom_patient"],
-    //     birthday: this.dataPatient["naissance_patient"],
-    //     idPatient: this.dataPatient["id_patient"],
-    //     idMed: this.dataPatient["id_medecin"],
-    //     weight: this.dataPatient["poids"],
-    //     imgEcg: this.dataPatient["ecg"],
-    //     id_dossier: this.dataPatient["id_dossier"],
-    //     dThorasic: this.dataPatient["douleur_thoracique"],
-    //     startTime: this.dataPatient["start_at"]
-    //   }
-    // ];
-    // console.log("dataPatientObj===>", this.dataPatientObj);
+    console.log(" vers diag dataPatient===>", this.dataPatient);
     this.router.navigate([
       "./diagnostic",
       idDossier,
-      JSON.stringify(this.dataPatient)
+      JSON.stringify([this.dataPatient])
     ]);
   }
   private showAlert(message: string) {
