@@ -18,7 +18,7 @@
         <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
 
           <div class="ion-text-center">
-            <h3 class="fw700 text-white shadow "> <span class="icon-loock text16 text-white"></span> Connexion</h3>
+            <h3 class="fw700 text-white shadow title-header "> <span class="icon-loock text12 text-white"></span>Connexion</h3>
           </div>
 
           <div>
@@ -70,10 +70,7 @@
               </ng-container>
             </div>
 
-            <ion-row class="ion-margin-top">
-              <ion-col size="10" offset="2" [routerLink]="['/reset']" class="ion-text-right  text1 text-white fw500">
-                Mot de passe oublié ?</ion-col>
-            </ion-row>
+           
           </div>
 
           <div class="ion-margin-top">
@@ -81,8 +78,12 @@
               Connexion
               <!-- <ion-icon slot="end" name="create"></ion-icon> -->
             </ion-button>
-          </div>
+          </div>          
         </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-top ">
+        <ion-col size="12"  [routerLink]="['/reset']" class="ion-text-center  text1 text-white fw500">
+          Mot de passe oublié ?</ion-col>
       </ion-row>
 
       <!-- Other links -->

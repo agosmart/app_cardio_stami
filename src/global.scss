@@ -146,6 +146,9 @@ ion-button.btn{
 
 
 // ---- Font size vlue => em
+.fsize-08em{
+  font-size: 0.8em!important;
+}
 .fsize-10em{
   font-size: 1em!important;
 }
@@ -248,7 +251,8 @@ ion-button.btn{
 }
 
 .border-dotted-top{
-    border-top: 2px dotted #58bbfdb7;
+    // border-top: 2px dotted #58bbfdb7;
+    border-top: 2px dotted rgba(255, 255, 255, 0.3);
     
 }
 .text-shadow{

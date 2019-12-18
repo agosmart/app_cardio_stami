@@ -16,14 +16,14 @@
     >Ajouter un nouveau dossier</ion-button
   > -->
   <ion-grid class="ion-no-padding">
-    <ion-row class=" bg-light  ion-padding ">
+    <ion-row class=" bg-light  ion-no-padding  ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
         <ion-button
           size="medium"
           shape="round"
           [routerLink]="['../inscription']"
         >
-          <span class="icon-doss-add fsize-30em"></span>
+          <span class="icon-doss-add fsize-28em"></span>
           <p class="fseiz-12em">Nouveau dossier</p>
           <ion-icon name="add-circle-outline" slot="end" class="fsize-20em">
           </ion-icon>
@@ -77,9 +77,9 @@
               <ion-button>
                 <ion-icon slot="icon-only" name="pulse"></ion-icon>
               </ion-button>
-              <ion-label (click)="goToDiag(patient.id_dossier)">
-                <h2>{{patient.nom_patient}} {{patient.prenom_patient}}</h2>
-                <h3>{{patient.naissance_patient}}</h3>
+              <ion-label  (click)="goToDiag(patient.dossierId)">
+                <h2>{{patient["lastName"]}} {{patient["firstName"]}}</h2>
+                <h3>{{patient["birthDay"]}}</h3>
                 <p>Status: RAS</p>
               </ion-label>
             </ion-item>
