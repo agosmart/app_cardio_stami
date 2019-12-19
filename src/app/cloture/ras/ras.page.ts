@@ -24,7 +24,7 @@ export class RasPage implements OnInit {
   ecgTmp: string;
   isLoading = false;
   isCloture: boolean;
-  returnClotureDossier: Array<ClotureModel>;
+  returnClotureDossier: ClotureModel;
 
   constructor(
     private srvApp: ServiceAppService,
@@ -62,7 +62,7 @@ export class RasPage implements OnInit {
     //   }
     // });
 
-    this.idDossier = 115;
+    this.idDossier = 1;
 
     this.dataPatient = {
       firstName: "Bouaziz",

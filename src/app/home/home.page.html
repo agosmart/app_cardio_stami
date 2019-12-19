@@ -50,7 +50,7 @@
       <ion-col>
         <ion-list>
           <ion-list-header>
-            Patients en cours
+            Dossiers en cours
           </ion-list-header>
 
           <div *ngFor="let patient of objectPatient">
@@ -67,8 +67,11 @@
               <ion-button>
                 <ion-icon slot="icon-only" name="pulse"></ion-icon>
               </ion-button>
-              <ion-label  (click)="goToDiag(patient.dossierId)">
-                <h2>{{patient["lastName"]}} {{patient["firstName"]}}</h2>
+              <ion-label (click)="goToStape(patient.dossierId)">
+                <h2>
+                  {{patient["lastName"]}} {{patient["firstName"]}}
+                  ({{patient["dossierId"]}})
+                </h2>
                 <h3>{{patient["birthDay"]}}</h3>
                 <p>Status: RAS</p>
               </ion-label>

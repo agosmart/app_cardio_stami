@@ -46,7 +46,6 @@
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
-               
               </ion-col>
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
@@ -101,7 +100,7 @@
       <!-- Facteurs de risque -->
       <ion-row class="ion-no-padding">
         <ion-col size="12" class="ion-no-padding ion-margin-top">
-          <!---->
+          <!--hta-->
           <ion-item>
             <ion-label>HTA</ion-label>
             <ion-checkbox checked="false" formControlName="hta"></ion-checkbox>
@@ -113,13 +112,6 @@
               formControlName="tobacco"
             ></ion-checkbox>
           </ion-item>
-          <!--== MESSAGE ==-->
-          <!-- <div *ngFor="let error of errorMessages.tobacco">
-                <ng-container *ngIf="tobacco.hasError(error.type) && (tobacco.dirty || tobacco.touched)">
-                  <small class="error-message">{{error.message}}</small>
-                </ng-container>
-              </div> -->
-          <!--====-->
 
           <!--Diabet -->
           <ion-list class="ion-no-padding">
@@ -162,6 +154,10 @@
               <ion-list-header>
                 <ion-label>DYSLIPIDIMIE</ion-label>
               </ion-list-header>
+              <ion-item>
+                <ion-label>Aucun</ion-label>
+                <ion-radio slot="start" color="primary" value="0"></ion-radio>
+              </ion-item>
               <ion-item>
                 <ion-label>Poids</ion-label>
                 <ion-radio
@@ -243,7 +239,7 @@
               <ion-radio
                 slot="start"
                 color="primary"
-                value="1"
+                value="0"
                 checked
               ></ion-radio>
             </ion-item>
@@ -252,13 +248,13 @@
               <ion-radio
                 slot="start"
                 color="primary"
-                value="2"
+                value="1"
                 checked
               ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>ST+</ion-label>
-              <ion-radio slot="start" color="primary" value="3"></ion-radio>
+              <ion-radio slot="start" color="primary" value="2"></ion-radio>
             </ion-item>
           </ion-radio-group>
           <!--== MESSAGE ==-->
@@ -303,7 +299,7 @@
               <ion-radio
                 slot="start"
                 color="primary"
-                value="1"
+                value="0"
                 checked
               ></ion-radio>
             </ion-item>
@@ -312,21 +308,21 @@
               <ion-radio
                 slot="start"
                 color="primary"
-                value="2"
+                value="1"
                 checked
               ></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>IVA</ion-label>
-              <ion-radio slot="start" color="primary" value="3"></ion-radio>
+              <ion-radio slot="start" color="primary" value="2"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>CX</ion-label>
-              <ion-radio slot="start" color="primary" value="4"></ion-radio>
+              <ion-radio slot="start" color="primary" value="3"></ion-radio>
             </ion-item>
             <ion-item>
               <ion-label>CD</ion-label>
-              <ion-radio slot="start" color="primary" value="5"></ion-radio>
+              <ion-radio slot="start" color="primary" value="4"></ion-radio>
             </ion-item>
           </ion-radio-group>
           <!--== MESSAGE ==-->

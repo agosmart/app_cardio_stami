@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
-import { File } from "@ionic-native/file/ngx";
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { File, FileEntry } from "@ionic-native/file/ngx";
 import { LoadingService } from "src/app/services/loading.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { finalize } from "rxjs/operators";
@@ -14,8 +13,10 @@ import {
   FileTransferObject
 } from "@ionic-native/file-transfer/ngx";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
-import { DossierResponseData } from "src/app/models/dossier.response";
 import { DossierModel } from "src/app/models/dossier.model";
+import { Observable } from "rxjs";
+import { PatientResponseData } from "src/app/models/patient.response";
+import { DossierResponseData } from "src/app/models/dossier.response";
 
 @Component({
   selector: "app-insc-ecg",
@@ -37,6 +38,7 @@ export class InscEcgPage implements OnInit {
   isEcg: boolean;
   ecgAfficher: string;
   imageData: any;
+  stapeId = 4; // etape Infos Dossier
 
   dataPatient: DossierModel;
   dataPatients: Array<DossierModel>;
@@ -53,7 +55,6 @@ export class InscEcgPage implements OnInit {
     private camera: Camera,
     private file: File,
     private transfer: FileTransfer,
-    private webview: WebView,
     private activatedroute: ActivatedRoute,
     public http: HttpClient
   ) {
@@ -106,12 +107,12 @@ export class InscEcgPage implements OnInit {
     });
   }
 
+  // without upload
   submitEcg() {
     if (!this.isEcg) {
-      this.idDossier = 115;
+      this.idDossier = 1;
       this.imageData = "file:/";
       this.ecgAfficher = "http:/";
-      // create object
       this.dataPatient.dossierId = this.idDossier;
       this.dataPatient.weight = this.EcgForm.value.poids;
       this.dataPatient.doctorId = this.idUser;
@@ -124,88 +125,117 @@ export class InscEcgPage implements OnInit {
 
       console.log("===== dataPatient envoye ===", this.dataPatient);
       this.sglob.presentToast("Données envoyés avec succès.");
-      //this.srv.setExtras(this.dataPatientObj);
       this.router.navigate([
         "./insc-infos",
         this.idDossier,
-        JSON.stringify(this.dataPatient)
+        JSON.stringify([this.dataPatient])
       ]);
       //this.upload();
       //this.uploadImageData();
-      //this.uploadold();
+      //this.startUpload();
+    } else {
+      console.log("===== veuiller faire un ECG====");
+    }
+  }
+  submitEcg___withupload() {
+    if (this.isEcg) {
+      // this.idDossier = 115;
+      // this.imageData = "file:/";
+      // this.ecgAfficher = "http:/";
+      // this.dataPatient.dossierId = this.idDossier;
+      // this.dataPatient.weight = this.EcgForm.value.poids;
+      // this.dataPatient.doctorId = this.idUser;
+      // this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
+      // this.dataPatient.patientId = this.idPatient;
+      // this.dataPatient.etabId = this.idEtab;
+      // this.dataPatient.ecgImage = this.imageData;
+      // this.dataPatient.ecgAfficher = this.ecgAfficher;
+      // this.dataPatient.startAt = "13:25:00";
+
+      // console.log("===== dataPatient envoye ===", this.dataPatient);
+      // this.sglob.presentToast("Données envoyés avec succès.");
+      // this.router.navigate([
+      //   "./insc-infos",
+      //   this.idDossier,
+      //   JSON.stringify(this.dataPatient)
+      // ]);
+      //this.upload();
+      //this.uploadImageData();
+      this.startUpload();
     } else {
       console.log("===== veuiller faire un ECG====");
     }
   }
 
+  startUpload() {
+    this.file
+      .resolveLocalFilesystemUrl(this.imageData)
+      .then(entry => {
+        console.log("ok");
+        (<FileEntry>entry).file(file => this.readFile(file));
+      })
+      .catch(err => {
+        console.log("erreur");
+        //this.presentToast("Error while reading file.");
+      });
+  }
+
+  readFile(file: any) {
+    console.log("readFile", file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const formData = new FormData();
+      const imgBlob = new Blob([reader.result], {
+        type: file.type
+      });
+      formData.append("ecgImage", imgBlob, file.name);
+      formData.append("etabId", this.idEtab.toString());
+      formData.append("doctorId", this.idUser.toString());
+      formData.append("dThorasic", this.EcgForm.value.dThorasic);
+      formData.append("weight", this.EcgForm.value.poids.toString());
+      formData.append("stapeId", this.stapeId.toString());
+      formData.append("patientId", this.idPatient.toString());
+      formData.append("lastName", this.dataPatient["firstName"]);
+      formData.append("firstName", this.dataPatient["lastName"]);
+      formData.append("birthday", this.dataPatient["birthDay"]);
+      formData.append("gender", this.gender.toString());
+      this.uploadImageData(formData);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  async uploadImageData(formData: FormData) {
+    console.log("uploadImageData", formData);
+    // const loading = await this.loadingController.create({
+    //   message: "Uploading image..."
+    // });
+    // await loading.present();
+
+    let headers = new HttpHeaders();
+    // headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set("Authorization", "" + this.token);
+
+    this.http
+      .post("http://cardio.cooffa.shop/api/dossiers", formData, { headers })
+      .pipe(
+        finalize(() => {
+          //loading.dismiss();
+        })
+      )
+      .subscribe((res: DossierResponseData) => {
+        if (+res.code === 201) {
+          console.log(" res", res.data);
+          // this.presentToast("File upload complete.");
+        } else {
+          console.log("erreur");
+          /// this.presentToast("File upload failed.");
+        }
+      });
+  }
+
   deleteImage() {
     this.isEcg = false;
   }
-
-  async upload() {
-    this.loading.showLoader("Envoi de données  en cours");
-    const fileTransfer: FileTransferObject = this.transfer.create();
-
-    const fileName = this.createFileName();
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + this.token
-    });
-
-    const options1: FileUploadOptions = {
-      fileKey: "file",
-      fileName: "ecg_image",
-      headers: { myHeaders }
-    };
-
-    const params = {
-      weight: this.EcgForm.value.poids,
-      doctorId: this.idMed,
-      lastName: this.firstName,
-      firstName: this.lastName,
-      birthday: this.birthDay,
-      etabId: this.idEtab,
-      dThorasic: this.EcgForm.value.dThorasic,
-      gender: this.gender,
-      patientId: this.idPatient
-    };
-    options1.params = params;
-
-    fileTransfer
-      .upload(
-        this.imageData,
-        //"http://cardio.cooffa.shop/api/dossiers",
-        "http://webcom.dz/cooffa/sante/u.php",
-        options1
-      )
-      .then(
-        res => {
-          // success
-          alert("succes");
-          console.log("retour upload data ==>", res);
-          console.log("retour upload response ==>", JSON.parse(res.response));
-          this.idDossier = 128;
-
-          this.loading.hideLoader();
-          this.sglob.presentToast("Données envoyés avec succès.");
-          //this.srv.setExtras(this.dataPatientObj);
-          this.router.navigate([
-            "./insc-infos",
-            this.idDossier,
-            JSON.stringify(this.dataPatient)
-          ]);
-        },
-        err => {
-          // error
-          this.loading.hideLoader();
-          this.sglob.presentToast("Erreur d'envois de données");
-          alert("erreur");
-          alert("error" + JSON.stringify(err));
-        }
-      );
-  }
-
   takePicture() {
     console.log("======n0=======");
     const options: CameraOptions = {
@@ -223,160 +253,7 @@ export class InscEcgPage implements OnInit {
     this.camera.getPicture(options).then(imageData => {
       this.isEcg = true;
       this.imageData = imageData;
-      this.ecgAfficher = this.pathForImage(imageData);
+      this.ecgAfficher = this.sglob.pathForImage(imageData);
     });
-  }
-
-  pathForImage(img: any) {
-    console.log("img", img);
-    if (img === null) {
-      return "";
-    } else {
-      const converted = this.webview.convertFileSrc(img);
-      console.log("converted", converted);
-      return converted;
-    }
-  }
-
-  createFileName() {
-    const d = new Date(),
-      n = d.getTime(),
-      newFileName = n + ".jpg";
-    return newFileName;
-  }
-
-  async uploadImageData() {
-    const pathurl = this.pathForImage(this.imageData);
-    const currentName = this.imageData.substr(
-      this.imageData.lastIndexOf("/") + 1
-    );
-    const imgEntry = {
-      name: currentName,
-      path: pathurl,
-      filePath: this.imageData
-      // weight: 50,
-      // doctorId: 160,
-      // lastName: "firstName",
-      // firstName: "lastName",
-      // birthday: "birthDay",
-      // etabId: 3,
-      // dThorasic: "n",
-      // gender: 2,
-      // patientId: 1
-    };
-    console.log("************uploadImageData imgEntry **********", imgEntry);
-    console.log(
-      "************uploadImageData imageData1 **********",
-      this.imageData
-    );
-
-    //     Content-Disposition: form-data; name="file"; filename="1576616964464.jpg"
-    // Content-Type: image/jpeg
-    // const url = "http://cardio.cooffa.shop/api/dossiers";
-    const url = "http://cardio.cooffa.shop/u.php";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer " + this.token
-    });
-    this.http
-      .post(url, imgEntry, { headers: myHeaders })
-      .pipe(finalize(() => {}))
-      .subscribe(
-        (res: DossierResponseData) => {
-          if (+res.code === 201) {
-            this.sglob.presentToast("File upload complete.");
-            console.log("resultat", res);
-          } else {
-            this.sglob.presentToast("File upload failed.");
-            console.log("erreur  cas code");
-          }
-        },
-        // ::::::::::::  ON ERROR ::::::::::::
-        errRes => {
-          console.log(errRes);
-          // ----- Hide loader ------
-
-          // --------- Show Alert --------
-          if (errRes.error.errors != null) {
-            console.log("errors", errRes.error.errors);
-          } else {
-            console.log(
-              "Prblème d'accès au réseau, veillez vérifier votre connexion"
-            );
-          }
-        }
-      );
-  }
-
-  async uploadold() {
-    this.loading.showLoader("Envoi de données  en cours");
-    const fileTransfer: FileTransferObject = this.transfer.create();
-
-    const fileName = this.createFileName();
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + this.token
-    });
-
-    const options1: FileUploadOptions = {
-      fileKey: "file",
-      fileName: "ecg_image",
-      headers: { myHeaders }
-    };
-
-    const params = {
-      poids: this.EcgForm.value.poids,
-      id_medecin: this.idMed,
-      prenom: this.firstName,
-      nom: this.lastName,
-      dateNaissance: this.birthDay,
-      id_etab: this.idEtab,
-      douleur: this.EcgForm.value.dThorasic,
-      id_patient: this.idPatient
-    };
-    options1.params = params;
-
-    fileTransfer
-      .upload(
-        this.imageData,
-        "http://cardio.cooffa.shop/api/dossiers",
-        options1
-      )
-      .then(
-        data => {
-          // success
-          console.log(" moha retour upload", data);
-          // this.dataPatientObj = [
-          //   {
-          //     firsName: this.firstName,
-          //     lastName: this.lastName,
-          //     birthday: this.birthDay,
-          //     weight: this.EcgForm.value.poids,
-          //     idDossier: this.idDossier,
-          //     idMed: this.idUser,
-          //     dThorasic: this.EcgForm.value.dThorasic,
-          //     idPatient: this.idPatient,
-          //     imgEcg: this.imageData,
-          //     startTime: "13:25:00"
-          //   }
-          // ];
-          this.loading.hideLoader();
-          // this.sglob.presentToast("Données envoyés avec succès.");
-          // //this.srv.setExtras(this.dataPatientObj);
-          // this.router.navigate([
-          //   "./insc-infos",
-          //   this.idDossier,
-          //   JSON.stringify(this.dataPatientObj)
-          // ]);
-        },
-        err => {
-          // error
-          this.loading.hideLoader();
-          this.sglob.presentToast("Erreur d'envois de données");
-          alert("error" + JSON.stringify(err));
-        }
-      );
   }
 }
