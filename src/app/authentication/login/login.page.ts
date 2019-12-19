@@ -122,6 +122,7 @@ export class LoginPage implements OnInit {
           uid: this.uid
         };
         console.log("params======>", params);
+       
         const authObs: Observable<AuthResponseData> = this.srv.loginDoctor(
           params
         );

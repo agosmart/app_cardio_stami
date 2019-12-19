@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RasPageRoutingModule } from './ras-routing.module';
+import { ImagePageRoutingModule } from './image-routing.module';
 
-import { RasPage } from './ras.page';
-import { ImagePageModule } from 'src/app/modal/image/image.module';
+import { ImagePage } from './image.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RasPageRoutingModule,
-    ImagePageModule
+    ImagePageRoutingModule
   ],
-  declarations: [RasPage]
+  declarations: [ImagePage]
 })
-export class RasPageModule {}
+export class ImagePageModule {}

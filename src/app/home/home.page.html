@@ -19,8 +19,10 @@
     <ion-row class=" bg-light  ion-no-padding  ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
         <ion-button
+          class="bt-cloture"
           size="medium"
           shape="round"
+          tappable
           [routerLink]="['../inscription']"
         >
           <span class="icon-doss-add fsize-28em"></span>
@@ -54,8 +56,8 @@
           </ion-list-header>
 
           <div *ngFor="let patient of objectPatient">
-            <ion-item detail>
-              <ion-button>
+            <ion-item detail (click)="goToDiag(patient.dossierId)">
+              <!-- <ion-button tappable>
                 <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
               </ion-button>
               <ion-button>
@@ -66,12 +68,17 @@
               </ion-button>
               <ion-button>
                 <ion-icon slot="icon-only" name="pulse"></ion-icon>
-              </ion-button>
-              <ion-label  (click)="goToDiag(patient.dossierId)">
+              </ion-button> -->
+              <ion-label  >
                 <h2>{{patient["lastName"]}} {{patient["firstName"]}}</h2>
                 <h3>{{patient["birthDay"]}}</h3>
-                <p>Status: RAS</p>
+               
+                <ion-badge slot="end" color="primary">N°: 2001-00035</ion-badge>
               </ion-label>
+              <p  class="p-0-10">
+              <ion-note slot="start" color="secondary" >Status: <b>RAS</b></ion-note>
+            </p >
+             
             </ion-item>
           </div>
         </ion-list>

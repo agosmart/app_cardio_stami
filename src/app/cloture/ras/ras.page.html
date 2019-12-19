@@ -7,7 +7,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="diag-info ion-no-padding">
+
+<!-- ------------------- -->
+<ion-content fullscreen class="cloture-info ion-no-padding ion-text-center">
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
@@ -15,14 +17,13 @@
         <span class="icon-diagnostic text-white text20"></span>
         <!---->
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >Cloture dossier
-      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">DIAGNOSTIC</ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
-        <ion-card class="ion-margin" color="light">
+
+        <ion-card class="ion-margin ion-text-left" color="light">
           <ion-card-content class="text09 ">
             <ion-row class="ion-no-padding">
               <ion-col size="10" class="ion-no-padding">
@@ -51,12 +52,92 @@
               </ion-col>
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="onShowEcg()"
-                    color="danger"
-                    class="ion-bt-padding "
-                  >
-                    <!-- <ion-icon slot="icon-only" name="pulse"></ion-icon> -->
+                  <ion-button  (click)="openImageEcg(ecgImage)" color="danger" class="ion-bt-padding "
+                    expand="full">
+                    <!-- <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin> -->
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                    <!-- <ion-img [src]="ecgTmp"></ion-img> -->
+                  </ion-button>
+                </ion-col>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- ------------------- -->
+
+  <ion-grid class="ion-no-padding">
+    <ion-row class=" bg-light  ion-no-padding">
+      <ion-col size="12" class="ion-padding-top ion-padding-bottom">
+        <ion-button class="bt-cloture" size="medium" expend="block" tapped (click)="clotureDossier()">
+          <span class="icon-doss-add fsize-28em"></span>
+          <p class="fseiz-12em">CLOTURER LE DOSSIER</p>
+
+          <ion-icon name="checkmark-circle-outline" slot="end" class="fsize-20em"></ion-icon>
+        </ion-button>
+      </ion-col>
+<!-- 
+      <ion-col size="12" class="ion-padding-top ion-padding-bottom" *ngIf="isCloture">
+
+        La clôture du dossier est faite avec succès, retour au dossiers
+        <ion-button size="medium" shape="round" [routerLink]="['/home']">
+          RETOUR A L'ACCUEIL
+        </ion-button>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
+
+<!--
+<ion-content fullscreen class="diag-info ion-no-padding">
+  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <ion-row class="ion-no-padding ">
+      <ion-col size="12" class="icon-header">
+
+        <span class="icon-diagnostic text-white text20"></span>
+
+      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">Cloture dossier
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card class="ion-margin" color="light">
+          <ion-card-content class="text09 ">
+            <ion-row class="ion-no-padding">
+              <ion-col size="10" class="ion-no-padding">
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+
+                    <span class="icon-man text-dark  text10"></span>
+                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-calander  text-dark  text10"></span>
+
+                    {{dataPatient['birthDay']}}
+
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-weight  text-dark  text10"></span>
+
+                    {{dataPatient['weight'] + ' KG'}}
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col size="2" class="ion-no-padding">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-button (click)="onShowEcg()" color="danger" class="ion-bt-padding ">
+
                     <ion-img [src]="ecgTmp"></ion-img>
                   </ion-button>
                 </ion-col>
@@ -66,32 +147,27 @@
         </ion-card>
       </ion-col>
     </ion-row>
+
+
     <ion-row class="ion-no-padding" *ngIf="!isCloture">
       <ion-col size="12" class="icon-header">
-        <!-- icon -->
+
         <span class="icon-diagnostic text-white text20"></span>
-        <!---->
+
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        ><ion-button
-          (click)="clotureDossier()"
-          color="danger"
-          class="ion-bt-padding "
-        >
+      <ion-col size="12" class="title-header ion-no-padding">
+        <ion-button (click)="clotureDossier()" color="danger" class="ion-bt-padding ">
           CLOTURER LE DOSSIER
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="title-header ion-no-padding" *ngIf="isCloture">
-        <ion-button
-          [routerLink]="['/home']"
-          color="danger"
-          class="ion-bt-padding "
-          >La clôture est faite avec succès, retour au dossiers
+        <ion-button [routerLink]="['/home']" color="danger" class="ion-bt-padding ">La clôture est faite avec succès,
+          retour au dossiers
         </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- ------------------- -->
-</ion-content>
+
+</ion-content>-->

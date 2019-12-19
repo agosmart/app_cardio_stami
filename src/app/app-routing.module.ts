@@ -94,7 +94,11 @@ const routes: Routes = [
     path: "ras/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/ras/ras.module").then(m => m.RasPageModule)
+  },  {
+    path: 'image',
+    loadChildren: () => import('./modal/image/image.module').then( m => m.ImagePageModule)
   }
+
 
   // {
   //   path: 'dossier-detail/:idPatient',

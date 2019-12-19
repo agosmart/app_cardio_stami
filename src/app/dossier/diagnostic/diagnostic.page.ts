@@ -3,6 +3,14 @@ import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
+import { ModalController, LoadingController, AlertController, ToastController } from '@ionic/angular';
+import { ImagePage } from '../../modal/image/image.page';
+
+import { Observable } from 'rxjs';
+
+import { PatientModel } from 'src/app/models/patient.model';
+import { PatientResponseData } from 'src/app/models/patient.response';
+
 
 @Component({
   selector: "app-diagnostic",
@@ -16,13 +24,27 @@ export class DiagnosticPage implements OnInit {
   dataPatient: object;
   ecgTmp: string;
   idDossier: number;
+  token: string;
+  returnSearchPatient: Array<PatientModel>;
+
+
+  ecgImage = '/assets/images/ecg.jpg';
 
   constructor(
-    private srvApp: ServiceAppService,
+    private srv: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+
+
+  ) {
+
+    this.token = this.sglob.getToken();
+  }
 
   ngOnInit() {
     this.activatedroute.paramMap.subscribe(paramMap => {
@@ -50,7 +72,20 @@ export class DiagnosticPage implements OnInit {
   onShowEcg() {
     console.log("::::::: Show Image ECG :::::::");
   }
-  ras() {
+  // ===============  PUBLIC SHow Alert ===============
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
+  }
+
+
+  diagnosticRas() {
     this.router.navigate([
       "./ras",
       this.idDossier,
@@ -66,4 +101,87 @@ export class DiagnosticPage implements OnInit {
   //     })
   //   };
   // }
+
+  async openImageEcg(image: any) {
+    console.log('image ::::', image);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: image }
+    });
+    return await modal.present();
+  }
+
+
+  async setDiagnosticAlert() {
+    const alert = await this.alertCtrl.create({
+      header: 'Le constat des risques',
+      cssClass: "alert-css",
+      message: 'Etes-vous sur que le patient est un ST.',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirme Annuler');
+          }
+        }, {
+          text: 'Je confirme',
+          handler: async () => {
+            const loader = await this.loadingCtrl.create({               
+              duration: 6000,
+              message: 'Envoie en cours...',
+              translucent: true,
+              cssClass: 'custom-class custom-loading',
+
+            });
+            await loader.present();
+
+            const params = {
+              lastName: "mamadou",
+              firstName: "Touré",
+              gender: "2",
+              birthDay: "1960-02-15"
+            };
+
+            const authObs: Observable<PatientResponseData> = this.srv.getPatient(params, this.token);
+            // ---- Call Login function
+            await authObs.subscribe(
+              // :::::::::::: ON RESULT ::::::::::
+              resData => {
+                this.returnSearchPatient = resData.data;
+                console.log("DATA DIAGNOSTIC:::", this.returnSearchPatient);
+              },
+              errRes => {
+                console.log("ERROR DIAGNOSTIC:::", errRes);
+
+              });
+
+            // await  loader.onWillDismiss().then(async l => { console.log("::: Loading ONDISMISS:::", l) };
+
+
+            await loader.onWillDismiss().then(async l => {
+              const toast = await this.toastCtrl.create({
+                showCloseButton: true,
+                message: 'Votre constat a été pris en considération.',
+                duration: 100000,
+                cssClass: '',
+                position: 'bottom'
+
+              });
+
+              toast.present();
+            });
+            await loader.dismiss().then((l) => {
+              //this.router.navigate(["./home"]);
+              this.diagnosticRas();
+            });
+
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 }

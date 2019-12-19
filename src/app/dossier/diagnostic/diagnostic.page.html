@@ -52,12 +52,15 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="onShowEcg()"
+                    tappable
+                    (click)="openImageEcg(ecgImage)"
                     color="danger"
                     class="ion-bt-padding "
+                    expand="full" 
                   >
-                    <!-- <ion-icon slot="icon-only" name="pulse"></ion-icon> -->
-                    <ion-img [src]="ecgTmp"></ion-img>
+                   <!-- <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin> -->
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                    <!-- <ion-img [src]="ecgTmp"></ion-img> -->
                   </ion-button>
                 </ion-col>
               </ion-col>
@@ -69,13 +72,13 @@
   </ion-grid>
   <!-- ------------------- -->
   <ion-grid fixed class="diagnostic ion-margin-top ion-padding-top">
-    <!-- ***************  -->
+     <!-- ------- -->
     <ion-row>
       <ion-col size="12">
         <ion-grid class="diagno-btn-group">
           <ion-row>
             <ion-col size="4">
-              <ion-button expand="block" fill="solid" class="st">
+              <ion-button expand="block" fill="solid" class="st" tappable (click)="setDiagnosticAlert()">
                 <div>
                   <h3><span class="icon-heart-st fsize-20em"></span></h3>
                   <ion-text color="_primary">
@@ -85,7 +88,7 @@
               </ion-button>
             </ion-col>
             <ion-col size="4">
-              <ion-button expand="block" fill="solid" class="sos">
+              <ion-button expand="block" fill="solid" class="sos" tappable (click)="setDiagnosticAlert()">
                 <div>
                   <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
                   <ion-text color="_primary">
@@ -94,8 +97,8 @@
                 </div>
               </ion-button>
             </ion-col>
-            <ion-col size="4" (click)="ras()">
-              <ion-button expand="block" fill="solid" class="ras">
+            <ion-col size="4" >
+              <ion-button expand="block" fill="solid" class="ras" tappable (click)="setDiagnosticAlert()">
                 <div>
                   <h3><span class="icon-heart-checked fsize-20em"></span></h3>
                   <ion-text color="_primary">

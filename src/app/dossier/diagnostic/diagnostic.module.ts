@@ -7,13 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { DiagnosticPageRoutingModule } from './diagnostic-routing.module';
 
 import { DiagnosticPage } from './diagnostic.page';
+import { ImagePageModule } from 'src/app/modal/image/image.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DiagnosticPageRoutingModule
+    DiagnosticPageRoutingModule,
+    ImagePageModule,
+
   ],
   declarations: [DiagnosticPage]
 })
