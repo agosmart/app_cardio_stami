@@ -14,7 +14,7 @@ import { DossierModel } from "../models/dossier.model";
   styleUrls: ["home.page.scss"]
 })
 export class HomePage implements OnInit {
-  IdUser: number;
+  idUser: number;
   idEtab: number;
   token: string;
   pageStape: string;
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
     private router: Router
   ) {
     this.isExistDossier = false;
-    this.IdUser = this.sglob.getIdUser();
+    this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
     this.idEtab = this.sglob.getidEtab();
     //console.log("idEtab", this.idEtab);
@@ -110,6 +110,15 @@ export class HomePage implements OnInit {
     return this.objectPatient.find(dossier => {
       return dossier["dossierId"] === id;
     });
+  }
+  goToDiag(idDossier) {
+    this.dataPatient = this.getDataPatient(idDossier);
+    console.log(" vers diag dataPatient===>", this.dataPatient);
+    this.router.navigate([
+      "./diagnostic",
+      idDossier,
+      JSON.stringify([this.dataPatient])
+    ]);
   }
 
   goToStape(idDossier) {
