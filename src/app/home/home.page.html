@@ -52,11 +52,11 @@
       <ion-col>
         <ion-list>
           <ion-list-header>
-            Patients en cours
+            Dossiers en cours
           </ion-list-header>
 
           <div *ngFor="let patient of objectPatient">
-            <ion-item detail (click)="goToDiag(patient.dossierId)">
+            <ion-item detail (click)="goToStape(patient.dossierId)">
               <!-- <ion-button tappable>
                 <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
               </ion-button>

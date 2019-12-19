@@ -21,8 +21,11 @@ export class InscInfosPage implements OnInit {
   idEtab: number;
   token: string;
   idDossier: number;
+  stapeId = 5; // etape Infos Dossier
   objectInsc: Array<object>;
+  //dataPatient: DossierModel;
   dataPatient: DossierModel;
+  objectRecu: object;
   idDossierToGet: any;
   dataPatients: Array<DossierModel>;
   ecgTmp: string;
@@ -106,7 +109,9 @@ export class InscInfosPage implements OnInit {
        =========================================== */
         this.router.navigate(["/home"]);
       } else {
-        this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
+        // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
+        this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
+        this.dataPatient = this.objectRecu[0];
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
       }
       //idDossier
@@ -133,19 +138,36 @@ export class InscInfosPage implements OnInit {
       .create({ keyboardClose: true, message: "ajout  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
-
+        let valHta = 0;
+        if (this.inscriptionFormInfos.value.hta === true) {
+          valHta = 1;
+        }
+        let valtobacco = 0;
+        if (this.inscriptionFormInfos.value.tobacco === true) {
+          valtobacco = 1;
+        }
+        let valinsCardiaque = 0;
+        if (this.inscriptionFormInfos.value.insCardiaque === true) {
+          valinsCardiaque = 1;
+        }
+        let valcardIscStable = 0;
+        if (this.inscriptionFormInfos.value.cardIscStable === true) {
+          valcardIscStable = 1;
+        }
         const params = {
           dossierId: this.idDossier,
+          doctorId: this.idUser,
           diabetes: this.inscriptionFormInfos.value.diabetes,
           dyslip: this.inscriptionFormInfos.value.dyslip,
           sca: this.inscriptionFormInfos.value.sca,
           angioCoran: this.inscriptionFormInfos.value.angioCoran,
-          hta: this.inscriptionFormInfos.value.hta,
-          tobacco: this.inscriptionFormInfos.value.tobacco,
-          insCardiaque: this.inscriptionFormInfos.value.insCardiaque,
-          cardIscStable: this.inscriptionFormInfos.value.cardIscStable,
+          hta: valHta,
+          tobacco: valtobacco,
+          insCardiaque: valinsCardiaque,
+          cardIscStable: valcardIscStable,
           daignoDate: this.inscriptionFormInfos.value.daignoDate.substr(0, 4),
-          atlDate: this.inscriptionFormInfos.value.atlDate.substr(0, 4)
+          atlDate: this.inscriptionFormInfos.value.atlDate.substr(0, 4),
+          stapeId: this.stapeId
         };
 
         const authObs: Observable<DossierResponseData> = this.srvApp.addInfoDossier(

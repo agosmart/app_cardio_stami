@@ -17,11 +17,12 @@ export class HomePage implements OnInit {
   IdUser: number;
   idEtab: number;
   token: string;
+  pageStape: string;
   etatDossier: number;
   isExistDossier: boolean;
   isLoading = false;
   objectPatient: Array<DossierModel>;
-  dataPatient: object;
+  dataPatient: DossierModel;
   dataPatientObj: object;
 
   constructor(
@@ -105,16 +106,18 @@ export class HomePage implements OnInit {
   }
 
   getDataPatient(id: any) {
+    console.log(this.objectPatient);
     return this.objectPatient.find(dossier => {
       return dossier["dossierId"] === id;
     });
   }
 
-  goToDiag(idDossier) {
+  goToStape(idDossier) {
     this.dataPatient = this.getDataPatient(idDossier);
-    console.log(" vers diag dataPatient===>", this.dataPatient);
+    console.log(" vers diag stape===>", this.dataPatient);
+    this.pageStape = this.dataPatient["page"];
     this.router.navigate([
-      "./diagnostic",
+      "./" + this.pageStape,
       idDossier,
       JSON.stringify([this.dataPatient])
     ]);
