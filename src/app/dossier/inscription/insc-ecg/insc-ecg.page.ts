@@ -28,7 +28,7 @@ export class InscEcgPage implements OnInit {
   lastName: string;
   birthDay: string;
   gender: number;
-  idPatient: number;
+  idPatient = 0;
   idUser: number;
   idEtab: number;
   token: string;
@@ -108,59 +108,37 @@ export class InscEcgPage implements OnInit {
   }
 
   // without upload
-  submitEcg() {
-    if (!this.isEcg) {
-      this.idDossier = 200;
-      this.imageData = "file:/";
-      this.ecgAfficher = "http:/";
-      this.dataPatient.dossierId = this.idDossier;
-      this.dataPatient.weight = this.EcgForm.value.poids;
-      this.dataPatient.doctorId = this.idUser;
-      this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
-      this.dataPatient.patientId = this.idPatient;
-      this.dataPatient.etabId = this.idEtab;
-      this.dataPatient.ecgImage = this.imageData;
-      this.dataPatient.ecgAfficher = this.ecgAfficher;
-      this.dataPatient.startAt = "13:25:00";
+  submitEcg_withoutUpload() {
+    // if (!this.isEcg) {
+    //   this.idDossier = 200;
+    //   this.imageData = "file:/";
+    //   this.ecgAfficher = "http:/";
+    //   this.dataPatient.dossierId = this.idDossier;
+    //   this.dataPatient.weight = this.EcgForm.value.poids;
+    //   this.dataPatient.doctorId = this.idUser;
+    //   this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
+    //   this.dataPatient.patientId = this.idPatient;
+    //   this.dataPatient.etabId = this.idEtab;
+    //   this.dataPatient.ecgImage = this.imageData;
+    //   this.dataPatient.ecgAfficher = this.ecgAfficher;
+    //   this.dataPatient.startAt = "13:25:00";
 
-      console.log("===== dataPatient envoye ===", this.dataPatient);
-      this.sglob.presentToast("Données envoyés avec succès.");
-      this.router.navigate([
-        "./insc-infos",
-        this.idDossier,
-        JSON.stringify([this.dataPatient])
-      ]);
-      //this.upload();
-      //this.uploadImageData();
-      //this.startUpload();
-    } else {
-      console.log("===== veuiller faire un ECG====");
-    }
+    //   console.log("===== dataPatient envoye ===", this.dataPatient);
+    //   this.sglob.presentToast("Données envoyés avec succès.");
+    //   this.router.navigate([
+    //     "./insc-infos",
+    //     this.idDossier,
+    //     JSON.stringify([this.dataPatient])
+    //   ]);
+    //   //this.upload();
+    //   //this.uploadImageData();
+    //   //this.startUpload();
+    // } else {
+    //   console.log("===== veuiller faire un ECG====");
+    // }
   }
-  submitEcg___withupload() {
+  submitEcg() {
     if (this.isEcg) {
-      // this.idDossier = 115;
-      // this.imageData = "file:/";
-      // this.ecgAfficher = "http:/";
-      // this.dataPatient.dossierId = this.idDossier;
-      // this.dataPatient.weight = this.EcgForm.value.poids;
-      // this.dataPatient.doctorId = this.idUser;
-      // this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
-      // this.dataPatient.patientId = this.idPatient;
-      // this.dataPatient.etabId = this.idEtab;
-      // this.dataPatient.ecgImage = this.imageData;
-      // this.dataPatient.ecgAfficher = this.ecgAfficher;
-      // this.dataPatient.startAt = "13:25:00";
-
-      // console.log("===== dataPatient envoye ===", this.dataPatient);
-      // this.sglob.presentToast("Données envoyés avec succès.");
-      // this.router.navigate([
-      //   "./insc-infos",
-      //   this.idDossier,
-      //   JSON.stringify(this.dataPatient)
-      // ]);
-      //this.upload();
-      //this.uploadImageData();
       this.startUpload();
     } else {
       console.log("===== veuiller faire un ECG====");
