@@ -26,23 +26,33 @@
         <ion-col size="12" class="ion-no-padding">
           <ion-card class="ion-margin" color="light">
             <ion-card-content class="text10 ">
+              
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <!-- <span class="icon-man text-dark  text10"></span> -->
-                  <span
-                    class='{{ gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }} text-dark  text10'></span>
-                  {{dataPatient['firstName']}} {{dataPatient['lastName']}}
+                  <ion-label>
+                    <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  </ion-label>
                 </ion-col>
               </ion-row>
 
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <span class="icon-calander  text-dark  text10"></span>
-                  <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
-                  {{dataPatient['birthDay']}}
-                  <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+                 <h2> <span class='{{ gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }} text-dark  text10'>
+                  </span>
+                  {{dataPatient['firstName']}} {{dataPatient['lastName']}}</h2>
                 </ion-col>
               </ion-row>
+
+              <ion-row class="ion-no-padding">
+                <ion-col size="12" class="ion-no-padding">
+                <h2> <span class="icon-calander  text-dark  text10"></span>
+                  {{dataPatient['birthDay']}}</h2>
+                </ion-col>
+              </ion-row>
+
+              
+
+              
               <!-- <ion-row class="ion-no-padding">
             <ion-col size="12" class="ion-no-padding">
               <span class="icon-weight  text-dark  text10"></span>

@@ -9,21 +9,32 @@
 
 <ion-content fullscreen class="insc-infos ion-no-padding">
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-doss-create text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >CREATION DU DOSSIER</ion-col
-      >
+      <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
     </ion-row>
+  </ion-grid>
 
+
+  <ion-grid class="form-bloc">
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
         <ion-card class="ion-margin" color="light">
           <ion-card-content class="text09 ">
             <ion-row class="ion-no-padding">
               <ion-col size="10" class="ion-no-padding">
+
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-label >
+                      <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+               
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
@@ -31,6 +42,7 @@
                     {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
                 </ion-row>
+              
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
@@ -39,6 +51,7 @@
                     <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
+                
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
@@ -46,13 +59,16 @@
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
+                
+               
+
               </ion-col>
               <ion-col size="2" class="ion-no-padding">
                 <!-- <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin> -->
                
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="onShowEcg()"
+                    (click)="openImageEcg(ecgImage)"
                     color="danger"
                     class="ion-bt-padding "                    
                   >
@@ -65,11 +81,11 @@
         </ion-card>
       </ion-col>
     </ion-row>
-  </ion-grid>
+ 
 
   <!----- FORM ----->
   <form [formGroup]="inscriptionFormInfos" (ngSubmit)="submitFormInfos()">
-    <ion-grid fixed class="form-bloc">
+    <ion-grid fixed >
       <ion-row class="ion-no-margin">
         <ion-col size="12" class="ion-no-padding">
           <ion-list class="ion-no-padding info ">
@@ -377,4 +393,5 @@
       </ion-row>
     </ion-grid>
   </form>
+</ion-grid>
 </ion-content>

@@ -1,11 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center"
-      ><div class="logo-header">
-        <ion-img
-          type="image/svg+xml"
-          src="../../../assets/images/logo-color.svg"
-        ></ion-img>
+    <ion-title class="ion-text-center">
+      <div class="logo-header">
+        <ion-img type="image/svg+xml" src="../../../assets/images/logo-color.svg"></ion-img>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -15,16 +12,10 @@
   <!-- <ion-button size="medium" (click)="goToAddDossier()"
     >Ajouter un nouveau dossier</ion-button
   > -->
-  <ion-grid class="ion-no-padding">
-    <ion-row class=" bg-light  ion-no-padding  ">
+  <ion-grid class="ion-no-padding ">
+    <ion-row class=" bg-light  ion-no-padding  block-add-dossier ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
-        <ion-button
-          class="bt-cloture"
-          size="medium"
-          shape="round"
-          tappable
-          [routerLink]="['../inscription']"
-        >
+        <ion-button size="medium" shape="round" tappable [routerLink]="['../inscription']">
           <span class="icon-doss-add fsize-28em"></span>
           <p class="fseiz-12em">Nouveau dossier</p>
           <ion-icon name="add-circle-outline" slot="end" class="fsize-20em">
@@ -33,8 +24,40 @@
       </ion-col>
     </ion-row>
 
-    <!-- NOT_EXIST PATIENT -->
-    <ion-row *ngIf="!isExistDossier">
+   
+    <!-- EXIST__MORE THEN ONE PATIENT -->
+    <ion-row *ngIf="isExistDossier">
+      <ion-col>
+        <ion-list class="list-dossier-cours">
+          <ion-list-header class="ion-no-padding">
+            <div class="ion-text-center back-light">
+              Dossiers en cours
+              <span class="small-border">&nbsp;</span>
+            </div>
+          </ion-list-header>
+          <!-- -->
+          <div *ngFor="let patient of objectPatient">
+            <ion-item detail (click)="goToStape(patient.dossierId)">
+             
+              <ion-label>
+                <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                <h2> <span class="icon-man text-dark  fsize14"></span>{{patient["lastName"]}} {{patient["firstName"]}}</h2>
+                <h3><span class="icon-calander text-dark  fsize14"></span>14-07-1974</h3>                
+              </ion-label>
+              <ion-chip color="secondary">
+                <ion-label>Status: <b>RAS</b></ion-label>
+              </ion-chip>
+              <!-- <p class="p-0-10">
+                <ion-note slot="start" color="secondary">Status: <b>RAS</b></ion-note>
+              </p> -->
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+     <!-- NOT_EXIST PATIENT -->
+     <ion-row *ngIf="!isExistDossier">
       <ion-col>
         <ion-card class="ion-margin">
           <ion-card-content class="ion-padding ion-margin text-gray300">
@@ -47,42 +70,7 @@
       </ion-col>
     </ion-row>
 
-    <!-- EXIST__MORE THEN ONE PATIENT -->
-    <ion-row *ngIf="isExistDossier">
-      <ion-col>
-        <ion-list>
-          <ion-list-header>
-            Dossiers en cours
-          </ion-list-header>
 
-          <div *ngFor="let patient of objectPatient">
-            <ion-item detail (click)="goToStape(patient.dossierId)">
-              <!-- <ion-button tappable>
-                <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
-              </ion-button>
-              <ion-button>
-                <ion-icon
-                  slot="icon-only"
-                  name="notifications-outline"
-                ></ion-icon>
-              </ion-button>
-              <ion-button>
-                <ion-icon slot="icon-only" name="pulse"></ion-icon>
-              </ion-button> -->
-              <ion-label  >
-                <h2>{{patient["lastName"]}} {{patient["firstName"]}}</h2>
-                <h3>{{patient["birthDay"]}}</h3>
-               
-                <ion-badge slot="end" color="primary">N°: 2001-00035</ion-badge>
-              </ion-label>
-              <p  class="p-0-10">
-              <ion-note slot="start" color="secondary" >Status: <b>RAS</b></ion-note>
-            </p >
-             
-            </ion-item>
-          </div>
-        </ion-list>
-      </ion-col>
-    </ion-row>
+
   </ion-grid>
 </ion-content>

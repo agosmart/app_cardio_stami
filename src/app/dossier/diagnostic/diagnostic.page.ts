@@ -28,7 +28,7 @@ export class DiagnosticPage implements OnInit {
   returnSearchPatient: Array<PatientModel>;
 
 
-  ecgImage = '/assets/images/ecg.jpg';
+  //ecgImage = '/assets/images/ecg.jpg';
 
   constructor(
     private srv: ServiceAppService,
@@ -53,10 +53,10 @@ export class DiagnosticPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj)[0];
-        console.log(
-          " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
-          this.dataPatient
-        );
+        // console.log(
+        //   " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
+        //   this.dataPatient
+        // );
       }
 
       if (!paramMap.has("idDossier")) {
@@ -68,21 +68,17 @@ export class DiagnosticPage implements OnInit {
     });
   }
 
-  // ===============  PUBLIC FUNCTIONS ===============
-  onShowEcg() {
-    console.log("::::::: Show Image ECG :::::::");
-  }
   // ===============  PUBLIC SHow Alert ===============
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
-  }
+  // showAlert(message: string) {
+  //   this.alertCtrl
+  //     .create({
+  //       header: "Résultat d'authentication",
+  //       message: message,
+  //       cssClass: "alert-css",
+  //       buttons: ["Okay"]
+  //     })
+  //     .then(alertEl => alertEl.present());
+  // }
 
 
   diagnosticRas() {
@@ -112,11 +108,47 @@ export class DiagnosticPage implements OnInit {
   }
 
 
-  async setDiagnosticAlert() {
+  async setDiagnosticAlert(diag: string) {
+
+    switch (diag) {
+      case 'RAS':
+        this.setDiagRas();
+        break;
+      case 'SOS':
+
+        this.setDiagSos();
+
+        break;
+      case 'ST':
+        this.setDiagSt();
+        break;
+
+      default:
+        this.router.navigate(['/home']);
+        break;
+    }
+
+  }
+
+  // ---- SOS ---
+  setDiagSos() {
+    console.log('dataPatientObj ::::', this.dataPatient);
+
+    this.router.navigate(['orientation', JSON.stringify(this.dataPatient)]);
+
+  }
+  // ---- ST ---
+  setDiagSt() {
+
+  }
+  // ---- RAS ---
+  async setDiagRas() {
+
     const alert = await this.alertCtrl.create({
       header: 'Le constat des risques',
       cssClass: "alert-css",
-      message: 'Etes-vous sur que le patient est un ST.',
+     // message: 'Etes-vous sur que le patient est un ST.',
+      message: "Etes-vous sur qu'il n'existe pas de facteur de risque d'infarctus connu au moment de diagnostic ?",
       buttons: [
         {
           text: 'Annuler',
@@ -128,22 +160,19 @@ export class DiagnosticPage implements OnInit {
         }, {
           text: 'Je confirme',
           handler: async () => {
-            const loader = await this.loadingCtrl.create({               
+            const loader = await this.loadingCtrl.create({
               duration: 6000,
               message: 'Envoie en cours...',
               translucent: true,
               cssClass: 'custom-class custom-loading',
-
             });
             await loader.present();
-
             const params = {
               lastName: "mamadou",
               firstName: "Touré",
               gender: "2",
               birthDay: "1960-02-15"
             };
-
             const authObs: Observable<PatientResponseData> = this.srv.getPatient(params, this.token);
             // ---- Call Login function
             await authObs.subscribe(
@@ -154,22 +183,19 @@ export class DiagnosticPage implements OnInit {
               },
               errRes => {
                 console.log("ERROR DIAGNOSTIC:::", errRes);
-
               });
 
             // await  loader.onWillDismiss().then(async l => { console.log("::: Loading ONDISMISS:::", l) };
 
-
             await loader.onWillDismiss().then(async l => {
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
+                color: 'dark',
                 message: 'Votre constat a été pris en considération.',
-                duration: 100000,
-                cssClass: '',
+                duration: 1500,
+                cssClass: 'toast',
                 position: 'bottom'
-
               });
-
               toast.present();
             });
             await loader.dismiss().then((l) => {
@@ -181,7 +207,6 @@ export class DiagnosticPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
   }
 }

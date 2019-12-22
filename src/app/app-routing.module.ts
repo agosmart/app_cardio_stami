@@ -84,7 +84,7 @@ const routes: Routes = [
   },
   // # 4 - ORIENTATION
   {
-    path: "orientation",
+    path: "orientation/:dataPatientObj",
     loadChildren: () =>
       import("./dossier/orientation/orientation.module").then(
         m => m.OrientationPageModule
@@ -94,7 +94,8 @@ const routes: Routes = [
     path: "ras/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/ras/ras.module").then(m => m.RasPageModule)
-  },  {
+  },
+  {
     path: 'image',
     loadChildren: () => import('./modal/image/image.module').then( m => m.ImagePageModule)
   }

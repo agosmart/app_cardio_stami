@@ -129,26 +129,24 @@
   </div>
 
   <!-- -->
-  <ion-row *ngIf="isPatient">
-    <ion-col>
-      <ion-list class="ion-margin-top ion-padding-top">
-        <ion-list-header class="ion-margin-top ion-padding-top">
-          Liste patients similaires
+  <ion-row *ngIf="isPatient">    
+    <ion-col class="ion-margin-top">
+      <ion-list class="ion-margin-top ">
+       
+        <ion-list-header class="ion-no-padding">
+          <div class="ion-text-center back-light">
+            Dossiers similaires
+            <span class="small-border">&nbsp;</span>
+          </div>
         </ion-list-header>
+        <!-- <ion-list-header class="ion-margin-top ion-padding-top">
+          Liste patients similaires
+        </ion-list-header> -->
 
         <ion-item
           *ngFor="let item of returnSearchPatient"
           (click)="goToEcgInfos(item.firstName,item.lastName,item.birthDay,item.gender,item.patientId)"
-        >
-          <!-- <ion-button>
-            <ion-icon slot="icon-only" name="heart-empty"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
-          </ion-button>
-          <ion-button>
-            <ion-icon slot="icon-only" name="pulse"></ion-icon>
-          </ion-button> -->
+        >         
           <ion-avatar slot="start">
             <span
               class='{{ item.gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }}'
@@ -158,6 +156,7 @@
           <ion-label>
             <h2>{{item.lastName}} {{item.firstName}}</h2>
             <h3>{{item.birthDay}}</h3>
+            <ion-badge slot="end" color="medium">N°: 2001-00035</ion-badge>
           </ion-label>
         </ion-item>
       </ion-list>

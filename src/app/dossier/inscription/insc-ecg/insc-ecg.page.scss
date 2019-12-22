@@ -4,7 +4,7 @@
     --ion-color-base: transparent !important;
   }
 
-  /* Remove bottom border on md */
+  /* Remove bottom border on md 
   .overly-gradian {
     //background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
     // background: #516bf0;
@@ -16,7 +16,7 @@
     height: 91px;
     z-index: 0;
     position: absolute;
-  }
+  }*/
   .header-md::after {
     background-image: none;
   }
@@ -28,6 +28,20 @@
   .ion-bt-padding {
     --padding-start: 5px;
     --padding-end: 5px;
+    width: 42px;
+  }
+  
+  ion-icon {
+    margin-right: 5px;
+    font-size: 1.4em;
+    float: left;
+    width: 1.4em;
+  }
+  ion-icon.i-card {
+    color: #929eaa;
+  }
+  button.button-native {
+    padding: 0 5px !important;
   }
 
   .error-message {
@@ -47,18 +61,7 @@
   .error-message p {
     margin: 0;
   }
-  ion-icon {
-    margin-right: 5px;
-    font-size: 1.4em;
-    float: left;
-    width: 1.4em;
-  }
-  ion-icon.i-card {
-    color: #929eaa;
-  }
-  button.button-native {
-    padding: 0 5px !important;
-  }
+  
 
   ion-button {
     --border-radius: 24px;
@@ -104,24 +107,6 @@
     text-align: center;
   }
   // Bloc Header fixed
-  .header-card-fix {
-    height: auto;
-    padding-bottom: 16px;
-    // position: absolute;
-    position: fixed;
-    top: 0;
-    z-index: 8;
-    width: 100%;
-    // background: linear-gradient(
-    //   236deg,
-    //   rgba(1, 37, 142, 0.9) 0%,
-    //   rgba(7, 133, 239, 0.75) 70%,
-    //   rgba(4, 230, 247, 0.3)
-    // );
-    //background: #516bf0;
-    // background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-  }
-
   .header-card-fix {
     //height: 215px;
     position: absolute;

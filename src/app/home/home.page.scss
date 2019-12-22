@@ -27,6 +27,7 @@
 
   ion-card {
     background-color: #ffffff;
+    margin-top: 150px;
   }
   ion-content {
     --background: rgba(236, 240, 244, 0.35);
@@ -35,4 +36,12 @@
 
 .home-page {
  background:#fff;
+ .block-add-dossier{
+   position: fixed;
+   width: 100%;
+   z-index: 1;
+ }
+ .list-dossier-cours{
+  margin-top: 115px;
+}
 }

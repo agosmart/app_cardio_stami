@@ -4,9 +4,10 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { LoadingController, AlertController, ModalController } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { DossierResponseData } from "src/app/models/dossier.response";
+import { ImagePage } from '../../../modal/image/image.page';
 
 @Component({
   selector: "app-insc-infos",
@@ -31,6 +32,8 @@ export class InscInfosPage implements OnInit {
   ecgTmp: string;
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
+
+  ecgImage = '/assets/images/ecg.jpg';
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -95,8 +98,9 @@ export class InscInfosPage implements OnInit {
     private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
-  ) {}
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
+  ) { }
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
@@ -128,10 +132,7 @@ export class InscInfosPage implements OnInit {
   }
 
   // ===============  PUBLIC FUNCTIONS ===============
-  onShowEcg() {
-    console.log("::::::: Show Image ECG :::::::");
-  }
-
+ 
   submitFormInfos() {
     this.isLoading = true;
     this.loadingCtrl
@@ -199,8 +200,9 @@ export class InscInfosPage implements OnInit {
             loadingEl.dismiss();
 
             // --------- Show Alert --------
-            if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+
+            if (errRes.error.code === '401') {
+              this.showAlert(errRes.error.message);
             } else {
               this.showAlert(
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
@@ -222,6 +224,16 @@ export class InscInfosPage implements OnInit {
         return dossier["id_dossier"] === id;
       })
     };
+  }
+
+
+  async openImageEcg(image: any) {
+    console.log('image ::::', image);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: image }
+    });
+    return await modal.present();
   }
 
   private showAlert(message: string) {
