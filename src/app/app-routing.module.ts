@@ -98,7 +98,12 @@ const routes: Routes = [
   {
     path: 'image',
     loadChildren: () => import('./modal/image/image.module').then( m => m.ImagePageModule)
+  },
+  {
+    path: 'pretreatment/:dataPatientObj',
+    loadChildren: () => import('./treatment/pretreatment/pretreatment.module').then( m => m.PretreatmentPageModule)
   }
+
 
 
   // {

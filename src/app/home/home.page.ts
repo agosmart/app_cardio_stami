@@ -114,10 +114,12 @@ export class HomePage implements OnInit {
 
   goToStape(idDossier) {
     this.dataPatient = this.getDataPatient(idDossier);
-    console.log(" vers diag stape===>", this.dataPatient);
     this.pageStape = this.dataPatient["page"];
+
+    console.log(" vers diag stape===>", this.pageStape, ' / ', this.dataPatient);
+
     this.router.navigate([
-      "./" + this.pageStape,
+      "./" + (this.pageStape === null) ? 'diagnostic' : this.pageStape,
       idDossier,
       JSON.stringify([this.dataPatient])
     ]);
