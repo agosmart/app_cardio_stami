@@ -112,7 +112,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  goToStape(idDossier) {
+  goToStep(idDossier) {
     this.dataPatient = this.getDataPatient(idDossier);
     this.pageStape = this.dataPatient["page"];
 

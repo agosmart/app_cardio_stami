@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { ServiceAppService } from "src/app/services/service-app.service";
-import { GlobalvarsService } from "src/app/services/globalvars.service";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DossierModel } from "src/app/models/dossier.model";
+import { Component, OnInit } from '@angular/core';
+import { ServiceAppService } from 'src/app/services/service-app.service';
+import { GlobalvarsService } from 'src/app/services/globalvars.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DossierModel } from 'src/app/models/dossier.model';
 import { ModalController, LoadingController, AlertController, ToastController } from '@ionic/angular';
 import { ImagePage } from '../../modal/image/image.page';
 
@@ -10,12 +10,13 @@ import { Observable } from 'rxjs';
 
 import { PatientModel } from 'src/app/models/patient.model';
 import { PatientResponseData } from 'src/app/models/patient.response';
+import { DiagResponseData } from 'src/app/models/diag.response';
 
 
 @Component({
-  selector: "app-diagnostic",
-  templateUrl: "./diagnostic.page.html",
-  styleUrls: ["./diagnostic.page.scss"]
+  selector: 'app-diagnostic',
+  templateUrl: './diagnostic.page.html',
+  styleUrls: ['./diagnostic.page.scss']
 })
 export class DiagnosticPage implements OnInit {
   idDossierToGet: number;
@@ -25,7 +26,8 @@ export class DiagnosticPage implements OnInit {
   ecgTmp: string;
   idDossier: number;
   token: string;
-  returnSearchPatient: Array<PatientModel>;
+  idUser: number;
+  returnDiag: DiagResponseData;
 
 
   // -----------------------------
@@ -48,59 +50,31 @@ export class DiagnosticPage implements OnInit {
   ) {
 
     this.token = this.sglob.getToken();
+    this.idUser = this.sglob.getIdUser();
   }
 
   ngOnInit() {
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
+      if (!paramMap.has('dataPatientObj')) {
+        this.router.navigate(['/home']);
       } else {
-        const dataObj = paramMap.get("dataPatientObj");
+        const dataObj = paramMap.get('dataPatientObj');
         this.dataPatient = JSON.parse(dataObj)[0];
         // console.log(
-        //   " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
+        //   ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
         //   this.dataPatient
         // );
       }
 
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
+      if (!paramMap.has('idDossier')) {
+        this.router.navigate(['/home']);
       } else {
-        this.idDossier = +paramMap.get("idDossier");
-        this.ecgTmp = this.dataPatient["ecgTmp"];
+        this.idDossier = +paramMap.get('idDossier');
+        this.ecgTmp = this.dataPatient['ecgTmp'];
       }
     });
   }
 
-  // ===============  PUBLIC SHow Alert ===============
-  // showAlert(message: string) {
-  //   this.alertCtrl
-  //     .create({
-  //       header: "Résultat d'authentication",
-  //       message: message,
-  //       cssClass: "alert-css",
-  //       buttons: ["Okay"]
-  //     })
-  //     .then(alertEl => alertEl.present());
-  // }
-
-
-  diagnosticRas() {
-    this.router.navigate([
-      "./ras",
-      this.idDossier,
-      JSON.stringify(this.dataPatient)
-    ]);
-  }
-
-  // getDataPatient(id: number) {
-  //   console.log("************id==>", id);
-  //   return {
-  //     ...this.dataPatients.find(dossier => {
-  //       return dossier["id_dossier"] === id;
-  //     })
-  //   };
-  // }
 
   async openImageEcg(image: any) {
     console.log('image ::::', image);
@@ -111,34 +85,137 @@ export class DiagnosticPage implements OnInit {
     return await modal.present();
   }
 
+  /* =================================
+            setDiagnostic()
+      -------- RAS /  SOS / ST ---------
+     ================================= */
+  /*
+    setDiagnostic(diag: string) {
+  
+      switch (diag) {
+  
+        case 'RAS':
+          // ---- RAS ---
+          console.log('dataPatientObj ::::----> RAS', this.dataPatient);
+         // this.router.navigate(['/ras', this.idDossier, JSON.stringify(this.dataPatient)]);
+          break;
+  
+        case 'SOS':
+          // ---- SOS ---
+          console.log('dataPatientObj ::::----> SOS', this.dataPatient);
+        //  this.router.navigate(['orientation', JSON.stringify(this.dataPatient)]);
+          break;
+  
+        case 'ST':
+          // ---- ST ---
+          console.log('dataPatientObj ::::----> ST', this.dataPatient);
+         // this.router.navigate(['/pretreatment', JSON.stringify(this.dataPatient)]);
+          break;
+  
+        default:
+          this.router.navigate(['/home']);
+          break;
+      }
+      */
+
+  // ===============  PUBLIC SHow Alert ===============
+  // showAlert(message: string) {
+  //   this.alertCtrl
+  //     .create({
+  //       header: 'Résultat d'authentication',
+  //       message: message,
+  //       cssClass: 'alert-css',
+  //       buttons: ['Okay']
+  //     })
+  //     .then(alertEl => alertEl.present());
+  // }
+
+
+
+
+  // getDataPatient(id: number) {
+  //   console.log('************id==>', id);
+  //   return {
+  //     ...this.dataPatients.find(dossier => {
+  //       return dossier['id_dossier'] === id;
+  //     })
+  //   };
+  // }
+
+
+
 
   /* =================================
            setDiagnosticAlert()
      -------- RAS /  SOS / ST ---------
    ================================= */
-  async setDiagnosticAlert(diag: string) {
 
-    const msg_ST = "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
-    const msg_RAS = "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ?";
-    const msg_SOS = "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ?";
+  onSetDiagnostic(diag: string) {
 
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "Opération en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
+        // ----------- END PARAMS  ---------------
+        const params = {
+          dossierId: this.idDossier,
+          doctorId: this.idUser,
+          diagnostic: diag,
+          stapeId: 7,
+        };
+
+        const authObs: Observable<DiagResponseData> = this.srv.diagDossier(params, this.token);
+        // ---- Call Login function
+        authObs.subscribe(
+          resData => {
+            this.returnDiag = resData;
+            console.log('RETOUR DATA DIAGNOSTIC:::', this.returnDiag.code);
+
+            if (+this.returnDiag.code === 202) {
+              loadingEl.dismiss();
+              this.setDiagnostic(diag);
+
+            } else {
+              loadingEl.dismiss();
+              this.msgAlert = 'Prblème interne, veuillez réessyer';
+              this.showAlert(this.msgAlert);
+            }
+          },
+          errRes => {
+            loadingEl.dismiss();
+            if (errRes.error.status === 401 || errRes.error.status === 500) {
+              this.msgAlert = "Accès à la ressource refusé";
+              this.showAlert(this.msgAlert);
+            } else {
+              console.log('RETOUR ERROR DIAGNOSTIC:::', errRes);
+              this.msgAlert = "Prblème d'accès au réseau, veillez vérifier votre connexion";
+              this.showAlert(this.msgAlert);
+            }
+          });
+      });
+
+  }
+  // --------- ALERT CONFIRME -----------
+
+  async showAlertConfirme(diag: string) {
+
+    let msgAlert = '';
     // ----------- message dynamic ---------------
-    if (diag === "ST") {
-      this.msgAlert = msg_ST;
-    } else if (diag === "RAS") {
-      this.msgAlert = msg_RAS;
+
+    if (diag === 'ST') {
+      msgAlert = "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+    } else if (diag === 'RAS') {
+      msgAlert = "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
     } else {
-      this.msgAlert = msg_SOS;
+      msgAlert = "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ? ";
     }
+
+    console.log('DIAG ::::', msgAlert);
     // -----------END  message dynamic ---------------
-
-
     const alert = await this.alertCtrl.create({
-      header: 'Le constat des risques',
+      header: "Résultat d'authentication",
+      message: msgAlert,
       cssClass: "alert-css",
-      // ----------- message dynamic ---------------
-      message: this.msgAlert,
-      // -------------------------
       buttons: [
         {
           text: 'Annuler',
@@ -150,57 +227,28 @@ export class DiagnosticPage implements OnInit {
         }, {
           text: 'Je confirme',
           handler: async () => {
-            const loader = await this.loadingCtrl.create({
-              duration: 8000,
-              message: 'Envoie en cours...',
-              translucent: true,
-              cssClass: 'custom-class custom-loading',
-            });
-            await loader.present();
+            await this.onSetDiagnostic(diag);
+          },
+        }
+      ]
+    });
+    await alert.present();
+  }
 
-            // ----------- params test  ---------------
-            const params = {
-              lastName: "mamadou",
-              firstName: "Touré",
-              gender: "2",
-              birthDay: "1960-02-15"
-            };
-            // ----------- END params test  ---------------
-
-            const authObs: Observable<PatientResponseData> = this.srv.getPatient(params, this.token);
-            // ---- Call Login function
-            await authObs.subscribe(
-              // :::::::::::: ON RESULT ::::::::::
-              resData => {
-                this.returnSearchPatient = resData.data;
-                console.log("RETOUR DATA DIAGNOSTIC:::", this.returnSearchPatient);
-              },
-              errRes => {
-                console.log("RETOUR ERROR DIAGNOSTIC:::", errRes);
-              });
-
-            // await  loader.onWillDismiss().then(async l => { console.log("::: Loading ONDISMISS:::", l) };
-
-            await loader.onWillDismiss().then(async l => {
-              const toast = await this.toastCtrl.create({
-                showCloseButton: true,
-                color: 'dark',
-                message: "Votre diagnostic sur l'état du patient a été prise en considération.",
-                duration: 1500,
-                cssClass: 'toast',
-                position: 'bottom'
-              });
-              toast.present();
-            });
-            await loader.dismiss().then((l) => {
-
-              /* ******** GO TO PAGE *********/
-
-              this.setDiagnostic(diag);
-
-              /* *****************************/
-            });
-
+  // --------- ALERT -----------
+  async showAlert(message: string) {
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: "Résultat d'authentication",
+      message: message,
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirme Annuler');
           }
         }
       ]
@@ -208,9 +256,10 @@ export class DiagnosticPage implements OnInit {
     await alert.present();
   }
 
-  /* =================================
-    setDiagnostic()
-  ================================= */
+
+  // =================================
+  //  setDiagnostic()
+  // =================================
 
   async setDiagnostic(diag: string) {
 
@@ -240,6 +289,95 @@ export class DiagnosticPage implements OnInit {
 
   }
 
+  /*
+    async setDiagnosticAlert_(diag: string) {
+  
+      // ----------- message dynamic ---------------
+      if (diag === 'ST') {
+        this.msgAlert = "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+      } else if (diag === 'RAS') {
+        this.msgAlert = "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+      } else {
+        this.msgAlert = "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ? ";
+      }
+      // -----------END  message dynamic ---------------
+  
+      const alert = await this.alertCtrl.create({
+        header: 'Le constat des risques',
+        cssClass: 'alert-css',
+        // ----------- message dynamic ---------------
+        message: this.msgAlert,
+        // -------------------------
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirme Annuler');
+            }
+          }, {
+            text: 'Je confirme',
+            handler: async () => {
+              const loader = await this.loadingCtrl.create({
+                duration: 8000,
+                message: 'Envoie en cours...',
+                translucent: true,
+                cssClass: 'custom-class custom-loading',
+              });
+              await loader.present();
+              // ----------- params test  ---------------
+              const params = {
+  
+                dossierId: '',
+                doctorId: '',
+                diagnostic: '',
+                stapeId: '',
+              };
+              // ----------- END params test  ---------------
+              const authObs: Observable<DiagResponseData> = this.srv.diagDossier(params, this.token);
+              // ---- Call Login function
+              authObs.subscribe(
+                // :::::::::::: ON RESULT ::::::::::
+                resData => {
+                  this.returnDiag = resData;
+                  console.log('RETOUR DATA DIAGNOSTIC:::', this.returnDiag.code);
+  
+                  if (+this.returnDiag.code === 202) {
+                    // loader.dismiss();
+                    this.msgAlert = 'Votre diagnostic sur l\'état du patient a été prise en considération.';
+  
+                  } else {
+                    // loader.dismiss();
+                    this.msgAlert = 'Prblème interne, veilley réessyer';
+                  }
+                },
+                errRes => {
+                  if (errRes.error.status === 401 || errRes.error.status === 500) {
+                    this.msgAlert = "Accès à la ressource refusé";
+  
+                  }
+                  // loader.dismiss();
+                  console.log('RETOUR ERROR DIAGNOSTIC:::', errRes);
+                  this.msgAlert = "Prblème d'accès au réseau, veillez vérifier votre connexion";
+  
+  
+                });
+  
+              await loader.dismiss().then((l) => {
+                this.setDiagnostic(diag);
+              });
+  
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }
+  
+  */
+
 
   /* *********** END **************** */
+
 }

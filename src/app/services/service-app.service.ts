@@ -9,6 +9,7 @@ import { DataListeEtab } from "../models/data_liste_etab";
 import { DossierResponseData } from "../models/dossier.response";
 import { DossierModel } from "../models/dossier.model";
 import { ClotureResponseData } from "../models/cloture.response";
+import { DiagResponseData } from '../models/diag.response';
 
 interface ResponseEtab {
   code: number;
@@ -93,6 +94,21 @@ export class ServiceAppService {
     //   headers: myHeaders
     // });
     return this.http.get<DossierResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+  diagDossier(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/diagnostic";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    const myBody: object = params;
+    console.log("PARAMS :::", myBody);
+    return this.http.post<DiagResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }
