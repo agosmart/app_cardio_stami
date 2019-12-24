@@ -39,6 +39,7 @@ export class InscEcgPage implements OnInit {
   ecgAfficher: string;
   imageData: any;
   stepId = 4; // etape Infos Dossier
+  startAt: string;
 
   dataPatient: DossierModel;
   dataPatients: Array<DossierModel>;
@@ -93,6 +94,15 @@ export class InscEcgPage implements OnInit {
   });
 
   ngOnInit() {
+    this.startAt =
+      new Date().getHours().toString() +
+      ":" +
+      new Date().getMinutes().toString() +
+      ":" +
+      new Date().getSeconds().toString();
+    // toString(new Date().getMinutes());
+    console.log("Current Date ", this.startAt);
+
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================
@@ -121,7 +131,7 @@ export class InscEcgPage implements OnInit {
     //   this.dataPatient.etabId = this.idEtab;
     //   this.dataPatient.ecgImage = this.imageData;
     //   this.dataPatient.ecgAfficher = this.ecgAfficher;
-    //   this.dataPatient.startAt = "13:25:00";
+    //   this.dataPatient.startAt = this.startAt;
     //   console.log("===== dataPatient envoye ===", this.dataPatient);
     //   this.sglob.presentToast("Données envoyés avec succès.");
     //   this.router.navigate([
@@ -202,6 +212,21 @@ export class InscEcgPage implements OnInit {
       .subscribe((res: DossierResponseData) => {
         if (+res.code === 201) {
           console.log(" res", res.data);
+          this.idDossier = res.data[0]["idDossier"];
+          this.dataPatient.dossierId = this.idDossier;
+          this.dataPatient.weight = this.EcgForm.value.poids;
+          this.dataPatient.doctorId = this.idUser;
+          this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
+          this.dataPatient.patientId = this.idPatient;
+          this.dataPatient.etabId = this.idEtab;
+          this.dataPatient.ecgImage = this.imageData;
+          this.dataPatient.ecgAfficher = this.ecgAfficher;
+          this.dataPatient.startAt = this.startAt;
+          this.router.navigate([
+            "./insc-infos",
+            this.idDossier,
+            JSON.stringify([this.dataPatient])
+          ]);
           // this.presentToast("File upload complete.");
         } else {
           console.log("erreur");

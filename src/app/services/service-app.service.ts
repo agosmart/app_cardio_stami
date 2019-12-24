@@ -9,7 +9,10 @@ import { DataListeEtab } from "../models/data_liste_etab";
 import { DossierResponseData } from "../models/dossier.response";
 import { DossierModel } from "../models/dossier.model";
 import { ClotureResponseData } from "../models/cloture.response";
-import { DiagResponseData } from '../models/diag.response';
+import { DiagResponseData } from "../models/diag.response";
+import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
+import { DemandeAvisResponseData } from "../models/DemandeAvis.response";
+import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 
 interface ResponseEtab {
   code: number;
@@ -109,6 +112,45 @@ export class ServiceAppService {
     const myBody: object = params;
     console.log("PARAMS :::", myBody);
     return this.http.post<DiagResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
+  demandeAvis(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/demande";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    const myBody: object = params;
+    console.log("PARAMS :::", myBody);
+    return this.http.post<DemandeAvisResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
+  reponseDemandeAvis(idAvis: number, token: string) {
+    const apiUrl = this.baseUrl + "/demande/" + idAvis + "/reponse";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return this.http.get<ReponseAvisResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+  listeMedByCr(idCr: number, token: string) {
+    const apiUrl = this.baseUrl + "/etablissements/" + idCr + "/medecins";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return this.http.get<ResponseEtab>(apiUrl, {
       headers: myHeaders
     });
   }

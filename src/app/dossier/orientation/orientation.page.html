@@ -80,7 +80,7 @@
   <!-- ------------------- -->
 
   <ion-grid>
-    <ion-row>
+    <ion-row *ngIf="!afficheMed">
       <ion-col size="12">
         <ion-card class="list-CR" color="light">
           <ion-card-content class="text09 ">
@@ -100,7 +100,7 @@
                 detail
                 lines="full"
                 *ngFor="let item of itemsCR"
-                (click)="callCr(item.etabId)"
+                (click)="demandeAvisCr(item.etabId)"
               >
                 <ion-label>
                   <span class="icon-cudt-box-2  text-dark  text14"></span>
@@ -115,5 +115,53 @@
         </ion-card>
       </ion-col>
     </ion-row>
+
+    <ion-row *ngIf="afficheMed">
+      <ion-col size="12">
+        <ion-card class="list-CR" color="light">
+          <ion-card-content class="text09 ">
+            <ion-list class="ion-no-padding">
+              <ion-list-header class="box-shadow">
+                <ion-label>
+                  <span class="icon-cudt-box-2  text-dark  text14 "></span>
+                  <b>CR {{etabName}}</b>
+                </ion-label>
+                <ion-label
+                  style="    padding-right: 32px"
+                  (click)="reponseAvisCR(demandeAvisId)"
+                >
+                  <span class="icon-cudt-box-2  text-dark  text14 "></span>
+                </ion-label>
+              </ion-list-header>
+              <!---->
+              <ion-item
+                detail
+                lines="full"
+                *ngFor="let itemReponse of dataReponsesAvis"
+              >
+                <ion-label>
+                  <span class="icon-cudt-box-2  text-dark  text14"></span>
+                  {{itemReponse.medecin}}
+                </ion-label>
+                <ion-chip outline color="secondary">
+                  <ion-label><b>{{itemReponse.reponse}}</b></ion-label>
+                </ion-chip>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <div class="ion-padding" *ngIf="afficheMed">
+      <ion-button
+        expand="block"
+        class="ion-margin-top btn"
+        (click)="decision()"
+      >
+        Décision
+        <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+    </div>
   </ion-grid>
 </ion-content>

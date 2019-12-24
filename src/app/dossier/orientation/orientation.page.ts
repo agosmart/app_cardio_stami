@@ -8,6 +8,12 @@ import {
   ModalController
 } from "@ionic/angular";
 import { EtabResponseData } from "src/app/models/etab.response";
+import { ListeMedByCRResponseData } from "src/app/models/listeMedByCr.response";
+import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
+import { Observable } from "rxjs";
+import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
+import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
+import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 
 @Component({
   selector: "app-orientation",
@@ -17,8 +23,15 @@ import { EtabResponseData } from "src/app/models/etab.response";
 export class OrientationPage implements OnInit {
   idUser: number;
   idEtab: number;
+  dossierId: number;
   token: string;
   itemsCR: any;
+  itemsMeds: ListeMedByCRModel;
+  dataReponsesAvis: ReponseAvisModel;
+  isLoading = false;
+  afficheMed = false;
+  demandeAvisId = 0;
+  etabName = "abc";
   dataPatient: object;
   retunListeCR: EtabResponseData;
 
@@ -42,11 +55,16 @@ export class OrientationPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
+        this.dossierId = this.dataPatient["dossierId"];
+        if (this.demandeAvisId !== 0) {
+          this.demandeAvisId = this.dataPatient["demandeAvisId"];
+        }
+
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
         console.log(
           " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatient["lastName"]
+          this.dataPatient["dossierId"]
         );
       }
       // if (!paramMap.has("idDossier")) {
@@ -73,7 +91,140 @@ export class OrientationPage implements OnInit {
     });
   }
 
-  callCr(idCr) {
-    console.log("call cr", idCr);
+  demandeAvisCr(idCr) {
+    console.log("demandeAvisCr idrc ", idCr);
+    this.isLoading = true;
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "opération  en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
+
+        const params = {
+          doctorId: this.idUser,
+          cudtId: this.idEtab,
+          crId: idCr,
+          dossierId: this.dossierId,
+          motifId: 1
+        };
+
+        const authObs: Observable<DemandeAvisResponseData> = this.srvApp.demandeAvis(
+          params,
+          this.token
+        );
+        // ---- Call Login function
+        authObs.subscribe(
+          // :::::::::::: ON RESULT ::::::::::
+          resData => {
+            this.isLoading = false;
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            if (+resData.code === 201) {
+              // this.etabName = this.itemsMeds[0]["etabName"];
+              this.afficheMed = true;
+              console.log(" resData", resData.data);
+              console.log(" resData demandeId", resData.data.demandeId);
+              this.demandeAvisId = resData.data.demandeId;
+              this.reponseAvisCR(this.demandeAvisId);
+              //this.sglob.presentToast(resData.message);
+              // ----- Redirection to Home page ------------
+            } else {
+              // --------- Show Alert --------
+              this.showAlert(resData.message);
+            }
+          },
+
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+          }
+        );
+      });
+  }
+
+  reponseAvisCR(demandeAvisId) {
+    console.log("******************reponseAvis cr **", demandeAvisId);
+    this.isLoading = true;
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "opération  en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
+
+        const authObs: Observable<ReponseAvisResponseData> = this.srvApp.reponseDemandeAvis(
+          demandeAvisId,
+          this.token
+        );
+        // ---- Call Login function
+        authObs.subscribe(
+          // :::::::::::: ON RESULT ::::::::::
+          resData => {
+            this.isLoading = false;
+            // const dataResponse: UserModel = JSON.stringify(resData.data);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            if (+resData.code === 200) {
+              // ----- Toast ------------
+              this.dataReponsesAvis = resData.data;
+              console.log("Response >>>>> ", this.dataReponsesAvis);
+              console.log(
+                "Response >>>>> ",
+                this.dataReponsesAvis[0]["medecin"]
+              );
+              //this.etabName = this.itemsMeds[0]["etabName"];
+              this.afficheMed = true;
+              this.sglob.presentToast(resData.message);
+              // ----- Redirection to Home page ------------
+            } else {
+              // --------- Show Alert --------
+              this.showAlert(resData.message);
+            }
+          },
+
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+          }
+        );
+      });
+  }
+
+  decision() {
+    this.router.navigate([
+      "./diagnostic",
+      this.dossierId,
+      JSON.stringify([this.dataPatient])
+    ]);
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
   }
 }

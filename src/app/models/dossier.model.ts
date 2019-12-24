@@ -25,5 +25,6 @@ export interface DossierModel {
   atlDate: string;
   stapeId: number;
   page: string;
+  demandeAvisId: number;
   diagnostic: DiagModel;
 }
