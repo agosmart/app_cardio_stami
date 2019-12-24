@@ -3,11 +3,15 @@ import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
-import { LoadingController, AlertController, ModalController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
 import { Observable } from "rxjs";
 import { ClotureResponseData } from "src/app/models/cloture.response";
 import { ClotureModel } from "src/app/models/cloture.model";
-import { ImagePage } from 'src/app/modal/image/image.page';
+import { ImagePage } from "src/app/modal/image/image.page";
 
 @Component({
   selector: "app-ras",
@@ -27,7 +31,7 @@ export class RasPage implements OnInit {
   isCloture: boolean;
   returnClotureDossier: ClotureModel;
 
-  ecgImage = '/assets/images/ecg.jpg';
+  ecgImage = "/assets/images/ecg.jpg";
 
   constructor(
     private srvApp: ServiceAppService,
@@ -36,8 +40,8 @@ export class RasPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private router: Router,
-    private modalCtrl: ModalController,
-  ) { }
+    private modalCtrl: ModalController
+  ) {}
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
@@ -97,7 +101,7 @@ export class RasPage implements OnInit {
         const params = {
           dossierId: this.idDossier,
           resultatId: 1,
-          doctorId: this.dataPatient["doctorId"],
+          doctorId: this.dataPatient["doctorId"]
         };
 
         const authObs: Observable<ClotureResponseData> = this.srvApp.clotureDossier(
@@ -110,16 +114,15 @@ export class RasPage implements OnInit {
             this.returnClotureDossier = resData.data;
             loadingEl.dismiss();
             if (+resData.code === 201) {
-
-              this.router.navigate(['/home']);
+              this.sglob.updateInitFetchHome(true);
+              console.log(" diag getInitFetch ", this.sglob.getInitFetch());
+              this.router.navigate(["/home"]);
 
               //this.isCloture = true;
             } else {
               // ----- Hide loader ------
               loadingEl.dismiss();
-              this.showAlert(
-                "Problème interne !!!"
-              );
+              this.showAlert("Problème interne !!!");
             }
           },
 
@@ -142,8 +145,7 @@ export class RasPage implements OnInit {
   }
 
   async openImageEcg(image: any, event) {
-
-    console.log('image ::::', image);
+    console.log("image ::::", image);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
       componentProps: { value: image }

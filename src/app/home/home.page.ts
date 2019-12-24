@@ -21,9 +21,9 @@ export class HomePage implements OnInit {
   etatDossier: number;
   isExistDossier: boolean;
   isLoading = false;
-  objectPatient: Array<DossierModel>;
-  dataPatient: DossierModel;
-  dataPatientObj: object;
+  objectDossiers: Array<DossierModel>;
+  objectDossier: DossierModel;
+  // objectDossierObj: object;
 
   constructor(
     private srv: ServiceAppService,
@@ -38,7 +38,16 @@ export class HomePage implements OnInit {
     this.idEtab = this.sglob.getidEtab();
     //console.log("idEtab", this.idEtab);
   }
-
+  ionViewDidEnter() {
+    console.log(" home ionViewDidEnter before", this.sglob.getInitFetch());
+    if (this.sglob.getInitFetch()) {
+      this.objectDossiers = [];
+      this.isExistDossier = false;
+      this.listingDossier();
+      this.sglob.updateInitFetchHome(false);
+      console.log(" home ionViewDidEnter after", this.sglob.getInitFetch());
+    }
+  }
   ngOnInit() {
     this.etatDossier = 0; // dossier ouvert
     this.listingDossier();
@@ -73,14 +82,16 @@ export class HomePage implements OnInit {
             // const dataResponse: UserModel = JSON.stringify(resData.data);
 
             console.log("<<<<<<<<<<<<<<<<<<<<<<Response >>>>> ", resData);
+
             // ----- Hide loader ------
             loadingEl.dismiss();
             if (resData.data.length > 0) {
               //console.log("resData", resData);
               this.isExistDossier = true;
-              this.objectPatient = resData.data;
+              this.objectDossiers = resData.data;
+              //this.[0].diagnostic['diagnostique']:
               //const dataResponse: DossierResponseData = resData;
-              //  console.log("dataResponse", this.objectPatient.length);
+              //  console.log("dataResponse", this.objectDossiers.length);
             } else {
               // --------- Show Alert --------
               // this.showAlert(resData.message);
@@ -105,23 +116,28 @@ export class HomePage implements OnInit {
       });
   }
 
-  getDataPatient(id: any) {
-    console.log(this.objectPatient);
-    return this.objectPatient.find(dossier => {
+  getobjectDossier(id: any) {
+    console.log(this.objectDossiers);
+    return this.objectDossiers.find(dossier => {
       return dossier["dossierId"] === id;
     });
   }
 
   goToStep(idDossier) {
-    this.dataPatient = this.getDataPatient(idDossier);
-    this.pageStape = this.dataPatient["page"];
+    this.objectDossier = this.getobjectDossier(idDossier);
+    this.pageStape = this.objectDossier["page"];
 
-    console.log(" vers diag stape===>", this.pageStape, ' / ', this.dataPatient);
+    console.log(
+      " vers diag stape===>",
+      this.pageStape,
+      " / ",
+      this.objectDossier
+    );
 
     this.router.navigate([
-      "./" + (this.pageStape === null) ? 'diagnostic' : this.pageStape,
+      "./" + (this.pageStape === null) ? "diagnostic" : this.pageStape,
       idDossier,
-      JSON.stringify([this.dataPatient])
+      JSON.stringify([this.objectDossier])
     ]);
   }
   private showAlert(message: string) {

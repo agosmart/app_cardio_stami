@@ -8,6 +8,7 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
+  private initFetch = false;
   constructor(
     private toastController: ToastController,
     private webview: WebView
@@ -19,8 +20,16 @@ export class GlobalvarsService {
     this.idEtab = idEtab;
   }
 
+  public updateInitFetchHome(initFetch) {
+    this.initFetch = initFetch;
+  }
+
   public getIdUser() {
     return this.idUser;
+  }
+
+  public getInitFetch() {
+    return this.initFetch;
   }
 
   public getToken() {

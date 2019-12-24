@@ -38,7 +38,7 @@ export class InscEcgPage implements OnInit {
   isEcg: boolean;
   ecgAfficher: string;
   imageData: any;
-  stapeId = 4; // etape Infos Dossier
+  stepId = 4; // etape Infos Dossier
 
   dataPatient: DossierModel;
   dataPatients: Array<DossierModel>;
@@ -122,7 +122,6 @@ export class InscEcgPage implements OnInit {
     //   this.dataPatient.ecgImage = this.imageData;
     //   this.dataPatient.ecgAfficher = this.ecgAfficher;
     //   this.dataPatient.startAt = "13:25:00";
-
     //   console.log("===== dataPatient envoye ===", this.dataPatient);
     //   this.sglob.presentToast("Données envoyés avec succès.");
     //   this.router.navigate([
@@ -171,7 +170,7 @@ export class InscEcgPage implements OnInit {
       formData.append("doctorId", this.idUser.toString());
       formData.append("dThorasic", this.EcgForm.value.dThorasic);
       formData.append("weight", this.EcgForm.value.poids.toString());
-      formData.append("stapeId", this.stapeId.toString());
+      formData.append("stepId", this.stepId.toString());
       formData.append("patientId", this.idPatient.toString());
       formData.append("lastName", this.dataPatient["firstName"]);
       formData.append("firstName", this.dataPatient["lastName"]);

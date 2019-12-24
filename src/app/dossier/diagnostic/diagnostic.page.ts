@@ -1,22 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { ServiceAppService } from 'src/app/services/service-app.service';
-import { GlobalvarsService } from 'src/app/services/globalvars.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DossierModel } from 'src/app/models/dossier.model';
-import { ModalController, LoadingController, AlertController, ToastController } from '@ionic/angular';
-import { ImagePage } from '../../modal/image/image.page';
+import { Component, OnInit } from "@angular/core";
+import { ServiceAppService } from "src/app/services/service-app.service";
+import { GlobalvarsService } from "src/app/services/globalvars.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { DossierModel } from "src/app/models/dossier.model";
+import {
+  ModalController,
+  LoadingController,
+  AlertController,
+  ToastController
+} from "@ionic/angular";
+import { ImagePage } from "../../modal/image/image.page";
 
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
-import { PatientModel } from 'src/app/models/patient.model';
-import { PatientResponseData } from 'src/app/models/patient.response';
-import { DiagResponseData } from 'src/app/models/diag.response';
-
+import { PatientModel } from "src/app/models/patient.model";
+import { PatientResponseData } from "src/app/models/patient.response";
+import { DiagResponseData } from "src/app/models/diag.response";
 
 @Component({
-  selector: 'app-diagnostic',
-  templateUrl: './diagnostic.page.html',
-  styleUrls: ['./diagnostic.page.scss']
+  selector: "app-diagnostic",
+  templateUrl: "./diagnostic.page.html",
+  styleUrls: ["./diagnostic.page.scss"]
 })
 export class DiagnosticPage implements OnInit {
   idDossierToGet: number;
@@ -27,14 +31,13 @@ export class DiagnosticPage implements OnInit {
   idDossier: number;
   token: string;
   idUser: number;
+  stepId: number;
   returnDiag: DiagResponseData;
 
-
   // -----------------------------
-  msgAlert = '';
+  msgAlert = "";
 
-
-  ecgImage = '/assets/images/ecg.jpg';
+  ecgImage = "/assets/images/ecg.jpg";
 
   constructor(
     private srv: ServiceAppService,
@@ -44,21 +47,18 @@ export class DiagnosticPage implements OnInit {
     private modalCtrl: ModalController,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController,
-
-
+    private toastCtrl: ToastController
   ) {
-
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
   }
 
   ngOnInit() {
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('dataPatientObj')) {
-        this.router.navigate(['/home']);
+      if (!paramMap.has("dataPatientObj")) {
+        this.router.navigate(["/home"]);
       } else {
-        const dataObj = paramMap.get('dataPatientObj');
+        const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj)[0];
         // console.log(
         //   ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
@@ -66,18 +66,17 @@ export class DiagnosticPage implements OnInit {
         // );
       }
 
-      if (!paramMap.has('idDossier')) {
-        this.router.navigate(['/home']);
+      if (!paramMap.has("idDossier")) {
+        this.router.navigate(["/home"]);
       } else {
-        this.idDossier = +paramMap.get('idDossier');
-        this.ecgTmp = this.dataPatient['ecgTmp'];
+        this.idDossier = +paramMap.get("idDossier");
+        this.ecgTmp = this.dataPatient["ecgTmp"];
       }
     });
   }
 
-
   async openImageEcg(image: any) {
-    console.log('image ::::', image);
+    console.log("image ::::", image);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
       componentProps: { value: image }
@@ -130,9 +129,6 @@ export class DiagnosticPage implements OnInit {
   //     .then(alertEl => alertEl.present());
   // }
 
-
-
-
   // getDataPatient(id: number) {
   //   console.log('************id==>', id);
   //   return {
@@ -142,16 +138,13 @@ export class DiagnosticPage implements OnInit {
   //   };
   // }
 
-
-
-
   /* =================================
            setDiagnosticAlert()
      -------- RAS /  SOS / ST ---------
    ================================= */
 
   onSetDiagnostic(diag: string) {
-
+    console.log("diag ::::----> diag", diag);
     this.loadingCtrl
       .create({ keyboardClose: true, message: "Opération en cours..." })
       .then(loadingEl => {
@@ -161,23 +154,25 @@ export class DiagnosticPage implements OnInit {
           dossierId: this.idDossier,
           doctorId: this.idUser,
           diagnostic: diag,
-          stapeId: 7,
+          stepId: this.stepId
         };
 
-        const authObs: Observable<DiagResponseData> = this.srv.diagDossier(params, this.token);
+        const authObs: Observable<DiagResponseData> = this.srv.diagDossier(
+          params,
+          this.token
+        );
         // ---- Call Login function
         authObs.subscribe(
           resData => {
             this.returnDiag = resData;
-            console.log('RETOUR DATA DIAGNOSTIC:::', this.returnDiag.code);
+            console.log("RETOUR DATA DIAGNOSTIC:::", this.returnDiag.code);
 
             if (+this.returnDiag.code === 202) {
               loadingEl.dismiss();
               this.setDiagnostic(diag);
-
             } else {
               loadingEl.dismiss();
-              this.msgAlert = 'Prblème interne, veuillez réessyer';
+              this.msgAlert = "Prblème interne, veuillez réessyer";
               this.showAlert(this.msgAlert);
             }
           },
@@ -187,30 +182,36 @@ export class DiagnosticPage implements OnInit {
               this.msgAlert = "Accès à la ressource refusé";
               this.showAlert(this.msgAlert);
             } else {
-              console.log('RETOUR ERROR DIAGNOSTIC:::', errRes);
-              this.msgAlert = "Prblème d'accès au réseau, veillez vérifier votre connexion";
+              console.log("RETOUR ERROR DIAGNOSTIC:::", errRes);
+              this.msgAlert =
+                "Prblème d'accès au réseau, veillez vérifier votre connexion";
               this.showAlert(this.msgAlert);
             }
-          });
+          }
+        );
       });
-
   }
   // --------- ALERT CONFIRME -----------
 
   async showAlertConfirme(diag: string) {
-
-    let msgAlert = '';
+    let msgAlert = "";
     // ----------- message dynamic ---------------
 
-    if (diag === 'ST') {
-      msgAlert = "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
-    } else if (diag === 'RAS') {
-      msgAlert = "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+    if (diag === "ST") {
+      this.stepId = 7;
+      msgAlert =
+        "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+    } else if (diag === "RAS") {
+      this.stepId = 10;
+      msgAlert =
+        "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
     } else {
-      msgAlert = "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ? ";
+      this.stepId = 6;
+      msgAlert =
+        "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ? ";
     }
 
-    console.log('DIAG ::::', msgAlert);
+    console.log("DIAG ::::", msgAlert);
     // -----------END  message dynamic ---------------
     const alert = await this.alertCtrl.create({
       header: "Résultat d'authentication",
@@ -218,17 +219,18 @@ export class DiagnosticPage implements OnInit {
       cssClass: "alert-css",
       buttons: [
         {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirme Annuler');
+            console.log("Confirme Annuler");
           }
-        }, {
-          text: 'Je confirme',
+        },
+        {
+          text: "Je confirme",
           handler: async () => {
             await this.onSetDiagnostic(diag);
-          },
+          }
         }
       ]
     });
@@ -244,11 +246,11 @@ export class DiagnosticPage implements OnInit {
       cssClass: "alert-css",
       buttons: [
         {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirme Annuler');
+            console.log("Confirme Annuler");
           }
         }
       ]
@@ -256,37 +258,44 @@ export class DiagnosticPage implements OnInit {
     await alert.present();
   }
 
-
   // =================================
   //  setDiagnostic()
   // =================================
 
   async setDiagnostic(diag: string) {
-
     switch (diag) {
-      case 'RAS':
+      case "RAS":
         // ---- RAS ---
-        console.log('dataPatientObj ::::----> RAS', this.dataPatient);
-        await this.router.navigate(['/ras', this.idDossier, JSON.stringify(this.dataPatient)]);
+        console.log("dataPatientObj ::::----> RAS", this.dataPatient);
+        await this.router.navigate([
+          "/ras",
+          this.idDossier,
+          JSON.stringify(this.dataPatient)
+        ]);
         break;
 
-      case 'SOS':
+      case "SOS":
         // ---- SOS ---
-        console.log('dataPatientObj ::::----> SOS', this.dataPatient);
-        await this.router.navigate(['orientation', JSON.stringify(this.dataPatient)]);
+        console.log("dataPatientObj ::::----> SOS", this.dataPatient);
+        await this.router.navigate([
+          "orientation",
+          JSON.stringify(this.dataPatient)
+        ]);
         break;
 
-      case 'ST':
+      case "ST":
         // ---- ST ---
-        console.log('dataPatientObj ::::----> ST', this.dataPatient);
-        await this.router.navigate(['/pretreatment', JSON.stringify(this.dataPatient)]);
+        console.log("dataPatientObj ::::----> ST", this.dataPatient);
+        await this.router.navigate([
+          "/pretreatment",
+          JSON.stringify(this.dataPatient)
+        ]);
         break;
 
       default:
-        this.router.navigate(['/home']);
+        this.router.navigate(["/home"]);
         break;
     }
-
   }
 
   /*
@@ -332,7 +341,7 @@ export class DiagnosticPage implements OnInit {
                 dossierId: '',
                 doctorId: '',
                 diagnostic: '',
-                stapeId: '',
+                stepId: '',
               };
               // ----------- END params test  ---------------
               const authObs: Observable<DiagResponseData> = this.srv.diagDossier(params, this.token);
@@ -377,7 +386,5 @@ export class DiagnosticPage implements OnInit {
   
   */
 
-
   /* *********** END **************** */
-
 }

@@ -1,3 +1,5 @@
+import { DiagModel } from "./diag.model";
+
 //import { EcgModel } from "./ecg.model";
 
 export interface DossierModel {
@@ -23,5 +25,5 @@ export interface DossierModel {
   atlDate: string;
   stapeId: number;
   page: string;
-  // ecg: Array<EcgModel>;
+  diagnostic: DiagModel;
 }

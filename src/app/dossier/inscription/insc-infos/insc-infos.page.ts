@@ -4,10 +4,14 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
-import { LoadingController, AlertController, ModalController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
 import { Observable } from "rxjs";
 import { DossierResponseData } from "src/app/models/dossier.response";
-import { ImagePage } from '../../../modal/image/image.page';
+import { ImagePage } from "../../../modal/image/image.page";
 
 @Component({
   selector: "app-insc-infos",
@@ -22,7 +26,7 @@ export class InscInfosPage implements OnInit {
   idEtab: number;
   token: string;
   idDossier: number;
-  stapeId = 5; // etape Infos Dossier
+  stepId = 5; // etape Infos Dossier
   objectInsc: Array<object>;
   //dataPatient: DossierModel;
   dataPatient: DossierModel;
@@ -33,7 +37,7 @@ export class InscInfosPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
 
-  ecgImage = '/assets/images/ecg.jpg';
+  ecgImage = "/assets/images/ecg.jpg";
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -99,8 +103,8 @@ export class InscInfosPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController,
-  ) { }
+    private modalCtrl: ModalController
+  ) {}
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
@@ -132,7 +136,7 @@ export class InscInfosPage implements OnInit {
   }
 
   // ===============  PUBLIC FUNCTIONS ===============
- 
+
   submitFormInfos() {
     this.isLoading = true;
     this.loadingCtrl
@@ -168,7 +172,7 @@ export class InscInfosPage implements OnInit {
           cardIscStable: valcardIscStable,
           daignoDate: this.inscriptionFormInfos.value.daignoDate.substr(0, 4),
           atlDate: this.inscriptionFormInfos.value.atlDate.substr(0, 4),
-          stapeId: this.stapeId
+          stepId: this.stepId
         };
 
         const authObs: Observable<DossierResponseData> = this.srvApp.addInfoDossier(
@@ -201,7 +205,7 @@ export class InscInfosPage implements OnInit {
 
             // --------- Show Alert --------
 
-            if (errRes.error.code === '401') {
+            if (errRes.error.code === "401") {
               this.showAlert(errRes.error.message);
             } else {
               this.showAlert(
@@ -226,9 +230,8 @@ export class InscInfosPage implements OnInit {
     };
   }
 
-
   async openImageEcg(image: any) {
-    console.log('image ::::', image);
+    console.log("image ::::", image);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
       componentProps: { value: image }

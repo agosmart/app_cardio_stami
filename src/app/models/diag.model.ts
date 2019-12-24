@@ -1,4 +1,4 @@
 export interface DiagModel {
-  id: number;
-  apiToken: string;
+  medecinId: number;
+  diagnostique: string;
 }
