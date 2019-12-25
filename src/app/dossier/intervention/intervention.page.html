@@ -1,21 +1,22 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/inscription"></ion-back-button>
+      <ion-back-button defaultHref="/pretreatment"></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="diag-info ion-no-padding">
+<ion-content fullscreen class="interv-info ion-no-padding">
  
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
-        <span class="icon-diagnostic text-white text20"></span>
+        <!-- <span class="icon-doctor-sos-2  text-white text20"></span> -->
+        <span class="icon-doctor-sos-2  text-white text20 _fsize-22em"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">DIAGNOSTIC</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">INTERVENTION ENVISAGÉE</ion-col>
     </ion-row>
   </ion-grid>
 
@@ -36,26 +37,25 @@
                 </ion-row>
 
                 <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
-                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
+                  <ion-col size="12" class="ion-no-padding">                 
                     <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+                    <!-- {{dataPatient['lastName']}} {{dataPatient['firstName']}} -->
+                    Bouaziz Halim
                   </ion-col>
                 </ion-row>
 
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
-                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
-                    {{dataPatient['birthDayFr']}}
+                   
+                    <!-- {{dataPatient['birthDayFr']}} -->
                     <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <span class="icon-weight  text-dark  text10"></span>
-                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
-                    {{dataPatient['weight'] + ' KG'}}
+                    <span class="icon-weight  text-dark  text10"></span>                   
+                    <!-- {{dataPatient['weight'] + ' KG'}} -->
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -78,38 +78,38 @@
 
  
   <!-- ------------------- -->
-  <ion-grid fixed class="diagnostic ion-margin-top ion-padding-top">
+  <ion-grid fixed class="intervention ion-margin-top ">
     <!-- ------- -->
     <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
+      <ion-col size="12" class="ion-text-left">
+        <ion-grid class="interv-btn-group ion-text-left">
           <ion-row>
-            <ion-col size="4">
-              <ion-button expand="block" fill="solid" class="st" tappable (click)="showAlertConfirme('ST')">
+            <ion-col size="12">
+              <ion-button expand="block" fill="solid" class="gocr" tappable (click)="showAlertConfirme('GOCR')">
                 <div>
-                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
+                  <span class="icon-heart-st fsize-20em"></span>
                   <ion-text color="_primary">
-                    ST
+                    Envoyer le patient au CR
                   </ion-text>
                 </div>
               </ion-button>
             </ion-col>
-            <ion-col size="4">
-              <ion-button expand="block" fill="solid" class="sos" tappable (click)="showAlertConfirme('SOS')">
+            <ion-col size="12">
+              <ion-button expand="block" fill="solid" class="engio" tappable (click)="showAlertConfirme('ENGIO')">
                 <div>
-                  <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
+                  <span class="icon-doctor-sos-2 fsize-22em"></span>
                   <ion-text color="_primary">
-                    SOS
+                    Engioplastie
                   </ion-text>
                 </div>
               </ion-button>
             </ion-col>
-            <ion-col size="4">
-              <ion-button expand="block" fill="solid" class="ras" tappable (click)="showAlertConfirme('RAS')">
+            <ion-col size="12">
+              <ion-button expand="block" fill="solid" class="thrombo" tappable (click)="showAlertConfirme('THROMBO')">
                 <div>
-                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
+                  <span class="icon-heart-checked fsize-20em"></span>
                   <ion-text color="_primary">
-                    RAS
+                    Thrombolyse
                   </ion-text>
                 </div>
               </ion-button>

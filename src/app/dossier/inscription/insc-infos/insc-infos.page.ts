@@ -39,6 +39,7 @@ export class InscInfosPage implements OnInit {
 
   ecgImage = "/assets/images/ecg.jpg";
 
+  
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
   }
@@ -74,6 +75,7 @@ export class InscInfosPage implements OnInit {
   // ------------ Message d'erreurs -----------------
 
   public errorMessages = {
+    
     diabetes: [{ type: "required", message: "" }],
     dyslip: [{ type: "required", message: "" }],
     sca: [{ type: "required", message: "" }],
@@ -82,6 +84,7 @@ export class InscInfosPage implements OnInit {
 
   // -------------------------------------
   inscriptionFormInfos = this.formBuilder.group({
+    
     daignoDate: ["", ""],
     atlDate: ["", ""],
     diabetes: ["", [Validators.required]],
@@ -135,12 +138,17 @@ export class InscInfosPage implements OnInit {
     });
   }
 
+  radioChecked() {
+
+    // this.cheked = this.pretreatmentFormInfos.value.bolus;
+     console.log( this.inscriptionFormInfos.value.bolus);
+   }
   // ===============  PUBLIC FUNCTIONS ===============
 
   submitFormInfos() {
     this.isLoading = true;
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "ajout  en cours..." })
+      .create({ keyboardClose: true, message: "Ajout  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
         let valHta = 0;

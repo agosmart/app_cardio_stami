@@ -26,47 +26,18 @@
           <ion-card-content class="text09 ion-text-center ">
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
-                <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                 <span class="icon-man text-dark  text10"></span>
-                Mouallem Mohamed
-                <!-- {{dataPatient['lastName']}} {{dataPatient['firstName']}} -->
+                {{dataPatient['lastName']}} {{dataPatient['firstName']}}
               </ion-col>
-
+              <ion-col size="12" class="ion-no-padding">
+                {{dataPatient['birthDayFr']}}
+              </ion-col>
               <ion-col size="12" class="ion-no-padding ">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16" slot="start" color="medium">DOSSIER N°: 2001-00035</ion-badge>
                 </ion-label>
               </ion-col>
 
-              <!-- <ion-col size="10" class="ion-no-padding">
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
-                    <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
-                  </ion-col>
-                </ion-row>
-
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
-                    <span class="icon-calander  text-dark  text10"></span>
-                    {{dataPatient['birthDay']}}
-                  </ion-col>
-                </ion-row>
-
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
-                    <span class="icon-weight  text-dark  text10"></span>
-                    {{dataPatient['weight'] + ' KG'}}
-                  </ion-col>
-                </ion-row> 
-              </ion-col>
-              <ion-col size="2" class="ion-no-padding">              
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button (click)="openImageEcg(ecgImage)" color="danger" class="ion-bt-padding ">
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-col>-->
             </ion-row>
           </ion-card-content>
         </ion-card>
@@ -74,15 +45,26 @@
     </ion-row>
 
 
-    <!----- FORM ----->
-
     <form [formGroup]="pretreatmentFormInfos" (ngSubmit)="submitFormInfos()">
       <ion-grid fixed>
         <ion-row class="ion-no-margin">
           <ion-col size="12">
 
             <!-- pretreatment-bolus -->
-            <ion-radio-group formControlName="bolus">
+            <ion-list-header class="ion-no-padding">
+              <div class="ion-text-center back-light">
+                Prétraitement bolus
+                <span class="small-border">&nbsp;</span>
+              </div>
+
+            </ion-list-header>
+            <ion-item lines="full">
+              <ion-label class=" _fsize-12em  p-16-0" >Prétraitement reçu</ion-label>
+              <ion-toggle  [(ngModel)]="toggled" [checked]="toggled" (ionChange)="formToggled($event)" formControlName="bolus" tappable></ion-toggle>
+              <!-- <ion-toggle checked="false" formControlName="bolus"></ion-toggle> -->
+            </ion-item>
+
+            <!-- <ion-radio-group formControlName="bolus" (ionSelect)="radioChecked()">
 
               <ion-list-header class="ion-no-padding">
                 <div class="ion-text-center back-light">
@@ -92,17 +74,25 @@
               </ion-list-header>
 
               <ion-item>
-                <ion-label>OUI</ion-label>
-                <ion-radio slot="start" color="primary" value="0"></ion-radio>
+                <ion-label>NON</ion-label>
+                <ion-radio slot="start" color="primary" checked value="0"></ion-radio>
               </ion-item>
               <ion-item>
-                <ion-label>NON</ion-label>
-                <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+                <ion-label>OUI</ion-label>
+                <ion-radio slot="start" color="primary" value="1"></ion-radio>
               </ion-item>
             </ion-radio-group>
+             
+            <div *ngFor="let error of errorMessages.bolus">
+              <ng-container *ngIf="bolus.hasError(error.type) && (bolus.dirty || bolus.touched)">
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div> -->
+            <!--====-->
 
 
-            <!-- ASPEGIC -->
+            <!--ASPEGIC-->
+            <ng-container *ngIf="toggled">
             <ion-row class="ion-no-padding ion-margin-top">
               <ion-col size="12" class="ion-no-padding">
                 <ion-card class="_ion-no-margin" color="light">
@@ -117,12 +107,18 @@
 
                     <ion-radio-group formControlName="aspegic">
                       <ion-item>
-                        <ion-label>Intraveineux la dose75-250 mg</ion-label>
-                        <ion-radio slot="start" color="primary" value="0"></ion-radio>
+                        <ion-note slot="" class="note">Aucun</ion-note>
+                        <ion-radio slot="start" color="primary" value="0" checked></ion-radio>
+                      </ion-item>
+                      <ion-item>
+                        <ion-note slot="" class="note">Intraveineux</ion-note>
+                        <ion-note slot="end" class=" fsize-12em">75-250 mg</ion-note>
+                        <ion-radio slot="start" color="primary" value="1"></ion-radio>
                       </ion-item>
                       <ion-item lines="none">
-                        <ion-label>Per os La dose 150-300 mg </ion-label>
-                        <ion-radio slot="start" color="primary" value="1"></ion-radio>
+                        <ion-note slot="" class="note">Per os</ion-note>
+                        <ion-note slot="end" class=" fsize-12em">150-300 mg</ion-note>
+                        <ion-radio slot="start" color="primary" value="2"></ion-radio>
                       </ion-item>
                     </ion-radio-group>
 
@@ -130,7 +126,7 @@
                 </ion-card>
               </ion-col>
             </ion-row>
-            <!-- PLAVIX -->
+            <!--PLAVIX-->
 
             <ion-row>
               <ion-col size="12" class="ion-no-padding">
@@ -140,35 +136,31 @@
                       <h6>PLAVIX</h6>
                     </ion-card-title>
                   </ion-card-header>
-
                   <ion-card-content class="text09 ">
+
                     <ion-radio-group formControlName="plavix">
-                     
                       <ion-item>
-                        <ion-radio slot="start" color="primary" value="0"></ion-radio>
-                        <ion-note slot="">Acune intervention</ion-note>
-                        <ion-note slot="end" class=" fsize-12em">0 mg </ion-note>
+                        <ion-note slot="" class="note">Aucun</ion-note>
+                        <ion-radio slot="start" color="primary" value="0" ></ion-radio>
                       </ion-item>
-
                       <ion-item>
-                        <ion-radio slot="start" color="primary" value="1"></ion-radio>
-                        <ion-note slot="">Thrombolyse</ion-note>
+                        <ion-note slot="" class="note">Thrombolyse</ion-note>
                         <ion-note slot="end" class=" fsize-12em">300 mg </ion-note>
+                        <ion-radio slot="start" color="primary" value="1"></ion-radio>
                       </ion-item>
-
                       <ion-item lines="none">
-                        <ion-radio slot="start" color="primary" value="2"></ion-radio>
-                        <ion-note slot="">Angioplastie</ion-note>
+                        <ion-note slot="" class="note">Angioplastie</ion-note>
                         <ion-note slot="end" class=" fsize-12em">600 mg </ion-note>
-
+                        <ion-radio slot="start" color="primary" value="2"></ion-radio>
                       </ion-item>
                     </ion-radio-group>
+
                   </ion-card-content>
                 </ion-card>
               </ion-col>
             </ion-row>
 
-            <!-- -->
+            <!--HEPARINE-->
             <ion-row>
               <ion-col size="12" class="ion-no-padding">
                 <ion-card class="ion-margin" color="light">
@@ -180,8 +172,8 @@
 
                   <ion-card-content class="text09 ">
                     <ion-item lines="full">
-                      <ion-label class=" fsize-12em" >4800 UI </ion-label>
-                      <ion-checkbox checked="false" formControlName="heparine"></ion-checkbox>
+                      <ion-label class=" fsize-12em">{{doseHeparine}} mg</ion-label>
+                      <ion-checkbox checked="false" formControlName="heparine" value="0"></ion-checkbox>
                     </ion-item>
                     <ion-note>
                       <small>DOSE PARE POIDS : 80 KG * 60 UI/KG</small>
@@ -191,7 +183,7 @@
               </ion-col>
             </ion-row>
 
-            <!-- -->
+            <!--ENOXAPARINE-->
             <ion-row>
               <ion-col size="12" class="ion-no-padding">
                 <ion-card class="ion-margin" color="light">
@@ -203,27 +195,30 @@
 
                   <ion-card-content class="text09 ">
                     <ion-item lines="full">
-                      <ion-label class=" fsize-12em" >60 mg</ion-label>
-                      <ion-checkbox checked="false" formControlName="enoxaparine"></ion-checkbox>
+                      <ion-label class=" fsize-12em">{{doseEnoxaparine}} UI</ion-label>
+                      <ion-checkbox checked="false" formControlName="enoxaparine" value="0"></ion-checkbox>
                     </ion-item>
                     <ion-note>
                       <small> DOSE PAR ÂGE :</small>
-                      <small>
-                        < 75 ANS BOLUS IV DE 30 MG </small> <small> ≥ 75 ANS DOSE SOUS CUTANÉE DE 0,75 MG/KG
-                      </small>
+                      <small>- Âge > 75 ANS BOLUS IV DE 30 MG </small> <small>- Âge ≤ 75 ANS DOSE SOUS CUTANÉE DE 0,75 MG/KG</small>
                     </ion-note>
                   </ion-card-content>
                 </ion-card>
               </ion-col>
             </ion-row>
             <!-- ----------------- -->
-
-            <!-- Button Submit-->
+          </ng-container>
+           <!-- ----------------- -->
+            <!--Button Submit-->
             <ion-row>
               <ion-col size="12">
                 <div class="ion-margin-top">
-                  <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark"
+                  <!-- <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark"
                     [disabled]="!pretreatmentFormInfos.valid" type="submit">
+                    Valider
+                    <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+                  </ion-button> -->
+                  <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" type="submit">
                     Valider
                     <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
                   </ion-button>
@@ -231,10 +226,12 @@
               </ion-col>
             </ion-row>
 
-
+         
           </ion-col>
         </ion-row>
       </ion-grid>
     </form>
+    <!----- FORM ----->
+
   </ion-grid>
 </ion-content>

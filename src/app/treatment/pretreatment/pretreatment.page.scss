@@ -105,10 +105,14 @@
     ion-note {
       font-size: 0.85rem;
       display: block;
-      padding: 12px 6px;
+      padding: 12px 5px;
       font-weight: 500;
       color: #47525d;
       display: block;
+
+      &.note{
+        padding: 16px 5px;
+      }
       small {
         display: block;
       }

@@ -5,13 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { PretreatmentPageRoutingModule } from './pretreatment-routing.module';
-
 import { PretreatmentPage } from './pretreatment.page';
 
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    //ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     IonicModule,
     PretreatmentPageRoutingModule
   ],
