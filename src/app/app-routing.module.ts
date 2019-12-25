@@ -102,8 +102,12 @@ const routes: Routes = [
   {
     path: 'pretreatment/:dataPatientObj',
     loadChildren: () => import('./treatment/pretreatment/pretreatment.module').then( m => m.PretreatmentPageModule)
-  }
+  },  {
+    path: 'intervention',
+    loadChildren: () => import('./dossier/intervention/intervention.module').then( m => m.InterventionPageModule)
+  },
 
+  
 
 
   // {

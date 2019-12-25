@@ -4,11 +4,7 @@ import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
 import {
-  ModalController,
-  LoadingController,
-  AlertController,
-  ToastController
-} from "@ionic/angular";
+  ModalController, LoadingController, AlertController,  ToastController} from "@ionic/angular";
 import { ImagePage } from "../../modal/image/image.page";
 
 import { Observable } from "rxjs";
@@ -51,6 +47,13 @@ export class DiagnosticPage implements OnInit {
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
+    if (this.token === undefined || this.idUser === undefined) {
+
+      this.token = "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
+      this.idUser = 61;
+    }
+
+
   }
 
   ngOnInit() {
@@ -59,11 +62,13 @@ export class DiagnosticPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
+       
         this.dataPatient = JSON.parse(dataObj)[0];
-        // console.log(
-        //   ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
-        //   this.dataPatient
-        // );
+        
+        console.log(
+          ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
+          this.dataPatient
+        );
       }
 
       if (!paramMap.has("idDossier")) {
@@ -83,68 +88,13 @@ export class DiagnosticPage implements OnInit {
     });
     return await modal.present();
   }
-
-  /* =================================
-            setDiagnostic()
-      -------- RAS /  SOS / ST ---------
-     ================================= */
-  /*
-    setDiagnostic(diag: string) {
-  
-      switch (diag) {
-  
-        case 'RAS':
-          // ---- RAS ---
-          console.log('dataPatientObj ::::----> RAS', this.dataPatient);
-         // this.router.navigate(['/ras', this.idDossier, JSON.stringify(this.dataPatient)]);
-          break;
-  
-        case 'SOS':
-          // ---- SOS ---
-          console.log('dataPatientObj ::::----> SOS', this.dataPatient);
-        //  this.router.navigate(['orientation', JSON.stringify(this.dataPatient)]);
-          break;
-  
-        case 'ST':
-          // ---- ST ---
-          console.log('dataPatientObj ::::----> ST', this.dataPatient);
-         // this.router.navigate(['/pretreatment', JSON.stringify(this.dataPatient)]);
-          break;
-  
-        default:
-          this.router.navigate(['/home']);
-          break;
-      }
-      */
-
-  // ===============  PUBLIC SHow Alert ===============
-  // showAlert(message: string) {
-  //   this.alertCtrl
-  //     .create({
-  //       header: 'Résultat d'authentication',
-  //       message: message,
-  //       cssClass: 'alert-css',
-  //       buttons: ['Okay']
-  //     })
-  //     .then(alertEl => alertEl.present());
-  // }
-
-  // getDataPatient(id: number) {
-  //   console.log('************id==>', id);
-  //   return {
-  //     ...this.dataPatients.find(dossier => {
-  //       return dossier['id_dossier'] === id;
-  //     })
-  //   };
-  // }
-
   /* =================================
            setDiagnosticAlert()
      -------- RAS /  SOS / ST ---------
    ================================= */
 
   onSetDiagnostic(diag: string) {
-    console.log("diag ::::----> diag", diag);
+    console.log("onSetDiagnostic ::::----> diag", diag);
     this.loadingCtrl
       .create({ keyboardClose: true, message: "Opération en cours..." })
       .then(loadingEl => {
@@ -161,13 +111,14 @@ export class DiagnosticPage implements OnInit {
           params,
           this.token
         );
-        // ---- Call Login function
+        // ---- Call DIAGNOSTIC function
         authObs.subscribe(
           resData => {
             this.returnDiag = resData;
-            console.log("RETOUR DATA DIAGNOSTIC:::", this.returnDiag.code);
+
 
             if (+this.returnDiag.code === 202) {
+              console.log("RETOUR DATA DIAGNOSTIC:::", this.returnDiag.code);
               loadingEl.dismiss();
               this.setDiagnostic(diag);
             } else {
@@ -286,14 +237,14 @@ export class DiagnosticPage implements OnInit {
         );
         // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
         await this.router.navigate([
-          "orientation",
+          "/orientation",
           JSON.stringify(this.dataPatient)
         ]);
         break;
 
       case "ST":
         // ---- ST ---
-        console.log("dataPatientObj ::::----> ST", this.dataPatient);
+        console.log("dataPatientObj ::::----> ST DIAGNOSTIC ", this.dataPatient);
         await this.router.navigate([
           "/pretreatment",
           JSON.stringify(this.dataPatient)

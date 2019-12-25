@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
   IdUser: number;
   idEtab: number;
   token: string;
-  pageStape: string;
+  pageStep: string;
   etatDossier: number;
   isExistDossier: boolean;
   isLoading = false;
@@ -125,18 +125,17 @@ export class HomePage implements OnInit {
 
   goToStep(idDossier) {
     this.objectDossier = this.getobjectDossier(idDossier);
-    this.pageStape = this.objectDossier["page"];
+    this.pageStep = this.objectDossier["page"];
 
     console.log(
       " vers diag stape===>",
-      this.pageStape,
+      this.pageStep,
       " / ",
       this.objectDossier
     );
 
     this.router.navigate([
-      "./" + (this.pageStape === null) ? "diagnostic" : this.pageStape,
-      idDossier,
+      "./" + this.pageStep,      
       JSON.stringify([this.objectDossier])
     ]);
   }

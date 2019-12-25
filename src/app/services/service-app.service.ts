@@ -13,6 +13,7 @@ import { DiagResponseData } from "../models/diag.response";
 import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
 import { DemandeAvisResponseData } from "../models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "../models/reponseAvis.response";
+import { PretreatmentResponseData } from '../models/pretreatment.response';
 
 interface ResponseEtab {
   code: number;
@@ -102,6 +103,7 @@ export class ServiceAppService {
   }
 
   diagDossier(params: object, token: string) {
+     
     const apiUrl = this.baseUrl + "/diagnostic";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -110,7 +112,7 @@ export class ServiceAppService {
     });
 
     const myBody: object = params;
-    console.log("PARAMS :::", myBody);
+    console.log("TOKEN", token, " - PARAMS :::", myBody);
     return this.http.post<DiagResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
@@ -181,6 +183,35 @@ export class ServiceAppService {
     const myBody: object = params;
     console.log("PARAMS :::", myBody);
     return this.http.post<ClotureResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
+  addPretreatment( params: object , token: string){
+    const apiUrl = this.baseUrl + "/pretraitement";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    const myBody: object = params;
+    console.log("PARAMS addPretreatment :::", myBody, " / URL ::::", apiUrl);
+    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
+  public getPretreatment(params: object, token: string): any {
+   // console.log("token service ===>", token);
+    const apiUrl = this.baseUrl + "/search";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+   // console.log("myHeaders service ===>", myHeaders);
+    const myBody: any = params; // nom / genre datenaissance
+    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }
