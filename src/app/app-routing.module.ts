@@ -78,42 +78,33 @@ const routes: Routes = [
   {
     path: "diagnostic/:idDossier/:dataPatientObj",
     loadChildren: () =>
-      import("./dossier/diagnostic/diagnostic.module").then(
-        m => m.DiagnosticPageModule
-      )
+      import("./dossier/diagnostic/diagnostic.module").then(m => m.DiagnosticPageModule)
   },
   // # 4 - ORIENTATION
   {
-    path: "orientation/:dataPatientObj",
+    path: "orientation/:idDossier/:dataPatientObj",
     loadChildren: () =>
-      import("./dossier/orientation/orientation.module").then(
-        m => m.OrientationPageModule
-      )
+      import("./dossier/orientation/orientation.module").then(m => m.OrientationPageModule)
   },
   {
     path: "ras/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import("./cloture/ras/ras.module").then(m => m.RasPageModule)
+    loadChildren: () => import("./cloture/ras/ras.module").then(m => m.RasPageModule)
   },
   {
     path: 'image',
-    loadChildren: () => import('./modal/image/image.module').then( m => m.ImagePageModule)
+    loadChildren: () => import('./modal/image/image.module').then(m => m.ImagePageModule)
   },
   {
-    path: 'pretreatment/:dataPatientObj',
-    loadChildren: () => import('./treatment/pretreatment/pretreatment.module').then( m => m.PretreatmentPageModule)
-  },  {
-    path: 'intervention',
-    loadChildren: () => import('./dossier/intervention/intervention.module').then( m => m.InterventionPageModule)
+    path: 'pretreatment/:idDossier/:dataPatientObj',
+    loadChildren: () => import('./treatment/pretreatment/pretreatment.module').then(m => m.PretreatmentPageModule)
+  },
+  {
+    path: "intervention/:idDossier/:dataPatientObj",
+    // path: "intervention",
+    loadChildren: () => import('./dossier/intervention/intervention.module').then(m => m.InterventionPageModule)
   },
 
-  
 
-
-  // {
-  //   path: 'dossier-detail/:idPatient',
-  //   loadChildren: () => import('./dossier/dossier-detail/dossier-detail.module').then( m => m.DossierDetailPageModule)
-  // }
 ];
 
 @NgModule({
@@ -122,4 +113,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

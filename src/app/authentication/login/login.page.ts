@@ -167,7 +167,7 @@ export class LoginPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.showAlert(errRes.error.message);
             } else {
               this.showAlert(
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"

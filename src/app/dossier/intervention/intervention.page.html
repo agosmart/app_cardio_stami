@@ -39,23 +39,27 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">                 
                     <span class="icon-man text-dark  text10"></span>
-                    <!-- {{dataPatient['lastName']}} {{dataPatient['firstName']}} -->
+                     {{dataPatient['lastName']}} {{dataPatient['firstName']}} 
                     Bouaziz Halim
                   </ion-col>
                 </ion-row>
 
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <span class="icon-calander  text-dark  text10"></span>
-                   
-                    <!-- {{dataPatient['birthDayFr']}} -->
-                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+                    <span class="icon-calander  text-dark  text10"></span>                   
+                   {{dataPatient['birthDayFr']}}
+                  
+                   <ion-chip outline color="secondary">                     
+                    <ion-label class="bold" >{{dataPatient['age']}} ans </ion-label>
+                  </ion-chip>
+
+                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>                   
-                    <!-- {{dataPatient['weight'] + ' KG'}} -->
+                    {{dataPatient['weight'] + ' KG'}} 
                   </ion-col>
                 </ion-row>
               </ion-col>

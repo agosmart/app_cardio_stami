@@ -110,7 +110,7 @@ export class PretreatmentPage implements OnInit {
       } else {
 
         const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj)[0];
+        this.dataPatient = JSON.parse(dataObj);
         // =================================================
         this.doctorId = this.dataPatient.doctorId;
         this.dossierId = this.dataPatient.dossierId;
@@ -244,7 +244,7 @@ export class PretreatmentPage implements OnInit {
         this.pretreatmentObj.stepId = 8;
         this.pretreatmentObj.dossierId = this.dossierId;
         this.pretreatmentObj.doctorId = this.doctorId;
-        this.pretreatmentObj.bolus = bolus?1:0;
+        this.pretreatmentObj.bolus = bolus ? 1 : 0;
         this.pretreatmentObj.treatments = treatmentsArr;
         // -------------------------------
         console.log('treatment ::: ', treatmentsArr);
@@ -264,8 +264,12 @@ export class PretreatmentPage implements OnInit {
 
             if (+this.returnData.code === 201) {
               loadingEl.dismiss();
-             
-              this.router.navigate(['/intervention']);
+
+              this.router.navigate([
+                '/intervention',
+                this.dossierId,
+                JSON.stringify(this.dataPatient)
+              ]);
 
             } else {
               loadingEl.dismiss();
@@ -276,7 +280,7 @@ export class PretreatmentPage implements OnInit {
           errRes => {
             loadingEl.dismiss();
             this.msgAlert = errRes.error.message;
-              this.showAlert(this.msgAlert);
+            this.showAlert(this.msgAlert);
             // if ( errRes.error.status === 500) {
             //   this.msgAlert = "Accès à la ressource refusé";
             //   this.showAlert(this.msgAlert);

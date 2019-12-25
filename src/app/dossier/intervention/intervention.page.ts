@@ -52,14 +52,14 @@ export class InterventionPage implements OnInit {
 
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
-
+        console.log("----AUCUNE DATA DISPO ----")
        // this.router.navigate(["/home"]);
 
       } else {
 
         const dataObj = paramMap.get("dataPatientObj");
 
-        this.dataPatient = JSON.parse(dataObj)[0];
+        this.dataPatient = JSON.parse(dataObj);
 
         console.log(
           ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',

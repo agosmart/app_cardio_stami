@@ -195,7 +195,8 @@ export class InscriptionPage implements OnInit {
                 this.inscriptionDossier.value.prenom,
                 this.inscriptionDossier.value.dateNaissance,
                 this.inscriptionDossier.value.genre,
-                this.idPatient
+                this.idPatient,
+
               );
             }
           },
@@ -225,7 +226,7 @@ export class InscriptionPage implements OnInit {
       lastName: nom,
       birthDay: dateNaissance,
       gender: genre,
-      patientId: idPatient
+      patientId: idPatient,
     };
 
     console.log("objetInsc---***", this.dataPatientObj);
@@ -233,6 +234,7 @@ export class InscriptionPage implements OnInit {
     this.inscriptionDossier.reset();
     this.router.navigate(["./insc-ecg", JSON.stringify(this.dataPatientObj)]);
   }
+
   private showAlert(message: string) {
     this.alertCtrl
       .create({

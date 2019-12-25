@@ -4,7 +4,8 @@ import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
 import {
-  ModalController, LoadingController, AlertController,  ToastController} from "@ionic/angular";
+  ModalController, LoadingController, AlertController, ToastController
+} from "@ionic/angular";
 import { ImagePage } from "../../modal/image/image.page";
 
 import { Observable } from "rxjs";
@@ -47,11 +48,11 @@ export class DiagnosticPage implements OnInit {
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
-    if (this.token === undefined || this.idUser === undefined) {
+    // if (this.token === undefined || this.idUser === undefined) {
 
-      this.token = "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
-      this.idUser = 61;
-    }
+    //   this.token = "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
+    //   this.idUser = 61;
+    // }
 
 
   }
@@ -62,9 +63,9 @@ export class DiagnosticPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
-       
-        this.dataPatient = JSON.parse(dataObj)[0];
-        
+
+        this.dataPatient = JSON.parse(dataObj);
+
         console.log(
           ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
           this.dataPatient
@@ -238,6 +239,7 @@ export class DiagnosticPage implements OnInit {
         // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
         await this.router.navigate([
           "/orientation",
+          this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
         break;
@@ -247,6 +249,7 @@ export class DiagnosticPage implements OnInit {
         console.log("dataPatientObj ::::----> ST DIAGNOSTIC ", this.dataPatient);
         await this.router.navigate([
           "/pretreatment",
+          this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
         break;

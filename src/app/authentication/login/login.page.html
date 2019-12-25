@@ -36,14 +36,13 @@
               <ion-label position="floating">
                 <!-- <ion-icon name="person" item-start></ion-icon> -->
                 <span class="icon-user"></span>
-                Nom utilisateur</ion-label
-              >
+                Nom utilisateur</ion-label>
 
               <ion-input
                 inputmode="text"
                 placeholder="email@domaine.com"
                 formControlName="username"
-                value=""
+                
               >
               </ion-input>
             </ion-item>
@@ -80,7 +79,7 @@
 
               <ion-input
                 type="{{showEye?'text': 'password'}}"
-                formControlName="password"
+                formControlName="password" 
               ></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.password">
