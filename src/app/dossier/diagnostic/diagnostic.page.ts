@@ -229,6 +229,10 @@ export class DiagnosticPage implements OnInit {
         {
           text: "Je confirme",
           handler: async () => {
+            if (this.dataPatient["demandeAvisId"] !== 0 && diag === "SOS") {
+              this.setDiagnostic("SOS");
+            } else {
+            }
             await this.onSetDiagnostic(diag);
           }
         }
@@ -276,7 +280,11 @@ export class DiagnosticPage implements OnInit {
 
       case "SOS":
         // ---- SOS ---
-        console.log("dataPatientObj ::::----> SOS", this.dataPatient);
+        console.log(
+          "dataPatientObj ::::----> SOS",
+          this.dataPatient["demandeAvisId"]
+        );
+        // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
         await this.router.navigate([
           "orientation",
           JSON.stringify(this.dataPatient)

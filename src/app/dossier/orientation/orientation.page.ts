@@ -51,43 +51,41 @@ export class OrientationPage implements OnInit {
     this.token = this.sglob.getToken();
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
-        // this.router.navigate(["/home"]);
+        this.router.navigate(["/home"]);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
-        if (this.demandeAvisId !== 0) {
-          this.demandeAvisId = this.dataPatient["demandeAvisId"];
-        }
-
         //this.objectInsc = JSON.parse(dataObj);
-        console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
+        this.demandeAvisId = this.dataPatient["demandeAvisId"];
+        console.log(" orientation  >>>>> dataPatients ::: ", this.dataPatient);
         console.log(
-          " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatient["dossierId"]
+          " orientation >>>>> demandeAvisId ::: ",
+          this.demandeAvisId
         );
-      }
-      // if (!paramMap.has("idDossier")) {
-      //   this.router.navigate(["/home"]);
-      // } else {
-      //   this.idDossier = +paramMap.get("idDossier");
-      //   console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
-      //   this.ecgTmp = this.dataPatient["ecgTmp"];
-      // }
-
-      // 1 c les CR  2 CUDT
-      this.srvApp.getListeCR(1).subscribe((resp: any) => {
-        this.retunListeCR = resp;
-        console.log("return liste cr", this.retunListeCR);
-        console.log("return liste code", this.retunListeCR.code);
-        // this.retunListeCR.code = 200; // a enlever
-        if (+this.retunListeCR.code === 200) {
-          this.itemsCR = this.retunListeCR.data;
-          console.log("nom etab cr", this.retunListeCR.data);
+        if (this.demandeAvisId !== 0) {
+          this.afficheMed = true;
+          this.reponseAvisCR(this.demandeAvisId);
         } else {
-          console.log("no");
+          this.listeCr();
         }
-      });
+      }
+      // 1 c les CR  2 CUDT
+    });
+  }
+
+  listeCr() {
+    this.srvApp.getListeCR(1).subscribe((resp: any) => {
+      this.retunListeCR = resp;
+      console.log("return liste cr", this.retunListeCR);
+      console.log("return liste code", this.retunListeCR.code);
+      // this.retunListeCR.code = 200; // a enlever
+      if (+this.retunListeCR.code === 200) {
+        this.itemsCR = this.retunListeCR.data;
+        console.log("nom etab cr", this.retunListeCR.data);
+      } else {
+        console.log("no");
+      }
     });
   }
 
