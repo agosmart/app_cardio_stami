@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ToastController } from "@ionic/angular";
+import { ToastController, AlertController } from "@ionic/angular";
 import { WebView } from "@ionic-native/ionic-webview/ngx";
 @Injectable({
   providedIn: "root"
@@ -11,6 +11,7 @@ export class GlobalvarsService {
   private initFetch = false;
   constructor(
     private toastController: ToastController,
+    private alertCtrl: AlertController,
     private webview: WebView
   ) {}
 
@@ -57,6 +58,17 @@ export class GlobalvarsService {
       console.log("converted", converted);
       return converted;
     }
+  }
+
+  public showAlert(headerAlert: string, messageAlert: string) {
+    this.alertCtrl
+      .create({
+        header: headerAlert,
+        message: messageAlert,
+        cssClass: "alert-css",
+        buttons: ["Ok"]
+      })
+      .then(alertEl => alertEl.present());
   }
 
   createFileName() {

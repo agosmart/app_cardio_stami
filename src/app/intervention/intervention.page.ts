@@ -168,6 +168,7 @@ export class InterventionPage implements OnInit {
         );
         await this.router.navigate([
           "/engio",
+          this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
         break;
@@ -180,6 +181,7 @@ export class InterventionPage implements OnInit {
         );
         await this.router.navigate([
           "/thromb",
+          this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
         break;

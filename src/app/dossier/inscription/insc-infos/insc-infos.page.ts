@@ -29,7 +29,8 @@ export class InscInfosPage implements OnInit {
   stepId = 5; // etape Infos Dossier
   objectInsc: Array<object>;
   //dataPatient: DossierModel;
-  dataPatient: DossierModel;
+  //dataPatient: DossierModel;
+  dataPatient: object;
   objectRecu: object;
   idDossierToGet: any;
   dataPatients: Array<DossierModel>;
@@ -39,7 +40,6 @@ export class InscInfosPage implements OnInit {
 
   ecgImage = "/assets/images/ecg.jpg";
 
-  
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
   }
@@ -75,7 +75,6 @@ export class InscInfosPage implements OnInit {
   // ------------ Message d'erreurs -----------------
 
   public errorMessages = {
-    
     diabetes: [{ type: "required", message: "" }],
     dyslip: [{ type: "required", message: "" }],
     sca: [{ type: "required", message: "" }],
@@ -84,7 +83,6 @@ export class InscInfosPage implements OnInit {
 
   // -------------------------------------
   inscriptionFormInfos = this.formBuilder.group({
-    
     daignoDate: ["", ""],
     atlDate: ["", ""],
     diabetes: ["", [Validators.required]],
@@ -122,7 +120,7 @@ export class InscInfosPage implements OnInit {
       } else {
         // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
-        this.dataPatient = this.objectRecu[0];
+        this.dataPatient = this.objectRecu;
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
       }
       //idDossier
@@ -139,10 +137,9 @@ export class InscInfosPage implements OnInit {
   }
 
   radioChecked() {
-
     // this.cheked = this.pretreatmentFormInfos.value.bolus;
-     console.log( this.inscriptionFormInfos.value.bolus);
-   }
+    console.log(this.inscriptionFormInfos.value.bolus);
+  }
   // ===============  PUBLIC FUNCTIONS ===============
 
   submitFormInfos() {
