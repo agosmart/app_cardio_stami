@@ -4,7 +4,10 @@ import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
 import {
-  ModalController, LoadingController, AlertController, ToastController
+  ModalController,
+  LoadingController,
+  AlertController,
+  ToastController
 } from "@ionic/angular";
 import { ImagePage } from "../../modal/image/image.page";
 
@@ -53,8 +56,6 @@ export class DiagnosticPage implements OnInit {
     //   this.token = "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
     //   this.idUser = 61;
     // }
-
-
   }
 
   ngOnInit() {
@@ -63,11 +64,11 @@ export class DiagnosticPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
-
+        console.log(" dataObj >>>>> dataPatient ::: ", dataObj);
         this.dataPatient = JSON.parse(dataObj);
 
         console.log(
-          ' DIAGNOSTIC  recu diag >>>>> dataPatient ::: ',
+          " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
           this.dataPatient
         );
       }
@@ -116,7 +117,6 @@ export class DiagnosticPage implements OnInit {
         authObs.subscribe(
           resData => {
             this.returnDiag = resData;
-
 
             if (+this.returnDiag.code === 202) {
               console.log("RETOUR DATA DIAGNOSTIC:::", this.returnDiag.code);
@@ -246,7 +246,10 @@ export class DiagnosticPage implements OnInit {
 
       case "ST":
         // ---- ST ---
-        console.log("dataPatientObj ::::----> ST DIAGNOSTIC ", this.dataPatient);
+        console.log(
+          "dataPatientObj ::::----> ST DIAGNOSTIC ",
+          this.dataPatient
+        );
         await this.router.navigate([
           "/pretreatment",
           this.idDossier,

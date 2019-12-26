@@ -208,10 +208,11 @@ export class OrientationPage implements OnInit {
   }
 
   decision() {
+    console.log("orientation vers datapatient diag ===>", this.dataPatient);
     this.router.navigate([
       "./diagnostic",
       this.dossierId,
-      JSON.stringify([this.dataPatient])
+      JSON.stringify(this.dataPatient)
     ]);
   }
 

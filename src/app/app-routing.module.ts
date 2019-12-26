@@ -78,33 +78,60 @@ const routes: Routes = [
   {
     path: "diagnostic/:idDossier/:dataPatientObj",
     loadChildren: () =>
-      import("./dossier/diagnostic/diagnostic.module").then(m => m.DiagnosticPageModule)
+      import("./dossier/diagnostic/diagnostic.module").then(
+        m => m.DiagnosticPageModule
+      )
   },
   // # 4 - ORIENTATION
   {
     path: "orientation/:idDossier/:dataPatientObj",
     loadChildren: () =>
-      import("./dossier/orientation/orientation.module").then(m => m.OrientationPageModule)
+      import("./dossier/orientation/orientation.module").then(
+        m => m.OrientationPageModule
+      )
   },
   {
     path: "ras/:idDossier/:dataPatientObj",
-    loadChildren: () => import("./cloture/ras/ras.module").then(m => m.RasPageModule)
+    loadChildren: () =>
+      import("./cloture/ras/ras.module").then(m => m.RasPageModule)
   },
   {
-    path: 'image',
-    loadChildren: () => import('./modal/image/image.module').then(m => m.ImagePageModule)
+    path: "image",
+    loadChildren: () =>
+      import("./modal/image/image.module").then(m => m.ImagePageModule)
   },
   {
-    path: 'pretreatment/:idDossier/:dataPatientObj',
-    loadChildren: () => import('./treatment/pretreatment/pretreatment.module').then(m => m.PretreatmentPageModule)
+    path: "pretreatment/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./treatment/pretreatment/pretreatment.module").then(
+        m => m.PretreatmentPageModule
+      )
   },
   {
     path: "intervention/:idDossier/:dataPatientObj",
     // path: "intervention",
-    loadChildren: () => import('./dossier/intervention/intervention.module').then(m => m.InterventionPageModule)
+    loadChildren: () =>
+      import("./intervention/intervention.module").then(
+        m => m.InterventionPageModule
+      )
   },
-
-
+  {
+    path: "gocr/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/gocr/gocr.module").then(m => m.GocrPageModule)
+  },
+  {
+    path: "engio/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/engio/engio.module").then(m => m.EngioPageModule)
+  },
+  {
+    path: "thromb/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/thromb/thromb.module").then(
+        m => m.ThrombPageModule
+      )
+  }
 ];
 
 @NgModule({
@@ -113,4 +140,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
