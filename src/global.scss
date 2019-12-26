@@ -125,6 +125,10 @@ ion-button.btn{
       background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
   }
 // Helpers //
+.w100{
+  width:100%;
+}
+
 .p-2{
   padding: 2px 2px;
 }
@@ -298,4 +302,77 @@ ion-button.btn{
   //margin: 10px 45% 0px 45%;
   margin: 5px 45% 0px 45%
 
+}
+/* -------- Bloc Header --------*/
+.form-bloc {
+  margin-top: 92px;
+}
+// Toolbar transparent
+.icon-header {
+  text-align: center;
+  //margin-top: 10px;
+  font-size: 1.8rem;
+  color: #fff;
+}
+.title-header {
+  // color: #ffffff;
+  // font-weight: 700;
+  // font-size: 0.8em;
+  // letter-spacing: 0.1em;
+  // text-align: center;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1em;
+  letter-spacing: 0.15rem;
+  padding-top: 3px;
+  text-align: center;
+}
+h3.title-header {
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// Bloc Header fixed
+.header-card-fix {
+  //height: 215px;
+  position: absolute;
+  position: fixed;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  top: 0;
+  z-index: 8;
+  // background: #01258e;
+  // background: linear-gradient(
+  //   236deg,
+  //   rgba(1, 37, 142, 0.9) 0%,
+  //   rgba(7, 133, 239, 0.75) 70%,
+  //   rgba(4, 230, 247, 0.3)
+  // );
+
+  // background: #516bf0;
+  // background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+  // background: #516bf0;
+  // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+
+  background: #3853de;
+  background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+}
+
+.error-message {
+  color: white;
+  background: #f32051;
+  border-radius: 8px;
+  width: 100%;
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 8px 10px;
+  height: 24px;
+  vertical-align: middle;
+  line-height: 20px;
+  font-size: 0.9em;
+  height: auto;
 }

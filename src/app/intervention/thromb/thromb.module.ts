@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -11,10 +11,10 @@ import { ThrombPage } from './thromb.page';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     ThrombPageRoutingModule
   ],
   declarations: [ThrombPage]
 })
-export class ThrombPageModule {}
+export class ThrombPageModule { }

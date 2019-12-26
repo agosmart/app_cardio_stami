@@ -104,19 +104,7 @@
   }
 
   .register-init {
-    .icon-header {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 1.8rem;
-      color: #fff;
-    }
-    .title-header {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 1.2em;
-      letter-spacing: 0.1em;
-      text-align: center;
-    }
+  
     // Bloc Header fixed
     .header-card-fix {
       height: 104px;
@@ -212,7 +200,7 @@
 
   .info-message {
     margin: 8px 0;
-    background: rgba(54, 59, 123, 0.35);
+    background: rgba(54, 59, 123, 0.4);
     display: inline-flex;
     border: 1px solid #fff;
     height: auto;

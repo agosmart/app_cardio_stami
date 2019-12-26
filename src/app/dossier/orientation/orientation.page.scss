@@ -64,59 +64,6 @@
     }
   
 
-
-    .form-bloc {
-      margin-top:92px;
-    }
-    .icon-header {
-      text-align: center;
-      // margin-top: 10px;
-      font-size: 1.8rem;
-      color: #fff;
-    }
-    
-    h3.title-header {
-      padding: 0;
-      margin: 0;
-      font-size: 1em;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .title-header {
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.8em;
-      letter-spacing: 0.1em;
-      text-align: center;
-    }
-  
-    // Bloc Header fixed
-    .header-card-fix {
-      //height: 215px;
-      position: absolute;
-      position: fixed;
-      width: 100%;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      top: 0;
-      z-index: 8;
-      // background: #01258e;
-      // background: linear-gradient(
-      //   236deg,
-      //   rgba(1, 37, 142, 0.9) 0%,
-      //   rgba(7, 133, 239, 0.75) 70%,
-      //   rgba(4, 230, 247, 0.3)
-      // );
-  
-      // background: #516bf0;
-      // background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-      // background: #516bf0;
-      // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
-  
-      background: #3853de;
-      background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
-    }
-  
     ion-card-content.md.card-content-md.hydrated {
       //padding: 10px 24px 10px 10px;
       padding: 10px;

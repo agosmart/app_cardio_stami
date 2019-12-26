@@ -62,7 +62,7 @@ export class HomePage implements OnInit {
   listingDossier() {
     this.isLoading = true;
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "recherche dossier en cours..." })
+      .create({ keyboardClose: true, message: "Recherche en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 

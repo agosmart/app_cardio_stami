@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, Validators } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { PretreatmentModel } from 'src/app/models/pretreatment.model';
 import { TreatmentModel } from 'src/app/models/treatment.model';
@@ -42,18 +42,18 @@ export class PretreatmentPage implements OnInit {
   token: string;
   idUser: number;
   returnData: PretreatmentResponseData;
-  msgAlert = "";
+  msgAlert = '';
 
   // weight: number;
   // birthdate: string;
   // age: string;
   pretreatmentFormInfos = this.formBuilder.group({
 
-    bolus: ["", ""],
-    aspegic: ["", ""],
-    plavix: ["", ""],
-    heparine: ["", ""],
-    enoxaparine: ["", ""],
+    bolus: ['', ''],
+    aspegic: ['', ''],
+    plavix: ['', ''],
+    heparine: ['', ''],
+    enoxaparine: ['', ''],
     // bolus: [false, [Validators.pattern]]
   });
 
@@ -64,19 +64,19 @@ export class PretreatmentPage implements OnInit {
 
   get bolus() {
     //return this.pretreatmentFormInfos.get("bolus");
-    return this.pretreatmentFormInfos.get("bolus");
+    return this.pretreatmentFormInfos.get('bolus');
   }
   get aspegic() {
-    return this.pretreatmentFormInfos.get("aspegic");
+    return this.pretreatmentFormInfos.get('aspegic');
   }
   get plavix() {
-    return this.pretreatmentFormInfos.get("plavix");
+    return this.pretreatmentFormInfos.get('plavix');
   }
   get heparine() {
-    return this.pretreatmentFormInfos.get("heparine");
+    return this.pretreatmentFormInfos.get('heparine');
   }
   get enoxaparine() {
-    return this.pretreatmentFormInfos.get("enoxaparine");
+    return this.pretreatmentFormInfos.get('enoxaparine');
   }
 
 
@@ -104,12 +104,12 @@ export class PretreatmentPage implements OnInit {
   ngOnInit() {
 
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
+      if (!paramMap.has('dataPatientObj')) {
+        this.router.navigate(['/home']);
 
       } else {
 
-        const dataObj = paramMap.get("dataPatientObj");
+        const dataObj = paramMap.get('dataPatientObj');
         this.dataPatient = JSON.parse(dataObj);
         // =================================================
         this.doctorId = this.dataPatient.doctorId;
@@ -126,20 +126,20 @@ export class PretreatmentPage implements OnInit {
             this.birthdate = this.dataPatient.patient.birthDay;
             this.getAge(this.birthdate);
         */
-        const age = this.dataPatient["age"];
+        const age = this.dataPatient['age'];
         if (age <= 75) {
           this.doseEnoxaparine = weight * 0.75;
         } else {
           this.doseEnoxaparine = 30;
         }
 
-        console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
+        console.log(':::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient');
         console.group();
         console.log(this.dataPatient);
         console.group();
-        console.log("::: weight ::: ", weight);
-        console.log("::: PRETREATMENT ::::");
-        console.log("dose Enoxaparine ===>", this.doseEnoxaparine);
+        console.log('::: weight ::: ', weight);
+        console.log('::: PRETREATMENT ::::');
+        console.log('dose Enoxaparine ===>', this.doseEnoxaparine);
         console.log('dose Heparine ===> ', this.doseHeparine);
         console.groupEnd();
         console.groupEnd();
@@ -155,76 +155,85 @@ export class PretreatmentPage implements OnInit {
 
   formToggled() {
     this.toggled = this.pretreatmentFormInfos.value.bolus;
-    //if (this.toggled === false) { this.pretreatmentFormInfos.reset(); }
+    // if (this.toggled === false) { this.pretreatmentFormInfos.reset(); }
     console.log(this.pretreatmentFormInfos.value.bolus);
   }
 
   initTreatmentObject() {
-    this.treatment = { dose: "", name: "", title: "" };
+    this.treatment = { dose: '', name: '', title: '' };
   }
 
 
   submitFormInfos() {
 
-    this.pretreatmentObj = { bolus: 0, treatments: [], dossierId: null, doctorId: null, stepId: 8 };
+    this.pretreatmentObj = {
+      bolus: 0,
+      dossierId: this.dossierId,
+      doctorId: this.doctorId,
+      stepId: 8,
+      treatments: []
+    };
     const treatmentsArr: Array<TreatmentModel> = [];
     this.initTreatmentObject();
 
-    const treatment: Array<TreatmentModel> = [];
+    // const treatment: Array<TreatmentModel> = [];
 
+    // -----------| START LOADING |----------
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "Envoi en cours..." })
+      .create({ keyboardClose: true, message: 'Envoi en cours...' })
       .then(loadingEl => {
         loadingEl.present();
 
         // ############# SET VARIABLS FORM ###############
 
-        let bolus = this.pretreatmentFormInfos.value.bolus;
-        let medAspegic = this.pretreatmentFormInfos.value.aspegic;
-        let medPlavix = this.pretreatmentFormInfos.value.plavix;
-        let medHeparine = this.pretreatmentFormInfos.value.heparine;
-        let medEnoxaparine = this.pretreatmentFormInfos.value.enoxaparine;
+        const bolus = this.pretreatmentFormInfos.value.bolus;
+        const medAspegic = this.pretreatmentFormInfos.value.aspegic;
+        const medPlavix = this.pretreatmentFormInfos.value.plavix;
+        const medHeparine = this.pretreatmentFormInfos.value.heparine;
+        const medEnoxaparine = this.pretreatmentFormInfos.value.enoxaparine;
 
+        console.group('::: VARIABLS RETRIVED FROM FORM :::: ');
         console.log('BOLUS ::: ', bolus);
         console.log('medAspegic ::: ', medAspegic);
         console.log('medPlavix ::: ', medPlavix);
         console.log('medHeparine ::: ', medHeparine);
         console.log('medEnoxaparine ::: ', medEnoxaparine);
+        console.groupEnd();
 
-        if (medAspegic === "1") {
-          this.treatment.title = "Aspegic";
-          this.treatment.name = "Intraveineux";
-          this.treatment.dose = "750 -250mg";
+        if (medAspegic === '1') {
+          this.treatment.title = 'Aspegic';
+          this.treatment.name = 'Intraveineux';
+          this.treatment.dose = '750 -250mg';
           treatmentsArr.push(this.treatment);
 
-        } else if (medAspegic === "2") {
+        } else if (medAspegic === '2') {
 
-          this.treatment.title = "Aspegic";
-          this.treatment.name = "Per Os";
-          this.treatment.dose = "150-300mg";
+          this.treatment.title = 'Aspegic';
+          this.treatment.name = 'Per Os';
+          this.treatment.dose = '150-300mg';
           treatmentsArr.push(this.treatment);
         }
         this.initTreatmentObject();
         // ---------------------------------------------
-        if (medPlavix === "1") {
-          this.treatment.title = "Plavix";
-          this.treatment.name = "Angioplastie";
-          this.treatment.dose = "300 mg";
+        if (medPlavix === '1') {
+          this.treatment.title = 'Plavix';
+          this.treatment.name = 'Angioplastie';
+          this.treatment.dose = '300 mg';
           treatmentsArr.push(this.treatment);
 
-        } else if (medPlavix === "2") {
+        } else if (medPlavix === '2') {
 
-          this.treatment.title = "Plavix";
-          this.treatment.name = "Thrombolyse";
-          this.treatment.dose = "600 mg";
+          this.treatment.title = 'Plavix';
+          this.treatment.name = 'Thrombolyse';
+          this.treatment.dose = '600 mg';
           treatmentsArr.push(this.treatment);
         }
         this.initTreatmentObject();
 
         // ---------------------------------------------
         if (medHeparine === true) {
-          this.treatment.title = "Heparine";
-          this.treatment.name = "HÉPARINE NON FRACTIONNÉE IV";
+          this.treatment.title = 'Heparine';
+          this.treatment.name = 'HÉPARINE NON FRACTIONNÉE IV';
           this.treatment.dose = this.doseHeparine.toString();
 
           treatmentsArr.push(this.treatment);
@@ -232,8 +241,8 @@ export class PretreatmentPage implements OnInit {
         this.initTreatmentObject();
         // ---------------------------------------------
         if (medEnoxaparine === true) {
-          this.treatment.title = "Enoxaparine";
-          this.treatment.name = "ÉNOXAPARINE";
+          this.treatment.title = 'Enoxaparine';
+          this.treatment.name = 'ÉNOXAPARINE';
           this.treatment.dose = this.doseHeparine.toString();
           treatmentsArr.push(this.treatment);
         }
@@ -241,14 +250,14 @@ export class PretreatmentPage implements OnInit {
         this.initTreatmentObject();
 
         // -------------SET FINAL VALUES------------------
-        this.pretreatmentObj.stepId = 8;
-        this.pretreatmentObj.dossierId = this.dossierId;
-        this.pretreatmentObj.doctorId = this.doctorId;
+        // this.pretreatmentObj.stepId = 8;
+        // this.pretreatmentObj.dossierId = this.dossierId;
+        // this.pretreatmentObj.doctorId = this.doctorId;
         this.pretreatmentObj.bolus = bolus ? 1 : 0;
         this.pretreatmentObj.treatments = treatmentsArr;
         // -------------------------------
         console.log('treatment ::: ', treatmentsArr);
-        console.log("pretreatmentObj :::>", this.pretreatmentObj);
+        console.log('pretreatmentObj :::>', this.pretreatmentObj);
 
         // ############# END / VARIABLS FORM ###############
 
@@ -260,7 +269,7 @@ export class PretreatmentPage implements OnInit {
         authObs.subscribe(
           resData => {
             this.returnData = resData;
-            //console.log("RETOUR DATA DIAGNOSTIC:::", this.returnData.code);
+            // console.log("RETOUR DATA DIAGNOSTIC:::", this.returnData.code);
 
             if (+this.returnData.code === 201) {
               loadingEl.dismiss();
@@ -273,7 +282,7 @@ export class PretreatmentPage implements OnInit {
 
             } else {
               loadingEl.dismiss();
-              this.msgAlert = "Prblème interne, veuillez réessyer";
+              this.msgAlert = 'Prblème interne, veuillez réessyer';
               this.showAlert(this.msgAlert);
             }
           },
@@ -298,22 +307,25 @@ export class PretreatmentPage implements OnInit {
         this.pretreatmentFormInfos.reset();
       });
 
+    // -----------| END LOADING |----------
+
+
   }
 
   // --------- ALERT -----------
   async showAlert(message: string) {
     // -----------END  message dynamic ---------------
     const alert = await this.alertCtrl.create({
-      header: "Résultat d'authentication",
+      header: 'Résultat d\'authentication',
       message: message,
-      cssClass: "alert-css",
+      cssClass: 'alert-css',
       buttons: [
         {
-          text: "Annuler",
-          role: "cancel",
-          cssClass: "secondary",
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
           handler: () => {
-            console.log("Confirme Annuler");
+            console.log('Confirme Annuler');
           }
         }
       ]

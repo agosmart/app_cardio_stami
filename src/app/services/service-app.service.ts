@@ -216,6 +216,22 @@ export class ServiceAppService {
     });
   }
 
+
+
+  addContreIndiAbs( params: object , token: string){
+    const apiUrl = this.baseUrl + "/contre_indication";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    const myBody: object = params;
+    console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
+    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
   /*************************************** */
   // public login(form): any {
   //   const md5 = new Md5();
