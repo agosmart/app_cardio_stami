@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ToastController } from "@ionic/angular";
+import { ToastController, AlertController } from "@ionic/angular";
 import { WebView } from "@ionic-native/ionic-webview/ngx";
 @Injectable({
   providedIn: "root"
@@ -8,9 +8,11 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
+  private urlEcg = "http://cooffa.shop/";
   private initFetch = false;
   constructor(
     private toastController: ToastController,
+    private alertCtrl: AlertController,
     private webview: WebView
   ) {}
 
@@ -39,6 +41,10 @@ export class GlobalvarsService {
   public getidEtab() {
     return this.idEtab;
   }
+
+  public getUrlEcg() {
+    return this.urlEcg;
+  }
   async presentToast(text) {
     const toast = await this.toastController.create({
       message: text,
@@ -57,6 +63,17 @@ export class GlobalvarsService {
       console.log("converted", converted);
       return converted;
     }
+  }
+
+  public showAlert(headerAlert: string, messageAlert: string) {
+    this.alertCtrl
+      .create({
+        header: headerAlert,
+        message: messageAlert,
+        cssClass: "alert-css",
+        buttons: ["Ok"]
+      })
+      .then(alertEl => alertEl.present());
   }
 
   createFileName() {

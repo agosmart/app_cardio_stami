@@ -131,6 +131,13 @@ const routes: Routes = [
       import("./intervention/thromb/thromb.module").then(
         m => m.ThrombPageModule
       )
+  },
+  {
+    path: "last-drug/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/last-drug/last-drug.module").then(
+        m => m.LastDrugPageModule
+      )
   }
 ];
 

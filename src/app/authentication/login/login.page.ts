@@ -39,8 +39,8 @@ export class LoginPage implements OnInit {
     private nat: NativeStorage,
     private sglob: GlobalvarsService,
     private fcm: FCM,
-    private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) {}
   // --------------------------------------------
   get username() {
@@ -122,7 +122,7 @@ export class LoginPage implements OnInit {
           uid: this.uid
         };
         console.log("params======>", params);
-       
+
         const authObs: Observable<AuthResponseData> = this.srv.loginDoctor(
           params
         );
@@ -178,17 +178,6 @@ export class LoginPage implements OnInit {
       });
   }
 
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
-  }
-
   SetStorage() {
     this.nat
       .setItem("cardio", {
@@ -211,5 +200,16 @@ export class LoginPage implements OnInit {
       //   this.ReturnLogin = newsFetched;
       // });
     });
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
   }
 }

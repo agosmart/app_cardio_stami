@@ -63,7 +63,7 @@ export class OrientationPage implements OnInit {
           " orientation >>>>> demandeAvisId ::: ",
           this.demandeAvisId
         );
-        if (this.demandeAvisId !== 0) {
+        if (this.demandeAvisId > 0) {
           this.afficheMed = true;
           this.reponseAvisCR(this.demandeAvisId);
         } else {

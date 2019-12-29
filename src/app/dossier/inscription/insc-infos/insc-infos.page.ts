@@ -29,17 +29,16 @@ export class InscInfosPage implements OnInit {
   stepId = 5; // etape Infos Dossier
   objectInsc: Array<object>;
   //dataPatient: DossierModel;
-  dataPatient: DossierModel;
+  //dataPatient: DossierModel;
+  dataPatient: object;
   objectRecu: object;
   idDossierToGet: any;
   dataPatients: Array<DossierModel>;
   ecgTmp: string;
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
+  urlEcg: string;
 
-  ecgImage = "/assets/images/ecg.jpg";
-
-  
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
   }
@@ -75,7 +74,6 @@ export class InscInfosPage implements OnInit {
   // ------------ Message d'erreurs -----------------
 
   public errorMessages = {
-    
     diabetes: [{ type: "required", message: "" }],
     dyslip: [{ type: "required", message: "" }],
     sca: [{ type: "required", message: "" }],
@@ -84,7 +82,6 @@ export class InscInfosPage implements OnInit {
 
   // -------------------------------------
   inscriptionFormInfos = this.formBuilder.group({
-    
     daignoDate: ["", ""],
     atlDate: ["", ""],
     diabetes: ["", [Validators.required]],
@@ -113,6 +110,7 @@ export class InscInfosPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
+    this.urlEcg = this.sglob.getUrlEcg();
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================
@@ -122,8 +120,9 @@ export class InscInfosPage implements OnInit {
       } else {
         // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
-        this.dataPatient = this.objectRecu[0];
+        this.dataPatient = this.objectRecu;
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
+        this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -139,10 +138,9 @@ export class InscInfosPage implements OnInit {
   }
 
   radioChecked() {
-
     // this.cheked = this.pretreatmentFormInfos.value.bolus;
-     console.log( this.inscriptionFormInfos.value.bolus);
-   }
+    console.log(this.inscriptionFormInfos.value.bolus);
+  }
   // ===============  PUBLIC FUNCTIONS ===============
 
   submitFormInfos() {
@@ -197,7 +195,7 @@ export class InscInfosPage implements OnInit {
               this.router.navigate([
                 "./diagnostic",
                 this.idDossier,
-                JSON.stringify([this.dataPatient])
+                JSON.stringify(this.dataPatient)
               ]);
             } else {
               // ----- Hide loader ------
@@ -238,11 +236,11 @@ export class InscInfosPage implements OnInit {
     };
   }
 
-  async openImageEcg(image: any) {
-    console.log("image ::::", image);
+  async openImageEcg() {
+    console.log("urlEcg ::::", this.urlEcg);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: image }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

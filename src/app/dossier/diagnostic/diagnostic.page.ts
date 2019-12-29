@@ -6,8 +6,8 @@ import { DossierModel } from "src/app/models/dossier.model";
 import {
   ModalController,
   LoadingController,
-  AlertController,
-  ToastController
+  ToastController,
+  AlertController
 } from "@ionic/angular";
 import { ImagePage } from "../../modal/image/image.page";
 
@@ -39,14 +39,16 @@ export class DiagnosticPage implements OnInit {
 
   ecgImage = "/assets/images/ecg.jpg";
 
+  //this.showAlert("Attention ", "Veuillez choisir un CR!");
+
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
     private router: Router,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
     private toastCtrl: ToastController
   ) {
     this.token = this.sglob.getToken();
@@ -193,26 +195,26 @@ export class DiagnosticPage implements OnInit {
     await alert.present();
   }
 
-  // --------- ALERT -----------
-  async showAlert(message: string) {
-    // -----------END  message dynamic ---------------
-    const alert = await this.alertCtrl.create({
-      header: "Résultat d'authentication",
-      message: message,
-      cssClass: "alert-css",
-      buttons: [
-        {
-          text: "Annuler",
-          role: "cancel",
-          cssClass: "secondary",
-          handler: () => {
-            console.log("Confirme Annuler");
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
+  // // --------- ALERT -----------
+  // async showAlert(message: string) {
+  //   // -----------END  message dynamic ---------------
+  //   const alert = await this.alertCtrl.create({
+  //     header: "Résultat d'authentication",
+  //     message: message,
+  //     cssClass: "alert-css",
+  //     buttons: [
+  //       {
+  //         text: "Annuler",
+  //         role: "cancel",
+  //         cssClass: "secondary",
+  //         handler: () => {
+  //           console.log("Confirme Annuler");
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
 
   // =================================
   //  setDiagnostic()
@@ -263,6 +265,16 @@ export class DiagnosticPage implements OnInit {
     }
   }
 
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
+  }
   /*
     async setDiagnosticAlert_(diag: string) {
   
