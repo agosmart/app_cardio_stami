@@ -37,8 +37,7 @@ export class InscInfosPage implements OnInit {
   ecgTmp: string;
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
-
-  ecgImage = "/assets/images/ecg.jpg";
+  urlEcg: string;
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -111,6 +110,7 @@ export class InscInfosPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
+    this.urlEcg = this.sglob.getUrlEcg();
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================
@@ -122,6 +122,7 @@ export class InscInfosPage implements OnInit {
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
         this.dataPatient = this.objectRecu;
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
+        this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -194,7 +195,7 @@ export class InscInfosPage implements OnInit {
               this.router.navigate([
                 "./diagnostic",
                 this.idDossier,
-                JSON.stringify([this.dataPatient])
+                JSON.stringify(this.dataPatient)
               ]);
             } else {
               // ----- Hide loader ------
@@ -235,11 +236,11 @@ export class InscInfosPage implements OnInit {
     };
   }
 
-  async openImageEcg(image: any) {
-    console.log("image ::::", image);
+  async openImageEcg() {
+    console.log("urlEcg ::::", this.urlEcg);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: image }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

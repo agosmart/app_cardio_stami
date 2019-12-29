@@ -8,6 +8,7 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
+  private urlEcg = "http://cooffa.shop/";
   private initFetch = false;
   constructor(
     private toastController: ToastController,
@@ -39,6 +40,10 @@ export class GlobalvarsService {
 
   public getidEtab() {
     return this.idEtab;
+  }
+
+  public getUrlEcg() {
+    return this.urlEcg;
   }
   async presentToast(text) {
     const toast = await this.toastController.create({
