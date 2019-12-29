@@ -25,6 +25,23 @@ export class HomePage implements OnInit {
   objectDossier: DossierModel;
   // objectDossierObj: object;
 
+  // colorsDiag = [
+  //   {
+  //     color: 'colorRas',
+  //     diag: 'RAS'
+  //   },
+  //   {
+  //     color: 'colorSos',
+  //     diag: 'SOS'
+  //   },
+  //   {
+  //     color: 'colorSt',
+  //     diag: 'ST'
+  //   }
+  // ];
+
+
+
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -38,6 +55,7 @@ export class HomePage implements OnInit {
     this.idEtab = this.sglob.getidEtab();
     //console.log("idEtab", this.idEtab);
   }
+
   ionViewDidEnter() {
     console.log(" home ionViewDidEnter before", this.sglob.getInitFetch());
     if (this.sglob.getInitFetch()) {
@@ -52,6 +70,9 @@ export class HomePage implements OnInit {
     this.etatDossier = 0; // dossier ouvert
     this.listingDossier();
   }
+
+
+
 
   goToAddDossier() {
     // console.log("go to add");
@@ -89,7 +110,7 @@ export class HomePage implements OnInit {
               //console.log("resData", resData);
               this.isExistDossier = true;
               this.objectDossiers = resData.data;
-              //this.[0].diagnostic['diagnostique']:
+              //  this.objectDossiers['diagnostique'];
               //const dataResponse: DossierResponseData = resData;
               //  console.log("dataResponse", this.objectDossiers.length);
             } else {
@@ -129,9 +150,9 @@ export class HomePage implements OnInit {
 
     console.log(" vers diag stape===>", this.pageStep, " / ", this.objectDossier);
     this.router.navigate([
-       "/"+this.pageStep ,
-       idDossier,
-       JSON.stringify(this.objectDossier)
+      "/" + this.pageStep,
+      idDossier,
+      JSON.stringify(this.objectDossier)
     ]);
     // this.router.navigate([
     //   "./" + this.pageStep, JSON.stringify([this.objectDossier])
@@ -147,4 +168,7 @@ export class HomePage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
+
+
+
 }

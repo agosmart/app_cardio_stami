@@ -1,13 +1,13 @@
 :host {
   //background:#000;
   ion-button {
-    --border:none ;
+    --border: none;
     --border-radius: 24px;
     // --background :linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
 
     //background: #516bf0;
     //--background: linear-gradient(202deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-  //  --background: linear-gradient(286deg, #11b9d4f2 0%, #0086c5e8 70%, rgb(4, 230, 247));
+    //  --background: linear-gradient(286deg, #11b9d4f2 0%, #0086c5e8 70%, rgb(4, 230, 247));
 
     //--background: linear-gradient(400deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
 
@@ -32,16 +32,57 @@
   ion-content {
     --background: rgba(236, 240, 244, 0.35);
   }
+  ion-chip {
+    width: 92px;
+    height: 46px;
+    background: #f1f2f3;
+    padding: 5px 12px;
+    &.span {
+      font-size: 1.8rem;
+    }
+    ion-label {
+      width: 100%;
+      margin-bottom: 4px;
+    }
+    ion-note {
+      color: #134149;
+    }
+
+    ion-row{
+      padding: 0;
+    }
+    ion-col{
+      padding: 0;
+    }
+  }
+
+  ion-item-divider {
+    ion-label {
+      padding-right: 4px;
+      padding-left: 24px;
+    }
+  }
 }
 
 .home-page {
- background:#fff;
- .block-add-dossier{
-   position: fixed;
-   width: 100%;
-   z-index: 1;
- }
- .list-dossier-cours{
-  margin-top: 115px;
-}
+  .colorSos {
+    color: #01a5c1;
+  }
+  .colorRas {
+    color: #009444;
+  }
+  .colorSt {
+    color: #ef4136;
+  }
+
+  background: #fff;
+  .block-add-dossier {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+  }
+  .list-dossier-cours {
+    // margin-top: 115px;
+    margin-top: 120px;
+  }
 }

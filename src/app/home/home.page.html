@@ -2,10 +2,7 @@
   <ion-toolbar>
     <ion-title class="ion-text-center">
       <div class="logo-header">
-        <ion-img
-          type="image/svg+xml"
-          src="../../../assets/images/logo-color.svg"
-        ></ion-img>
+        <ion-img type="image/svg+xml" src="../../../assets/images/logo-color.svg"></ion-img>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -18,51 +15,84 @@
   <ion-grid class="ion-no-padding ">
     <ion-row class=" bg-light  ion-no-padding  block-add-dossier ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
-        <ion-button
-          size="medium"
-          shape="round"
-          tappable
-          [routerLink]="['../inscription']"
-        >
+        <ion-button size="medium" shape="round" tappable [routerLink]="['../inscription']">
           <span class="icon-doss-add fsize-28em"></span>
           <p class="fseiz-12em">Nouveau dossier</p>
           <ion-icon name="add-circle-outline" slot="end" class="fsize-20em">
           </ion-icon>
         </ion-button>
       </ion-col>
+      <!-- <ion-col size="12">
+        <div class="ion-text-center back-light">
+          Dossiers en cours
+          <span class="small-border">&nbsp;</span>
+        </div>
+      </ion-col> -->
     </ion-row>
 
     <!-- EXIST__MORE THEN ONE PATIENT -->
     <ion-row *ngIf="isExistDossier">
-      <ion-col>
+      <ion-col class="ion-no-padding">
         <ion-list class="list-dossier-cours">
-          <ion-list-header class="ion-no-padding">
-            <div class="ion-text-center back-light">
-              Dossiers en cours
-              <span class="small-border">&nbsp;</span>
-            </div>
+          <!-- <ion-list-header class="ion-no-padding">
+           
           </ion-list-header>
-          <!-- -->
+         -->
+
+          <ion-item-divider class="box-shadow">
+            <ion-label class="p-10-0">
+              <span class="icon-doss-edit text-dark  text14 "></span>
+              <b class="text-gray500 text10">DOSSIER(s) EN COURS</b>
+            </ion-label>
+            <!-- <ion-label style="    padding-right: 32px">
+              <span class="icon-heart-outline-box  text-dark  text14 "></span>
+              <b>DIAGNOSTIC</b>
+            </ion-label> -->
+          </ion-item-divider>
+
           <div *ngFor="let dossier of objectDossiers">
             <ion-item detail (click)="goToStep(dossier.dossierId)">
               <ion-label>
-                <ion-badge class="p-6-16" slot="start" color="medium"
-                  >N°: 2001-00035</ion-badge
-                >
+                <ion-badge class="p-6-16" slot="start" color="medium" class="color-num-dossier">N°: 2001-00035</ion-badge>
                 <h2>
-                  <span class="icon-man text-dark  fsize14"></span
-                  >{{dossier["lastName"]}} {{dossier["firstName"]}}
+                  <span class="icon-man text-dark  fsize14"></span>{{dossier["lastName"]}} {{dossier["firstName"]}}
                 </h2>
                 <h3>
-                  <span class="icon-calander text-dark  fsize14"></span
-                  >14-07-1974
+                  <span class="icon-calander text-dark  fsize14"></span>14-07-1974
                 </h3>
               </ion-label>
-              <ion-chip color="secondary">
-                <ion-label
-                  >Status:
-                  <b>{{dossier["diagnostic"]['diagnostique']}}</b></ion-label
-                >
+              <ion-chip >
+                <!-- <ion-label>Diagnostic:</ion-label> -->
+
+                <!-- <ion-col size="12">
+                  <img src="http://cardio.cooffa.shop/show/ecg/3_1577617035.png">
+
+                </ion-col> -->
+                <ion-row >
+                  <ion-col size="12"><small>STATUS</small></ion-col>
+                  <ion-col size="12">
+
+                    <span [ngClass]="{ 
+                  'icon-doctor-sos-2':dossier['diagnostic']['diagnostique'] === 'SOS',
+                  'icon-heart-st':dossier['diagnostic']['diagnostique'] === 'ST',
+                  'icon-doss-edit':dossier['diagnostic']['diagnostique'] === 'RAS' 
+                }" class="text-dark  fsize14"></span>
+
+
+
+                    <ion-note [ngClass]="{ 
+                  'colorSos':dossier['diagnostic']['diagnostique'] === 'SOS',
+                  'colorSt':dossier['diagnostic']['diagnostique'] === 'ST',
+                  'colorRas':dossier['diagnostic']['diagnostique'] === 'RAS'                 
+                }">
+
+                      <b>{{dossier["diagnostic"]["diagnostique"] === null? "EN COURS" : dossier["diagnostic"]["diagnostique"] }}</b>
+                    </ion-note>
+
+
+                  </ion-col>
+                </ion-row>
+
               </ion-chip>
               <!-- <p class="p-0-10">
                 <ion-note slot="start" color="secondary">Status: <b>RAS</b></ion-note>
@@ -75,7 +105,7 @@
 
     <!-- NOT_EXIST PATIENT -->
     <ion-row *ngIf="!isExistDossier">
-      <ion-col>
+      <ion-col class="ion-no-padding">
         <ion-card class="ion-margin">
           <ion-card-content class="ion-padding ion-margin text-gray300">
             <span class="icon-diagnostic  fsize-40em"></span>

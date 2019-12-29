@@ -138,6 +138,8 @@ ion-button.btn{
 .p-0-10 {
   padding: 0 10px;
 }
+.p-10-0 {  padding: 10px 0;
+}
 .p-0-16{
   padding: 0px 16px;
 }
@@ -257,6 +259,9 @@ ion-button.btn{
 .text-gray400{ 
   color: #4f606e;
 }
+.text-gray500{
+  color:#4e5967;
+}
 
 
 .text-primary {
@@ -302,6 +307,10 @@ ion-button.btn{
   //margin: 10px 45% 0px 45%;
   margin: 5px 45% 0px 45%
 
+}
+
+.color-num-dossier{
+  background-color: #7a839e ;
 }
 /* -------- Bloc Header --------*/
 .form-bloc {
@@ -363,8 +372,8 @@ h3.title-header {
 }
 
 .error-message {
-  color: white;
-  background: #f32051;
+  color: #f32051; //white;
+ background:#fff;// #f32051;
   border-radius: 8px;
   width: 100%;
   display: inline-flex;
