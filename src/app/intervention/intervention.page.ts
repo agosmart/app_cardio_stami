@@ -21,8 +21,9 @@ export class InterventionPage implements OnInit {
   token: string;
   idUser: number;
   stepId: number;
-  ecgTmp: string;
+ // ecgTmp: string;
   resultatId = 0;
+  urlEcg:string;
   //returnDataIntervention: InterResponseData;
 
   // -----------------------------
@@ -39,14 +40,17 @@ export class InterventionPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
+  
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
-    if (this.token === undefined || this.idUser === undefined) {
-      this.token =
-        "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
-      this.idUser = 61;
-    }
+    this.urlEcg = this.sglob.getUrlEcg();
+
+    // if (this.token === undefined || this.idUser === undefined) {
+    //   this.token =
+    //     "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
+    //   this.idUser = 61;
+    // }
   }
 
   ngOnInit() {
@@ -69,7 +73,8 @@ export class InterventionPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         this.idDossier = +paramMap.get("idDossier");
-        this.ecgTmp = this.dataPatient["ecgTmp"];
+        this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
+        console.log('IMAGE ECG :::', this.urlEcg);
       }
     });
   }

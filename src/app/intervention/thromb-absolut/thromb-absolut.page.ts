@@ -47,8 +47,7 @@ export class ThrombAbsolutPage implements OnInit {
   listContIndicAbs = [
     // tslint:disable-next-line: max-line-length
     {
-      text:
-        "Antécédent d’hémorragie intracrânienne ou d’accident vasculaire cérébral d’origine inconnue, quelle que soit l’ancienneté de l’antécédent",
+      text: "Antécédent d’hémorragie intracrânienne ou d’accident vasculaire cérébral d’origine inconnue, quelle que soit l’ancienneté de l’antécédent",
       isChecked: false
     },
     {
@@ -57,13 +56,11 @@ export class ThrombAbsolutPage implements OnInit {
       isChecked: false
     },
     {
-      text:
-        "Atteinte ou néoplasme ou malformation artério-veineuse du système nerveux central",
+      text: "Atteinte ou néoplasme ou malformation artério-veineuse du système nerveux central",
       isChecked: false
     },
     {
-      text:
-        "Traumatisme majeur/chirurgie/blessure céphalique dans le mois précédent ",
+      text:"Traumatisme majeur/chirurgie/blessure céphalique dans le mois précédent ",
       isChecked: false
     },
     {
@@ -71,18 +68,16 @@ export class ThrombAbsolutPage implements OnInit {
       isChecked: false
     },
     {
-      text: "Désordre hémorragique connu (hormis les menstrues)",
+      text:"Désordre hémorragique connu (hormis les menstrues)",
       isChecked: false
     },
     // tslint:disable-next-line: max-line-length
     {
-      text:
-        "Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie hépatique, ponction lombaire)",
+      text:"Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie hépatique, ponction lombaire)",
       isChecked: false
     },
     {
-      text:
-        "Si au moins un de ces pathologies exist c’est une indication de l’Angioplastie primaire",
+      text:"Si au moins un de ces pathologies exist c’est une indication de l’Angioplastie primaire",
       isChecked: false
     }
   ];
@@ -134,7 +129,7 @@ export class ThrombAbsolutPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController // private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
@@ -147,17 +142,6 @@ export class ThrombAbsolutPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
 
-        // this.dataPatient = {
-        //   patientId: 1,
-        //   lastName: "Bouaziz",
-        //   firstName: "Touré",
-        //   gender: "2",
-        //   birthDay: "1960-02-15",
-        //   birthDayFr: "1960-02-15",
-        //   age: 45
-        // };
-        // this.token =
-        //   "OOSlM0N9NF2NGRZRXuB8pIDRMmQeHMbzi61URUhdJA3skNDasle9Hxt0PH5W";
         // =================================================
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
@@ -202,7 +186,7 @@ export class ThrombAbsolutPage implements OnInit {
     this.contIndAbsObj = {
       doctorId: this.doctorId,
       dossierId: this.dossierId,
-      typeId: 1,
+      typeId: 1, // # contre indications Absoluts
       contreIndications: []
     };
     // # Init contre indication Object

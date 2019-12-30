@@ -8,13 +8,15 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
-  private urlEcg = "http://cooffa.shop/";
+
+  private urlEcg = "http://cardio.cooffa.shop/show/ecg/";
   private initFetch = false;
+// -------------------------------------
   constructor(
     private toastController: ToastController,
     private alertCtrl: AlertController,
     private webview: WebView
-  ) {}
+  ) { }
 
   public updateInfoUser(idUser, token, idEtab) {
     this.idUser = idUser;
@@ -29,6 +31,7 @@ export class GlobalvarsService {
   public getIdUser() {
     return this.idUser;
   }
+  
 
   public getInitFetch() {
     return this.initFetch;
