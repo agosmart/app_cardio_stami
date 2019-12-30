@@ -24,6 +24,7 @@ export class EngioPage implements OnInit {
   idCr = 0;
   stepId = 0;
   isLoading = false;
+  resultatId: number;
   dataPatient: object;
   retunListeCR: EtabResponseData;
   itemsCR: any;
@@ -78,10 +79,12 @@ export class EngioPage implements OnInit {
   async envoiCR() {
     console.log("envoiCR  ====> ", this.idCr);
     console.log("envoi vers cr idrc ", this.idCr);
+    this.resultatId = 7;
     await this.router.navigate([
       "/last-drug",
       this.dossierId,
       this.idCr,
+      this.resultatId,
       JSON.stringify(this.dataPatient)
     ]);
   }

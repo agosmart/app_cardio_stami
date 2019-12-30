@@ -22,6 +22,7 @@ export class LastDrugPage implements OnInit {
   token: string;
   idDossier: number;
   idCr: number;
+  resultatId: number;
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
   dataPatient: object;
@@ -83,7 +84,13 @@ export class LastDrugPage implements OnInit {
         this.idCr = +paramMap.get("idCr");
         console.log(" DIAGNOSTIC >>>>> idCr  ::: ", this.idCr);
       }
-      // idCr;
+      if (!paramMap.has("resultatId")) {
+        this.router.navigate(["/home"]);
+      } else {
+        this.resultatId = +paramMap.get("resultatId");
+        console.log(" DIAGNOSTIC >>>>> resultatId  ::: ", this.resultatId);
+      }
+      // resultatId;
     });
 
     console.log(" ras >>>>> dataPatient ::: ", this.dataPatient);
@@ -99,7 +106,7 @@ export class LastDrugPage implements OnInit {
         loadingEl.present();
         const params = {
           dossierId: this.idDossier,
-          resultatId: 7,
+          resultatId: this.resultatId,
           plavix: 1,
           crId: this.idCr,
           angio: 1,

@@ -140,7 +140,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "last-drug/:idDossier/:idCr/:dataPatientObj",
+    path: "last-drug/:idDossier/:idCr/:resultatId/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/last-drug/last-drug.module").then(
         m => m.LastDrugPageModule
