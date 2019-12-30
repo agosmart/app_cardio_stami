@@ -27,228 +27,277 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-notification2:before {
-  content: "\e937";
-  
-}
-.icon-weight:before {
-  content: "\e936";
+.icon-remove-outline:before {
+  content: "\e940";
  
 }
-
-.icon-calander:before {
-  content: "\e935";
+.icon-validate-outline:before {
+  content: "\e941";
  
 }
-.icon-woman:before {
-  content: "\e933";
-  /* color: #4d5867; */
+.icon-duration-1:before {
+  content: "\e942";
+ 
 }
-.icon-man:before {
-  content: "\e934";
-  /* color: #4d5867; */
+.icon-int-engio:before {
+  content: "\e93f";
+ 
 }
-.icon-aplus-outline:before {
+.icon-int-ras:before {
+  content: "\e946";
+ 
+}
+.icon-int-thromb:before {
+  content: "\e959";
+ 
+}
+.icon-add-outline:before {
   content: "\e900";
-  /* color: #4d5867;*/
+ 
+}
+.icon-calander:before {
+  content: "\e901";
+ 
 }
 .icon-camera:before {
-  content: "\e901";
-  /* color: #4d5867;*/
+  content: "\e902";
+ 
 }
 .icon-camera-outline-box:before {
-  content: "\e902";
-  /* color: #4d5867;*/
+  content: "\e903";
+ 
 }
 .icon-conditions:before {
-  content: "\e903";
-  /* color: #4d5867;*/
+  content: "\e904";
+ 
 }
 .icon-cr:before {
-  content: "\e904";
-  /* color: #4d5867;*/
+  content: "\e905";
+ 
 }
 .icon-cr-orientation:before {
-  content: "\e905";
-  /* color: #4d5867;*/
+  content: "\e906";
+ 
 }
 .icon-cudt:before {
-  content: "\e906";
-  /* color: #4d5867;*/
+  content: "\e907";
+ 
 }
 .icon-cudt-box:before {
-  content: "\e907";
-  /* color: #4d5867;*/
+  content: "\e908";
+ 
 }
 .icon-cudt-box-2:before {
-  content: "\e908";
-  /* color: #4d5867;*/
+  content: "\e909";
+ 
 }
 .icon-diagnostic:before {
-  content: "\e909";
-  /* color: #4d5867;*/
+  content: "\e90a";
+ 
 }
 .icon-doctor_status-1:before {
-  content: "\e90a";
-  /* color: #4d5867;*/
+  content: "\e90b";
+ 
 }
 .icon-doctor-men-1:before {
-  content: "\e90b";
-  /* color: #4d5867;*/
+  content: "\e90c";
+ 
 }
 .icon-doctor-men-2:before {
-  content: "\e90c";
-  /* color: #4d5867;*/
+  content: "\e90d";
+ 
 }
 .icon-doctor-men3:before {
-  content: "\e90d";
-  /* color: #4d5867;*/
+  content: "\e90e";
+ 
 }
 .icon-doctor-sos:before {
-  content: "\e90e";
-  /* color: #4d5867;*/
+  content: "\e90f";
+ 
+}
+.icon-doctor-sos1:before {
+  content: "\e910";
+ 
 }
 .icon-doctor-sos-2:before {
-  content: "\e90f";
-  /* color: #4d5867;*/
+  content: "\e911";
+ 
 }
 .icon-doctor-sos3:before {
-  content: "\e910";
-  /* color: #4d5867;*/
+  content: "\e912";
+ 
 }
 .icon-doctor-status:before {
-  content: "\e911";
-  /* color: #4d5867;*/
+  content: "\e913";
+ 
 }
 .icon-doctor-women1:before {
-  content: "\e912";
-  /* color: #4d5867;*/
+  content: "\e914";
+ 
 }
 .icon-doctor-women-2:before {
-  content: "\e913";
-  /* color: #4d5867;*/
+  content: "\e915";
+ 
 }
 .icon-doss-add:before {
-  content: "\e914";
-  /* color: #4d5867;*/
+  content: "\e916";
+ 
 }
 .icon-doss-create:before {
-  content: "\e915";
-  /* color: #4d5867;*/
+  content: "\e917";
+ 
 }
 .icon-doss-current:before {
-  content: "\e916";
-  /* color: #4d5867;*/
+  content: "\e918";
+ 
 }
 .icon-doss-edit:before {
-  content: "\e917";
-  /* color: #4d5867;*/
+  content: "\e919";
+ 
 }
 .icon-doss-patient:before {
-  content: "\e918";
-  /* color: #4d5867;*/
+  content: "\e91a";
+ 
 }
 .icon-doss-sent:before {
-  content: "\e919";
-  /* color: #4d5867;*/
+  content: "\e91b";
+ 
 }
 .icon-drogs:before {
-  content: "\e91a";
-  /* color: #4d5867;*/
+  content: "\e91c";
+ 
 }
 .icon-drugs-2:before {
-  content: "\e91b";
-  /* color: #4d5867;*/
+  content: "\e91d";
+ 
+}
+.icon-duration-line:before {
+  content: "\e91e";
+ 
 }
 .icon-ecg-outline:before {
-  content: "\e91c";
-  /* color: #4d5867;*/
+  content: "\e91f";
+ 
 }
 .icon-ecg-outline-box:before {
-  content: "\e91d";
-  /* color: #4d5867;*/
+  content: "\e920";
+ 
+}
+.icon-emergency-time-line:before {
+  content: "\e921";
+ 
 }
 .icon-eye-hide:before {
-  content: "\e91e";
+  content: "\e922";
   color: #4e5867;
 }
 .icon-eye-show:before {
-  content: "\e91f";
-  /* color: #4d5867;*/
+  content: "\e923";
+ 
 }
 .icon-file:before {
-  content: "\e920";
-  /* color: #4d5867;*/
+  content: "\e924";
+ 
 }
 .icon-heart:before {
-  content: "\e921";
-  /* color: #4d5867;*/
+  content: "\e925";
+ 
 }
 .icon-heart-checked:before {
-  content: "\e922";
-  /* color: #4d5867;*/
+  content: "\e926";
+ 
 }
 .icon-heart-outline-box:before {
-  content: "\e923";
-  /* color: #4d5867;*/
+  content: "\e927";
+ 
 }
 .icon-heart-st:before {
-  content: "\e924";
-  /* color: #4d5867;*/
+  content: "\e928";
+ 
 }
 .icon-loock:before {
-  content: "\e925";
-  /* color: #4d5867;*/
+  content: "\e929";
+ 
+}
+.icon-man:before {
+  content: "\e92a";
+ 
+}
+.icon-map-direction:before {
+  content: "\e92b";
+ 
+}
+.icon-notif:before {
+  content: "\e92c";
+}
+.icon-notification2:before {
+  content: "\e92d";
+ 
 }
 .icon-notification-outline:before {
-  content: "\e926";
-  /* color: #4d5867;*/
+  content: "\e92e";
+ 
 }
 .icon-notification-outline-bod:before {
-  content: "\e927";
-  /* color: #4d5867;*/
+  content: "\e92f";
+ 
 }
 .icon-patient-add-outline-box:before {
-  content: "\e928";
-  /* color: #4d5867;*/
+  content: "\e930";
+ 
 }
 .icon-patient-historic:before {
-  content: "\e929";
-  /* color: #4d5867;*/
+  content: "\e931";
+ 
 }
 .icon-print:before {
-  content: "\e92a";
-  /* color: #4d5867;*/
+  content: "\e932";
+ 
+}
+.icon-refresh:before {
+  content: "\e933";
+ 
 }
 .icon-search:before {
-  content: "\e92b";
-  /* color: #4d5867;*/
+  content: "\e934";
+ 
 }
 .icon-serach-result:before {
-  content: "\e92c";
-  /* color: #4d5867;*/
+  content: "\e935";
+ 
 }
 .icon-thrombolyse:before {
-  content: "\e92d";
-  /* color: #4d5867;*/
+  content: "\e936";
+ 
 }
 .icon-user:before {
-  content: "\e92e";
-  /* color: #4d5867;*/
+  content: "\e937";
+ 
 }
 .icon-user-2:before {
-  content: "\e92f";
-  /* color: #4d5867;*/
+  content: "\e938";
+ 
 }
 .icon-user-add:before {
-  content: "\e930";
-  /* color: #4d5867;*/
+  content: "\e939";
+ 
 }
 .icon-user-checked:before {
-  content: "\e931";
-  /* color: #4d5867;*/
+  content: "\e93a";
+ 
 }
 .icon-user-delete:before {
-  content: "\e932";
-  /* color: #4d5867;*/
+  content: "\e93b";
+ 
+}
+.icon-weight:before {
+  content: "\e93c";
+ 
+}
+.icon-weight-2:before {
+  content: "\e93d";
+}
+.icon-woman:before {
+  content: "\e93e";
+ 
 }

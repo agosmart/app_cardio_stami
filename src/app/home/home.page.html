@@ -42,7 +42,7 @@
           <ion-item-divider class="box-shadow">
             <ion-label class="p-10-0">
               <span class="icon-doss-edit text-dark  text14 "></span>
-              <b class="text-gray500 text10">DOSSIER(s) EN COURS</b>
+              <b class="text-gray500 text10">DOSSIER(S) EN COURS</b>
             </ion-label>
             <!-- <ion-label style="    padding-right: 32px">
               <span class="icon-heart-outline-box  text-dark  text14 "></span>
@@ -53,22 +53,23 @@
           <div *ngFor="let dossier of objectDossiers">
             <ion-item detail (click)="goToStep(dossier.dossierId)">
               <ion-label>
-                <ion-badge class="p-6-16" slot="start" color="medium" class="color-num-dossier">N°: 2001-00035</ion-badge>
+                <ion-badge class="p-6-16" slot="start" color="medium" class="color-num-dossier">N°: 2001-00035
+                </ion-badge>
                 <h2>
                   <span class="icon-man text-dark  fsize14"></span>{{dossier["lastName"]}} {{dossier["firstName"]}}
                 </h2>
-                <h3>
+                <!-- <h3>
                   <span class="icon-calander text-dark  fsize14"></span>14-07-1974
-                </h3>
+                </h3> -->
               </ion-label>
-              <ion-chip >
+              <ion-chip>
                 <!-- <ion-label>Diagnostic:</ion-label> -->
 
                 <!-- <ion-col size="12">
                   <img src="http://cardio.cooffa.shop/show/ecg/3_1577617035.png">
 
                 </ion-col> -->
-                <ion-row >
+                <ion-row>
                   <ion-col size="12"><small>STATUS</small></ion-col>
                   <ion-col size="12">
 
@@ -78,14 +79,10 @@
                   'icon-doss-edit':dossier['diagnostic']['diagnostique'] === 'RAS' 
                 }" class="text-dark  fsize14"></span>
 
-
-
                     <ion-note [ngClass]="{ 
-                  'colorSos':dossier['diagnostic']['diagnostique'] === 'SOS',
-                  'colorSt':dossier['diagnostic']['diagnostique'] === 'ST',
-                  'colorRas':dossier['diagnostic']['diagnostique'] === 'RAS'                 
-                }">
-
+                    'colorSos':dossier['diagnostic']['diagnostique'] === 'SOS',
+                    'colorSt':dossier['diagnostic']['diagnostique'] === 'ST',
+                    'colorRas':dossier['diagnostic']['diagnostique'] === 'RAS' }">
                       <b>{{dossier["diagnostic"]["diagnostique"] === null? "EN COURS" : dossier["diagnostic"]["diagnostique"] }}</b>
                     </ion-note>
 

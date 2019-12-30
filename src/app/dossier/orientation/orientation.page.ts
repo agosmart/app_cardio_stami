@@ -43,7 +43,7 @@ export class OrientationPage implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
@@ -83,6 +83,11 @@ export class OrientationPage implements OnInit {
       if (+this.retunListeCR.code === 200) {
         this.itemsCR = this.retunListeCR.data;
         console.log("nom etab cr", this.retunListeCR.data);
+
+        // ---------- DEMO DURATION ----------
+        this.itemsCR[0]['duration'] = '00:25:00';
+        this.itemsCR[1]['duration'] = '03:25:00';
+        //--------------------------------------
       } else {
         console.log("no");
       }
@@ -181,7 +186,7 @@ export class OrientationPage implements OnInit {
               );
               //this.etabName = this.itemsMeds[0]["etabName"];
               this.afficheMed = true;
-              this.sglob.presentToast(resData.message);
+              //this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
             } else {
               // --------- Show Alert --------

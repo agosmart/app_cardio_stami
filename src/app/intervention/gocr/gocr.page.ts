@@ -11,6 +11,9 @@ import { Observable } from "rxjs";
 import { EtabResponseData } from "src/app/models/etab.response";
 import { ClotureResponseData } from "src/app/models/cloture.response";
 
+//# moment to calculate time deffirence
+import * as moment from 'moment';
+
 @Component({
   selector: "app-gocr",
   templateUrl: "./gocr.page.html",
@@ -35,9 +38,10 @@ export class GocrPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
+
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
@@ -50,6 +54,10 @@ export class GocrPage implements OnInit {
         this.dossierId = this.dataPatient["dossierId"];
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
         this.listeCr();
+
+
+
+
       }
       // 1 c les CR  2 CUDT
     });
@@ -63,6 +71,10 @@ export class GocrPage implements OnInit {
       // this.retunListeCR.code = 200; // a enlever
       if (+this.retunListeCR.code === 200) {
         this.itemsCR = this.retunListeCR.data;
+        // ---------- DEMO DURATION ----------
+        this.itemsCR[0]['duration'] = '00:25:00';
+        this.itemsCR[1]['duration'] = '03:25:00';
+        //--------------------------------------
         console.log("nom etab cr", this.retunListeCR.data);
       } else {
         console.log("no");
@@ -180,5 +192,33 @@ export class GocrPage implements OnInit {
         buttons: ["Ok"]
       })
       .then(alertEl => alertEl.present());
+  }
+
+
+  getHoursFromTime(duration: string) {
+    const time = moment(duration, 'HH:mm:ss');
+    const hours = time.get("hours");
+    return hours;
+
+  }
+
+  calculateTimeMoment___() {
+    // console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
+    //console.log(moment().format('LTS'));
+    // const x = '03:32:30';
+    // const y = '02:00:00';
+    // const diff = moment(x, 'HH:mm:ss').diff(moment(y, 'HH:mm:ss'));
+    // const d = moment.duration(diff);
+    // //  const totaltime = Math.floor(d.asHours()) + moment.utc(diff).format(":mm");
+    // const totaltime = moment.utc(diff).format("HH:mm:ss");
+    // console.log(totaltime);
+
+    const x = moment('00:32:30', 'HH:mm:ss');
+    const y = moment('02:00:00', 'HH:mm:ss');
+    const duration = moment.duration(x.diff(y));
+    console.log(duration.get("hours"));
+    const z = moment('07:02:30', 'HH:mm:ss');
+    console.log(z.get("hours"));
+
   }
 }
