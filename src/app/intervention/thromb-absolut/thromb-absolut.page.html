@@ -8,20 +8,19 @@
 </ion-header>
 
 <ion-content fullscreen class="form-infos ion-no-padding">
-
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-conditions text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">PRETRAITEMENT</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >PRETRAITEMENT</ion-col
+      >
     </ion-row>
   </ion-grid>
 
-
   <ion-grid class="form-bloc">
-
     <ion-row>
       <ion-col size="12" class="p-0-16">
         <ion-card class="_ion-margin " color="light">
@@ -34,27 +33,27 @@
               <ion-col size="12" class="ion-no-padding">
                 {{dataPatient['birthDayFr']}}
                 <ion-chip outline color="secondary">
-                  <ion-label class="bold">{{dataPatient['age']}} ans
+                  <ion-label class="bold"
+                    >{{dataPatient['age']}} ans
                   </ion-label>
                 </ion-chip>
               </ion-col>
               <ion-col size="12" class="ion-no-padding ">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium">DOSSIER N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >DOSSIER N°: 2001-00035</ion-badge
+                  >
                 </ion-label>
               </ion-col>
-
             </ion-row>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
 
-
     <!-- FORM -->
     <form [formGroup]="contreIndicForm" (ngSubmit)="submitFormInfos()">
       <ion-grid fixed>
-
         <ion-row class="ion-no-margin">
           <ion-col size="12" class="ion-no-padding">
             <ion-list class="ion-no-padding info ">
@@ -65,16 +64,22 @@
                   <span class="small-border">&nbsp;</span>
                 </div>
               </ion-list-header>
-             
 
-              <!-- FORM --> 
-              <ng-container *ngFor='let contIndicAbs of  listContIndicAbs; let i = index'>
+              <!-- FORM -->
+              <ng-container
+                *ngFor="let contIndicAbs of  listContIndicAbs; let i = index"
+              >
                 <ion-item>
                   <ion-text color="primary">
-                    <p>{{contIndicAbs.text}} </p>
+                    <p>{{contIndicAbs.text}}</p>
                   </ion-text>
-                  <ion-checkbox slot="end"  [(ngModel)]="contIndicAbs.isChecked" formControlName="cia{{i+1}}"
-                    value="contIndicAbs.isChecked" (ionChange)='onCheckBoxChange(contIndicAbs.isChecked)'>
+                  <ion-checkbox
+                    slot="end"
+                    [(ngModel)]="contIndicAbs.isChecked"
+                    formControlName="cia{{i+1}}"
+                    value="contIndicAbs.isChecked"
+                    (ionChange)="onCheckBoxChange(contIndicAbs.isChecked)"
+                  >
                   </ion-checkbox>
                 </ion-item>
               </ng-container>
@@ -143,36 +148,41 @@
               <ion-row>
                 <ion-col size="12">
                   <div class="ion-margin-top">
-                    <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" type="submit">
+                    <ion-button
+                      shape="round"
+                      expand="block"
+                      class="ion-margin-top btn"
+                      color="dark"
+                      type="submit"
+                    >
                       Valider
-                      <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+                      <ion-icon
+                        slot="end"
+                        name="checkmark-circle-outline"
+                      ></ion-icon>
                     </ion-button>
                   </div>
                 </ion-col>
               </ion-row>
               <!-- -->
-
             </ion-list>
           </ion-col>
         </ion-row>
-
-
       </ion-grid>
     </form>
-    
-    <!-- ENDFORM -->
 
-  </ion-grid> 
+    <!-- ENDFORM -->
+  </ion-grid>
 </ion-content>
 
-<ion-footer *ngIf=exitProcess>
+<ion-footer *ngIf="exitProcess">
   <ion-toolbar>
-    <ion-text >
+    <ion-text>
       <small class="error-message-inverse">
         <ion-icon name="information-circle-outline"></ion-icon>
-        Si au moins un de ces pathologies existe<br>c’est une indication de l’Angioplastie primaire
+        Si au moins un de ces pathologies existe<br />c’est une indication de
+        l’Angioplastie primaire
       </small>
     </ion-text>
   </ion-toolbar>
 </ion-footer>
-

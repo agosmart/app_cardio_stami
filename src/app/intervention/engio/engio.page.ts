@@ -81,62 +81,9 @@ export class EngioPage implements OnInit {
     await this.router.navigate([
       "/last-drug",
       this.dossierId,
+      this.idCr,
       JSON.stringify(this.dataPatient)
     ]);
-    // this.isLoading = true;
-    // this.loadingCtrl
-    //   .create({ keyboardClose: true, message: "opération  en cours..." })
-    //   .then(loadingEl => {
-    //     loadingEl.present();
-
-    //     const params = {
-    //       dossierId: this.dossierId,
-    //       resultatId: 6,
-    //       crId: this.idCr,
-    //       doctorId: this.dataPatient["doctorId"]
-    //     };
-
-    //     const authObs: Observable<ClotureResponseData> = this.srvApp.clotureDossier(
-    //       params,
-    //       this.token
-    //     );
-    //     // ---- Call Login function
-    //     authObs.subscribe(
-    //       // :::::::::::: ON RESULT ::::::::::
-    //       resData => {
-    //         this.isLoading = false;
-    //         // ----- Hide loader ------
-    //         loadingEl.dismiss();
-
-    //         if (+resData.code === 201) {
-    //           console.log(" resData", resData);
-    //           //this.sglob.presentToast(resData.message);
-    //           // ----- Redirection to Home page ------------
-    //           this.sglob.updateInitFetchHome(true);
-    //           this.router.navigate(["/home"]);
-    //         } else {
-    //           // --------- Show Alert --------
-    //           this.sglob.showAlert("Erreur", resData.message);
-    //         }
-    //       },
-
-    //       // ::::::::::::  ON ERROR ::::::::::::
-    //       errRes => {
-    //         console.log(errRes);
-    //         // ----- Hide loader ------
-    //         loadingEl.dismiss();
-    //         // --------- Show Alert --------
-    //         if (errRes.error.errors != null) {
-    //           this.sglob.showAlert("Erreur", errRes.error.errors.email);
-    //         } else {
-    //           this.sglob.showAlert(
-    //             "Erreur",
-    //             "Prblème d'accès au réseau, veillez vérifier votre connexion"
-    //           );
-    //         }
-    //       }
-    //     );
-    //   });
   }
 
   async showAlertConfirme() {

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ThrombPage } from './thromb.page';
+import { ThrombAbsolutPage } from './thromb-absolut.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ThrombPage
+    component: ThrombAbsolutPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ThrombPageRoutingModule {}
+export class ThrombAbsolutPageRoutingModule {}

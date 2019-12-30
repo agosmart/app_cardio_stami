@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ThrombPage } from './thromb.page';
+import { ThrombAbsolutPage } from './thromb-absolut.page';
 
-describe('ThrombPage', () => {
-  let component: ThrombPage;
-  let fixture: ComponentFixture<ThrombPage>;
+describe('ThrombAbsolutPage', () => {
+  let component: ThrombAbsolutPage;
+  let fixture: ComponentFixture<ThrombAbsolutPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThrombPage ],
+      declarations: [ ThrombAbsolutPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ThrombPage);
+    fixture = TestBed.createComponent(ThrombAbsolutPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

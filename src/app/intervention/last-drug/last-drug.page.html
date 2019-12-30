@@ -20,7 +20,13 @@
     </ion-row>
     <ion-row class=" ion-no-padding ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
-        <ion-button class="bt-cloture" size="medium" expend="block" tappable>
+        <ion-button
+          class="bt-cloture"
+          size="medium"
+          expend="block"
+          tappable
+          (click)="clotureDossier()"
+        >
           <span class="icon-doss-add fsize-28em"></span>
           <p class="fseiz-12em">CLOTURER LE DOSSIER</p>
 

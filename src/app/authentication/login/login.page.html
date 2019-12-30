@@ -28,7 +28,9 @@
           size-xs="12"
         >
           <div class="ion-text-center">
-            <h3 class="fw700 text-white shadow title-header "> <span class="icon-loock text12 text-white"></span>Connexion</h3>
+            <h3 class="fw700 text-white shadow title-header ">
+              <span class="icon-loock text12 text-white"></span>Connexion
+            </h3>
           </div>
 
           <div>
@@ -36,14 +38,14 @@
               <ion-label position="floating">
                 <!-- <ion-icon name="person" item-start></ion-icon> -->
                 <span class="icon-user"></span>
-                Nom utilisateur</ion-label>
+                Nom utilisateur</ion-label
+              >
 
               <ion-input
                 inputmode="text"
                 placeholder="email@domaine.com"
                 formControlName="username"
-                value="enafor99@gmail.co"
-                
+                value=""
               >
               </ion-input>
             </ion-item>
@@ -80,8 +82,8 @@
 
               <ion-input
                 type="{{showEye?'text': 'password'}}"
-                formControlName="password" 
-                value="1234567"
+                formControlName="password"
+                value=""
               ></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.password">
@@ -94,8 +96,6 @@
                 </small>
               </ng-container>
             </div>
-
-           
           </div>
 
           <div class="ion-margin-top">
@@ -109,12 +109,17 @@
               Connexion
               <!-- <ion-icon slot="end" name="create"></ion-icon> -->
             </ion-button>
-          </div>          
+          </div>
         </ion-col>
       </ion-row>
       <ion-row class="ion-margin-top ">
-        <ion-col size="12"  [routerLink]="['/reset']" class="ion-text-center  text1 text-white fw500">
-          Mot de passe oublié ?</ion-col>
+        <ion-col
+          size="12"
+          [routerLink]="['/reset']"
+          class="ion-text-center  text1 text-white fw500"
+        >
+          Mot de passe oublié ?</ion-col
+        >
       </ion-row>
 
       <!-- Other links -->

@@ -22,6 +22,7 @@ export class InterventionPage implements OnInit {
   idUser: number;
   stepId: number;
   ecgTmp: string;
+  resultatId = 0;
   //returnDataIntervention: InterResponseData;
 
   // -----------------------------
@@ -147,6 +148,7 @@ export class InterventionPage implements OnInit {
     switch (inter) {
       case "GOCR":
         // ---- CR ---
+        this.resultatId = 6; // aucune intervention envoi direct au CR
         console.log(
           "dataPatientObj ::::----> CR INTERVENTION ::",
           this.dataPatient,
@@ -156,6 +158,7 @@ export class InterventionPage implements OnInit {
         await this.router.navigate([
           "/gocr",
           this.idDossier,
+          this.resultatId,
           JSON.stringify(this.dataPatient)
         ]);
         break;
@@ -180,7 +183,7 @@ export class InterventionPage implements OnInit {
           this.dataPatient
         );
         await this.router.navigate([
-          "/thromb",
+          "/thromb-absolut",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);

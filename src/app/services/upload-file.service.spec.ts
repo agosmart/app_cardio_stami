@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CameraService } from './camera.service';
+import { UploadFileService } from './upload-file.service';
 
-describe('CameraService', () => {
+describe('UploadFileService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CameraService = TestBed.get(CameraService);
+    const service: UploadFileService = TestBed.get(UploadFileService);
     expect(service).toBeTruthy();
   });
 });

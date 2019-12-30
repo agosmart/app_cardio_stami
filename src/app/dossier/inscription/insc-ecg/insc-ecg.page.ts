@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ServiceAppService } from "src/app/services/service-app.service";
+import { UploadFileService } from "src/app/services/upload-file.service";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { File, FileEntry } from "@ionic-native/file/ngx";
@@ -50,6 +51,7 @@ export class InscEcgPage implements OnInit {
   constructor(
     public loading: LoadingService,
     private sglob: GlobalvarsService,
+    private srvUploadecg: UploadFileService,
     private router: Router,
     private srv: ServiceAppService,
     private formBuilder: FormBuilder,
@@ -148,12 +150,26 @@ export class InscEcgPage implements OnInit {
   }
   submitEcg() {
     if (this.isEcg) {
+      // this.dataPatient.weight = this.EcgForm.value.poids;
+      // this.dataPatient.doctorId = this.idUser;
+      // this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
+      // this.dataPatient.patientId = this.idPatient;
+      // this.dataPatient.etabId = this.idEtab;
+      // this.dataPatient.ecgImage = this.imageData;
+      // this.dataPatient.ecgAfficher = this.ecgAfficher;
+      // this.dataPatient.startAt = this.startAt;
+
+      // this.srvUploadecg.startUpload(
+      //   this.imageData,
+      //   this.token,
+      //   this.dataPatient
+      // );
+
       this.startUpload();
     } else {
       console.log("===== veuiller faire un ECG====");
     }
   }
-
   startUpload() {
     this.file
       .resolveLocalFilesystemUrl(this.imageData)

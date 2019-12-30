@@ -14,7 +14,9 @@
       <ion-col size="12" class="icon-header">
         <span class="icon-cr-orientation text-white text22"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">ORIENTATION</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >ORIENTATION</ion-col
+      >
     </ion-row>
   </ion-grid>
 
@@ -26,7 +28,9 @@
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >N°: 2001-00035</ion-badge
+                  >
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -80,35 +84,30 @@
         <ion-card class="list-CR" color="light">
           <ion-card-content class="text09 ion-no-padding ">
             <ion-list class="ion-no-padding">
-
               <ion-item-divider class="box-shadow">
                 <ion-label class="p-10-0">
                   <span class="icon-cr text-dark  text17 "></span>
-                  <b class="text-gray500 text10">CENTRES DE REFERENCE</b>
+                  <b class="text-gray500 ">CENTRES DE REFERENCE</b>
                 </ion-label>
               </ion-item-divider>
-
-              <!-- <ion-list-header class="box-shadow">
-                <ion-label>
-                  <span class="icon-cr  text-dark  text14 "></span>
-                  <b>LES CR </b>
-                </ion-label>
-                <ion-label style="    padding-right: 32px">
-                  <span class="icon-cudt-box-2  text-dark  text14 "></span>
-                  <b>DUREE </b>
-                </ion-label>
-              </ion-list-header> -->
               <!---->
-              <ion-item detail lines="full" *ngFor="let item of itemsCR" (click)="choixCr(item.etabId)">
+              <ion-item
+                detail
+                lines="full"
+                *ngFor="let item of itemsCR"
+                (click)="choixCr(item.etabId)"
+              >
                 <ion-label class="ion-text-wrap">
                   <span class="icon-cudt-box-2  text-dark  text17"></span>
                   {{item.etabName}}
                 </ion-label>
                 <ion-chip color="secondary">
-                  <ion-note> <span class="icon-duration-1 text-dark  "></span> <b> {{item.duration}}</b></ion-note>
+                  <ion-note>
+                    <span class="icon-duration-1 text-dark  "></span>
+                    <b> {{item.duration}}</b></ion-note
+                  >
                 </ion-chip>
               </ion-item>
-
             </ion-list>
           </ion-card-content>
         </ion-card>
@@ -116,7 +115,11 @@
     </ion-row>
 
     <div class="ion-padding">
-      <ion-button expand="block" class="ion-margin-top btn" (click)="showAlertConfirme()">
+      <ion-button
+        expand="block"
+        class="ion-margin-top btn"
+        (click)="showAlertConfirme()"
+      >
         Valider
         <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
       </ion-button>
