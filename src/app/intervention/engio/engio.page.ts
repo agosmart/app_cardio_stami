@@ -128,7 +128,7 @@ export class EngioPage implements OnInit {
 
   async goToTromb() {
     await this.router.navigate([
-      "/thromb",
+      "/thromb-absolut",
       this.dossierId,
       JSON.stringify(this.dataPatient)
     ]);

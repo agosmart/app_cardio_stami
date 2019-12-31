@@ -1,3 +1,4 @@
+import { DetailDossier } from "./detailDossier.model";
 export interface PatientModel {
   patientId: number;
   lastName: string;
@@ -7,5 +8,5 @@ export interface PatientModel {
   birthDayFr?: string;
   age?: number;
   qrCode?: string;
-
+  dossiers?: DetailDossier;
 }
