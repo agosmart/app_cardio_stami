@@ -80,10 +80,16 @@
                       </ul>
                     </div>
                     <!-- -->
+                    
+                    <!-- <div *ngIf="errorMessages">
+                      <small class="error-message"> Veuillez préciser le type Hypertension artérielle réfractaire </small>
+                    </div> -->
                   </ion-text>
+                
+                 
 
                   <ion-checkbox slot="end" [(ngModel)]="contIndicAbs.isChecked" formControlName="cia{{i+1}}"
-                    value="contIndicAbs.isChecked"
+                    value="contIndicAbs.isChecked" id="cia{{i+1}}"
                     (ionChange)="onCheckBoxChange(contIndicAbs.isChecked, contIndicAbs.alert)">
                   </ion-checkbox>
 
@@ -112,74 +118,79 @@
                     </div>
                       -->
 
-              <!-- 
-              <ion-item>
+
+
+              <!-- <ion-item>
                 <ion-text color="primary">
-                  <p>Antécédent d’hémorragie intracrânienne ou d’accident vasculaire cérébral d’origine inconnue, quelle
-                    que soit l’ancienneté de l’antécédent </p>
+                  <p>Accident ischémique transitoire dans les 6 mois précédents</p>
                 </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia1" value="false" (ionChange)='ionChange()'>
+                <ion-checkbox slot="end" checked="false" formControlName="cia1" value="false" >
                 </ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-text color="primary">
-                  <p>Accident vasculaire cérébral ischémique dans les 6 mois précédents </p>
+                  <p>Traitement anticoagulant oral</p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia2" value="false"></ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-text color="primary">
-                  <p>Atteinte ou néoplasme ou malformation artério-veineuse du système nerveux central</p>
+                  <p>Grossesse ou post-partum de moins d’une semaine</p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia3" value="false"></ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-text color="primary">
-                  <p>Traumatisme majeur chirurgie / blessure céphalique dans le mois précédent </p>
+                  <p>Hypertension artérielle réfractaire </p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia4"></ion-checkbox>
               </ion-item>
-
+              <div>
+                <ul>
+                  <li>
+                    <ion-note>
+                      Tension artérielle systolique > 180 mmHg ET/OU,
+                    </ion-note>
+                  </li>
+                  <li>
+                    <ion-note>
+                      Tension artérielle diastolique > 110 mmHg
+                    </ion-note>
+                  </li>
+                </ul>
+              </div>
               <ion-item>
                 <ion-text color="primary">
-                  <p>Hémorragie gastro-intestinale dans le mois précédent </p>
+                  <p>Maladie hépatique avancée</p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia5"></ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-text color="primary">
-                  <p>Désordre hémorragique connu (hormis les menstrues) </p>
+                  <p>Endocardite infectieuse </p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia6"></ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-text color="primary">
-                  <p>Dissection aortique </p>
+                  <p>Ulcère peptique actif </p>
                 </ion-text>
                 <ion-checkbox slot="end" checked="false" formControlName="cia7"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie
-                    hépatique, ponction lombaire) </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia8"></ion-checkbox>
               </ion-item> -->
+
+
 
               <!-- Button Submit-->
               <ion-row>
                 <ion-col size="12">
                   <div class="ion-margin-top">
                     <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" type="submit"
-                    
-                    [disabled]="isRequiredCheckBox"
-                    >
+                      [disabled]="isRequiredCheckBox">
                       Valider
                       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
                     </ion-button>

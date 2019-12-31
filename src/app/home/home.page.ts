@@ -148,7 +148,7 @@ export class HomePage implements OnInit {
     this.objectDossier = this.getobjectDossier(idDossier);
     this.pageStep = this.objectDossier["page"];
 
-    console.log(" vers diag stape===>", this.pageStep, " / ", this.objectDossier);
+    console.log(" vers diag step===>", this.pageStep, " / ", this.objectDossier);
     this.router.navigate([
       "/" + this.pageStep,
       idDossier,

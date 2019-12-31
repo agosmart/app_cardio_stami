@@ -116,7 +116,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "gocr/:idDossier/:resultatId/:dataPatientObj",
+    path: "gocr/:idDossier/:resultatId/:stepId/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/gocr/gocr.module").then(m => m.GocrPageModule)
   },

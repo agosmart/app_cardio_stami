@@ -43,6 +43,11 @@
         color: rgb(71, 82, 93);
         font-weight: 600;
       }
+
+      ul{
+        padding: 0px 0 0 20px;
+        margin: 8px 0;
+      }
     }
     ion-checkbox {
       margin-left: 8px;
@@ -53,6 +58,9 @@
 
   ion-footer {
     background: #f32051;
+    ion-toolbar{
+        padding-bottom: 0;
+    }
   }
 }
 

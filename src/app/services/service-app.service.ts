@@ -42,7 +42,7 @@ export class ServiceAppService {
 
   //********************************** */
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   loginDoctor(params: object) {
     const apiUrl = this.baseUrl + "/login";
@@ -103,7 +103,7 @@ export class ServiceAppService {
   }
 
   diagDossier(params: object, token: string) {
-     
+
     const apiUrl = this.baseUrl + "/diagnostic";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -187,7 +187,7 @@ export class ServiceAppService {
     });
   }
 
-  addPretreatment( params: object , token: string){
+  addPretreatment(params: object, token: string) {
     const apiUrl = this.baseUrl + "/pretraitement";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -202,14 +202,14 @@ export class ServiceAppService {
   }
 
   public getPretreatment(params: object, token: string): any {
-   // console.log("token service ===>", token);
+    // console.log("token service ===>", token);
     const apiUrl = this.baseUrl + "/search";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-   // console.log("myHeaders service ===>", myHeaders);
+    // console.log("myHeaders service ===>", myHeaders);
     const myBody: any = params; // nom / genre datenaissance
     return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
       headers: myHeaders
@@ -218,7 +218,7 @@ export class ServiceAppService {
 
 
 
-  addContreIndiAbs( params: object , token: string){
+  addContreIndiAbs(params: object, token: string) {
     const apiUrl = this.baseUrl + "/contre_indication";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -268,7 +268,7 @@ export class ServiceAppService {
   //     .catch(error => console.log("Une erreur est survenue" + error));
   // }
 
-  addToken(token, idUser, mobile) {}
+  addToken(token, idUser, mobile) { }
 
   getListeCR(params: number) {
     const apiUrl = this.baseUrl + "/etablissements/" + params;
@@ -301,5 +301,22 @@ export class ServiceAppService {
       .then(response => response.json() as StandarReturnModel)
       .catch(error => console.log("Une erreur est survenue" + error));
       */
+  }
+
+  updateStep(params: object, token: string) {
+
+    const apiUrl = this.baseUrl + "/updateStape";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    const myBody: object = params;
+    console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
+    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+
+
   }
 }

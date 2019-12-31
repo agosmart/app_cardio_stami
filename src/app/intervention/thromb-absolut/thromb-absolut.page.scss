@@ -36,16 +36,28 @@
       padding: 2px 2px;
     }
   }
-  ion-text{
-    padding: 10px 0;
-}
-  ion-checkbox {
-    --background-checked: var(--ion-color-medium);
-    --border-color-checked: var(--ion-color-medium);
+  ion-item {
+    ion-text {
+      //padding: 10px 0;
+      ion-note {
+        color: rgb(71, 82, 93);
+        font-weight: 600;
+      }
+
+      
+    }
+    ion-checkbox {
+      margin-left: 10px;
+      --background-checked: var(--ion-color-medium);
+      --border-color-checked: var(--ion-color-medium);
+    }
   }
 
   ion-footer {
     background: #f32051;
+    ion-toolbar{
+      padding-bottom: 0;
+  }
   }
 }
 

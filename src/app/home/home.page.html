@@ -89,23 +89,26 @@
                   <ion-col size="12">
                     <span
                       [ngClass]="{ 
-                  'icon-doctor-sos-2':dossier['diagnostic']['diagnostique'] === 'SOS',
-                  'icon-heart-st':dossier['diagnostic']['diagnostique'] === 'ST',
-                  'icon-doss-edit':dossier['diagnostic']['diagnostique'] === 'RAS' 
+                  'icon-doctor-sos-2':dossier['diagnostic']=== 'SOS',
+                  'icon-heart-st':dossier['diagnostic'] === 'ST',
+                  'icon-doss-edit':dossier['diagnostic'] === 'RAS' 
                 }"
                       class="text-dark  fsize14"
                     ></span>
 
                     <ion-note
                       [ngClass]="{ 
-                    'colorSos':dossier['diagnostic']['diagnostique'] === 'SOS',
-                    'colorSt':dossier['diagnostic']['diagnostique'] === 'ST',
-                    'colorRas':dossier['diagnostic']['diagnostique'] === 'RAS' }"
+                    'colorSos':dossier['diagnostic'] === 'SOS',
+                    'colorSt':dossier['diagnostic'] === 'ST',
+                    'colorRas':dossier['diagnostic'] === 'RAS' }"
                     >
-                      <b
-                        >{{dossier["diagnostic"]["diagnostique"] === null? "EN
-                        COURS" : dossier["diagnostic"]["diagnostique"] }}</b
-                      >
+                    <b> {{dossier["diagnostic"] === null? "EN COURS" : dossier["diagnostic"] }}</b >
+
+                      <!-- <b>
+                        {{dossier["diagnostic"]["diagnostique"] === null? "EN
+                        COURS" : dossier["diagnostic"]["diagnostique"] }}
+                      </b > -->
+                     
                     </ion-note>
                   </ion-col>
                 </ion-row>

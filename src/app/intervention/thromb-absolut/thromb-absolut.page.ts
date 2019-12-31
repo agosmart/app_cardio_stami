@@ -60,7 +60,7 @@ export class ThrombAbsolutPage implements OnInit {
       isChecked: false
     },
     {
-      text:"Traumatisme majeur/chirurgie/blessure céphalique dans le mois précédent ",
+      text: "Traumatisme majeur/chirurgie/blessure céphalique dans le mois précédent ",
       isChecked: false
     },
     {
@@ -68,16 +68,16 @@ export class ThrombAbsolutPage implements OnInit {
       isChecked: false
     },
     {
-      text:"Désordre hémorragique connu (hormis les menstrues)",
+      text: "Désordre hémorragique connu (hormis les menstrues)",
       isChecked: false
     },
     // tslint:disable-next-line: max-line-length
     {
-      text:"Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie hépatique, ponction lombaire)",
+      text: "Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie hépatique, ponction lombaire)",
       isChecked: false
     },
     {
-      text:"Si au moins un de ces pathologies exist c’est une indication de l’Angioplastie primaire",
+      text: "Si au moins un de ces pathologies exist c’est une indication de l’Angioplastie primaire",
       isChecked: false
     }
   ];
@@ -179,7 +179,7 @@ export class ThrombAbsolutPage implements OnInit {
     }
     // ----------------------------------------
     console.log("somCheck :::", this.somCheck);
-    this.somCheck ? (this.exitProcess = true) : (this.exitProcess = false);
+    this.somCheck > 0 ? (this.exitProcess = true) : (this.exitProcess = false);
   }
 
   submitFormInfos() {
@@ -203,91 +203,81 @@ export class ThrombAbsolutPage implements OnInit {
         for (let i = 1; i < 9; i++) {
           // console.log('- checkValue ==> ', i, ':', eval("this.contreIndicForm.value.cia" + i));
           const checkValue = eval("this.contreIndicForm.value.cia" + i);
-          let thisHar = "0";
+
           if (checkValue) {
-            thisHar = "1";
+
             // some += thisHar;
             console.log("TEXT ===>", this.listContIndicAbs[i - 1].text);
             this.contIndAbsElm.name = this.listContIndicAbs[i - 1].text;
 
-            //   this.contIndAbsElm.name = this.listContIndicAbsText[i];
-          } else {
-            thisHar = "0";
-            this.contIndAbsElm.name = "";
+            // ------------------------------
+            this.contIndAbsElm.har = "0";
+            this.contIndAbsObj.contreIndications.push(this.contIndAbsElm);
+            // # Init contre indication Object
+            this.initContIndAbsObject();
           }
-          // ------------------------------
-          this.contIndAbsElm.har = thisHar;
-          this.contIndAbsObj.contreIndications.push(this.contIndAbsElm);
-          // # Init contre indication Object
-          this.initContIndAbsObject();
         }
-        // some > 0 ? this.exitProcess = true : this.exitProcess = false;
-        // =================================================
-        //this.contIndAbsObj.contreIndications = contreIndications;
-        // =================================================
-        console.group("= CONTRE INDICATION ABSOLUT:::RESULTAT FINAL =");
-        console.log(
-          "::: SOME CHEKED ::: ",
-          this.somCheck,
-          " | exitProcess ",
-          this.exitProcess
-        );
-        // console.log('- contre Indications Array ===>', contreIndications);
-        console.log("- contre Indications Obj ===> ", this.contIndAbsObj);
-        console.groupEnd();
+        console.log("- contre Indications Abs Obj ===> ", this.contIndAbsObj);
         // ############# END / VARIABLS FORM ###############
+        this.checkContreIndication(loadingEl);
 
-        const authObs: Observable<PretreatmentResponseData> = this.srvApp.addContreIndiAbs(
-          this.contIndAbsObj,
-          this.token
-        );
-
-        // ---- Call DIAGNOSTIC function
-        authObs.subscribe(
-          resData => {
-            this.returnData = resData;
-            console.log(
-              "::: RETOUR DATA CONTRE INDICATION ABSOLUT - Success ! :::",
-              this.returnData.code
-            );
-
-            if (+this.returnData.code === 201) {
-              loadingEl.dismiss();
-
-              // ************ REDIRECTION ****************
-              if (this.exitProcess) {
-                this.resultatId = 7; //  L’ENGIOPLASTIE a été jugée risquée
-                this.router.navigate([
-                  "/gocr",
-                  this.dossierId,
-                  this.resultatId,
-                  JSON.stringify(this.dataPatient)
-                ]);
-              } else {
-                this.router.navigate([
-                  "/thromb-relative",
-                  this.dossierId,
-                  JSON.stringify(this.dataPatient)
-                ]);
-              }
-              // ****************************
-            } else {
-              loadingEl.dismiss();
-              this.msgAlert = "Prblème interne, veuillez réessyer";
-              this.showAlert(this.msgAlert);
-            }
-          },
-          errRes => {
-            loadingEl.dismiss();
-            this.msgAlert = errRes.error.message;
-            this.showAlert(this.msgAlert);
-          }
-        );
-
-        this.contreIndicForm.reset();
+        // this.contreIndicForm.reset();
       });
     // -----------| END LOADING |------------
   }
+
+
+  checkContreIndication(loadingEl) {
+
+    if (this.exitProcess) {
+      loadingEl.dismiss();
+      this.resultatId = 8; //  L’ENGIOPLASTIE a été jugée risquée
+      const stepId = 13;
+
+      // ************ REDIRECTION TO GOCR PAGE ****************
+      this.router.navigate([
+        "/gocr",        this.dossierId,
+        this.resultatId,
+        stepId,
+        JSON.stringify(this.dataPatient)
+      ]);
+      // ****************************
+
+    } else {
+
+      // ---- Call addContreIndiAbs function
+      const authObs: Observable<PretreatmentResponseData> = this.srvApp.addContreIndiAbs(this.contIndAbsObj, this.token);
+      authObs.subscribe(
+        resData => {
+          this.returnData = resData;
+          console.log("::: RETOUR DATA CONTRE INDICATION ABSOLUT - Success ! :::", this.returnData.code);
+
+          if (+this.returnData.code === 201) {
+            loadingEl.dismiss();
+            // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
+            this.router.navigate([
+              "/thromb-relative",
+              this.dossierId,
+              JSON.stringify(this.dataPatient)
+            ]);
+            // ****************************
+          } else {
+            loadingEl.dismiss();
+            this.msgAlert = "Prblème interne, veuillez réessyer";
+            this.showAlert(this.msgAlert);
+          }
+        },
+        errRes => {
+          loadingEl.dismiss();
+          this.msgAlert = errRes.error.message;
+          this.showAlert(this.msgAlert);
+        }
+      );
+    }
+  }
+
+
+
   // --------- ALERT -----------
   async showAlert(message: string) {
     // -----------END  message dynamic ---------------
