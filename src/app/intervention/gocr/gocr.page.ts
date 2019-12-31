@@ -12,7 +12,8 @@ import { EtabResponseData } from "src/app/models/etab.response";
 import { ClotureResponseData } from "src/app/models/cloture.response";
 
 //# moment to calculate time deffirence
-import * as moment from 'moment';
+import * as moment from "moment";
+import { DossierResponseData } from "src/app/models/dossier.response";
 
 @Component({
   selector: "app-gocr",
@@ -25,7 +26,8 @@ export class GocrPage implements OnInit {
   dossierId: number;
   token: string;
   idCr = 0;
-  stepId = 0;
+  stepId = 13;
+  resultatId: number;
   isLoading = false;
   dataPatient: object;
   retunListeCR: EtabResponseData;
@@ -38,10 +40,9 @@ export class GocrPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
-
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
@@ -52,15 +53,52 @@ export class GocrPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
-        console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
+        //this.resultatId = this.dataPatient["resultatId"];
+        if (this.dataPatient["stepId"] !== 13) {
+          this.updateStep();
+        }
         this.listeCr();
-
-
-
-
+        console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
       }
+
       // 1 c les CR  2 CUDT
     });
+  }
+  updateStep() {
+    console.log("update step");
+    const params = {
+      dossierId: this.dossierId,
+      //resultatId: this.resultatId,
+      stepId: this.stepId
+    };
+
+    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
+      params,
+      this.token
+    );
+    authObs.subscribe(
+      resData => {
+        if (+resData.code === 200) {
+        } else {
+          // ----- Hide loader ------
+        }
+      },
+
+      // ::::::::::::  ON ERROR ::::::::::::
+      errRes => {
+        console.log(errRes);
+        // ----- Hide loader ------
+        // --------- Show Alert --------
+
+        if (errRes.error.code === "401") {
+          this.showAlert(errRes.error.message);
+        } else {
+          this.showAlert(
+            "Prblème d'accès au réseau, veillez vérifier votre connexion"
+          );
+        }
+      }
+    );
   }
 
   listeCr() {
@@ -72,8 +110,8 @@ export class GocrPage implements OnInit {
       if (+this.retunListeCR.code === 200) {
         this.itemsCR = this.retunListeCR.data;
         // ---------- DEMO DURATION ----------
-        this.itemsCR[0]['duration'] = '00:25:00';
-        this.itemsCR[1]['duration'] = '03:25:00';
+        this.itemsCR[0]["duration"] = "00:25:00";
+        this.itemsCR[1]["duration"] = "03:25:00";
         //--------------------------------------
         console.log("nom etab cr", this.retunListeCR.data);
       } else {
@@ -194,12 +232,10 @@ export class GocrPage implements OnInit {
       .then(alertEl => alertEl.present());
   }
 
-
   getHoursFromTime(duration: string) {
-    const time = moment(duration, 'HH:mm:ss');
+    const time = moment(duration, "HH:mm:ss");
     const hours = time.get("hours");
     return hours;
-
   }
 
   calculateTimeMoment___() {
@@ -213,12 +249,11 @@ export class GocrPage implements OnInit {
     // const totaltime = moment.utc(diff).format("HH:mm:ss");
     // console.log(totaltime);
 
-    const x = moment('00:32:30', 'HH:mm:ss');
-    const y = moment('02:00:00', 'HH:mm:ss');
+    const x = moment("00:32:30", "HH:mm:ss");
+    const y = moment("02:00:00", "HH:mm:ss");
     const duration = moment.duration(x.diff(y));
     console.log(duration.get("hours"));
-    const z = moment('07:02:30', 'HH:mm:ss');
+    const z = moment("07:02:30", "HH:mm:ss");
     console.log(z.get("hours"));
-
   }
 }

@@ -11,6 +11,7 @@ import { Observable } from "rxjs";
 import { ClotureResponseData } from "src/app/models/cloture.response";
 import { ClotureModel } from "src/app/models/cloture.model";
 import { DossierModel } from "src/app/models/dossier.model";
+import { DossierResponseData } from "src/app/models/dossier.response";
 @Component({
   selector: "app-last-drug",
   templateUrl: "./last-drug.page.html",
@@ -57,44 +58,14 @@ export class LastDrugPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
+        this.idDossier = this.dataPatient["dossierId"];
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        console.log(
-          " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatient["lastName"]
-        );
+        if (this.dataPatient["stepId"] !== 16) {
+          this.updateStep();
+        }
       }
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
-        this.ecgTmp = this.dataPatient["ecgTmp"];
-      }
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
-        this.ecgTmp = this.dataPatient["ecgTmp"];
-      }
-      if (!paramMap.has("idCr")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idCr = +paramMap.get("idCr");
-        console.log(" DIAGNOSTIC >>>>> idCr  ::: ", this.idCr);
-      }
-      if (!paramMap.has("resultatId")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.resultatId = +paramMap.get("resultatId");
-        console.log(" DIAGNOSTIC >>>>> resultatId  ::: ", this.resultatId);
-      }
-      // resultatId;
     });
-
-    console.log(" ras >>>>> dataPatient ::: ", this.dataPatient);
-    console.log(" ras idDosier   ::: ", this.idDossier);
   }
 
   clotureDossier() {
@@ -154,6 +125,42 @@ export class LastDrugPage implements OnInit {
       });
   }
 
+  updateStep() {
+    console.log("update step");
+    const params = {
+      dossierId: this.idDossier,
+      //resultatId: this.resultatId,
+      stepId: 16
+    };
+
+    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
+      params,
+      this.token
+    );
+    authObs.subscribe(
+      resData => {
+        if (+resData.code === 200) {
+        } else {
+          // ----- Hide loader ------
+        }
+      },
+
+      // ::::::::::::  ON ERROR ::::::::::::
+      errRes => {
+        console.log(errRes);
+        // ----- Hide loader ------
+        // --------- Show Alert --------
+
+        if (errRes.error.code === "401") {
+          this.showAlert(errRes.error.message);
+        } else {
+          this.showAlert(
+            "Prblème d'accès au réseau, veillez vérifier votre connexion"
+          );
+        }
+      }
+    );
+  }
   private showAlert(message: string) {
     this.alertCtrl
       .create({

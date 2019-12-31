@@ -10,6 +10,8 @@ import {
 import { Observable } from "rxjs";
 import { EtabResponseData } from "src/app/models/etab.response";
 import { ClotureResponseData } from "src/app/models/cloture.response";
+import { DossierResponseData } from "src/app/models/dossier.response";
+import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
   selector: "app-engio",
@@ -25,7 +27,7 @@ export class EngioPage implements OnInit {
   stepId = 0;
   isLoading = false;
   resultatId: number;
-  dataPatient: object;
+  dataPatient: DossierModel;
   retunListeCR: EtabResponseData;
   itemsCR: any;
   constructor(
@@ -50,12 +52,52 @@ export class EngioPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
+        if (this.dataPatient["stepId"] !== 15) {
+          this.updateStep();
+        }
+
         this.listeCr();
       }
       // 1 c les CR  2 CUDT
     });
   }
 
+  updateStep() {
+    console.log("update step");
+    const params = {
+      dossierId: this.dossierId,
+      //resultatId: this.resultatId,
+      stepId: 15
+    };
+
+    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
+      params,
+      this.token
+    );
+    authObs.subscribe(
+      resData => {
+        if (+resData.code === 200) {
+        } else {
+          // ----- Hide loader ------
+        }
+      },
+
+      // ::::::::::::  ON ERROR ::::::::::::
+      errRes => {
+        console.log(errRes);
+        // ----- Hide loader ------
+        // --------- Show Alert --------
+
+        if (errRes.error.code === "401") {
+          this.showAlert(errRes.error.message);
+        } else {
+          this.showAlert(
+            "Prblème d'accès au réseau, veillez vérifier votre connexion"
+          );
+        }
+      }
+    );
+  }
   listeCr() {
     this.srvApp.getListeCR(1).subscribe((resp: any) => {
       this.retunListeCR = resp;
@@ -79,12 +121,11 @@ export class EngioPage implements OnInit {
   async envoiCR() {
     console.log("envoiCR  ====> ", this.idCr);
     console.log("envoi vers cr idrc ", this.idCr);
-    this.resultatId = 7;
+    this.dataPatient.resultatId = 7; //  300 plavix
+    this.dataPatient.idCr = this.idCr; //  id cr choisit
     await this.router.navigate([
       "/last-drug",
       this.dossierId,
-      this.idCr,
-      this.resultatId,
       JSON.stringify(this.dataPatient)
     ]);
   }

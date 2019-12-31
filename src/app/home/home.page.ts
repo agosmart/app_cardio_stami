@@ -40,8 +40,6 @@ export class HomePage implements OnInit {
   //   }
   // ];
 
-
-
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -70,9 +68,6 @@ export class HomePage implements OnInit {
     this.etatDossier = 0; // dossier ouvert
     this.listingDossier();
   }
-
-
-
 
   goToAddDossier() {
     // console.log("go to add");
@@ -148,7 +143,14 @@ export class HomePage implements OnInit {
     this.objectDossier = this.getobjectDossier(idDossier);
     this.pageStep = this.objectDossier["page"];
 
-    console.log(" vers diag step===>", this.pageStep, " / ", this.objectDossier);
+    console.log(
+      " vers diag step===>",
+      this.pageStep,
+      " / ",
+      this.objectDossier
+    );
+    //this.objectDossier.resultatId = 66;
+    // this.objectDossier.stepId = 12;
     this.router.navigate([
       "/" + this.pageStep,
       idDossier,
@@ -168,7 +170,4 @@ export class HomePage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
-
-
-
 }

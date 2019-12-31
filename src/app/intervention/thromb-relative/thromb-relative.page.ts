@@ -1,31 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { ServiceAppService } from 'src/app/services/service-app.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { GlobalvarsService } from 'src/app/services/globalvars.service';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { Component, OnInit } from "@angular/core";
+import { ServiceAppService } from "src/app/services/service-app.service";
+import { FormBuilder, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { GlobalvarsService } from "src/app/services/globalvars.service";
+import { LoadingController, AlertController } from "@ionic/angular";
 import {
   ContreIndicListModel,
   ContreIndicElmModel
-} from 'src/app/models/contre.indic.list.model';
-import { PretreatmentResponseData } from 'src/app/models/pretreatment.response';
-
+} from "src/app/models/contre.indic.list.model";
+import { PretreatmentResponseData } from "src/app/models/pretreatment.response";
+import { DossierResponseData } from "src/app/models/dossier.response";
+import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
-  selector: 'app-thromb-relative',
-  templateUrl: './thromb-relative.page.html',
-  styleUrls: ['./thromb-relative.page.scss'],
+  selector: "app-thromb-relative",
+  templateUrl: "./thromb-relative.page.html",
+  styleUrls: ["./thromb-relative.page.scss"]
 })
 export class ThrombRelativePage implements OnInit {
-
   // --------------------------------
   idUser: number;
   token: string;
   dossierId: number;
   typeId: number;
   doctorId: number;
-  dataPatient: object;
+  //dataPatient: object;
+  dataPatient: DossierModel;
   resultatId: number;
   contIndAbsObj: ContreIndicListModel;
   contIndAbsElm: ContreIndicElmModel;
@@ -33,7 +34,7 @@ export class ThrombRelativePage implements OnInit {
   exitProcess = false;
   somCheck = 0;
   returnData: PretreatmentResponseData;
-  msgAlert = '';
+  msgAlert = "";
   isDisplayRadio = false;
   isRequiredCheckBox = false;
   hypertentionValue = 0;
@@ -54,81 +55,79 @@ export class ThrombRelativePage implements OnInit {
   listContIndicAbs = [
     // tslint:disable-next-line: max-line-length
     {
-      text: 'Accident ischémique transitoire dans les 6 mois précédents',
+      text: "Accident ischémique transitoire dans les 6 mois précédents",
       isChecked: false,
-      alert: false,
+      alert: false
     },
     {
-      text:
-        'Traitement anticoagulant oral',
+      text: "Traitement anticoagulant oral",
       isChecked: false,
-      alert: false,
+      alert: false
     },
     {
-      text: 'Grossesse ou post-partum de moins d’une semaine',
+      text: "Grossesse ou post-partum de moins d’une semaine",
       isChecked: false,
-      alert: false,
+      alert: false
     },
     {
-      text: 'Hypertension artérielle réfractaire',
-      textNote:
-        ['Tension artérielle systolique > 180 mmHg et/ou', 'Tension artérielle diastolique > 110 mmHg'],
+      text: "Hypertension artérielle réfractaire",
+      textNote: [
+        "Tension artérielle systolique > 180 mmHg et/ou",
+        "Tension artérielle diastolique > 110 mmHg"
+      ],
       isChecked: false,
-      alert: true,
+      alert: true
     },
     {
-      text: 'Maladie hépatique avancée',
+      text: "Maladie hépatique avancée",
       isChecked: false,
-      alert: false,
+      alert: false
     },
     {
-      text: 'Endocardite infectieuse ',
+      text: "Endocardite infectieuse ",
       isChecked: false,
-      alert: false,
+      alert: false
     },
     // tslint:disable-next-line: max-line-length
     {
-      text: 'Ulcère peptique actif ',
+      text: "Ulcère peptique actif ",
       isChecked: false,
-      alert: false,
-    },
-
+      alert: false
+    }
   ];
 
   // --------------------------------
   get cia1() {
-    return this.contreIndicForm.get('cia1');
+    return this.contreIndicForm.get("cia1");
   }
   get cia2() {
-    return this.contreIndicForm.get('cia2');
+    return this.contreIndicForm.get("cia2");
   }
   get cia3() {
-    return this.contreIndicForm.get('cia3');
+    return this.contreIndicForm.get("cia3");
   }
   get cia4() {
-    return this.contreIndicForm.get('cia4');
+    return this.contreIndicForm.get("cia4");
   }
   get cia5() {
-    return this.contreIndicForm.get('cia5');
+    return this.contreIndicForm.get("cia5");
   }
   get cia6() {
-    return this.contreIndicForm.get('cia6');
+    return this.contreIndicForm.get("cia6");
   }
   get cia7() {
-    return this.contreIndicForm.get('cia7');
+    return this.contreIndicForm.get("cia7");
   }
-
 
   // --------------------------------
   contreIndicForm = this.formBuilder.group({
-    cia1: ['', ''],
-    cia2: ['', ''],
-    cia3: ['', ''],
-    cia4: ['', ''],
-    cia5: ['', ''],
-    cia6: ['', ''],
-    cia7: ['', ''],
-
+    cia1: ["", ""],
+    cia2: ["", ""],
+    cia3: ["", ""],
+    cia4: ["", ""],
+    cia5: ["", ""],
+    cia6: ["", ""],
+    cia7: ["", ""]
   });
   // --------------------------------
 
@@ -140,7 +139,7 @@ export class ThrombRelativePage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController // private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
     // this.hypertentionValue = 0;
@@ -149,24 +148,27 @@ export class ThrombRelativePage implements OnInit {
     this.token = this.sglob.getToken();
 
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('dataPatientObj')) {
+      if (!paramMap.has("dataPatientObj")) {
         // this.router.navigate(['/home']);
       } else {
-        const dataObj = paramMap.get('dataPatientObj');
+        const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
 
         // =================================================
-        this.doctorId = this.dataPatient['doctorId'];
-        this.dossierId = this.dataPatient['dossierId'];
+        this.doctorId = this.dataPatient["doctorId"];
+        this.dossierId = this.dataPatient["dossierId"];
+        if (this.dataPatient["stepId"] !== 12) {
+          this.updateStep();
+        }
         // # typeId = 1 : Formulaire de contre indications Absolus;
         this.typeId = 1;
         // =================================================
 
-        console.log(':::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient');
+        console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
         console.group();
-        console.log('::: FORM TYPE ::: ', this.typeId);
-        console.log('dossierId ===>', this.dossierId);
-        console.log('doctorId ===> ', this.doctorId);
+        console.log("::: FORM TYPE ::: ", this.typeId);
+        console.log("dossierId ===>", this.dossierId);
+        console.log("doctorId ===> ", this.doctorId);
         console.group();
         console.log(this.dataPatient);
         console.groupEnd();
@@ -177,50 +179,57 @@ export class ThrombRelativePage implements OnInit {
 
   initContIndAbsObject() {
     this.contIndAbsElm = {
-      name: '',
+      name: "",
       har: 0
     };
     // this.contIndAbsElm.name = '';
     // this.contIndAbsElm.har = 0;
   }
   onCheckBoxChange(isChecked, isAlert) {
-
-    console.log('isAlert :::', isAlert, ' / ', 'isChecked', isChecked);
+    console.log("isAlert :::", isAlert, " / ", "isChecked", isChecked);
 
     if (isChecked) {
-
       if (isAlert) {
         // # You must select one of value 'PAD' OR 'PAS' to submit form
         this.presentAlertRadio();
         this.isDisplayRadio = true;
         this.isRequiredCheckBox = true;
       } else {
-
-
-        if (this.hypertentionValue === 0 && this.contreIndicForm.value.cia4 === true) {
+        if (
+          this.hypertentionValue === 0 &&
+          this.contreIndicForm.value.cia4 === true
+        ) {
           this.isDisplayRadio = false;
           this.isRequiredCheckBox = true;
-          console.log(' 1 - this.isRequiredCheckBox :::>', this.isRequiredCheckBox);
+          console.log(
+            " 1 - this.isRequiredCheckBox :::>",
+            this.isRequiredCheckBox
+          );
         } else {
           this.isDisplayRadio = false;
           this.isRequiredCheckBox = false;
-          console.log('2 - this.isRequiredCheckBox :::>', this.isRequiredCheckBox);
+          console.log(
+            "2 - this.isRequiredCheckBox :::>",
+            this.isRequiredCheckBox
+          );
         }
-        console.group('ENABLE / DESABLE FORM');
-        console.log(' this.hypertentionValue :::>', this.hypertentionValue);
-        console.log(' this.isRequiredCheckBox :::>', this.isRequiredCheckBox);
+        console.group("ENABLE / DESABLE FORM");
+        console.log(" this.hypertentionValue :::>", this.hypertentionValue);
+        console.log(" this.isRequiredCheckBox :::>", this.isRequiredCheckBox);
         console.groupEnd();
-
       }
       // ---------------------------------
       this.somCheck++;
-
     } else {
-
       if (this.contreIndicForm.value.cia4 === false) {
-
-        console.log(' 0 - this.isRequiredCheckBox :::>', this.isRequiredCheckBox);
-        console.log(' 0-1 - this.isRequiredCheckBox :::>', this.isRequiredCheckBox);
+        console.log(
+          " 0 - this.isRequiredCheckBox :::>",
+          this.isRequiredCheckBox
+        );
+        console.log(
+          " 0-1 - this.isRequiredCheckBox :::>",
+          this.isRequiredCheckBox
+        );
 
         //this.errorMessages = true;
         this.isDisplayRadio = false;
@@ -241,11 +250,9 @@ export class ThrombRelativePage implements OnInit {
        this.isRequiredCheckBox = false;
      }*/
 
-
     // ----------------------------------------
-    console.log('somCheck :::', this.somCheck);
+    console.log("somCheck :::", this.somCheck);
     this.somCheck ? (this.exitProcess = true) : (this.exitProcess = false);
-
   }
 
   submitFormInfos() {
@@ -259,26 +266,24 @@ export class ThrombRelativePage implements OnInit {
     this.initContIndAbsObject();
     // -----------| START LOADING |----------
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Envoi en cours...' })
+      .create({ keyboardClose: true, message: "Envoi en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 
         for (let i = 0; i <= this.listContIndicAbs.length; i++) {
           // console.log('- checkValue ==> ', i, ':', eval('this.contreIndicForm.value.cia' + i));
           // let thisHar = '0';
-          const checkValue = eval('this.contreIndicForm.value.cia' + i);
+          const checkValue = eval("this.contreIndicForm.value.cia" + i);
           if (checkValue) {
-            console.log('checkValue', checkValue);
+            console.log("checkValue", checkValue);
 
             if (this.listContIndicAbs[i - 1].alert) {
-              console.log('EXEPTION !!!!!!!!!!!!', this.hypertentionValue);
+              console.log("EXEPTION !!!!!!!!!!!!", this.hypertentionValue);
 
               this.contIndAbsElm.har = this.hypertentionValue.toString();
-              this.contIndAbsElm.name = '';
+              this.contIndAbsElm.name = "";
               // this.hypertentionValue = 0;
-
             } else {
-
               this.contIndAbsElm.har = "0";
               this.contIndAbsElm.name = this.listContIndicAbs[i - 1].text;
             }
@@ -290,29 +295,31 @@ export class ThrombRelativePage implements OnInit {
         }
         // # Init contre indication Object
         // =================================================
-        console.group('= CONTRE INDICATION ABSOLUT:::RESULTAT FINAL =');
-        console.log('::: SOME CHEKED ::: ', this.somCheck, ' | exitProcess ', this.exitProcess);
-        console.log('- contre Indications Obj ===> ', this.contIndAbsObj);
+        console.group("= CONTRE INDICATION ABSOLUT:::RESULTAT FINAL =");
+        console.log(
+          "::: SOME CHEKED ::: ",
+          this.somCheck,
+          " | exitProcess ",
+          this.exitProcess
+        );
+        console.log("- contre Indications Obj ===> ", this.contIndAbsObj);
         console.groupEnd();
         // ############# END / VARIABLS FORM ###############
 
         if (this.exitProcess) {
-
           loadingEl.dismiss();
-          this.resultatId = 9; //  Le THROMBOLYSE a été jugée risquée
+          this.dataPatient.resultatId = 9; //   Le THROMBOLYSE a été jugée risquée
+
+          // ************ REDIRECTION TO GOCR PAGE ****************
 
           // ************ REDIRECTION TO GOCR PAGE ****************
           this.router.navigate([
             "/gocr",
             this.dossierId,
-            this.resultatId,
             JSON.stringify(this.dataPatient)
           ]);
           // ****************************
-
-
         } else {
-
           const authObs: Observable<PretreatmentResponseData> = this.srvApp.addContreIndiAbs(
             this.contIndAbsObj,
             this.token
@@ -321,22 +328,25 @@ export class ThrombRelativePage implements OnInit {
           authObs.subscribe(
             resData => {
               this.returnData = resData;
-              console.log('::: RETOUR DATA CONTRE INDICATION ABSOLUT - Success ! :::', this.returnData.code);
+              console.log(
+                "::: RETOUR DATA CONTRE INDICATION ABSOLUT - Success ! :::",
+                this.returnData.code
+              );
 
               if (+this.returnData.code === 201) {
-
                 loadingEl.dismiss();
 
                 // ************ REDIRECTION TO PICK PHOTO ECG 2  ****************
-
                 this.router.navigate([
-                  '/home'
+                  "/thromb-ecg",
+                  this.dossierId,
+                  JSON.stringify(this.dataPatient)
                 ]);
 
                 // ****************************
               } else {
                 loadingEl.dismiss();
-                this.msgAlert = 'Prblème interne, veuillez réessyer';
+                this.msgAlert = "Prblème interne, veuillez réessyer";
                 this.showAlert(this.msgAlert);
               }
             },
@@ -357,71 +367,108 @@ export class ThrombRelativePage implements OnInit {
   async presentAlertRadio() {
     this.hypertentionValue = 0;
     const alert = await this.alertCtrl.create({
-      header: 'Radio',
+      header: "Radio",
       inputs: [
         {
-          name: 'Aucun',
-          type: 'radio',
-          label: 'Aucun',
+          name: "Aucun",
+          type: "radio",
+          label: "Aucun",
           value: 0,
           checked: true
         },
         {
-          name: 'PAS',
-          type: 'radio',
-          label: 'PAS',
+          name: "PAS",
+          type: "radio",
+          label: "PAS",
           value: 1,
           checked: false
         },
         {
-          name: 'PAD',
-          type: 'radio',
-          label: 'PAD',
+          name: "PAD",
+          type: "radio",
+          label: "PAD",
           value: 2,
           checked: false
-        },
+        }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirm Cancel');
-
+            console.log("Confirm Cancel");
           }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log('Confirm Ok');
+        },
+        {
+          text: "Ok",
+          handler: data => {
+            console.log("Confirm Ok");
             console.log(JSON.stringify(data));
             this.hypertentionValue = data; // JSON.stringify(data);
             // ------ ENABLE / DESABLE FORM ------
             // console.log('cia4:::',  this.contreIndicForm.value.cia4);
             // this.contreIndicForm.value.cia1 = false;
 
-            this.hypertentionValue === 0 ? this.isRequiredCheckBox = true : this.isRequiredCheckBox = false;
-            console.group('ON OK');
-            console.log('this.hypertentionValue ::', this.hypertentionValue);
-            console.log('this.isRequiredCheckBox ::', this.isRequiredCheckBox);
+            this.hypertentionValue === 0
+              ? (this.isRequiredCheckBox = true)
+              : (this.isRequiredCheckBox = false);
+            console.group("ON OK");
+            console.log("this.hypertentionValue ::", this.hypertentionValue);
+            console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
             console.groupEnd();
           }
         }
       ]
     });
     await alert.present();
-    await alert.onDidDismiss().then(
-      (data) => {
-        if (this.hypertentionValue === 0) {
-          this.isRequiredCheckBox = true;
-          // this.cia4.reset();
+    await alert.onDidDismiss().then(data => {
+      if (this.hypertentionValue === 0) {
+        this.isRequiredCheckBox = true;
+        // this.cia4.reset();
+      } else {
+        this.isRequiredCheckBox = false;
+      }
+      console.group("ON DISMISS");
+      console.log("this.hypertentionValue ::", this.hypertentionValue);
+      console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
+      console.groupEnd();
+    });
+  }
+
+  updateStep() {
+    console.log("update step");
+    const params = {
+      dossierId: this.dossierId,
+      //resultatId: this.resultatId,
+      stepId: 12
+    };
+
+    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
+      params,
+      this.token
+    );
+    authObs.subscribe(
+      resData => {
+        if (+resData.code === 200) {
         } else {
-          this.isRequiredCheckBox = false;
+          // ----- Hide loader ------
         }
-        console.group('ON DISMISS');
-        console.log('this.hypertentionValue ::', this.hypertentionValue);
-        console.log('this.isRequiredCheckBox ::', this.isRequiredCheckBox);
-        console.groupEnd();
+      },
+
+      // ::::::::::::  ON ERROR ::::::::::::
+      errRes => {
+        console.log(errRes);
+        // ----- Hide loader ------
+        // --------- Show Alert --------
+
+        if (errRes.error.code === "401") {
+          this.showAlert(errRes.error.message);
+        } else {
+          this.showAlert(
+            "Prblème d'accès au réseau, veillez vérifier votre connexion"
+          );
+        }
       }
     );
   }
@@ -472,13 +519,5 @@ export class ThrombRelativePage implements OnInit {
     // });
   }
 
-
-
-
-
   // ---------------------------------------
-
-
-
-
 }

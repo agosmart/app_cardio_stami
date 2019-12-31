@@ -116,7 +116,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "gocr/:idDossier/:resultatId/:stepId/:dataPatientObj",
+    path: "gocr/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/gocr/gocr.module").then(m => m.GocrPageModule)
   },
@@ -140,10 +140,31 @@ const routes: Routes = [
       )
   },
   {
-    path: "last-drug/:idDossier/:idCr/:resultatId/:dataPatientObj",
+    path: "last-drug/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/last-drug/last-drug.module").then(
         m => m.LastDrugPageModule
+      )
+  },
+  {
+    path: "thromb-ecg/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/thromb-ecg/thromb-ecg.module").then(
+        m => m.ThrombEcgPageModule
+      )
+  },
+  {
+    path: "thromb-protoc/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/thromb-protoc/thromb-protoc.module").then(
+        m => m.ThrombProtocPageModule
+      )
+  },
+  {
+    path: "thromb-result/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/thromb-result/thromb-result.module").then(
+        m => m.ThrombResultPageModule
       )
   },
   {

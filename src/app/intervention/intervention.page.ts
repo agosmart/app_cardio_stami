@@ -10,20 +10,21 @@ import {
 } from "@ionic/angular";
 import { ImagePage } from "../modal/image/image.page";
 import { Observable } from "rxjs";
+import { DossierModel } from "../models/dossier.model";
 @Component({
   selector: "app-intervention",
   templateUrl: "./intervention.page.html",
   styleUrls: ["./intervention.page.scss"]
 })
 export class InterventionPage implements OnInit {
-  dataPatient: object;
+  dataPatient: DossierModel;
   idDossier: number;
   token: string;
   idUser: number;
   stepId: number;
- // ecgTmp: string;
+  // ecgTmp: string;
   resultatId = 0;
-  urlEcg:string;
+  urlEcg: string;
   //returnDataIntervention: InterResponseData;
 
   // -----------------------------
@@ -40,7 +41,6 @@ export class InterventionPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController
-  
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
@@ -74,7 +74,7 @@ export class InterventionPage implements OnInit {
       } else {
         this.idDossier = +paramMap.get("idDossier");
         this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
-        console.log('IMAGE ECG :::', this.urlEcg);
+        console.log("IMAGE ECG :::", this.urlEcg);
       }
     });
   }
@@ -153,17 +153,10 @@ export class InterventionPage implements OnInit {
     switch (inter) {
       case "GOCR":
         // ---- CR ---
-        this.resultatId = 6; // aucune intervention envoi direct au CR
-        console.log(
-          "dataPatientObj ::::----> CR INTERVENTION ::",
-          this.dataPatient,
-          " / ",
-          this.idDossier
-        );
+        this.dataPatient.resultatId = 6; // aucune intervention envoi direct au CR
         await this.router.navigate([
           "/gocr",
           this.idDossier,
-          this.resultatId,
           JSON.stringify(this.dataPatient)
         ]);
         break;

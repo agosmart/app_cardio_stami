@@ -13,7 +13,8 @@ import { DiagResponseData } from "../models/diag.response";
 import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
 import { DemandeAvisResponseData } from "../models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "../models/reponseAvis.response";
-import { PretreatmentResponseData } from '../models/pretreatment.response';
+import { PretreatmentResponseData } from "../models/pretreatment.response";
+import { Observable } from "rxjs";
 
 interface ResponseEtab {
   code: number;
@@ -42,7 +43,7 @@ export class ServiceAppService {
 
   //********************************** */
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient) {}
 
   loginDoctor(params: object) {
     const apiUrl = this.baseUrl + "/login";
@@ -103,7 +104,6 @@ export class ServiceAppService {
   }
 
   diagDossier(params: object, token: string) {
-
     const apiUrl = this.baseUrl + "/diagnostic";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -216,8 +216,6 @@ export class ServiceAppService {
     });
   }
 
-
-
   addContreIndiAbs(params: object, token: string) {
     const apiUrl = this.baseUrl + "/contre_indication";
     const myHeaders: HttpHeaders = new HttpHeaders({
@@ -268,7 +266,7 @@ export class ServiceAppService {
   //     .catch(error => console.log("Une erreur est survenue" + error));
   // }
 
-  addToken(token, idUser, mobile) { }
+  addToken(token, idUser, mobile) {}
 
   getListeCR(params: number) {
     const apiUrl = this.baseUrl + "/etablissements/" + params;
@@ -304,7 +302,6 @@ export class ServiceAppService {
   }
 
   updateStep(params: object, token: string) {
-
     const apiUrl = this.baseUrl + "/updateStape";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -313,10 +310,8 @@ export class ServiceAppService {
     });
     const myBody: object = params;
     console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
-    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+    return this.http.post<DossierResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
-
-
   }
 }

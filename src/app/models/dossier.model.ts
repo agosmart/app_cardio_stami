@@ -27,4 +27,7 @@ export interface DossierModel {
   page: string;
   demandeAvisId: number;
   diagnostic: DiagModel;
+  resultatId?: number;
+  stepId?: number;
+  idCr?: number;
 }
