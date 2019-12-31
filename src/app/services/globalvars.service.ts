@@ -8,8 +8,7 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
-
-  private urlEcg = "http://cardio.cooffa.shop/show/ecg/";
+  private urlEcg = " http://cardio.cooffa.shop/show/ecg/";
   private initFetch = false;
 // -------------------------------------
   constructor(

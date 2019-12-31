@@ -32,6 +32,7 @@ export class DiagnosticPage implements OnInit {
   token: string;
   idUser: number;
   stepId: number;
+  patientId: number;
   returnDiag: DiagResponseData;
 
   // -----------------------------
@@ -68,6 +69,7 @@ export class DiagnosticPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         console.log(" dataObj >>>>> dataPatient ::: ", dataObj);
         this.dataPatient = JSON.parse(dataObj);
+        this.patientId = this.dataPatient["patientId"];
 
         console.log(
           " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
@@ -275,93 +277,9 @@ export class DiagnosticPage implements OnInit {
       })
       .then(alertEl => alertEl.present());
   }
-  /*
-    async setDiagnosticAlert_(diag: string) {
-  
-      // ----------- message dynamic ---------------
-      if (diag === 'ST') {
-        this.msgAlert = "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
-      } else if (diag === 'RAS') {
-        this.msgAlert = "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
-      } else {
-        this.msgAlert = "Etes-vous sur de bien vouloir lancer une demande d'aide auprès de vos collègues ? ";
-      }
-      // -----------END  message dynamic ---------------
-  
-      const alert = await this.alertCtrl.create({
-        header: 'Le constat des risques',
-        cssClass: 'alert-css',
-        // ----------- message dynamic ---------------
-        message: this.msgAlert,
-        // -------------------------
-        buttons: [
-          {
-            text: 'Annuler',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
-              console.log('Confirme Annuler');
-            }
-          }, {
-            text: 'Je confirme',
-            handler: async () => {
-              const loader = await this.loadingCtrl.create({
-                duration: 8000,
-                message: 'Envoie en cours...',
-                translucent: true,
-                cssClass: 'custom-class custom-loading',
-              });
-              await loader.present();
-              // ----------- params test  ---------------
-              const params = {
-  
-                dossierId: '',
-                doctorId: '',
-                diagnostic: '',
-                stepId: '',
-              };
-              // ----------- END params test  ---------------
-              const authObs: Observable<DiagResponseData> = this.srv.diagDossier(params, this.token);
-              // ---- Call Login function
-              authObs.subscribe(
-                // :::::::::::: ON RESULT ::::::::::
-                resData => {
-                  this.returnDiag = resData;
-                  console.log('RETOUR DATA DIAGNOSTIC:::', this.returnDiag.code);
-  
-                  if (+this.returnDiag.code === 202) {
-                    // loader.dismiss();
-                    this.msgAlert = 'Votre diagnostic sur l\'état du patient a été prise en considération.';
-  
-                  } else {
-                    // loader.dismiss();
-                    this.msgAlert = 'Prblème interne, veilley réessyer';
-                  }
-                },
-                errRes => {
-                  if (errRes.error.status === 401 || errRes.error.status === 500) {
-                    this.msgAlert = "Accès à la ressource refusé";
-  
-                  }
-                  // loader.dismiss();
-                  console.log('RETOUR ERROR DIAGNOSTIC:::', errRes);
-                  this.msgAlert = "Prblème d'accès au réseau, veillez vérifier votre connexion";
-  
-  
-                });
-  
-              await loader.dismiss().then((l) => {
-                this.setDiagnostic(diag);
-              });
-  
-            }
-          }
-        ]
-      });
-      await alert.present();
-    }
-  
-  */
 
-  /* *********** END **************** */
+  archive() {
+    console.log(this.patientId);
+    this.router.navigate(["/archive", this.patientId]);
+  }
 }

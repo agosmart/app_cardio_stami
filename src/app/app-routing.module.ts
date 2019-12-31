@@ -145,6 +145,18 @@ const routes: Routes = [
       import("./intervention/last-drug/last-drug.module").then(
         m => m.LastDrugPageModule
       )
+  },
+  {
+    path: "archive/:patientId",
+    loadChildren: () =>
+      import("./archive/archive.module").then(m => m.ArchivePageModule)
+  },
+  {
+    path: "detail-archive/:patientId",
+    loadChildren: () =>
+      import("./archive/detail-archive/detail-archive.module").then(
+        m => m.DetailArchivePageModule
+      )
   }
 ];
 

@@ -1,22 +1,20 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/inscription"></ion-back-button>
-    </ion-buttons>
+    <!-- <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons> -->
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content fullscreen class="diag-info ion-no-padding">
+<ion-content>
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-diagnostic text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >DIAGNOSTIC</ion-col
-      >
+      <ion-col size="12" class="title-header ion-no-padding">Archive</ion-col>
     </ion-row>
   </ion-grid>
 
@@ -41,7 +39,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
-                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+                    {{lastName}} {{lastName}}
                   </ion-col>
                 </ion-row>
 
@@ -74,82 +72,9 @@
                   </ion-button>
                 </ion-col>
               </ion-col>
-
-              <ion-col size="2" class="ion-no-padding">
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="archive()"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
-                    <ion-icon slot="icon-only" name="archive"></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-col>
             </ion-row>
           </ion-card-content>
         </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <!-- ------------------- -->
-  <ion-grid fixed class="diagnostic ion-margin-top ion-padding-top">
-    <!-- ------- -->
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="st"
-                tappable
-                (click)="showAlertConfirme('ST')"
-              >
-                <div>
-                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    ST
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="sos"
-                tappable
-                (click)="showAlertConfirme('SOS')"
-              >
-                <div>
-                  <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
-                  <ion-text color="_primary">
-                    SOS
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="ras"
-                tappable
-                (click)="showAlertConfirme('RAS')"
-              >
-                <div>
-                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    RAS
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
