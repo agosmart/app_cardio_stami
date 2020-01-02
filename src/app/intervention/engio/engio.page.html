@@ -14,7 +14,9 @@
       <ion-col size="12" class="icon-header">
         <span class="icon-int-engio text-white text22"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">ORIENTATION - ENGIOPLASTIE</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >ORIENTATION - ENGIOPLASTIE</ion-col
+      >
     </ion-row>
   </ion-grid>
 
@@ -26,7 +28,9 @@
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >N°: 2001-00035</ion-badge
+                  >
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -80,64 +84,77 @@
         <ion-card class="list-CR" color="light">
           <ion-card-content class="text09 ">
             <ion-list class="ion-no-padding">
-
               <!---->
               <ion-item-divider class="box-shadow">
                 <ion-label class="p-10-0">
                   <span class="icon-cr text-dark  text17 "></span>
                   <b class="text-gray500 text10">CENTRES DE REFERENCE</b>
+                  <p>{{resultName}}</p>
                 </ion-label>
               </ion-item-divider>
               <!---->
 
-              <ion-item  lines="full" *ngFor="let item of itemsCR" (click)="choixCr(item.etabId)">
+              <ion-item
+                lines="full"
+                *ngFor="let item of itemsCR"
+                (click)="choixCr(item.etabId)"
+              >
                 <ion-label class="ion-text-wrap">
                   <span class="icon-cudt-box-2  text-dark  text17"></span>
                   {{item.etabName}}
                 </ion-label>
                 <ion-chip color="secondary">
-                  <ion-note> <span class="icon-duration-1 text-dark  "></span> <b> {{item.duration}} < 120 min</b>
-                        </ion-note> </ion-chip> </ion-item> <!---->
+                  <ion-note>
+                    <span class="icon-duration-1 text-dark  "></span>
+                    <b> {{item.duration}} < 120 min</b>
+                  </ion-note>
+                </ion-chip>
+              </ion-item>
+              <!---->
             </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
-
   </ion-grid>
   <!-- ------------ -->
   <ion-grid fixed class="intervention ion-no-margin ">
-   
     <ion-row>
       <ion-col size="12" class="ion-text-left">
         <ion-grid class="interv-btn-group ion-text-left">
           <ion-row>
-
             <ion-col size="12">
-              <ion-button expand="block" fill="solid" class="gocr" tappable (click)="showAlertConfirme('THROMB')">              
-                  <span class="icon-int-ras "></span>
-                  <ion-text>
-                    Envoyer au CR
-                  </ion-text>             
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="gocr"
+                tappable
+                (click)="showAlertConfirme('THROMB')"
+              >
+                <span class="icon-int-ras "></span>
+                <ion-text>
+                  Envoyer au CR
+                </ion-text>
               </ion-button>
             </ion-col>
 
             <ion-col size="12">
-              <ion-button expand="block" fill="solid" class="thrombo" tappable (click)="goToTromb()">
-                  <span class="icon-int-thromb"></span>
-                  <ion-text>
-                    Thrombolyse
-                  </ion-text>
-               
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="thrombo"
+                tappable
+                (click)="goToTromb()"
+              >
+                <span class="icon-int-thromb"></span>
+                <ion-text>
+                  Thrombolyse
+                </ion-text>
               </ion-button>
             </ion-col>
-
-
-
           </ion-row>
         </ion-grid>
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

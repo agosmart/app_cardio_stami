@@ -308,7 +308,7 @@ export class ThrombRelativePage implements OnInit {
 
         if (this.exitProcess) {
           loadingEl.dismiss();
-          this.dataPatient.resultatId = 9; //   Le THROMBOLYSE a été jugée risquée
+          this.dataPatient.resultId = 9; //   Le THROMBOLYSE a été jugée risquée
 
           // ************ REDIRECTION TO GOCR PAGE ****************
 

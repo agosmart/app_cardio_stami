@@ -24,6 +24,7 @@ export class ThrombAbsolutPage implements OnInit {
   token: string;
   dossierId: number;
   typeId: number;
+  resultId: number;
   doctorId: number;
   dataPatient: DossierModel;
   resultatId: number;
@@ -152,6 +153,7 @@ export class ThrombAbsolutPage implements OnInit {
         // =================================================
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
+        this.resultId = this.dataPatient["resultId"];
         if (this.dataPatient["stepId"] !== 9) {
           this.updateStep();
         }
@@ -159,15 +161,15 @@ export class ThrombAbsolutPage implements OnInit {
         this.typeId = 1;
         // =================================================
 
-        console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
-        console.group();
-        console.log("::: FORM TYPE ::: ", this.typeId);
-        console.log("dossierId ===>", this.dossierId);
-        console.log("doctorId ===> ", this.doctorId);
-        console.group();
-        console.log(this.dataPatient);
-        console.groupEnd();
-        console.groupEnd();
+        // console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
+        // console.group();
+        // console.log("::: FORM TYPE ::: ", this.typeId);
+        // console.log("dossierId ===>", this.dossierId);
+        // console.log("doctorId ===> ", this.doctorId);
+        // console.group();
+        // console.log(this.dataPatient);
+        // console.groupEnd();
+        // console.groupEnd();
       }
     });
   }
@@ -238,7 +240,7 @@ export class ThrombAbsolutPage implements OnInit {
   checkContreIndication(loadingEl) {
     if (this.exitProcess) {
       loadingEl.dismiss();
-      this.dataPatient.resultatId = 8; // aucune intervention envoi direct au CR
+      this.dataPatient.resultId = 8;
       // ************ REDIRECTION TO GOCR PAGE ****************
       this.router.navigate([
         "/gocr",
@@ -309,7 +311,7 @@ export class ThrombAbsolutPage implements OnInit {
     console.log("update step");
     const params = {
       dossierId: this.dossierId,
-      //resultatId: this.resultatId,
+      resultId: this.resultId,
       stepId: 9
     };
 

@@ -82,8 +82,8 @@ export class RegisterPage implements OnInit {
   get cr() {
     return this.registrationForm.get("cr");
   }
-  get cudtId() {
-    return this.registrationForm.get("cudtId");
+  get etabId() {
+    return this.registrationForm.get("etabId");
   }
   get terms() {
     return this.registrationForm.get("terms");
@@ -129,7 +129,7 @@ export class RegisterPage implements OnInit {
     ],
     gender: [{ type: "required", message: "Votre civilité est requise" }],
     cr: [{ type: "required", message: "Le nom du CR est required" }],
-    cudtId: [{ type: "required", message: "Le nom du CUDT est requis" }],
+    etabId: [{ type: "required", message: "Le nom du CUDT est requis" }],
     terms: [
       {
         type: "pattern",
@@ -200,7 +200,7 @@ export class RegisterPage implements OnInit {
 
         gender: [this.genders[0], [Validators.required]],
         cr: ["", [Validators.required]],
-        cudtId: ["", [Validators.required]],
+        etabId: ["", [Validators.required]],
         terms: [true, [Validators.pattern("true")]]
       },
       {
@@ -219,7 +219,8 @@ export class RegisterPage implements OnInit {
       .then(loadingEl => {
         loadingEl.present();
 
-        const params = this.registrationForm.value;
+        let params = this.registrationForm.value;
+        params["userType"] = 2;
         console.log("params register : ", params);
         const authObs: Observable<AuthResponseData> = this.srv.registerDoctor(
           params

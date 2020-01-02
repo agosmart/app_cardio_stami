@@ -210,7 +210,7 @@
             <ion-list *ngIf="ChoixCR != 0" class="ion-margin-top" lines="none">
               <ion-item>
                 <ion-label>Votre CUDT</ion-label>
-                <ion-select formControlName="cudtId">
+                <ion-select formControlName="etabId">
                   <ion-select-option
                     *ngFor="let item of itemsCudt"
                     value="{{item.etabId}}"

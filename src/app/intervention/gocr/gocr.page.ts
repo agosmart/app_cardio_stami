@@ -25,9 +25,10 @@ export class GocrPage implements OnInit {
   idEtab: number;
   dossierId: number;
   token: string;
+  resultName: "";
   idCr = 0;
   stepId = 13;
-  resultatId: number;
+  resultId: number;
   isLoading = false;
   dataPatient: object;
   retunListeCR: EtabResponseData;
@@ -53,7 +54,11 @@ export class GocrPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
-        //this.resultatId = this.dataPatient["resultatId"];
+        //this.resultId = this.dataPatient["resultId"];
+
+        this.resultId = this.dataPatient["resultId"];
+        this.resultName = this.dataPatient["resultName"];
+        console.log(" resultId ::: ", this.resultId);
         if (this.dataPatient["stepId"] !== 13) {
           this.updateStep();
         }
@@ -65,12 +70,12 @@ export class GocrPage implements OnInit {
     });
   }
   updateStep() {
-    console.log("update step");
     const params = {
       dossierId: this.dossierId,
-      //resultatId: this.resultatId,
-      stepId: this.stepId
+      stepId: this.stepId,
+      resultId: this.resultId
     };
+    console.log("update step gocr", params);
 
     const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
       params,
@@ -136,7 +141,7 @@ export class GocrPage implements OnInit {
 
         const params = {
           dossierId: this.dossierId,
-          resultatId: 6,
+          resultatId: this.resultId,
           crId: this.idCr,
           doctorId: this.dataPatient["doctorId"]
         };

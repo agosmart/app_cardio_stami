@@ -153,7 +153,7 @@ export class InterventionPage implements OnInit {
     switch (inter) {
       case "GOCR":
         // ---- CR ---
-        this.dataPatient.resultatId = 6; // aucune intervention envoi direct au CR
+        this.dataPatient.resultId = 6; // aucune intervention envoi direct au CR
         await this.router.navigate([
           "/gocr",
           this.idDossier,

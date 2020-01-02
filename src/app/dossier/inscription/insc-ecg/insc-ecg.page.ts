@@ -241,7 +241,7 @@ export class InscEcgPage implements OnInit {
           this.router.navigate([
             "./insc-infos",
             this.idDossier,
-            JSON.stringify([this.dataPatient])
+            JSON.stringify(this.dataPatient)
           ]);
           // this.presentToast("File upload complete.");
         } else {

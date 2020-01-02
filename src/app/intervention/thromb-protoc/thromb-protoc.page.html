@@ -1,9 +1,207 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>thromb-protoc</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inscription"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen class="insc-infos ion-no-padding">
+  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+    <!-- <div class="overly-gradian">&nbsp;</div> -->
+    <ion-row class="ion-no-padding ">
+      <ion-col size="12" class="icon-header">
+        <span class="icon-doss-create text-white text20"></span>
+      </ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >CREATION DU DOSSIER</ion-col
+      >
+    </ion-row>
+  </ion-grid>
 
+  <ion-grid class="form-bloc">
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card class="ion-margin" color="light">
+          <ion-card-content class="text09 ">
+            <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <ion-label>
+                  <ion-badge class="p-6-16 w100" slot="start" color="medium"
+                    >N°: 2001-00035</ion-badge
+                  >
+                </ion-label>
+              </ion-col>
+
+              <ion-col size="12" class="ion-no-padding">
+                <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
+                <span class="icon-man text-dark  text10"></span>
+                {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+              </ion-col>
+
+              <ion-col size="12" class="ion-no-padding">
+                <span class="icon-calander  text-dark  text10"></span>
+                <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                {{dataPatient['birthDay']}}
+                <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
+              </ion-col>
+
+              <ion-col size="12" class="ion-no-padding">
+                <span class="icon-weight  text-dark  text10"></span>
+                <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
+                {{dataPatient['weight'] + ' KG'}}
+              </ion-col>
+
+              <ion-col size="12" class="ion-no-margin ion-no-padding">
+                <ion-row class="ion-no-margin ion-no-padding">
+                  <ion-col size="2" class="ion-no-margin ion-no-padding">
+                    <ion-button
+                      (click)="openImageEcg(urlEcg)"
+                      color="danger"
+                      tappable
+                      class="ion-bt-padding "
+                    >
+                      <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col size="10">
+                    <ion-text color="primary">
+                      <h6>Image ECG prise le :</h6>
+                      <h6>25-12-2019 à 23:30</h6>
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <!--  </ion-col>
+             <ion-col size="2" class="ion-no-padding">                
+               
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-button
+                    (click)="openImageEcg()"
+                    color="danger"
+                    class="ion-bt-padding "                    
+                  >
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>   
+                  </ion-button>
+                </ion-col>
+              </ion-col> -->
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <!----- FORM ----->
+    <form [formGroup]="protocolFormInfos" (ngSubmit)="submitFormInfos()">
+      <ion-grid fixed>
+        <!---ANTECEDENTS CARDIOLOGIQUE-->
+        <ion-row class="ion-no-padding">
+          <ion-col size="12">
+            <ion-radio-group formControlName="tpa">
+              <ion-list-header>
+                <ion-label>ALTÉPLASE (TPA) ACTILYSE</ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>15 mg bolus IV</ion-label>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="15 mg bolus IV"
+                  checked
+                ></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>60 mg IV en 30 minutes-</ion-label>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="60 mg IV en 30 minutes"
+                  checked
+                ></ion-radio>
+              </ion-item>
+              <ion-item>
+                <ion-label>40 mg IV en 60 minutes</ion-label>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="40 mg IV en 60 minutes"
+                ></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+            <div *ngFor="let error of errorMessages.tpa">
+              <ng-container
+                *ngIf="tpa.hasError(error.type) && (tpa.dirty || tpa.touched)"
+              >
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+            <ion-radio-group formControlName="tnktpa">
+              <ion-list-header>
+                <ion-label>TÉNECTÉPLASE (TNK-TPA)METALYSE</ion-label>
+              </ion-list-header>
+              <ion-item>
+                <ion-label>{{tnkTpaVal}}</ion-label>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="{{tnkTpaVal}}"
+                  checked
+                ></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+            <div *ngFor="let error of errorMessages.tnk-tpa">
+              <ng-container
+                *ngIf="tnk-tpa.hasError(error.type) && (tnk-tpa.dirty || tnk-tpa.touched)"
+              >
+                <small class="error-message">{{error.message}}</small>
+              </ng-container>
+            </div>
+
+            <!-- consentement-->
+            <ion-item class="ion-margin-top" lines="full">
+              <ion-label color="primary"
+                >J'accepte les conditions d'utilisations</ion-label
+              >
+              <ion-checkbox
+                color="primary"
+                checked="true"
+                formControlName="consentement"
+              ></ion-checkbox>
+            </ion-item>
+
+            <div *ngFor="let error of errorMessages.consentement">
+              <ng-container
+                *ngIf="consentement.hasError(error.type) && (consentement.dirty || consentement.touched)"
+              >
+                <small class="message  error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{error.message}}
+                </small>
+              </ng-container>
+            </div>
+          </ion-col>
+        </ion-row>
+        <!-- Button Submit-->
+        <ion-row>
+          <ion-col size="12">
+            <div class="ion-margin-top">
+              <ion-button
+                shape="round"
+                expand="block"
+                class="ion-margin-top btn"
+                color="dark"
+                [disabled]="!inscriptionFormInfos.valid"
+                type="submit"
+              >
+                Valider
+                <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-grid>
 </ion-content>

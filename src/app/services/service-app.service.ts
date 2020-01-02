@@ -302,6 +302,7 @@ export class ServiceAppService {
   }
 
   updateStep(params: object, token: string) {
+    console.log("update step service ", params);
     const apiUrl = this.baseUrl + "/updateStape";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",

@@ -21,9 +21,11 @@ export class LastDrugPage implements OnInit {
   idUser: number;
   idEtab: number;
   token: string;
+  resultName: string;
   idDossier: number;
   idCr: number;
-  resultatId: number;
+  resultId: number;
+  stepId: number;
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
   dataPatient: object;
@@ -59,11 +61,12 @@ export class LastDrugPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.idDossier = this.dataPatient["dossierId"];
+        this.resultId = this.dataPatient["resultId"];
+        this.stepId = this.dataPatient["stepId"];
+        this.resultName = this.dataPatient["resultName"];
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        if (this.dataPatient["stepId"] !== 16) {
-          this.updateStep();
-        }
+        this.updateStep();
       }
     });
   }
@@ -77,7 +80,7 @@ export class LastDrugPage implements OnInit {
         loadingEl.present();
         const params = {
           dossierId: this.idDossier,
-          resultatId: this.resultatId,
+          resultatId: this.resultId,
           plavix: 1,
           crId: this.idCr,
           angio: 1,
@@ -129,8 +132,8 @@ export class LastDrugPage implements OnInit {
     console.log("update step");
     const params = {
       dossierId: this.idDossier,
-      //resultatId: this.resultatId,
-      stepId: 16
+      resultId: this.resultId,
+      stepId: this.stepId
     };
 
     const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(

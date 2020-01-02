@@ -23,23 +23,6 @@ export class HomePage implements OnInit {
   isLoading = false;
   objectDossiers: Array<DossierModel>;
   objectDossier: DossierModel;
-  // objectDossierObj: object;
-
-  // colorsDiag = [
-  //   {
-  //     color: 'colorRas',
-  //     diag: 'RAS'
-  //   },
-  //   {
-  //     color: 'colorSos',
-  //     diag: 'SOS'
-  //   },
-  //   {
-  //     color: 'colorSt',
-  //     diag: 'ST'
-  //   }
-  // ];
-
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -66,6 +49,10 @@ export class HomePage implements OnInit {
   }
   ngOnInit() {
     this.etatDossier = 0; // dossier ouvert
+    this.listingDossier();
+  }
+  regrechListDossier() {
+    this.objectDossiers = [];
     this.listingDossier();
   }
 

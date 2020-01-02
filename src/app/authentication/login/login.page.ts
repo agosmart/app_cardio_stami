@@ -119,7 +119,8 @@ export class LoginPage implements OnInit {
         const params = {
           email: this.loginForm.value.username,
           password: this.loginForm.value.password,
-          uid: this.uid
+          uid: this.uid,
+          userType: 2
         };
         console.log("params======>", params);
 

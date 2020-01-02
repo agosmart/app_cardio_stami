@@ -23,6 +23,7 @@ export class EngioPage implements OnInit {
   idEtab: number;
   dossierId: number;
   token: string;
+  resultName: string;
   idCr = 0;
   stepId = 0;
   isLoading = false;
@@ -51,7 +52,9 @@ export class EngioPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
+        this.resultName = this.dataPatient["resultName"];
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
+        console.log("resultName", this.resultName);
         if (this.dataPatient["stepId"] !== 15) {
           this.updateStep();
         }
@@ -121,8 +124,9 @@ export class EngioPage implements OnInit {
   async envoiCR() {
     console.log("envoiCR  ====> ", this.idCr);
     console.log("envoi vers cr idrc ", this.idCr);
-    this.dataPatient.resultatId = 7; //  300 plavix
+    this.dataPatient.resultId = 7; //  300 plavix
     this.dataPatient.idCr = this.idCr; //  id cr choisit
+    this.dataPatient.stepId = 15;
     await this.router.navigate([
       "/last-drug",
       this.dossierId,
@@ -168,6 +172,7 @@ export class EngioPage implements OnInit {
   }
 
   async goToTromb() {
+    this.dataPatient.resultId = 13;
     await this.router.navigate([
       "/thromb-absolut",
       this.dossierId,

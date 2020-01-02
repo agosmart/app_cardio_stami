@@ -1,5 +1,4 @@
 import { DiagModel } from "./diag.model";
-
 //import { EcgModel } from "./ecg.model";
 
 export interface DossierModel {
@@ -26,8 +25,9 @@ export interface DossierModel {
   stapeId: number;
   page: string;
   demandeAvisId: number;
-  diagnostic: DiagModel;
-  resultatId?: number;
+  resultId?: number;
+  resultName?: string;
   stepId?: number;
   idCr?: number;
+  diagnostic: DiagModel;
 }

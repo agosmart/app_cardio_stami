@@ -1,17 +1,21 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
-import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { LoadingController, AlertController } from "@ionic/angular";
+import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
+import { File, FileEntry } from "@ionic-native/file/ngx";
+import { LoadingService } from "src/app/services/loading.service";
+import { finalize } from "rxjs/operators";
 import {
-  ContreIndicListModel,
-  ContreIndicElmModel
-} from "src/app/models/contre.indic.list.model";
-import { PretreatmentResponseData } from "src/app/models/pretreatment.response";
-import { DossierResponseData } from "src/app/models/dossier.response";
+  FileTransfer,
+  FileUploadOptions,
+  FileTransferObject
+} from "@ionic-native/file-transfer/ngx";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { DossierModel } from "src/app/models/dossier.model";
+import { DossierResponseData } from "src/app/models/dossier.response";
 
 @Component({
   selector: "app-thromb-ecg",
@@ -24,16 +28,24 @@ export class ThrombEcgPage implements OnInit {
   dossierId: number;
   typeId: number;
   doctorId: number;
+  isEcg: boolean;
+  ecgAfficher: string;
+  imageData: any;
   //dataPatient: object;
   dataPatient: DossierModel;
   constructor(
-    private formBuilder: FormBuilder,
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public loading: LoadingService,
+    private srv: ServiceAppService,
+    private camera: Camera,
+    private file: File,
+    private transfer: FileTransfer,
+    public http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -104,5 +116,107 @@ export class ThrombEcgPage implements OnInit {
         buttons: ["Okay"]
       })
       .then(alertEl => alertEl.present());
+  }
+
+  deleteImage() {
+    this.isEcg = false;
+  }
+  takePicture() {
+    console.log("======n0=======");
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: false,
+      targetWidth: 640,
+      targetHeight: 400,
+      correctOrientation: true
+    };
+
+    this.camera.getPicture(options).then(imageData => {
+      this.isEcg = true;
+      this.imageData = imageData;
+      this.ecgAfficher = this.sglob.pathForImage(imageData);
+    });
+  }
+
+  valider() {
+    console.log(" test ===========>isEcg");
+    if (this.isEcg) {
+      console.log("isEcg");
+      this.startUpload();
+    } else {
+      console.log(" not isEcg");
+      this.showAlert("veuiller faire un ECG");
+    }
+  }
+
+  startUpload() {
+    this.file
+      .resolveLocalFilesystemUrl(this.imageData)
+      .then(entry => {
+        console.log("ok");
+        (<FileEntry>entry).file(file => this.readFile(file));
+      })
+      .catch(err => {
+        console.log("erreur");
+        //this.presentToast("Error while reading file.");
+      });
+  }
+
+  readFile(file: any) {
+    console.log("readFile", file);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const formData = new FormData();
+      const imgBlob = new Blob([reader.result], {
+        type: file.type
+      });
+
+      const stepId = 17;
+      formData.append("ecgImage", imgBlob, file.name);
+      formData.append("doctorId", this.idUser.toString());
+      formData.append("stepId", stepId.toString());
+      this.uploadImageData(formData);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
+  async uploadImageData(formData: FormData) {
+    console.log("uploadImageData", formData);
+    // const loading = await this.loadingController.create({
+    //   message: "Uploading image..."
+    // });
+    // await loading.present();
+
+    let headers = new HttpHeaders();
+    // headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set("Authorization", "" + this.token);
+
+    this.http
+      .post("http://cardio.cooffa.shop/api/ecgs", formData, { headers })
+      .pipe(
+        finalize(() => {
+          //loading.dismiss();
+        })
+      )
+      .subscribe((res: DossierResponseData) => {
+        if (+res.code === 201) {
+          console.log(" res", res.data);
+          this.dataPatient.ecgImage = this.imageData;
+          this.dataPatient.ecgAfficher = this.ecgAfficher;
+          this.router.navigate([
+            "./thromb-protoc",
+            this.dossierId,
+            JSON.stringify(this.dataPatient)
+          ]);
+          // this.presentToast("File upload complete.");
+        } else {
+          console.log("erreur");
+          /// this.presentToast("File upload failed.");
+        }
+      });
   }
 }

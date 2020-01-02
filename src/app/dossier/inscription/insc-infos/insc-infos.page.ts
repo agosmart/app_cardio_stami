@@ -247,7 +247,7 @@ export class InscInfosPage implements OnInit {
 
   private showAlert(message: string) {
     this.alertCtrl
-    
+
       .create({
         header: "Résultat d'authentication",
         message: message,
