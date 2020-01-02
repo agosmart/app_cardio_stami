@@ -14,6 +14,8 @@ import { ClotureResponseData } from "src/app/models/cloture.response";
 //# moment to calculate time deffirence
 import * as moment from "moment";
 import { DossierResponseData } from "src/app/models/dossier.response";
+import { UserModel } from "src/app/models/user.model";
+import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
   selector: "app-gocr",
@@ -30,7 +32,7 @@ export class GocrPage implements OnInit {
   stepId = 13;
   resultId: number;
   isLoading = false;
-  dataPatient: object;
+  dataPatient: DossierModel;
   retunListeCR: EtabResponseData;
   itemsCR: any;
   constructor(
@@ -57,7 +59,7 @@ export class GocrPage implements OnInit {
         //this.resultId = this.dataPatient["resultId"];
 
         this.resultId = this.dataPatient["resultId"];
-        this.resultName = this.dataPatient["resultName"];
+        // this.resultName = this.dataPatient["resultName"];
         console.log(" resultId ::: ", this.resultId);
         if (this.dataPatient["stepId"] !== 13) {
           this.updateStep();
@@ -133,60 +135,71 @@ export class GocrPage implements OnInit {
   envoiCR() {
     console.log("envoiCR  ====> ", this.idCr);
     console.log("envoi vers cr idrc ", this.idCr);
-    this.isLoading = true;
-    this.loadingCtrl
-      .create({ keyboardClose: true, message: "opération  en cours..." })
-      .then(loadingEl => {
-        loadingEl.present();
+    if (this.resultId === 8 || this.resultId === 9) {
+      this.dataPatient.stepId = 13;
 
-        const params = {
-          dossierId: this.dossierId,
-          resultatId: this.resultId,
-          crId: this.idCr,
-          doctorId: this.dataPatient["doctorId"]
-        };
+      this.dataPatient.resultId = this.resultId;
+      this.router.navigate([
+        "/last-drug",
+        this.dossierId,
+        JSON.stringify(this.dataPatient)
+      ]);
+    } else {
+      this.isLoading = true;
+      this.loadingCtrl
+        .create({ keyboardClose: true, message: "opération  en cours..." })
+        .then(loadingEl => {
+          loadingEl.present();
 
-        const authObs: Observable<ClotureResponseData> = this.srvApp.clotureDossier(
-          params,
-          this.token
-        );
-        // ---- Call Login function
-        authObs.subscribe(
-          // :::::::::::: ON RESULT ::::::::::
-          resData => {
-            this.isLoading = false;
-            // ----- Hide loader ------
-            loadingEl.dismiss();
+          const params = {
+            dossierId: this.dossierId,
+            resultatId: this.resultId,
+            crId: this.idCr,
+            doctorId: this.dataPatient["doctorId"]
+          };
 
-            if (+resData.code === 201) {
-              console.log(" resData", resData);
-              //this.sglob.presentToast(resData.message);
-              // ----- Redirection to Home page ------------
-              this.sglob.updateInitFetchHome(true);
-              this.router.navigate(["/home"]);
-            } else {
+          const authObs: Observable<ClotureResponseData> = this.srvApp.clotureDossier(
+            params,
+            this.token
+          );
+          // ---- Call Login function
+          authObs.subscribe(
+            // :::::::::::: ON RESULT ::::::::::
+            resData => {
+              this.isLoading = false;
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+
+              if (+resData.code === 201) {
+                console.log(" resData", resData);
+                //this.sglob.presentToast(resData.message);
+                // ----- Redirection to Home page ------------
+                this.sglob.updateInitFetchHome(true);
+                this.router.navigate(["/home"]);
+              } else {
+                // --------- Show Alert --------
+                this.sglob.showAlert("Erreur", resData.message);
+              }
+            },
+
+            // ::::::::::::  ON ERROR ::::::::::::
+            errRes => {
+              console.log(errRes);
+              // ----- Hide loader ------
+              loadingEl.dismiss();
               // --------- Show Alert --------
-              this.sglob.showAlert("Erreur", resData.message);
+              if (errRes.error.errors != null) {
+                this.sglob.showAlert("Erreur", errRes.error.errors.email);
+              } else {
+                this.sglob.showAlert(
+                  "Erreur",
+                  "Prblème d'accès au réseau, veillez vérifier votre connexion"
+                );
+              }
             }
-          },
-
-          // ::::::::::::  ON ERROR ::::::::::::
-          errRes => {
-            console.log(errRes);
-            // ----- Hide loader ------
-            loadingEl.dismiss();
-            // --------- Show Alert --------
-            if (errRes.error.errors != null) {
-              this.sglob.showAlert("Erreur", errRes.error.errors.email);
-            } else {
-              this.sglob.showAlert(
-                "Erreur",
-                "Prblème d'accès au réseau, veillez vérifier votre connexion"
-              );
-            }
-          }
-        );
-      });
+          );
+        });
+    }
   }
 
   async showAlertConfirme() {

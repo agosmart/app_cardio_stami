@@ -1,17 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { ThrombProtocPageRoutingModule } from './thromb-protoc-routing.module';
+import { ThrombProtocPageRoutingModule } from "./thromb-protoc-routing.module";
 
-import { ThrombProtocPage } from './thromb-protoc.page';
+import { ThrombProtocPage } from "./thromb-protoc.page";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     ThrombProtocPageRoutingModule
   ],

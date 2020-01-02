@@ -11,7 +11,7 @@ import {
 } from "@ionic/angular";
 import { Observable } from "rxjs";
 import { DossierResponseData } from "src/app/models/dossier.response";
-import { ImagePage } from "../../../modal/image/image.page";
+import { AuthResponseData } from "src/app/models/auth.response";
 
 @Component({
   selector: "app-thromb-protoc",
@@ -35,6 +35,7 @@ export class ThrombProtocPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
+  tnkTpaVal = "45 mg (9000 UI)";
 
   get tpa() {
     return this.protocolFormInfos.get("tpa");
@@ -52,9 +53,10 @@ export class ThrombProtocPage implements OnInit {
     tpa: [{ type: "required", message: "" }],
     tnktpa: [{ type: "required", message: "" }],
     consentement: [
+      { type: "required", message: "" },
       {
         type: "pattern",
-        message: "Vous devez accepter les conditions générales pour continuer"
+        message: "Le patient doit signer le document avant la Thrombolyse"
       }
     ]
   };
@@ -65,6 +67,8 @@ export class ThrombProtocPage implements OnInit {
     tnktpa: ["", ""],
     consentement: [true, [Validators.pattern("true")]]
   });
+
+  // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
 
   constructor(
     private formBuilder: FormBuilder,
@@ -96,59 +100,60 @@ export class ThrombProtocPage implements OnInit {
   }
 
   submitFormInfos() {
-    this.isLoading = true;
-    this.loadingCtrl
-      .create({ keyboardClose: true, message: "opération en cours..." })
-      .then(loadingEl => {
-        loadingEl.present();
+    console.log(this.protocolFormInfos.value);
+    // this.isLoading = true;
+    // this.loadingCtrl
+    //   .create({ keyboardClose: true, message: "Inscription en cours..." })
+    //   .then(loadingEl => {
+    //     loadingEl.present();
 
-        const params = this.protocolFormInfos.value;
+    //     let params = this.protocolFormInfos.value;
+    //     params["userType"] = 2;
+    //     console.log("params register : ", params);
+    //     const authObs: Observable<AuthResponseData> = this.srvApp.registerDoctor(
+    //       params
+    //     );
+    //     let message = "";
+    //     // ---- Call Login function
+    //     authObs.subscribe(
+    //       // :::::::::::: ON RESULT ::::::::::
+    //       resData => {
+    //         this.isLoading = false;
+    //         // const dataResponse: UserModel = JSON.stringify(resData.data);
+    //         const dataResponse: UserModel = resData.data;
+    //         console.log("Response >>>>> ", resData);
+    //         console.log("Response code >>>>> ", resData.code);
+    //         // ----- Hide loader ------
+    //         loadingEl.dismiss();
+    //         if (+resData.code === 201) {
+    //           // ------- Reset Form -------
+    //           //this.registrationForm.reset();
+    //           // ----- Toast ------------
+    //           this.sglob.presentToast(resData.message);
+    //           // ----- Redirection to login page ------------
+    //           this.router.navigate(["./login"]);
+    //         } else {
+    //           // --------- Show Alert --------
+    //           this.showAlert(resData.message);
+    //         }
+    //       },
 
-        console.log("params register : ", params);
-        // const authObs: Observable<AuthResponseData> = this.srv.registerDoctor(
-        //   params
-        // );
-        let message = "";
-        // ---- Call Login function
-        // authObs.subscribe(
-        //   // :::::::::::: ON RESULT ::::::::::
-        //   resData => {
-        //     this.isLoading = false;
-        //     // const dataResponse: UserModel = JSON.stringify(resData.data);
-        //     const dataResponse: UserModel = resData.data;
-        //     console.log("Response >>>>> ", resData);
-        //     console.log("Response code >>>>> ", resData.code);
-        //     // ----- Hide loader ------
-        //     loadingEl.dismiss();
-        //     if (+resData.code === 201) {
-        //       // ------- Reset Form -------
-        //       //this.registrationForm.reset();
-        //       // ----- Toast ------------
-        //       this.sglob.presentToast(resData.message);
-        //       // ----- Redirection to login page ------------
-        //       this.router.navigate(["./login"]);
-        //     } else {
-        //       // --------- Show Alert --------
-        //       this.showAlert(resData.message);
-        //     }
-        //   },
-
-        //   // ::::::::::::  ON ERROR ::::::::::::
-        //   errRes => {
-        //     console.log(errRes);
-        //     // ----- Hide loader ------
-        //     loadingEl.dismiss();
-        //     // --------- Show Alert --------
-        //     if (errRes.error.errors != null) {
-        //       this.showAlert(errRes.error.errors.email);
-        //     } else {
-        //       this.showAlert(
-        //         "Prblème d'accès au réseau, veillez vérifier votre connexion"
-        //       );
-        //     }
-        //   }
-        );
-      });
+    //       // ::::::::::::  ON ERROR ::::::::::::
+    //       errRes => {
+    //         console.log(errRes);
+    //         // ----- Hide loader ------
+    //         loadingEl.dismiss();
+    //         // --------- Show Alert --------
+    //         if (errRes.error.errors != null) {
+    //           this.showAlert(errRes.error.errors.email);
+    //         } else {
+    //           this.showAlert(
+    //             "Prblème d'accès au réseau, veillez vérifier votre connexion"
+    //           );
+    //         }
+    //       }
+    //     );
+    //   });
   }
 
   private showAlert(message: string) {
