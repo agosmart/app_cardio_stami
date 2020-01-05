@@ -56,6 +56,10 @@
 
     // --background: #01258e;
     // --background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
+    button {
+      color: #fff;
+      padding: 16px 34px;
+    }
   }
 
   ion-button.md.button.button-medium.button-solid.ion-activatable.ion-focusable.hydrated {
@@ -89,4 +93,3 @@
 
 .insc-ecg {
 }
-

@@ -31,7 +31,10 @@
                 {{dataPatient['lastName']}} {{dataPatient['firstName']}}
               </ion-col>
               <ion-col size="12" class="ion-no-padding">
-                {{dataPatient['birthDayFr']}}
+                Age: {{dataPatient['age']}} ans
+              </ion-col>
+              <ion-col size="12" class="ion-no-padding">
+                Poids: {{dataPatient['weight']}} kg
               </ion-col>
               <ion-col size="12" class="ion-no-padding ">
                 <ion-label>
@@ -73,27 +76,27 @@
                     <ion-card-content class="text09 ">
                       <ion-radio-group formControlName="tpa">
                         <ion-item>
-                          <ion-label>15 mg bolus IV</ion-label>
+                          <ion-label>{{tpaVal[0]}}</ion-label>
                           <ion-radio
                             slot="end"
                             color="primary"
-                            value="15 mg bolus IV"
+                            value="{{tpaVal[0]}}"
                           ></ion-radio>
                         </ion-item>
                         <ion-item>
-                          <ion-label>60 mg IV en 30 minutes</ion-label>
+                          <ion-label>{{tpaVal[1]}}</ion-label>
                           <ion-radio
                             slot="end"
                             color="primary"
-                            value="60 mg IV en 30 minutes"
+                            value="{{tpaVal[1]}}"
                           ></ion-radio>
                         </ion-item>
                         <ion-item>
-                          <ion-label>40 mg IV en 60 minutes</ion-label>
+                          <ion-label>{{tpaVal[2]}}</ion-label>
                           <ion-radio
                             slot="end"
                             color="primary"
-                            value="40 mg IV en 60 minutes"
+                            value="{{tpaVal[2]}}"
                           ></ion-radio>
                         </ion-item>
                       </ion-radio-group>
@@ -132,6 +135,28 @@
             <!-- consentement-->
             <ion-item class="ion-margin-top" lines="full">
               <ion-label color="primary"
+                >J'accepte les conditions d'utilisations</ion-label
+              >
+              <ion-checkbox
+                color="primary"
+                checked="true"
+                formControlName="consentement"
+              ></ion-checkbox>
+            </ion-item>
+
+            <div *ngFor="let error of errorMessages.consentement">
+              <ng-container
+                *ngIf="consentement.hasError(error.type) && (consentement.dirty || consentement.touched)"
+              >
+                <small class="message  error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{error.message}}
+                </small>
+              </ng-container>
+            </div>
+
+            <!-- <ion-item class="ion-margin-top" lines="full">
+              <ion-label color="primary"
                 >Patient a signé le consentement</ion-label
               >
               <ion-checkbox
@@ -150,7 +175,7 @@
                   {{error.message}}
                 </small>
               </ng-container>
-            </div>
+            </div> -->
 
             <!--Button Submit-->
             <ion-row>

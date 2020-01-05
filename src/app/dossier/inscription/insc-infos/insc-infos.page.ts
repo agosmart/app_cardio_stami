@@ -38,6 +38,8 @@ export class InscInfosPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
+  url: string;
+  ecgImage = "/assets/images/ecg.jpg";
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -122,7 +124,8 @@ export class InscInfosPage implements OnInit {
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
         this.dataPatient = this.objectRecu;
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
-        this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
+        this.url = this.urlEcg + this.dataPatient["ecgImage"];
+        console.log("===== url oninit", this.url);
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -137,6 +140,16 @@ export class InscInfosPage implements OnInit {
     });
   }
 
+  async openImageEcg() {
+    console.log("url ::::function", this.url);
+    //cardio.cooffa.shop/show/ecg/
+    // http: // urlEcg ::::  http://cardio.cooffa.shop/show/ecg/file:///storage/emulated/0/Android/data/com.cardio.test/cache/1578250275137.jpg
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.ecgImage }
+    });
+    return await modal.present();
+  }
   radioChecked() {
     // this.cheked = this.pretreatmentFormInfos.value.bolus;
     console.log(this.inscriptionFormInfos.value.bolus);
@@ -149,21 +162,21 @@ export class InscInfosPage implements OnInit {
       .create({ keyboardClose: true, message: "Ajout  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
-        let valHta = 0;
+        let valHta = "0";
         if (this.inscriptionFormInfos.value.hta === true) {
-          valHta = 1;
+          valHta = "1";
         }
-        let valtobacco = 0;
+        let valtobacco = "0";
         if (this.inscriptionFormInfos.value.tobacco === true) {
-          valtobacco = 1;
+          valtobacco = "1";
         }
-        let valinsCardiaque = 0;
+        let valinsCardiaque = "0";
         if (this.inscriptionFormInfos.value.insCardiaque === true) {
-          valinsCardiaque = 1;
+          valinsCardiaque = "1";
         }
-        let valcardIscStable = 0;
+        let valcardIscStable = "0";
         if (this.inscriptionFormInfos.value.cardIscStable === true) {
-          valcardIscStable = 1;
+          valcardIscStable = "1";
         }
         const params = {
           dossierId: this.idDossier,
@@ -234,15 +247,6 @@ export class InscInfosPage implements OnInit {
         return dossier["id_dossier"] === id;
       })
     };
-  }
-
-  async openImageEcg() {
-    console.log("urlEcg ::::", this.urlEcg);
-    const modal = await this.modalCtrl.create({
-      component: ImagePage,
-      componentProps: { value: this.urlEcg }
-    });
-    return await modal.present();
   }
 
   private showAlert(message: string) {

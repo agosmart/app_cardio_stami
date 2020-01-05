@@ -88,13 +88,14 @@
       <ion-col size="12">
         <ion-grid class="diagno-btn-group">
           <ion-row>
+            <!--NON RÉUSSIT-->
             <ion-col size="4">
               <ion-button
                 expand="block"
                 fill="solid"
                 class="st"
                 tappable
-                (click)="showAlertConfirme('ST')"
+                (click)="showAlertConfirme(10)"   
               >
                 <div>
                   <h3><span class="icon-heart-st fsize-20em"></span></h3>
@@ -104,13 +105,14 @@
                 </div>
               </ion-button>
             </ion-col>
+            <!--RÉUSSIT-->
             <ion-col size="4">
               <ion-button
                 expand="block"
                 fill="solid"
                 class="sos"
                 tappable
-                (click)="showAlertConfirme('SOS')"
+                (click)="showAlertConfirme(11)"
               >
                 <div>
                   <h3><span class="icon-doctor-sos-2 fsize-22em"></span></h3>
@@ -120,13 +122,14 @@
                 </div>
               </ion-button>
             </ion-col>
+            <!--SANS RÉSULTAT-->
             <ion-col size="4">
               <ion-button
                 expand="block"
                 fill="solid"
                 class="ras"
                 tappable
-                (click)="showAlertConfirme('RAS')"
+                (click)="showAlertConfirme(12)"
               >
                 <div>
                   <h3><span class="icon-heart-checked fsize-20em"></span></h3>

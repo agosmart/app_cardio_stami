@@ -152,7 +152,7 @@ export class LoginPage implements OnInit {
               // ----- Retrive a value of uid -----
               //this.getuidFcm();
               // ----- Toast ------------
-              this.sglob.presentToast(resData.message);
+              //this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
               this.router.navigate(["home"]);
             } else {

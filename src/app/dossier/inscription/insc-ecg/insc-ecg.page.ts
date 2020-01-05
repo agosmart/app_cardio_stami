@@ -18,6 +18,7 @@ import { DossierModel } from "src/app/models/dossier.model";
 import { Observable } from "rxjs";
 import { PatientResponseData } from "src/app/models/patient.response";
 import { DossierResponseData } from "src/app/models/dossier.response";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-insc-ecg",
@@ -59,7 +60,9 @@ export class InscEcgPage implements OnInit {
     private file: File,
     private transfer: FileTransfer,
     private activatedroute: ActivatedRoute,
-    public http: HttpClient
+    public http: HttpClient,
+    private alertCtrl: AlertController,
+    public loadingController: LoadingController
   ) {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
@@ -115,6 +118,8 @@ export class InscEcgPage implements OnInit {
         this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
         console.log(" recu set dataPatients:::", this.dataPatient);
         this.gender = this.dataPatient["gender"];
+
+        console.log(" gender:::", this.gender);
       }
     });
   }
@@ -167,6 +172,7 @@ export class InscEcgPage implements OnInit {
 
       this.startUpload();
     } else {
+      this.showAlert("veuiller faire l'ECG");
       console.log("===== veuiller faire un ECG====");
     }
   }
@@ -191,10 +197,13 @@ export class InscEcgPage implements OnInit {
       const imgBlob = new Blob([reader.result], {
         type: file.type
       });
+      let dThorasic = 0;
+      this.EcgForm.value.dThorasic === true ? (dThorasic = 1) : (dThorasic = 0);
+
       formData.append("ecgImage", imgBlob, file.name);
       formData.append("etabId", this.idEtab.toString());
       formData.append("doctorId", this.idUser.toString());
-      formData.append("dThorasic", this.EcgForm.value.dThorasic);
+      formData.append("dThorasic", dThorasic.toString());
       formData.append("weight", this.EcgForm.value.poids.toString());
       formData.append("stepId", this.stepId.toString());
       formData.append("patientId", this.idPatient.toString());
@@ -209,10 +218,10 @@ export class InscEcgPage implements OnInit {
 
   async uploadImageData(formData: FormData) {
     console.log("uploadImageData", formData);
-    // const loading = await this.loadingController.create({
-    //   message: "Uploading image..."
-    // });
-    // await loading.present();
+    const loading = await this.loadingController.create({
+      message: "Uploading image..."
+    });
+    await loading.present();
 
     let headers = new HttpHeaders();
     // headers = headers.set('Content-Type', 'application/json');
@@ -222,13 +231,14 @@ export class InscEcgPage implements OnInit {
       .post("http://cardio.cooffa.shop/api/dossiers", formData, { headers })
       .pipe(
         finalize(() => {
-          //loading.dismiss();
+          loading.dismiss();
         })
       )
       .subscribe((res: DossierResponseData) => {
         if (+res.code === 201) {
           console.log(" res", res.data);
-          this.idDossier = res.data[0]["idDossier"];
+          this.idDossier = res.data["dossierId"];
+          //this.idDossier = res.data[0]["idDossier"];
           this.dataPatient.dossierId = this.idDossier;
           this.dataPatient.weight = this.EcgForm.value.poids;
           this.dataPatient.doctorId = this.idUser;
@@ -238,6 +248,8 @@ export class InscEcgPage implements OnInit {
           this.dataPatient.ecgImage = this.imageData;
           this.dataPatient.ecgAfficher = this.ecgAfficher;
           this.dataPatient.startAt = this.startAt;
+          console.log(" idDossier", this.idDossier);
+          console.log(" dataPatient", this.dataPatient);
           this.router.navigate([
             "./insc-infos",
             this.idDossier,
@@ -245,7 +257,9 @@ export class InscEcgPage implements OnInit {
           ]);
           // this.presentToast("File upload complete.");
         } else {
+          //loading.dismiss();
           console.log("erreur");
+          this.showAlert("Erreur interne, veuillez réessayer");
           /// this.presentToast("File upload failed.");
         }
       });
@@ -257,7 +271,7 @@ export class InscEcgPage implements OnInit {
   takePicture() {
     console.log("======n0=======");
     const options: CameraOptions = {
-      quality: 100,
+      quality: 75,
       sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
@@ -273,5 +287,16 @@ export class InscEcgPage implements OnInit {
       this.imageData = imageData;
       this.ecgAfficher = this.sglob.pathForImage(imageData);
     });
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'envoi",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
   }
 }

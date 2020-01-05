@@ -12,6 +12,7 @@ import {
 import { Observable } from "rxjs";
 import { DossierResponseData } from "src/app/models/dossier.response";
 import { AuthResponseData } from "src/app/models/auth.response";
+import { ProtocolThromResponseData } from "src/app/models/protocolThromb.response";
 
 @Component({
   selector: "app-thromb-protoc",
@@ -24,9 +25,8 @@ export class ThrombProtocPage implements OnInit {
   token: string;
   idDossier: number;
   stepId = 5; // etape Infos Dossier
+  tpaval2: number;
   objectInsc: Array<object>;
-  //dataPatient: DossierModel;
-  //dataPatient: DossierModel;
   dataPatient: object;
   objectRecu: object;
   idDossierToGet: any;
@@ -35,7 +35,11 @@ export class ThrombProtocPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
-  tnkTpaVal = "45 mg (9000 UI)";
+  tnkTpaVal = "";
+  tnkTpaValMg: number;
+  tnkTpaValUi: number;
+  tpaVal = [];
+  weight: number;
 
   get tpa() {
     return this.protocolFormInfos.get("tpa");
@@ -46,25 +50,26 @@ export class ThrombProtocPage implements OnInit {
   }
 
   get consentement() {
+    // console.log(this.protocolFormInfos.get("consentement"));
     return this.protocolFormInfos.get("consentement");
   }
 
   public errorMessages = {
     tpa: [{ type: "required", message: "" }],
     tnktpa: [{ type: "required", message: "" }],
+
     consentement: [
-      { type: "required", message: "" },
       {
         type: "pattern",
-        message: "Le patient doit signer le document avant la Thrombolyse"
+        message: "Le patient doit signer le document avant Thrombolyse"
       }
     ]
   };
 
   // -------------------------------------
   protocolFormInfos = this.formBuilder.group({
-    tpa: ["", ""],
-    tnktpa: ["", ""],
+    tpa: ["", [Validators.required]],
+    tnktpa: ["", [Validators.required]],
     consentement: [true, [Validators.pattern("true")]]
   });
 
@@ -82,8 +87,6 @@ export class ThrombProtocPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.hypertentionValue = 0;
-
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
 
@@ -93,67 +96,118 @@ export class ThrombProtocPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
-        // this.doctorId = this.dataPatient["doctorId"];
+        console.log("dataPatient protocol ===>", this.dataPatient);
         this.idDossier = this.dataPatient["dossierId"];
+        const age = this.dataPatient["age"];
+        this.weight = this.dataPatient["weight"];
+
+        this.tpaval2 = 0.75 * this.weight;
+        if (this.tpaval2 > 50) {
+          this.tpaval2 = 50;
+        }
+        this.tpaVal = [
+          "15 MG BOLUS IV",
+          this.tpaval2 + "mg IV en 30 minutes",
+          0.5 * this.weight + "mg IV en 60 minutes"
+        ];
+        // - BOLUS IV UNIQUE : < 60 KG : 30 MG (6 000 UI)
+        // - 60-70 KG : 35 MG (7 000 UI)
+        // - 70-80 KG : 40 MG (8 000 UI)
+        // - 80-90 KG : 45 MG (9 000 UI)
+        // - ≥ 100 KG : 50 MG (10 000 UI)
+        // - DIVISER LA DOSE PAR 2 CHEZ LES PATIENTS
+        // ÂGÉS PLUS 75 ANS
+
+        if (this.weight < 60) {
+          this.tnkTpaValMg = 30;
+          this.tnkTpaValUi = 6000;
+        } else if (this.weight < 70) {
+          this.tnkTpaValMg = 35;
+          this.tnkTpaValUi = 7000;
+        } else if (this.weight < 80) {
+          this.tnkTpaValMg = 40;
+          this.tnkTpaValUi = 8000;
+        } else if (this.weight < 90) {
+          this.tnkTpaValMg = 45;
+          this.tnkTpaValUi = 9000;
+        } else if (this.weight >= 100) {
+          this.tnkTpaValMg = 50;
+          this.tnkTpaValUi = 10000;
+        }
+
+        if (age >= 75) {
+          this.tnkTpaValMg = this.tnkTpaValMg / 2;
+          this.tnkTpaValUi = this.tnkTpaValUi / 2;
+        }
+        this.tnkTpaVal =
+          this.tnkTpaValMg + " MG   (  " + this.tnkTpaValUi + " UI) ";
+
+        console.log("weight ===>", this.weight);
+
+        console.log("tnkTpaVal ===>", this.tnkTpaVal);
       }
     });
   }
 
   submitFormInfos() {
     console.log(this.protocolFormInfos.value);
-    // this.isLoading = true;
-    // this.loadingCtrl
-    //   .create({ keyboardClose: true, message: "Inscription en cours..." })
-    //   .then(loadingEl => {
-    //     loadingEl.present();
+    this.isLoading = true;
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "Inscription en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
 
-    //     let params = this.protocolFormInfos.value;
-    //     params["userType"] = 2;
-    //     console.log("params register : ", params);
-    //     const authObs: Observable<AuthResponseData> = this.srvApp.registerDoctor(
-    //       params
-    //     );
-    //     let message = "";
-    //     // ---- Call Login function
-    //     authObs.subscribe(
-    //       // :::::::::::: ON RESULT ::::::::::
-    //       resData => {
-    //         this.isLoading = false;
-    //         // const dataResponse: UserModel = JSON.stringify(resData.data);
-    //         const dataResponse: UserModel = resData.data;
-    //         console.log("Response >>>>> ", resData);
-    //         console.log("Response code >>>>> ", resData.code);
-    //         // ----- Hide loader ------
-    //         loadingEl.dismiss();
-    //         if (+resData.code === 201) {
-    //           // ------- Reset Form -------
-    //           //this.registrationForm.reset();
-    //           // ----- Toast ------------
-    //           this.sglob.presentToast(resData.message);
-    //           // ----- Redirection to login page ------------
-    //           this.router.navigate(["./login"]);
-    //         } else {
-    //           // --------- Show Alert --------
-    //           this.showAlert(resData.message);
-    //         }
-    //       },
+        const params = {
+          dossierId: this.idDossier,
+          doctorId: this.idUser,
+          alteplase: this.protocolFormInfos.value.tpa,
+          tenecteplase: this.protocolFormInfos.value.tnktpa,
+          signedDocuments: "1"
+        };
+        console.log("params register : ", params);
+        const authObs: Observable<ProtocolThromResponseData> = this.srvApp.addProtocThromb(
+          params,
+          this.token
+        );
+        let message = "";
+        // ---- Call Login function
+        authObs.subscribe(
+          // :::::::::::: ON RESULT ::::::::::
+          resData => {
+            this.isLoading = false;
+            console.log("Response >>>>> ", resData);
+            console.log("Response code >>>>> ", resData.code);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            if (+resData.code === 201) {
+              // ------- Reset Form -------
+              this.router.navigate([
+                "/thromb-result",
+                this.idDossier,
+                JSON.stringify(this.dataPatient)
+              ]);
+            } else {
+              // --------- Show Alert --------
+              this.showAlert(resData.message);
+            }
+          },
 
-    //       // ::::::::::::  ON ERROR ::::::::::::
-    //       errRes => {
-    //         console.log(errRes);
-    //         // ----- Hide loader ------
-    //         loadingEl.dismiss();
-    //         // --------- Show Alert --------
-    //         if (errRes.error.errors != null) {
-    //           this.showAlert(errRes.error.errors.email);
-    //         } else {
-    //           this.showAlert(
-    //             "Prblème d'accès au réseau, veillez vérifier votre connexion"
-    //           );
-    //         }
-    //       }
-    //     );
-    //   });
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+          }
+        );
+      });
   }
 
   private showAlert(message: string) {

@@ -15,6 +15,7 @@ import { DemandeAvisResponseData } from "../models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 import { PretreatmentResponseData } from "../models/pretreatment.response";
 import { Observable } from "rxjs";
+import { ProtocolThromResponseData } from "../models/protocolThromb.response";
 
 interface ResponseEtab {
   code: number;
@@ -230,44 +231,19 @@ export class ServiceAppService {
     });
   }
 
-  /*************************************** */
-  // public login(form): any {
-  //   const md5 = new Md5();
-  //   const md5Password = md5.appendStr(form.password).end();
-  //   const url = `${this.BaseUrl}login.php?password=${md5Password}&username=${form.username}&apiKey=${this.apiKey}`;
-
-  //   return this.http
-  //     .get(url)
-  //     .toPromise()
-  //     .then(re
-  // sponse => response.json() as StandarReturnModel)
-  //     .catch(error => console.log('Une erreur est survenue' + error));
-  // }
-
-  // public Inscription(registrationForm): any {
-  //   const md5 = new Md5();
-  //   const md5Password = md5.appendStr(registrationForm.password).end();
-  //   const url = `${this.BaseUrl}inscription.php?nom=${registrationForm.nom}&prenom=${registrationForm.prenom}&mobile=${registrationForm.mobile}&password=${md5Password}&username=${registrationForm.username}&cr=${registrationForm.cr}&cudt=${registrationForm.cudt}&gender=${registrationForm.civilite}&apiKey=${this.apiKey}`;
-
-  //   return this.http
-  //     .get(url)
-  //     .toPromise()
-  //     .then(response => response.json() as StandarReturnModel)
-  //     .catch(error => console.log("Une erreur est survenue" + error));
-  // }
-
-  // public addToken(uid, idUser, mobile): any {
-  //   const url = `${this.baseUrl}token.php?idUser=${idUser}&uid=${uid}`;
-
-  //   return this.http
-  //     .get(url)
-  //     .toPromise()
-  //     .then(response => response.json() as StandarReturnModel)
-  //     .catch(error => console.log("Une erreur est survenue" + error));
-  // }
-
-  addToken(token, idUser, mobile) {}
-
+  addProtocThromb(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/protocole";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    const myBody: object = params;
+    console.log("PARAMS addPretreatment :::", myBody, " / URL ::::", apiUrl);
+    return this.http.post<ProtocolThromResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
   getListeCR(params: number) {
     const apiUrl = this.baseUrl + "/etablissements/" + params;
     const myHeaders: HttpHeaders = new HttpHeaders({

@@ -45,7 +45,8 @@ export class ThrombEcgPage implements OnInit {
     private camera: Camera,
     private file: File,
     private transfer: FileTransfer,
-    public http: HttpClient
+    public http: HttpClient,
+    public loadingController: LoadingController
   ) {}
 
   ngOnInit() {
@@ -106,25 +107,13 @@ export class ThrombEcgPage implements OnInit {
     );
   }
 
-  private showAlert(message: string) {
-    this.alertCtrl
-
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
-  }
-
   deleteImage() {
     this.isEcg = false;
   }
   takePicture() {
     console.log("======n0=======");
     const options: CameraOptions = {
-      quality: 100,
+      quality: 75,
       sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
@@ -177,6 +166,7 @@ export class ThrombEcgPage implements OnInit {
 
       const stepId = 17;
       formData.append("ecgImage", imgBlob, file.name);
+      formData.append("dossierId", this.dossierId.toString());
       formData.append("doctorId", this.idUser.toString());
       formData.append("stepId", stepId.toString());
       this.uploadImageData(formData);
@@ -186,10 +176,10 @@ export class ThrombEcgPage implements OnInit {
 
   async uploadImageData(formData: FormData) {
     console.log("uploadImageData", formData);
-    // const loading = await this.loadingController.create({
-    //   message: "Uploading image..."
-    // });
-    // await loading.present();
+    const loading = await this.loadingController.create({
+      message: "Uploading image..."
+    });
+    await loading.present();
 
     let headers = new HttpHeaders();
     // headers = headers.set('Content-Type', 'application/json');
@@ -199,7 +189,7 @@ export class ThrombEcgPage implements OnInit {
       .post("http://cardio.cooffa.shop/api/ecgs", formData, { headers })
       .pipe(
         finalize(() => {
-          //loading.dismiss();
+          loading.dismiss();
         })
       )
       .subscribe((res: DossierResponseData) => {
@@ -215,8 +205,21 @@ export class ThrombEcgPage implements OnInit {
           // this.presentToast("File upload complete.");
         } else {
           console.log("erreur");
+          this.showAlert("Erreur interne, veuillez réessayer");
           /// this.presentToast("File upload failed.");
         }
       });
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
   }
 }

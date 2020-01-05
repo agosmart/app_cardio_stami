@@ -24,6 +24,8 @@ export class ThrombResultPage implements OnInit {
   dossierId: number;
   typeId: number;
   doctorId: number;
+  resultatId: number;
+
   //dataPatient: object;
   dataPatient: DossierModel;
   constructor(
@@ -50,6 +52,7 @@ export class ThrombResultPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
+
         if (this.dataPatient["stepId"] !== 18) {
           this.updateStep();
         }
@@ -92,6 +95,54 @@ export class ThrombResultPage implements OnInit {
         }
       }
     );
+  }
+
+  // --------- ALERT CONFIRME -----------
+
+  async showAlertConfirme(resultatId: number) {
+    let msgAlert = "";
+    // ----------- message dynamic ---------------
+
+    if (resultatId === 10) {
+      //NON RÉUSSIT
+      msgAlert =
+        "Le CR doit appliquer l’Angioplastie de sauvettage au patient, merci de choisir le CR";
+    } else if (resultatId === 11) {
+      //RÉUSSIT
+      msgAlert = " Thromobolyse réussit, merci de choisir le CR ? ";
+    } else {
+      //SANS RÉSULTAT
+      msgAlert = "Thromobolyse faite sans  résultat, merci de choisir le CR ? ";
+    }
+
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: "Résultat d'authentication",
+      message: msgAlert,
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirme Annuler");
+          }
+        },
+        {
+          text: "Je confirme",
+          handler: async () => {
+            this.dataPatient.resultId = resultatId;
+            this.router.navigate([
+              "/gocr",
+              this.dossierId,
+              JSON.stringify(this.dataPatient)
+            ]);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   private showAlert(message: string) {

@@ -14,45 +14,50 @@
       <ion-col size="12" class="icon-header">
         <span class="icon-doss-create text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding"
+        >CREATION DU DOSSIER</ion-col
+      >
     </ion-row>
   </ion-grid>
 
   <!---->
   <form [formGroup]="EcgForm" (ngSubmit)="submitEcg()" class="list-form">
     <ion-grid fixed class="form-bloc">
-
       <ion-row class="ion-no-padding ">
         <ion-col size="12" class="ion-no-padding">
           <ion-card class="ion-margin" color="light">
             <ion-card-content class="text10 ">
-              
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-label>
-                    <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                    <ion-badge class="p-6-16" slot="start" color="medium"
+                      >N°: 2001-00035</ion-badge
+                    >
                   </ion-label>
                 </ion-col>
               </ion-row>
 
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                 <h2> <span class='{{ gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }} text-dark  text10'>
-                  </span>
-                  {{dataPatient['firstName']}} {{dataPatient['lastName']}}</h2>
+                  <h2>
+                    <span
+                      class='{{ gender === 1 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }} text-dark  text10'
+                    >
+                    </span>
+                    {{dataPatient['firstName']}} {{dataPatient['lastName']}}
+                  </h2>
                 </ion-col>
               </ion-row>
 
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                <h2> <span class="icon-calander  text-dark  text10"></span>
-                  {{dataPatient['birthDay']}}</h2>
+                  <h2>
+                    <span class="icon-calander  text-dark  text10"></span>
+                    {{dataPatient['birthDay']}}
+                  </h2>
                 </ion-col>
               </ion-row>
 
-              
-
-              
               <!-- <ion-row class="ion-no-padding">
             <ion-col size="12" class="ion-no-padding">
               <span class="icon-weight  text-dark  text10"></span>
@@ -70,12 +75,19 @@
           <ion-list class="ion-no-padding">
             <ion-item lines="full">
               <ion-label position="floating">Poids du patient en KG</ion-label>
-              <ion-input inputmode="number" type="number" placeholder="00 KG" formControlName="poids"
-                class="fsize-20em">
+              <ion-input
+                inputmode="number"
+                type="number"
+                placeholder="00 KG"
+                formControlName="poids"
+                class="fsize-20em"
+              >
               </ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.poids">
-              <ng-container *ngIf="poids.hasError(error.type) && (poids.dirty || poids.touched)">
+              <ng-container
+                *ngIf="poids.hasError(error.type) && (poids.dirty || poids.touched)"
+              >
                 <small class="error-message">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   <p>{{error.message}}</p>
@@ -84,16 +96,20 @@
             </div>
 
             <ion-item lines="full">
-              <ion-label>Douleurs Thoracique au moment</ion-label>
-              <ion-toggle checked="false" formControlName="dThorasic"></ion-toggle>
+              <ion-text>Douleurs Thoracique au moment</ion-text>
+              <ion-toggle
+                checked="false"
+                formControlName="dThorasic"
+              ></ion-toggle>
             </ion-item>
 
             <ion-item *ngIf="isEcg">
               <ion-thumbnail slot="start">
                 <ion-img [src]="ecgAfficher"></ion-img>
               </ion-thumbnail>
-              <ion-button slot="end" fill="clear" (click)="deleteImage()">
-                <ion-icon slot="icon-only" name="trash"></ion-icon>
+              <ion-button slot="end" fill="clear" (click)="deleteImage()"
+                >
+                <ion-icon slot="_icon-only" name="trash"> </ion-icon>
               </ion-button>
             </ion-item>
 
@@ -102,19 +118,32 @@
             </ion-button> -->
 
             <ion-row class=" bg-light  ion-padding ">
-              <ion-col size="12" class="ion-padding-top ion-padding-bottom ion-text-center">
+              <ion-col
+                size="12"
+                class="ion-padding-top ion-padding-bottom ion-text-center"
+              >
                 <ion-button size="medium" shape="round" (click)="takePicture()">
                   <span class="icon-camera fsize-30em"></span>
                   <p class="fseiz-12em">Image ECG</p>
-                  <ion-icon name="add-circle-outline" slot="end" class="fsize-20em">
+                  <ion-icon
+                    name="add-circle-outline"
+                    slot="end"
+                    class="fsize-20em"
+                  >
                   </ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>
 
             <div class="ion-margin-top">
-              <ion-button shape="round" expand="block" color="dark" [disabled]="!EcgForm.valid" type="submit"
-                class="ion-margin-top btn">
+              <ion-button
+                shape="round"
+                expand="block"
+                color="dark"
+                [disabled]="!EcgForm.valid"
+                type="submit"
+                class="ion-margin-top btn"
+              >
                 Valider
                 <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
               </ion-button>

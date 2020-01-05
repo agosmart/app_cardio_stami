@@ -311,7 +311,7 @@ export class ThrombAbsolutPage implements OnInit {
     console.log("update step");
     const params = {
       dossierId: this.dossierId,
-      resultId: this.resultId,
+      //resultId: this.resultId,
       stepId: 9
     };
 
