@@ -1,40 +1,59 @@
 :root {
-      --ion-safe-area-top: 20px;
-      --ion-safe-area-bottom: 22px;
-    }
-    .swiper-slide {
-      display: block;
-    }
-    ion-slide > h2 {
-      margin-top: 2.8rem;
-    }
-    ion-slide > img {
-      max-height: 50%;
-      max-width: 60%;
-      margin: 36px 0;
-    }
-    p {
-      padding: 0 40px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #60646B;
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 22px;
+}
+.swiper-slide {
+  display: block;
+}
+ion-slide {
+  margin-bottom: 52px;
+  h2 {
+    margin-top: 0.5rem;
+    font-weight: 300;
+    font-size: 1.4rem;
+  }
+  img {
+    //max-height: 50%;
+    max-width: 80%;
+    margin-top: 24px;
+  }
+}
 
-      b {
-        color: #000000;
-      }
+p {
+  padding: 0 8px;
+  font-size: 12px;
+  line-height: 1.2rem;
+  color: #60646b;
 
-    }
+  b {
+    color: #000000;
+  }
+}
+.intro {
+  position: absolute;
+  top:5px;
+  right: 5px;
+  z-index: 1000;
+
+  ion-slides {
+    --bullet-background: #fff;
+  }
+
+}
+.slide-title {
+  margin-top: 2.8rem;
+  
+}
+
+
+
  
-    .slide-title {
-      margin-top: 2.8rem;
-    }
-        .s1{
-      color: #e53367;
-    }
-      .s2{
-      color: #b544ca;
-    }
-    .s3{
-      color: #14baa6;
-    }
-    
+.s1 {
+  color: #c82220;
+}
+.s2 {
+  color: #285981;
+}
+.s3 {
+  color: #14baa6;
+}

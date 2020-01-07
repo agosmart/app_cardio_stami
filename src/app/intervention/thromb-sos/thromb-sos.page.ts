@@ -14,13 +14,15 @@ import { Observable } from "rxjs";
 import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
 import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
+import { DossierResponseData } from "src/app/models/dossier.response";
+import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
-  selector: "app-orientation",
-  templateUrl: "./orientation.page.html",
-  styleUrls: ["./orientation.page.scss"]
+  selector: "app-thromb-sos",
+  templateUrl: "./thromb-sos.page.html",
+  styleUrls: ["./thromb-sos.page.scss"]
 })
-export class OrientationPage implements OnInit {
+export class ThrombSosPage implements OnInit {
   idUser: number;
   idEtab: number;
   dossierId: number;
@@ -33,7 +35,7 @@ export class OrientationPage implements OnInit {
   afficheReponseMed = false;
   demandeAvisId = 0;
   etabName = "abc";
-  dataPatient: object;
+  dataPatient: DossierModel;
   retunListeCR: EtabResponseData;
 
   constructor(
@@ -57,14 +59,13 @@ export class OrientationPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient["dossierId"];
-        //this.objectInsc = JSON.parse(dataObj);
         this.demandeAvisId = this.dataPatient["LastDemandeAvisId"];
-        console.log(" orientation  >>>>> dataPatients ::: ", this.dataPatient);
-        console.log(
-          " orientation >>>>> demandeAvisId ::: ",
-          this.demandeAvisId
-        );
-        if (this.demandeAvisId > 0) {
+        const motifId = this.dataPatient["lastMotifId"];
+        if (this.dataPatient["stepId"] !== 19) {
+          this.srvApp.stepUpdatePage(this.dossierId, 19, 9, this.token);
+        }
+        console.log("demandeAvisId", this.demandeAvisId);
+        if (this.demandeAvisId > 0 && motifId === 2) {
           this.afficheListeCr = true;
           this.reponseAvisCR(this.demandeAvisId);
         } else {
@@ -108,7 +109,7 @@ export class OrientationPage implements OnInit {
           cudtId: this.idEtab,
           crId: idCr,
           dossierId: this.dossierId,
-          motifId: 1
+          motifId: "2"
         };
 
         const authObs: Observable<DemandeAvisResponseData> = this.srvApp.demandeAvis(
@@ -180,11 +181,19 @@ export class OrientationPage implements OnInit {
 
             if (+resData.code === 200) {
               // ----- Toast ------------
+              console.log("Response >>>>> ", this.dataReponsesAvis);
               this.dataReponsesAvis = resData.data;
-
               if (Object.keys(this.dataReponsesAvis).length > 0) {
+                console.log(
+                  "taille data >>>>> ",
+                  Object.keys(this.dataReponsesAvis).length
+                );
                 this.afficheReponseMed = true;
               }
+              //this.etabName = this.itemsMeds[0]["etabName"];
+
+              //this.sglob.presentToast(resData.message);
+              // ----- Redirection to Home page ------------
             } else {
               // --------- Show Alert --------
               this.showAlert(resData.message);
@@ -209,13 +218,54 @@ export class OrientationPage implements OnInit {
       });
   }
 
-  decision() {
-    console.log("orientation vers datapatient diag ===>", this.dataPatient);
-    this.router.navigate([
-      "./diagnostic",
-      this.dossierId,
-      JSON.stringify(this.dataPatient)
-    ]);
+  async showAlertConfirme(decision: string) {
+    let msgAlert = "";
+    // ----------- message dynamic ---------------
+
+    if (decision === "THROMB") {
+      msgAlert = "Etes-vous sur de vouloir faire une Thromobolyse au patient?";
+    } else if (decision === "CR") {
+      msgAlert = "Etes-vous sur de vouloir envoyer le patient au CR ? ";
+    }
+
+    console.log("decision ::::", msgAlert);
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: "Résultat d'authentication",
+      message: msgAlert,
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirme Annuler");
+          }
+        },
+        {
+          text: "Je confirme",
+          handler: async () => {
+            if (decision === "CR") {
+              this.dataPatient.resultId = 9;
+              // ************ REDIRECTION TO GOCR PAGE ****************
+              this.router.navigate([
+                "/gocr",
+                this.dossierId,
+                JSON.stringify(this.dataPatient)
+              ]);
+            } else {
+              this.router.navigate([
+                "/thromb-relative",
+                this.dossierId,
+                JSON.stringify(this.dataPatient)
+              ]);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   private showAlert(message: string) {

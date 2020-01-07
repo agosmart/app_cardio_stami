@@ -16,7 +16,7 @@
     >Ajouter un nouveau dossier</ion-button
   > -->
 
-  <!-- <div (click)="regrechListDossier()">rafraichire</div> -->
+  <div (click)="regrechListDossier()">rafraichire</div>
   <ion-grid class="ion-no-padding ">
     <ion-row class=" bg-light  ion-no-padding  block-add-dossier ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
@@ -68,7 +68,7 @@
                   slot="start"
                   color="medium"
                   class="color-num-dossier"
-                  >N°: 2001-00035
+                  >N°: 2001-00035 ({{dossier["dossierId"]}})
                 </ion-badge>
                 <h2>
                   <span class="icon-man text-dark  fsize14"></span

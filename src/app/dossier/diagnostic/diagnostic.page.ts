@@ -30,6 +30,7 @@ export class DiagnosticPage implements OnInit {
   ecgTmp: string;
   idDossier: number;
   token: string;
+  pageOrig: string;
   idUser: number;
   stepId: number;
   patientId: number;
@@ -70,6 +71,7 @@ export class DiagnosticPage implements OnInit {
         console.log(" dataObj >>>>> dataPatient ::: ", dataObj);
         this.dataPatient = JSON.parse(dataObj);
         this.patientId = this.dataPatient["patientId"];
+        this.pageOrig = this.dataPatient["page"];
 
         console.log(
           " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
@@ -188,8 +190,8 @@ export class DiagnosticPage implements OnInit {
             if (this.dataPatient["demandeAvisId"] !== 0 && diag === "SOS") {
               this.setDiagnostic("SOS");
             } else {
+              await this.onSetDiagnostic(diag);
             }
-            await this.onSetDiagnostic(diag);
           }
         }
       ]
@@ -280,6 +282,14 @@ export class DiagnosticPage implements OnInit {
 
   archive() {
     console.log(this.patientId);
-    this.router.navigate(["/archive", this.patientId]);
+    // this.router.navigate(["/archive", this.patientId]);
+    //" archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
+    this.router.navigate([
+      "/archive",
+      this.patientId,
+      this.pageOrig,
+      this.idDossier,
+      JSON.stringify(this.dataPatient)
+    ]);
   }
 }

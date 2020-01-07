@@ -62,7 +62,12 @@ export class GocrPage implements OnInit {
         // this.resultName = this.dataPatient["resultName"];
         console.log(" resultId ::: ", this.resultId);
         if (this.dataPatient["stepId"] !== 13) {
-          this.updateStep();
+          this.srvApp.stepUpdatePage(
+            this.dossierId,
+            13,
+            this.resultId,
+            this.token
+          );
         }
         this.listeCr();
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
@@ -70,42 +75,6 @@ export class GocrPage implements OnInit {
 
       // 1 c les CR  2 CUDT
     });
-  }
-  updateStep() {
-    const params = {
-      dossierId: this.dossierId,
-      stepId: this.stepId,
-      resultId: this.resultId
-    };
-    console.log("update step gocr", params);
-
-    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
-      params,
-      this.token
-    );
-    authObs.subscribe(
-      resData => {
-        if (+resData.code === 200) {
-        } else {
-          // ----- Hide loader ------
-        }
-      },
-
-      // ::::::::::::  ON ERROR ::::::::::::
-      errRes => {
-        console.log(errRes);
-        // ----- Hide loader ------
-        // --------- Show Alert --------
-
-        if (errRes.error.code === "401") {
-          this.showAlert(errRes.error.message);
-        } else {
-          this.showAlert(
-            "Prblème d'accès au réseau, veillez vérifier votre connexion"
-          );
-        }
-      }
-    );
   }
 
   listeCr() {

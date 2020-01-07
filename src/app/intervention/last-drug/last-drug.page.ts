@@ -66,7 +66,12 @@ export class LastDrugPage implements OnInit {
         this.resultName = this.dataPatient["resultName"];
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        this.updateStep();
+        this.srvApp.stepUpdatePage(
+          this.idDossier,
+          this.stepId,
+          this.resultId,
+          this.token
+        );
       }
     });
   }
@@ -128,42 +133,6 @@ export class LastDrugPage implements OnInit {
       });
   }
 
-  updateStep() {
-    console.log("update step");
-    const params = {
-      dossierId: this.idDossier,
-      resultId: this.resultId,
-      stepId: this.stepId
-    };
-
-    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
-      params,
-      this.token
-    );
-    authObs.subscribe(
-      resData => {
-        if (+resData.code === 200) {
-        } else {
-          // ----- Hide loader ------
-        }
-      },
-
-      // ::::::::::::  ON ERROR ::::::::::::
-      errRes => {
-        console.log(errRes);
-        // ----- Hide loader ------
-        // --------- Show Alert --------
-
-        if (errRes.error.code === "401") {
-          this.showAlert(errRes.error.message);
-        } else {
-          this.showAlert(
-            "Prblème d'accès au réseau, veillez vérifier votre connexion"
-          );
-        }
-      }
-    );
-  }
   private showAlert(message: string) {
     this.alertCtrl
       .create({

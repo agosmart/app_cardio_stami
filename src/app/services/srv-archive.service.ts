@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
 //import { Observable } from'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { PatientResponseData } from "../models/patient.response";
+import { ArchiveResponseData } from "../models/archive.response";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +20,7 @@ export class SrvArchiveService {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return this.http.get<PatientResponseData>(apiUrl, {
+    return this.http.get<ArchiveResponseData>(apiUrl, {
       headers: myHeaders
     });
   }

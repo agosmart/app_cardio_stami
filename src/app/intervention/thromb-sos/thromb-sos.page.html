@@ -1,9 +1,13 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/diagnostic"></ion-back-button>
-    </ion-buttons>
-    <!-- <ion-title>insc-infos</ion-title> -->
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      <div class="logo-header">
+        <ion-img
+          type="image/svg+xml"
+          src="../../../assets/images/logo-color.svg"
+        ></ion-img>
+      </div>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,7 +20,7 @@
         <span class="icon-cr-orientation text-white text22"></span>
       </ion-col>
       <ion-col size="12" class="title-header ion-no-padding"
-        >ORIENTATION</ion-col
+        >SOS Thrombolyse</ion-col
       >
     </ion-row>
   </ion-grid>
@@ -173,7 +177,7 @@
               >
                 <ion-label>
                   <span class="icon-doctor-men3  text-dark  text17"></span>
-                  {{itemReponse.medecin}}
+                  {{itemReponse.doctor}}
                 </ion-label>
 
                 <ion-chip color="secondary" slot="end" class="ion-no-padding">
@@ -199,7 +203,7 @@
       </ion-col>
     </ion-row>
 
-    <div class="ion-padding" *ngIf="afficheReponseMed">
+    <!-- <div class="ion-padding" *ngIf="afficheReponseMed">
       <ion-button
         expand="block"
         class="ion-margin-top btn"
@@ -208,6 +212,46 @@
         Décision
         <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
       </ion-button>
-    </div>
+    </div> -->
+  </ion-grid>
+
+  <ion-grid fixed class="intervention ion-no-margin" *ngIf="afficheReponseMed">
+    <ion-row>
+      <ion-col size="12" class="ion-text-left">
+        <ion-grid class="interv-btn-group ion-text-left">
+          <ion-row>
+            <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="gocr"
+                tappable
+                (click)="showAlertConfirme('CR')"
+              >
+                <span class="icon-int-ras "></span>
+                <ion-text>
+                  Envoyer au CR
+                </ion-text>
+              </ion-button>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="thrombo"
+                tappable
+                (click)="showAlertConfirme('THROMB')"
+              >
+                <span class="icon-int-thromb"></span>
+                <ion-text>
+                  Thrombolyse
+                </ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

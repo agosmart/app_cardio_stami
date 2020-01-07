@@ -56,7 +56,7 @@ export class EngioPage implements OnInit {
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
         console.log("resultName", this.resultName);
         if (this.dataPatient["stepId"] !== 15) {
-          this.updateStep();
+          this.srvApp.stepUpdatePage(this.dossierId, 15, 14, this.token);
         }
 
         this.listeCr();
@@ -65,42 +65,6 @@ export class EngioPage implements OnInit {
     });
   }
 
-  updateStep() {
-    console.log("update step");
-    const params = {
-      dossierId: this.dossierId,
-      //resultatId: this.resultatId,
-      stepId: 15
-    };
-
-    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
-      params,
-      this.token
-    );
-    authObs.subscribe(
-      resData => {
-        if (+resData.code === 200) {
-        } else {
-          // ----- Hide loader ------
-        }
-      },
-
-      // ::::::::::::  ON ERROR ::::::::::::
-      errRes => {
-        console.log(errRes);
-        // ----- Hide loader ------
-        // --------- Show Alert --------
-
-        if (errRes.error.code === "401") {
-          this.showAlert(errRes.error.message);
-        } else {
-          this.showAlert(
-            "Prblème d'accès au réseau, veillez vérifier votre connexion"
-          );
-        }
-      }
-    );
-  }
   listeCr() {
     this.srvApp.getListeCR(1).subscribe((resp: any) => {
       this.retunListeCR = resp;

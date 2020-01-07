@@ -46,6 +46,47 @@ export class ServiceAppService {
 
   constructor(public http: HttpClient) {}
 
+  stepUpdatePage(dossierIdVal, stepIdVal, resultIdVal, token) {
+    console.log("first update step");
+    const params = {
+      dossierId: dossierIdVal,
+      resultId: resultIdVal,
+      stepId: stepIdVal
+    };
+
+    const authObs: Observable<DossierResponseData> = this.stepUpdateService(
+      params,
+      token
+    );
+    authObs.subscribe(
+      resData => {
+        if (+resData.code === 200) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      errRes => {
+        return false;
+      }
+    );
+  }
+
+  stepUpdateService(params: object, token: string) {
+    console.log(" seconde update step service ", params);
+    const apiUrl = this.baseUrl + "/updateStape";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    const myBody: object = params;
+    console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
+    return this.http.post<DossierResponseData>(apiUrl, myBody, {
+      headers: myHeaders
+    });
+  }
+
   loginDoctor(params: object) {
     const apiUrl = this.baseUrl + "/login";
     const myHeaders: HttpHeaders = new HttpHeaders({
@@ -275,20 +316,5 @@ export class ServiceAppService {
       .then(response => response.json() as StandarReturnModel)
       .catch(error => console.log("Une erreur est survenue" + error));
       */
-  }
-
-  updateStep(params: object, token: string) {
-    console.log("update step service ", params);
-    const apiUrl = this.baseUrl + "/updateStape";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
-    const myBody: object = params;
-    console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
-    return this.http.post<DossierResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
   }
 }

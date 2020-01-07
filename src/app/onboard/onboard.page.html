@@ -1,36 +1,44 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>onboard</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content fullscreen class="ion-padding" scroll-y="false">
-  <ion-slides *ngIf="affichePub">
+  <div class='intro'>
+    <ion-button color="primary" fill="clear" (click)="goToLogin()">Quitter<ion-icon slot="end" name="arrow-forward">
+      </ion-icon>
+    </ion-button>
+  
+    </div>
+
+  <ion-slides *ngIf="affichePub" [options]="slideOpts"   pager="true" >
     <ion-slide>
-      <img src="./assets/slides/ica-slidebox-img-1.png" />
-      <h2 class="slide-title s1">Welcome to the <b>ICA</b></h2>
+      <img src="./assets/slides/slide1.png" />
+      <h2 class="slide-title s1">Bienvenue sur <b>STAMI</b> !</h2>
       <p>
-        The <b>ionic conference app</b> is a practical preview of the ionic
-        framework in action, and a demonstration of proper code use.
+        Merci d'avoir installé <b>STAMI</b>, l'application qui vous permet d'accéder à votre espace médicale aisément.<br>
+        <b>STAMI</b> vous permet de collaborer et partager votre expèrience avec vos collègues durant la phase du diagnostique.
       </p>
     </ion-slide>
 
     <ion-slide>
-      <img src="./assets/slides/ica-slidebox-img-2.png" />
-      <h2 class="slide-title s2">What is Ionic?</h2>
+      <img src="./assets/slides/slide2.png" />
+      <h2 class="slide-title s2">S'impliquer avec les patients </h2>
       <p>
-        <b>Ionic Framework</b> is an open source SDK that enables developers to
-        build high quality mobile apps with web technologies like HTML, CSS, and
-        JavaScript.
+        <b>STAMI</b> vous permet d'enctiper un examen clinique des patients que vous pouvez aussi être amené à le recever au  centre de référence<br>
+        L'application <b>STAMI</b> vous permet l'état de snaté des patients et consulter leur dossiers médical
       </p>
     </ion-slide>
 
     <ion-slide>
-      <img src="./assets/slides/ica-slidebox-img-3.png" />
-      <h2 class="slide-title s3">Ready to Play?</h2>
-      <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <img src="./assets/slides/slide3.png" />
+      <h2 class="slide-title s3">Êtes-vous prêts ?</h2>
+      <p>Afin d'accèder à votre espace médicale, vous devez activer l'option de votre disponibilité après l'authentification.</p>
+      <ion-button fill="clear" (click)="goToLogin()">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-slide>
   </ion-slides>
-  <ion-button color="primary" (click)="goToLogin()">continuer</ion-button>
+  
+  
 </ion-content>

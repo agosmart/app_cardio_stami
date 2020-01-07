@@ -155,7 +155,7 @@ export class ThrombAbsolutPage implements OnInit {
         this.dossierId = this.dataPatient["dossierId"];
         this.resultId = this.dataPatient["resultId"];
         if (this.dataPatient["stepId"] !== 9) {
-          this.updateStep();
+          this.srvApp.stepUpdatePage(this.dossierId, 9, 8, this.token);
         }
         // # typeId = 1 : Formulaire de contre indications Absolus;
         this.typeId = 1;
@@ -307,42 +307,6 @@ export class ThrombAbsolutPage implements OnInit {
     await alert.present();
   }
 
-  updateStep() {
-    console.log("update step");
-    const params = {
-      dossierId: this.dossierId,
-      //resultId: this.resultId,
-      stepId: 9
-    };
-
-    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
-      params,
-      this.token
-    );
-    authObs.subscribe(
-      resData => {
-        if (+resData.code === 200) {
-        } else {
-          // ----- Hide loader ------
-        }
-      },
-
-      // ::::::::::::  ON ERROR ::::::::::::
-      errRes => {
-        console.log(errRes);
-        // ----- Hide loader ------
-        // --------- Show Alert --------
-
-        if (errRes.error.code === "401") {
-          this.showAlert(errRes.error.message);
-        } else {
-          this.showAlert(
-            "Prblème d'accès au réseau, veillez vérifier votre connexion"
-          );
-        }
-      }
-    );
-  }
   // ---------------------------------------
 }
 

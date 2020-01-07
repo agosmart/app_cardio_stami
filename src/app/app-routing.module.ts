@@ -140,6 +140,13 @@ const routes: Routes = [
       )
   },
   {
+    path: "thromb-sos/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/thromb-sos/thromb-sos.module").then(
+        m => m.ThrombSosPageModule
+      )
+  },
+  {
     path: "last-drug/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/last-drug/last-drug.module").then(
@@ -168,7 +175,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "archive/:patientId",
+    path: "archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
     loadChildren: () =>
       import("./archive/archive.module").then(m => m.ArchivePageModule)
   },

@@ -54,47 +54,10 @@ export class ThrombResultPage implements OnInit {
         this.dossierId = this.dataPatient["dossierId"];
 
         if (this.dataPatient["stepId"] !== 18) {
-          this.updateStep();
+          this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token);
         }
       }
     });
-  }
-
-  updateStep() {
-    console.log("update step");
-    const params = {
-      dossierId: this.dossierId,
-      //resultatId: this.resultatId,
-      stepId: 18
-    };
-
-    const authObs: Observable<DossierResponseData> = this.srvApp.updateStep(
-      params,
-      this.token
-    );
-    authObs.subscribe(
-      resData => {
-        if (+resData.code === 200) {
-        } else {
-          // ----- Hide loader ------
-        }
-      },
-
-      // ::::::::::::  ON ERROR ::::::::::::
-      errRes => {
-        console.log(errRes);
-        // ----- Hide loader ------
-        // --------- Show Alert --------
-
-        if (errRes.error.code === "401") {
-          this.showAlert(errRes.error.message);
-        } else {
-          this.showAlert(
-            "Prblème d'accès au réseau, veillez vérifier votre connexion"
-          );
-        }
-      }
-    );
   }
 
   // --------- ALERT CONFIRME -----------

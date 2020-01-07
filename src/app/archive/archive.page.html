@@ -14,7 +14,7 @@
       <ion-col size="12" class="icon-header">
         <span class="icon-diagnostic text-white text20"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">Archive</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">ARCHIVE</ion-col>
     </ion-row>
   </ion-grid>
 
@@ -39,7 +39,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
-                    {{lastName}} {{lastName}}
+                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
                 </ion-row>
 
@@ -47,6 +47,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+
                     {{dataPatient['birthDayFr']}}
                     <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
@@ -55,7 +56,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
                     <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
-                    {{dataPatient['weight'] + ' KG'}}
+                    {{dataPatient['weight']+ ' KG'}}
                   </ion-col>
                 </ion-row>
               </ion-col>
@@ -70,9 +71,56 @@
                   >
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
+                  <ion-button
+                    (click)="backToOrig()"
+                    color="secondary"
+                    class="ion-bt-padding "
+                    expand="full"
+                  >
+                    <ion-icon
+                      slot="icon-only"
+                      name="icon-diagnostic"
+                    ></ion-icon>
+                  </ion-button>
                 </ion-col>
               </ion-col>
             </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card class="list-CR" color="light">
+          <ion-card-content class="text09 ion-no-padding ">
+            <ion-list class="ion-no-padding">
+              <ion-item-divider class="box-shadow">
+                <ion-label class="p-10-0">
+                  <span class="icon-cr text-dark  text17 "></span>
+                  <b class="text-gray500 ">Liste des dossiers du Patient</b>
+                  <!-- <p>{{resultName}}</p> -->
+                </ion-label>
+              </ion-item-divider>
+              <!---->
+              <ion-item
+                detail
+                lines="full"
+                *ngFor="let item of ListeDossier"
+                (click)="showDetail(item.dossierId)"
+              >
+                <ion-label class="ion-text-wrap">
+                  <span class="icon-cudt-box-2  text-dark  text17"></span>
+                  {{item.etabName}}
+                </ion-label>
+                <ion-chip color="secondary">
+                  <ion-note>
+                    <span class="icon-duration-1 text-dark  "></span>
+                    <b> {{item.createdAt}}</b></ion-note
+                  >
+                </ion-chip>
+              </ion-item>
+            </ion-list>
           </ion-card-content>
         </ion-card>
       </ion-col>
