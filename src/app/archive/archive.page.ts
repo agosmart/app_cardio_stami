@@ -113,22 +113,22 @@ export class ArchivePage implements OnInit {
               console.log("ListeDossier", this.ListeDossier);
             } else {
               loadingEl.dismiss();
-
-              //this.returnListeDossier = resData.data[];
-              this.msgAlert = "Prblème interne, veuillez réessyer";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert(
+                "Erreur ",
+                "Prblème interne, veuillez réessyer"
+              );
             }
           },
           errRes => {
             loadingEl.dismiss();
             if (errRes.error.status === 401 || errRes.error.status === 500) {
-              this.msgAlert = "Accès à la ressource refusé";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert("Erreur ", "Accès à la ressource refusé");
             } else {
               console.log("RETOUR ERROR DIAGNOSTIC:::", errRes);
-              this.msgAlert =
-                "Prblème d'accès au réseau, veillez vérifier votre connexion";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert(
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
             }
           }
         );
@@ -146,16 +146,5 @@ export class ArchivePage implements OnInit {
       this.idDossierOrig,
       JSON.stringify(this.dataPatient)
     ]);
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

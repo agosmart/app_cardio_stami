@@ -11,6 +11,7 @@ import { Observable } from "rxjs";
 import { UserModel } from "src/app/models/user.model";
 import { AuthResponseData } from "src/app/models/auth.response";
 import { EtabResponseData } from "src/app/models/etab.response";
+import { UserService } from "src/app/services/user.service";
 @Component({
   selector: "app-register",
   templateUrl: "./register.page.html",
@@ -39,16 +40,13 @@ export class RegisterPage implements OnInit {
     private srv: ServiceAppService,
     public router: Router,
     private sglob: GlobalvarsService,
-
-    private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private userService: UserService,
+    private loadingCtrl: LoadingController
   ) {
-    //1 c les CR  2 CUDT
     this.srv.getListeCR(1).subscribe((resp: any) => {
       this.retunListeCR = resp;
       console.log("return liste cr", this.retunListeCR);
       console.log("return liste code", this.retunListeCR.code);
-      // this.retunListeCR.code = 200; // a enlever
       if (+this.retunListeCR.code === 200) {
         this.itemsCR = this.retunListeCR.data;
         console.log("nom etab cr", this.retunListeCR.data);
@@ -222,7 +220,7 @@ export class RegisterPage implements OnInit {
         let params = this.registrationForm.value;
         params["userType"] = 2;
         console.log("params register : ", params);
-        const authObs: Observable<AuthResponseData> = this.srv.registerDoctor(
+        const authObs: Observable<AuthResponseData> = this.userService.registerDoctor(
           params
         );
         let message = "";
@@ -246,7 +244,7 @@ export class RegisterPage implements OnInit {
               this.router.navigate(["./login"]);
             } else {
               // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -257,26 +255,16 @@ export class RegisterPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
         );
       });
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 
   OnChangeCR(event: any) {

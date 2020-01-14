@@ -228,20 +228,6 @@ export class ThrombRelativePage implements OnInit {
       // ---------------------------------
       this.somCheck--;
     }
-
-    /* if (isChecked && isAlert) {
-       this.presentAlertRadio();
-       // # display Alert
-       this.isDisplayRadio = true;
-       this.isRequiredCheckBox = true;
-     } else {
-       // # Hide Alert
-       this.isDisplayRadio = false;
-       this.isRequiredCheckBox = false;
-     }*/
-
-    // ----------------------------------------
-    console.log("somCheck :::", this.somCheck);
     this.somCheck ? (this.exitProcess = true) : (this.exitProcess = false);
   }
 
@@ -336,14 +322,15 @@ export class ThrombRelativePage implements OnInit {
                 // ****************************
               } else {
                 loadingEl.dismiss();
-                this.msgAlert = "Prblème interne, veuillez réessyer";
-                this.showAlert(this.msgAlert);
+                this.sglob.showAlert(
+                  "Erreur ",
+                  "Prblème interne, veuillez réessyer"
+                );
               }
             },
             errRes => {
               loadingEl.dismiss();
-              this.msgAlert = errRes.error.message;
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert("Erreur ", errRes.error.message);
             }
           );
         }
@@ -419,58 +406,7 @@ export class ThrombRelativePage implements OnInit {
       } else {
         this.isRequiredCheckBox = false;
       }
-      console.group("ON DISMISS");
-      console.log("this.hypertentionValue ::", this.hypertentionValue);
-      console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
-      console.groupEnd();
     });
   }
-  // --------- ALERT -----------
-  async showAlert(message: string) {
-    // -----------END  message dynamic ---------------
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Résultat',
-    //   message: message,
-    //   cssClass: 'alert-css',
-    //   buttons: [
-    //     {
-    //       text: 'Annuler',
-    //       role: 'cancel',
-    //       cssClass: 'secondary',
-    //       handler: () => {
-    //         console.log('Confirme Annuler');
-    //       }
-    //     }
-    //   ]
-    // });
-    // await alert.present();
-    ////////////////////////////////////////////////////////////
-    // const alert = await this.alertCtrl.create({
-    //   header: 'Veillez préciser',
-    //   message: message,
-    //   cssClass: 'alert-css',
-    //   buttons: [
-    //     {
-    //       text: 'Annuler',
-    //       role: 'cancel',
-    //       cssClass: 'secondary',
-    //       handler: () => {
-    //         console.log('Précision Annulée');
-    //       }
-    //     },
-    //     {
-    //       text: 'valider',
-    //       handler: async () => {
-    //         // if (this.dataPatient['demandeAvisId'] !== 0 && diag === 'SOS') {
-    //         //   this.setDiagnostic('SOS');
-    //         // } else {
-    //         // }
-    //         // await this.onSetDiagnostic(diag);
-    //       }
-    //     }
-    //   ]
-    // });
-  }
-
   // ---------------------------------------
 }

@@ -1,16 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
 import { PatientResponseData } from "../models/patient.response";
-import { Md5 } from "ts-md5/dist/md5";
-//import { Observable } from'rxjs';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { AuthResponseData } from "../models/auth.response";
 import { DataListeEtab } from "../models/data_liste_etab";
 import { DossierResponseData } from "../models/dossier.response";
-import { DossierModel } from "../models/dossier.model";
 import { ClotureResponseData } from "../models/cloture.response";
 import { DiagResponseData } from "../models/diag.response";
-import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
 import { DemandeAvisResponseData } from "../models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 import { PretreatmentResponseData } from "../models/pretreatment.response";
@@ -27,7 +21,6 @@ interface ResponseEtab {
   providedIn: "root"
 })
 export class ServiceAppService {
-  //baseUrl ='http://41.110.24.164/cooffa/sante/';
   baseUrl = "http://cardio.cooffa.shop/api";
 
   private apiKey =
@@ -41,8 +34,6 @@ export class ServiceAppService {
   public getExtras() {
     return this.extras;
   }
-
-  //********************************** */
 
   constructor(public http: HttpClient) {}
 
@@ -83,31 +74,6 @@ export class ServiceAppService {
     const myBody: object = params;
     console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
     return this.http.post<DossierResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
-  }
-
-  loginDoctor(params: object) {
-    const apiUrl = this.baseUrl + "/login";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json"
-    });
-    const myBody: any = params; // username / password
-    return this.http.post<AuthResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
-  }
-
-  registerDoctor(params: object) {
-    const apiUrl = this.baseUrl + "/register";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json"
-    });
-
-    const myBody: object = params;
-    console.log("PARAMS :::", myBody);
-    return this.http.post<AuthResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }

@@ -143,15 +143,4 @@ export class EngioPage implements OnInit {
       JSON.stringify(this.dataPatient)
     ]);
   }
-
-  private showAlert(messageAlert: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat validation choix",
-        message: messageAlert,
-        cssClass: "alert-css",
-        buttons: ["Ok"]
-      })
-      .then(alertEl => alertEl.present());
-  }
 }

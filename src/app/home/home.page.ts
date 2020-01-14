@@ -108,9 +108,10 @@ export class HomePage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -146,15 +147,5 @@ export class HomePage implements OnInit {
     // this.router.navigate([
     //   "./" + this.pageStep, JSON.stringify([this.objectDossier])
     // ]);
-  }
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

@@ -59,11 +59,9 @@ export class OrientationPage implements OnInit {
         this.dossierId = this.dataPatient["dossierId"];
         //this.objectInsc = JSON.parse(dataObj);
         this.demandeAvisId = this.dataPatient["LastDemandeAvisId"];
-        console.log(" orientation  >>>>> dataPatients ::: ", this.dataPatient);
-        console.log(
-          " orientation >>>>> demandeAvisId ::: ",
-          this.demandeAvisId
-        );
+        if (this.dataPatient["stepId"] !== 6) {
+          this.srvApp.stepUpdatePage(this.dossierId, 6, 1, this.token);
+        }
         if (this.demandeAvisId > 0) {
           this.afficheListeCr = true;
           this.reponseAvisCR(this.demandeAvisId);
@@ -133,8 +131,7 @@ export class OrientationPage implements OnInit {
               //this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
             } else {
-              // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -145,9 +142,10 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -186,8 +184,7 @@ export class OrientationPage implements OnInit {
                 this.afficheReponseMed = true;
               }
             } else {
-              // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -198,9 +195,10 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -216,16 +214,5 @@ export class OrientationPage implements OnInit {
       this.dossierId,
       JSON.stringify(this.dataPatient)
     ]);
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

@@ -208,17 +208,6 @@ export class GocrPage implements OnInit {
     }
   }
 
-  private showAlert(messageAlert: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat validation choix",
-        message: messageAlert,
-        cssClass: "alert-css",
-        buttons: ["Ok"]
-      })
-      .then(alertEl => alertEl.present());
-  }
-
   getHoursFromTime(duration: string) {
     const time = moment(duration, "HH:mm:ss");
     const hours = time.get("hours");
@@ -226,16 +215,6 @@ export class GocrPage implements OnInit {
   }
 
   calculateTimeMoment___() {
-    // console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
-    //console.log(moment().format('LTS'));
-    // const x = '03:32:30';
-    // const y = '02:00:00';
-    // const diff = moment(x, 'HH:mm:ss').diff(moment(y, 'HH:mm:ss'));
-    // const d = moment.duration(diff);
-    // //  const totaltime = Math.floor(d.asHours()) + moment.utc(diff).format(":mm");
-    // const totaltime = moment.utc(diff).format("HH:mm:ss");
-    // console.log(totaltime);
-
     const x = moment("00:32:30", "HH:mm:ss");
     const y = moment("02:00:00", "HH:mm:ss");
     const duration = moment.duration(x.diff(y));

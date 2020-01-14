@@ -131,11 +131,8 @@ export class ThrombSosPage implements OnInit {
               console.log(" resData demandeId", resData.data.demandeId);
               this.demandeAvisId = resData.data.demandeId;
               this.reponseAvisCR(this.demandeAvisId);
-              //this.sglob.presentToast(resData.message);
-              // ----- Redirection to Home page ------------
             } else {
-              // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -146,9 +143,10 @@ export class ThrombSosPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -190,26 +188,19 @@ export class ThrombSosPage implements OnInit {
                 );
                 this.afficheReponseMed = true;
               }
-              //this.etabName = this.itemsMeds[0]["etabName"];
-
-              //this.sglob.presentToast(resData.message);
-              // ----- Redirection to Home page ------------
             } else {
-              // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
-
-          // ::::::::::::  ON ERROR ::::::::::::
           errRes => {
             console.log(errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
-            // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -228,8 +219,6 @@ export class ThrombSosPage implements OnInit {
       msgAlert = "Etes-vous sur de vouloir envoyer le patient au CR ? ";
     }
 
-    console.log("decision ::::", msgAlert);
-    // -----------END  message dynamic ---------------
     const alert = await this.alertCtrl.create({
       header: "Résultat d'authentication",
       message: msgAlert,
@@ -266,16 +255,5 @@ export class ThrombSosPage implements OnInit {
       ]
     });
     await alert.present();
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

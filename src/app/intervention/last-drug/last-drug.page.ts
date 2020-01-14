@@ -111,7 +111,7 @@ export class LastDrugPage implements OnInit {
             } else {
               // ----- Hide loader ------
               loadingEl.dismiss();
-              this.showAlert("Problème interne !!!");
+              this.sglob.showAlert("Erreur ", "Problème interne !!!");
             }
           },
 
@@ -122,25 +122,15 @@ export class LastDrugPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Problème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
         );
       });
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

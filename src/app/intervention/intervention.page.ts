@@ -45,12 +45,6 @@ export class InterventionPage implements OnInit {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
     this.urlEcg = this.sglob.getUrlEcg();
-
-    // if (this.token === undefined || this.idUser === undefined) {
-    //   this.token =
-    //     "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
-    //   this.idUser = 61;
-    // }
   }
 
   ngOnInit() {
@@ -117,27 +111,6 @@ export class InterventionPage implements OnInit {
           text: "Je confirme",
           handler: async () => {
             await this.setIntervention(inter);
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  // --------- ALERT -----------
-  async showAlert(message: string) {
-    // -----------END  message dynamic ---------------
-    const alert = await this.alertCtrl.create({
-      header: "Résultat d'authentication",
-      message: message,
-      cssClass: "alert-css",
-      buttons: [
-        {
-          text: "Annuler",
-          role: "cancel",
-          cssClass: "secondary",
-          handler: () => {
-            console.log("Confirme Annuler");
           }
         }
       ]

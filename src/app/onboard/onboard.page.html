@@ -1,44 +1,43 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>onboard</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-
 <ion-content fullscreen class="ion-padding" scroll-y="false">
-  <div class='intro'>
-    <ion-button color="primary" fill="clear" (click)="goToLogin()">Quitter<ion-icon slot="end" name="arrow-forward">
-      </ion-icon>
+  <div class="intro">
+    <ion-button color="primary" fill="clear" (click)="goToLogin()"
+      >Quitter<ion-icon slot="end" name="arrow-forward"> </ion-icon>
     </ion-button>
-  
-    </div>
+  </div>
 
-  <ion-slides *ngIf="affichePub" [options]="slideOpts"   pager="true" >
+  <ion-slides *ngIf="affichePub" [options]="slideOpts" pager="true">
     <ion-slide>
       <img src="./assets/slides/slide1.png" />
       <h2 class="slide-title s1">Bienvenue sur <b>STAMI</b> !</h2>
       <p>
-        Merci d'avoir installé <b>STAMI</b>, l'application qui vous permet d'accéder à votre espace médicale aisément.<br>
-        <b>STAMI</b> vous permet de collaborer et partager votre expèrience avec vos collègues durant la phase du diagnostique.
+        Merci d'avoir installé <b>STAMI</b>, l'application qui vous permet
+        d'accéder à votre espace médicale aisément.<br />
+        <b>STAMI</b> vous permet de collaborer et partager votre expèrience avec
+        vos collègues durant la phase du diagnostique.
       </p>
     </ion-slide>
 
     <ion-slide>
       <img src="./assets/slides/slide2.png" />
-      <h2 class="slide-title s2">S'impliquer avec les patients </h2>
+      <h2 class="slide-title s2">S'impliquer avec les patients</h2>
       <p>
-        <b>STAMI</b> vous permet d'enctiper un examen clinique des patients que vous pouvez aussi être amené à le recever au  centre de référence<br>
-        L'application <b>STAMI</b> vous permet l'état de snaté des patients et consulter leur dossiers médical
+        <b>STAMI</b> vous permet d'enctiper un examen clinique des patients que
+        vous pouvez aussi être amené à le recever au centre de référence<br />
+        L'application <b>STAMI</b> vous permet l'état de snaté des patients et
+        consulter leur dossiers médical
       </p>
     </ion-slide>
 
     <ion-slide>
       <img src="./assets/slides/slide3.png" />
       <h2 class="slide-title s3">Êtes-vous prêts ?</h2>
-      <p>Afin d'accèder à votre espace médicale, vous devez activer l'option de votre disponibilité après l'authentification.</p>
-      <ion-button fill="clear" (click)="goToLogin()">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      <p>
+        Afin d'accèder à votre espace médicale, vous devez activer l'option de
+        votre disponibilité après l'authentification.
+      </p>
+      <ion-button fill="clear" (click)="goToLogin()"
+        >Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-slide>
   </ion-slides>
-  
-  
 </ion-content>

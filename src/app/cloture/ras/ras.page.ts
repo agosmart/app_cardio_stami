@@ -70,25 +70,6 @@ export class RasPage implements OnInit {
         this.ecgTmp = this.dataPatient["ecgTmp"];
       }
     });
-
-    // this.idDossier = 115;
-
-    // this.dataPatient = {
-    //   firstName: "Bouaziz",
-    //   lastName: "Halim",
-    //   birthDay: "2019-11-01",
-    //   gender: "2",
-    //   dossierId: 110,
-    //   weight: 14,
-    //   doctorId: 61,
-    //   dThorasic: true,
-    //   etabId: 5,
-    //   ecgImage: "file:/",
-    //   ecgAfficher: "http:/",
-    //   startAt: "13:25:00"
-    // };
-    console.log(" ras >>>>> dataPatient ::: ", this.dataPatient);
-    console.log(" ras idDosier   ::: ", this.idDossier);
   }
 
   clotureDossier() {
@@ -122,7 +103,7 @@ export class RasPage implements OnInit {
             } else {
               // ----- Hide loader ------
               loadingEl.dismiss();
-              this.showAlert("Problème interne !!!");
+              this.sglob.showAlert("Erreur ", "Problème interne !!!");
             }
           },
 
@@ -133,9 +114,10 @@ export class RasPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Problème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -151,15 +133,5 @@ export class RasPage implements OnInit {
       componentProps: { value: image }
     });
     return await modal.present();
-  }
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

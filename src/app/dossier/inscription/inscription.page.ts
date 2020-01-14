@@ -195,8 +195,7 @@ export class InscriptionPage implements OnInit {
                 this.inscriptionDossier.value.prenom,
                 this.inscriptionDossier.value.dateNaissance,
                 this.inscriptionDossier.value.genre,
-                this.idPatient,
-
+                this.idPatient
               );
             }
           },
@@ -209,9 +208,10 @@ export class InscriptionPage implements OnInit {
 
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -226,23 +226,9 @@ export class InscriptionPage implements OnInit {
       lastName: nom,
       birthDay: dateNaissance,
       gender: genre,
-      patientId: idPatient,
+      patientId: idPatient
     };
-
-    console.log("objetInsc---***", this.dataPatientObj);
-    // this.srv.setExtras(this.objetInsc);
     this.inscriptionDossier.reset();
     this.router.navigate(["./insc-ecg", JSON.stringify(this.dataPatientObj)]);
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

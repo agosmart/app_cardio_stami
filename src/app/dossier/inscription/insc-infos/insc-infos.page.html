@@ -1,15 +1,13 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
-    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="insc-infos ion-no-padding">
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
-    <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-doss-create text-white text20"></span>
@@ -35,29 +33,28 @@
               </ion-col>
 
               <ion-col size="12" class="ion-no-padding">
-                <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                 <span class="icon-man text-dark  text10"></span>
                 {{dataPatient['lastName']}} {{dataPatient['firstName']}}
               </ion-col>
 
               <ion-col size="12" class="ion-no-padding">
                 <span class="icon-calander  text-dark  text10"></span>
-                <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
                 {{dataPatient['birthDay']}}
-                <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
               </ion-col>
 
               <ion-col size="12" class="ion-no-padding">
                 <span class="icon-weight  text-dark  text10"></span>
-                <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
+
                 {{dataPatient['weight'] + ' KG'}}
               </ion-col>
+
+              <img src="{{url}}" />
 
               <ion-col size="12" class="ion-no-margin ion-no-padding">
                 <ion-row class="ion-no-margin ion-no-padding">
                   <ion-col size="2" class="ion-no-margin ion-no-padding">
                     <ion-button
-                      (click)="openImageEcg(urlEcg)"
+                      (click)="openImageEcg()"
                       color="danger"
                       tappable
                       class="ion-bt-padding "
@@ -73,20 +70,6 @@
                   </ion-col>
                 </ion-row>
               </ion-col>
-
-              <!--  </ion-col>
-             <ion-col size="2" class="ion-no-padding">                
-               
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="openImageEcg()"
-                    color="danger"
-                    class="ion-bt-padding "                    
-                  >
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>   
-                  </ion-button>
-                </ion-col>
-              </ion-col> -->
             </ion-row>
           </ion-card-content>
         </ion-card>
@@ -245,13 +228,6 @@
                   formControlName="insCardiaque"
                 ></ion-checkbox>
               </ion-item>
-              <!--== MESSAGE ==-->
-              <!-- <div *ngFor="let error of errorMessages.insCardiaque">
-              <ng-container *ngIf="insCardiaque.hasError(error.type) && (insCardiaque.dirty || insCardiaque.touched)">
-                <small class="error-message">{{error.message}}</small>
-              </ng-container>
-            </div> -->
-              <!--====-->
 
               <ion-item>
                 <ion-label>Cardiopathie ischémique stable </ion-label>
@@ -260,14 +236,6 @@
                   formControlName="cardIscStable"
                 ></ion-checkbox>
               </ion-item>
-              <!--== MESSAGE ==-->
-              <!-- <div *ngFor="let error of errorMessages.cardIscStable">
-              <ng-container
-                *ngIf="cardIscStable.hasError(error.type) && (cardIscStable.dirty || cardIscStable.touched)">
-                <small class="error-message">{{error.message}}</small>
-              </ng-container>
-            </div> -->
-              <!--====-->
             </ion-list>
           </ion-col>
           <!----->
@@ -323,15 +291,7 @@
                 formControlName="daignoDate"
               ></ion-datetime>
             </ion-item>
-            <!--== MESSAGE ==-->
-            <!-- <div *ngFor="let error of errorMessages.daignoDate">
-            <ng-container *ngIf="daignoDate.hasError(error.type) && (daignoDate.dirty || daignoDate.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div> -->
-            <!--====-->
 
-            <!-- -->
             <ion-radio-group formControlName="angioCoran">
               <ion-list-header>
                 <ion-label>ANGIOPLASTIE CORONAIRE</ion-label>
@@ -389,13 +349,6 @@
                 formControlName="atlDate"
               ></ion-datetime>
             </ion-item>
-            <!--== MESSAGE ==-->
-            <!-- <div *ngFor="let error of errorMessages.atlDate">
-            <ng-container *ngIf="atlDate.hasError(error.type) && (atlDate.dirty || atlDate.touched)">
-              <small class="error-message">{{error.message}}</small>
-            </ng-container>
-          </div> -->
-            <!--====-->
           </ion-col>
         </ion-row>
         <!-- Button Submit-->

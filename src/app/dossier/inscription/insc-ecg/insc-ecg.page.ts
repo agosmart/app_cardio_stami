@@ -155,25 +155,9 @@ export class InscEcgPage implements OnInit {
   }
   submitEcg() {
     if (this.isEcg) {
-      // this.dataPatient.weight = this.EcgForm.value.poids;
-      // this.dataPatient.doctorId = this.idUser;
-      // this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
-      // this.dataPatient.patientId = this.idPatient;
-      // this.dataPatient.etabId = this.idEtab;
-      // this.dataPatient.ecgImage = this.imageData;
-      // this.dataPatient.ecgAfficher = this.ecgAfficher;
-      // this.dataPatient.startAt = this.startAt;
-
-      // this.srvUploadecg.startUpload(
-      //   this.imageData,
-      //   this.token,
-      //   this.dataPatient
-      // );
-
       this.startUpload();
     } else {
-      this.showAlert("veuiller faire l'ECG");
-      console.log("===== veuiller faire un ECG====");
+      this.sglob.showAlert("Erreur ", "veuiller faire l'ECG");
     }
   }
   startUpload() {
@@ -257,10 +241,7 @@ export class InscEcgPage implements OnInit {
           ]);
           // this.presentToast("File upload complete.");
         } else {
-          //loading.dismiss();
-          console.log("erreur");
-          this.showAlert("Erreur interne, veuillez réessayer");
-          /// this.presentToast("File upload failed.");
+          this.sglob.showAlert("Erreur ", "Erreur interne, veuillez réessayer");
         }
       });
   }
@@ -287,16 +268,5 @@ export class InscEcgPage implements OnInit {
       this.imageData = imageData;
       this.ecgAfficher = this.sglob.pathForImage(imageData);
     });
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'envoi",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

@@ -100,8 +100,7 @@ export class ThrombEcgPage implements OnInit {
       console.log("isEcg");
       this.startUpload();
     } else {
-      console.log(" not isEcg");
-      this.showAlert("veuiller faire un ECG");
+      this.sglob.showAlert("Erreur ", "veuiller faire un ECG");
     }
   }
 
@@ -113,8 +112,7 @@ export class ThrombEcgPage implements OnInit {
         (<FileEntry>entry).file(file => this.readFile(file));
       })
       .catch(err => {
-        console.log("erreur");
-        //this.presentToast("Error while reading file.");
+        this.sglob.showAlert("Erreur ", "Problème interne");
       });
   }
 
@@ -167,22 +165,8 @@ export class ThrombEcgPage implements OnInit {
           ]);
           // this.presentToast("File upload complete.");
         } else {
-          console.log("erreur");
-          this.showAlert("Erreur interne, veuillez réessayer");
-          /// this.presentToast("File upload failed.");
+          this.sglob.showAlert("Erreur ", "Erreur interne, veuillez réessayer");
         }
       });
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

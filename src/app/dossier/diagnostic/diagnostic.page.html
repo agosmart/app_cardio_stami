@@ -1,15 +1,13 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
-    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="diag-info ion-no-padding">
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
-    <!-- <div class="overly-gradian">&nbsp;</div> -->
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
         <span class="icon-diagnostic text-white text20"></span>
@@ -39,7 +37,6 @@
 
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
                     {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
@@ -48,15 +45,14 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
-                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+
                     {{dataPatient['birthDayFr']}}
-                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
-                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
+
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>

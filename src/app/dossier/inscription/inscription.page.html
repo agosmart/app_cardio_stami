@@ -3,7 +3,6 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
@@ -119,7 +118,8 @@
                 expand="block"
                 class="ion-margin-top btn"
               >
-                Valider  <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+                Valider
+                <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
               </ion-button>
             </div>
           </ion-col>
@@ -129,10 +129,9 @@
   </div>
 
   <!-- -->
-  <ion-row *ngIf="isPatient">    
+  <ion-row *ngIf="isPatient">
     <ion-col class="ion-margin-top">
       <ion-list class="ion-margin-top ">
-       
         <ion-list-header class="ion-no-padding">
           <div class="ion-text-center back-light">
             Dossiers similaires
@@ -146,7 +145,7 @@
         <ion-item
           *ngFor="let item of returnSearchPatient"
           (click)="goToEcgInfos(item.firstName,item.lastName,item.birthDay,item.gender,item.patientId)"
-        >         
+        >
           <ion-avatar slot="start">
             <span
               class='{{ item.gender === 2 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }}'

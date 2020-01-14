@@ -110,14 +110,6 @@ export class ThrombProtocPage implements OnInit {
           this.tpaval2 + "mg IV en 30 minutes",
           0.5 * this.weight + "mg IV en 60 minutes"
         ];
-        // - BOLUS IV UNIQUE : < 60 KG : 30 MG (6 000 UI)
-        // - 60-70 KG : 35 MG (7 000 UI)
-        // - 70-80 KG : 40 MG (8 000 UI)
-        // - 80-90 KG : 45 MG (9 000 UI)
-        // - ≥ 100 KG : 50 MG (10 000 UI)
-        // - DIVISER LA DOSE PAR 2 CHEZ LES PATIENTS
-        // ÂGÉS PLUS 75 ANS
-
         if (this.weight < 60) {
           this.tnkTpaValMg = 30;
           this.tnkTpaValUi = 6000;
@@ -175,9 +167,6 @@ export class ThrombProtocPage implements OnInit {
           // :::::::::::: ON RESULT ::::::::::
           resData => {
             this.isLoading = false;
-            console.log("Response >>>>> ", resData);
-            console.log("Response code >>>>> ", resData.code);
-            // ----- Hide loader ------
             loadingEl.dismiss();
             if (+resData.code === 201) {
               // ------- Reset Form -------
@@ -187,8 +176,7 @@ export class ThrombProtocPage implements OnInit {
                 JSON.stringify(this.dataPatient)
               ]);
             } else {
-              // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -199,26 +187,15 @@ export class ThrombProtocPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
         );
       });
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

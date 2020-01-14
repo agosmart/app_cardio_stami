@@ -41,8 +41,6 @@ export class DiagnosticPage implements OnInit {
 
   ecgImage = "/assets/images/ecg.jpg";
 
-  //this.showAlert("Attention ", "Veuillez choisir un CR!");
-
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -130,20 +128,21 @@ export class DiagnosticPage implements OnInit {
               this.setDiagnostic(diag);
             } else {
               loadingEl.dismiss();
-              this.msgAlert = "Prblème interne, veuillez réessyer";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert(
+                "Erreur ",
+                "Prblème interne, veuillez réessyer"
+              );
             }
           },
           errRes => {
             loadingEl.dismiss();
             if (errRes.error.status === 401 || errRes.error.status === 500) {
-              this.msgAlert = "Accès à la ressource refusé";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert("Erreur ", "Accès à la ressource refusé");
             } else {
-              console.log("RETOUR ERROR DIAGNOSTIC:::", errRes);
-              this.msgAlert =
-                "Prblème d'accès au réseau, veillez vérifier votre connexion";
-              this.showAlert(this.msgAlert);
+              this.sglob.showAlert(
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
             }
           }
         );
@@ -199,31 +198,6 @@ export class DiagnosticPage implements OnInit {
     await alert.present();
   }
 
-  // // --------- ALERT -----------
-  // async showAlert(message: string) {
-  //   // -----------END  message dynamic ---------------
-  //   const alert = await this.alertCtrl.create({
-  //     header: "Résultat d'authentication",
-  //     message: message,
-  //     cssClass: "alert-css",
-  //     buttons: [
-  //       {
-  //         text: "Annuler",
-  //         role: "cancel",
-  //         cssClass: "secondary",
-  //         handler: () => {
-  //           console.log("Confirme Annuler");
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   await alert.present();
-  // }
-
-  // =================================
-  //  setDiagnostic()
-  // =================================
-
   async setDiagnostic(diag: string) {
     switch (diag) {
       case "RAS":
@@ -269,21 +243,8 @@ export class DiagnosticPage implements OnInit {
     }
   }
 
-  private showAlert(message: string) {
-    this.alertCtrl
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
-  }
-
   archive() {
     console.log(this.patientId);
-    // this.router.navigate(["/archive", this.patientId]);
-    //" archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
     this.router.navigate([
       "/archive",
       this.patientId,

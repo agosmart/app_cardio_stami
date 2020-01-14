@@ -12,6 +12,7 @@ import {
 import { Observable } from "rxjs";
 import { DossierResponseData } from "src/app/models/dossier.response";
 import { ImagePage } from "../../../modal/image/image.page";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-insc-infos",
@@ -105,7 +106,8 @@ export class InscInfosPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -141,12 +143,9 @@ export class InscInfosPage implements OnInit {
   }
 
   async openImageEcg() {
-    console.log("url ::::function", this.url);
-    //cardio.cooffa.shop/show/ecg/
-    // http: // urlEcg ::::  http://cardio.cooffa.shop/show/ecg/file:///storage/emulated/0/Android/data/com.cardio.test/cache/1578250275137.jpg
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: this.ecgImage }
+      componentProps: { value: this.url }
     });
     return await modal.present();
   }
@@ -225,9 +224,10 @@ export class InscInfosPage implements OnInit {
             // --------- Show Alert --------
 
             if (errRes.error.code === "401") {
-              this.showAlert(errRes.error.message);
+              this.sglob.showAlert("Erreur ", errRes.error.message);
             } else {
-              this.showAlert(
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -247,17 +247,5 @@ export class InscInfosPage implements OnInit {
         return dossier["id_dossier"] === id;
       })
     };
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

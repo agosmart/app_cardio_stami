@@ -64,8 +64,6 @@ export class ThrombResultPage implements OnInit {
 
   async showAlertConfirme(resultatId: number) {
     let msgAlert = "";
-    // ----------- message dynamic ---------------
-
     if (resultatId === 10) {
       //NON RÉUSSIT
       msgAlert =
@@ -106,17 +104,5 @@ export class ThrombResultPage implements OnInit {
       ]
     });
     await alert.present();
-  }
-
-  private showAlert(message: string) {
-    this.alertCtrl
-
-      .create({
-        header: "Résultat d'authentication",
-        message: message,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
-      })
-      .then(alertEl => alertEl.present());
   }
 }

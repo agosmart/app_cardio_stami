@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import { LoadingController, AlertController } from "@ionic/angular";
-import { ServiceAppService } from "src/app/services/service-app.service";
 import { LoadingService } from "src/app/services/loading.service";
 import { NativeStorage } from "@ionic-native/native-storage/ngx";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
@@ -11,6 +10,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { UserModel } from "src/app/models/user.model";
 import { AuthResponseData } from "src/app/models/auth.response";
+import { UserService } from "src/app/services/user.service";
 
 // ------------------------------
 
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
     public loading: LoadingService,
     public loadingController: LoadingController,
     private formBuilder: FormBuilder,
-    private srv: ServiceAppService,
+    private userService: UserService,
     private router: Router,
     private nat: NativeStorage,
     private sglob: GlobalvarsService,
@@ -124,7 +124,7 @@ export class LoginPage implements OnInit {
         };
         console.log("params======>", params);
 
-        const authObs: Observable<AuthResponseData> = this.srv.loginDoctor(
+        const authObs: Observable<AuthResponseData> = this.userService.loginDoctor(
           params
         );
         // ---- Call Login function
@@ -157,7 +157,7 @@ export class LoginPage implements OnInit {
               this.router.navigate(["home"]);
             } else {
               // --------- Show Alert --------
-              this.showAlert(resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -168,9 +168,14 @@ export class LoginPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.message);
+              //this.showAlert(errRes.error.message);
+              this.sglob.showAlert("Erreur ", errRes.error.message);
             } else {
-              this.showAlert(
+              // this.showAlert(
+              //   "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              // );
+              this.sglob.showAlert(
+                "Erreur ",
                 "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
@@ -203,7 +208,7 @@ export class LoginPage implements OnInit {
     });
   }
 
-  private showAlert(message: string) {
+  private showAlert1(message: string) {
     this.alertCtrl
       .create({
         header: "Résultat d'authentication",

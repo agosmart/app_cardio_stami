@@ -157,19 +157,7 @@ export class ThrombAbsolutPage implements OnInit {
         if (this.dataPatient["stepId"] !== 9) {
           this.srvApp.stepUpdatePage(this.dossierId, 9, 8, this.token);
         }
-        // # typeId = 1 : Formulaire de contre indications Absolus;
         this.typeId = 1;
-        // =================================================
-
-        // console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
-        // console.group();
-        // console.log("::: FORM TYPE ::: ", this.typeId);
-        // console.log("dossierId ===>", this.dossierId);
-        // console.log("doctorId ===> ", this.doctorId);
-        // console.group();
-        // console.log(this.dataPatient);
-        // console.groupEnd();
-        // console.groupEnd();
       }
     });
   }
@@ -179,8 +167,6 @@ export class ThrombAbsolutPage implements OnInit {
       name: "",
       har: 0
     };
-    // this.contIndAbsElm.name = '';
-    // this.contIndAbsElm.har = 0;
   }
   onCheckBoxChange(isChecked) {
     console.log();
@@ -273,66 +259,17 @@ export class ThrombAbsolutPage implements OnInit {
             // ****************************
           } else {
             loadingEl.dismiss();
-            this.msgAlert = "Prblème interne, veuillez réessyer";
-            this.showAlert(this.msgAlert);
+            this.sglob.showAlert(
+              "Erreur ",
+              "Prblème interne, veuillez réessyer"
+            );
           }
         },
         errRes => {
           loadingEl.dismiss();
-          this.msgAlert = errRes.error.message;
-          this.showAlert(this.msgAlert);
+          this.sglob.showAlert("Erreur ", errRes.error.message);
         }
       );
     }
   }
-
-  // --------- ALERT -----------
-  async showAlert(message: string) {
-    // -----------END  message dynamic ---------------
-    const alert = await this.alertCtrl.create({
-      header: "Résultat",
-      message: message,
-      cssClass: "alert-css",
-      buttons: [
-        {
-          text: "Annuler",
-          role: "cancel",
-          cssClass: "secondary",
-          handler: () => {
-            console.log("Confirme Annuler");
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
-  // ---------------------------------------
 }
-
-/*
-{
-"doctorId" : 34,
-"dossierId" : 134,
-"typeId" :  1,
-   "contreIndications": [
-       {
-           "name": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-           "har": "0"
-       },
-       {
-           "name": "Integer pulvinar ante at mattis aliquet.",
-           "har": "0"
-       },
-       {
-           "name": "Duis eget enim vestibulum, porttitor ligula eu, ultrices dui.",
-           "har": "0" // 1 , 2"
-       },
-       {
-           "name": "Nam in sem lobortis nisi sollicitudin aliquet.",
-           "har": "0"
-       }
-   ]
-
-}
-*/
