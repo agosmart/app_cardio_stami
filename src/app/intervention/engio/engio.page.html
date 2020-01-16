@@ -88,7 +88,7 @@
               <ion-item
                 lines="full"
                 *ngFor="let item of itemsCR"
-                (click)="choixCr(item.etabId)"
+                (click)="choixCr(item.etabId,  item.etabName)"
               >
                 <ion-label class="ion-text-wrap">
                   <span class="icon-cudt-box-2  text-dark  text17"></span>
@@ -120,7 +120,7 @@
                 fill="solid"
                 class="gocr"
                 tappable
-                (click)="showAlertConfirme('THROMB')"
+                (click)="showAlertConfirme('CR')"
               >
                 <span class="icon-int-ras "></span>
                 <ion-text>

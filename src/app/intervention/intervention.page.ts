@@ -9,7 +9,6 @@ import {
   ToastController
 } from "@ionic/angular";
 import { ImagePage } from "../modal/image/image.page";
-import { Observable } from "rxjs";
 import { DossierModel } from "../models/dossier.model";
 @Component({
   selector: "app-intervention",
@@ -22,29 +21,21 @@ export class InterventionPage implements OnInit {
   token: string;
   idUser: number;
   stepId: number;
-  // ecgTmp: string;
   resultatId = 0;
   urlEcg: string;
-  //returnDataIntervention: InterResponseData;
 
   // -----------------------------
   msgAlert = "";
 
-  ecgImage = "/assets/images/ecg.jpg";
-
   constructor(
-    private srv: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
     private router: Router,
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController
+    private alertCtrl: AlertController
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
-    this.urlEcg = this.sglob.getUrlEcg();
   }
 
   ngOnInit() {
@@ -67,7 +58,7 @@ export class InterventionPage implements OnInit {
         this.router.navigate(["/home"]);
       } else {
         this.idDossier = +paramMap.get("idDossier");
-        this.urlEcg = this.urlEcg + this.dataPatient["ecgImage"];
+        this.urlEcg = this.dataPatient["ecgImage"];
         console.log("IMAGE ECG :::", this.urlEcg);
       }
     });
@@ -128,7 +119,7 @@ export class InterventionPage implements OnInit {
         // ---- CR ---
         this.dataPatient.resultId = 6; // aucune intervention envoi direct au CR
         await this.router.navigate([
-          "/gocr",
+          "/envoi-cr",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);

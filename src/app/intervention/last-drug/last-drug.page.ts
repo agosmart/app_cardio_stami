@@ -86,7 +86,7 @@ export class LastDrugPage implements OnInit {
         const params = {
           dossierId: this.idDossier,
           resultatId: this.resultId,
-          plavix: 1,
+          plavix: "1",
           crId: this.idCr,
           angio: 1,
           doctorId: this.idUser

@@ -1,16 +1,13 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { ModalController, NavParams } from "@ionic/angular";
 
 @Component({
-  selector: 'app-image',
-  templateUrl: './image.page.html',
-  styleUrls: ['./image.page.scss'],
+  selector: "app-image",
+  templateUrl: "./image.page.html",
+  styleUrls: ["./image.page.scss"]
 })
 export class ImagePage implements OnInit {
-  // @Input() value: any;
-  //public image: any;
-  @ViewChild('slider', { read: ElementRef, static: false }) slider: ElementRef;
+  @ViewChild("slider", { read: ElementRef, static: false }) slider: ElementRef;
   img: any;
 
   sliderOpts = {
@@ -19,20 +16,22 @@ export class ImagePage implements OnInit {
     }
   };
 
-  constructor(private navParams: NavParams, private modalController: ModalController) { }
+  constructor(
+    private navParams: NavParams,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
-    this.img = this.navParams.get('value');
+    this.img = this.navParams.get("value");
   }
 
   zoom(zoomIn: boolean) {
     //const zoom = this.slider.nativeElement.swiper.zoom;
     if (zoomIn) {
       //zoom.in();
-       this.slider.nativeElement.swiper.zoom.in();
+      this.slider.nativeElement.swiper.zoom.in();
     } else {
-
-    //  zoom.out();
+      //  zoom.out();
       this.slider.nativeElement.swiper.zoom.out();
     }
   }
@@ -48,7 +47,6 @@ export class ImagePage implements OnInit {
   //   }
   // };
 
-
   // constructor(
   //   private navParams: NavParams,
   //   private modalCtrl: ModalController,
@@ -62,7 +60,6 @@ export class ImagePage implements OnInit {
   // // ngAfterViewInit() {
 
   // // }
-
 
   // zoom(zoomIn: boolean) {
   //   console.log('zoomIn:::', zoomIn);
@@ -78,8 +75,4 @@ export class ImagePage implements OnInit {
   // closeModal() {
   //   this.modalCtrl.dismiss();
   // }
-
-
-
-
 }

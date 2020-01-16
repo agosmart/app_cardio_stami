@@ -121,6 +121,13 @@ const routes: Routes = [
       import("./intervention/gocr/gocr.module").then(m => m.GocrPageModule)
   },
   {
+    path: "envoi-cr/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/envoi-cr/envoi-cr.module").then(
+        m => m.EnvoiCrPageModule
+      )
+  },
+  {
     path: "engio/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/engio/engio.module").then(m => m.EngioPageModule)
@@ -185,6 +192,10 @@ const routes: Routes = [
       import("./archive/detail-archive/detail-archive.module").then(
         m => m.DetailArchivePageModule
       )
+  },
+  {
+    path: "test",
+    loadChildren: () => import("./test/test.module").then(m => m.TestPageModule)
   }
 ];
 

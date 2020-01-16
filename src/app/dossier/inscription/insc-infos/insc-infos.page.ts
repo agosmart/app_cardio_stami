@@ -39,8 +39,6 @@ export class InscInfosPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
-  url: string;
-  ecgImage = "/assets/images/ecg.jpg";
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -126,8 +124,8 @@ export class InscInfosPage implements OnInit {
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
         this.dataPatient = this.objectRecu;
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
-        this.url = this.urlEcg + this.dataPatient["ecgImage"];
-        console.log("===== url oninit", this.url);
+        this.urlEcg = this.dataPatient["ecgImage"];
+        console.log("===== url oninit", this.urlEcg);
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -145,7 +143,7 @@ export class InscInfosPage implements OnInit {
   async openImageEcg() {
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: this.url }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

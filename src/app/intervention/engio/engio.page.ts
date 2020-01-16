@@ -7,10 +7,7 @@ import {
   AlertController,
   ModalController
 } from "@ionic/angular";
-import { Observable } from "rxjs";
 import { EtabResponseData } from "src/app/models/etab.response";
-import { ClotureResponseData } from "src/app/models/cloture.response";
-import { DossierResponseData } from "src/app/models/dossier.response";
 import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
@@ -31,6 +28,8 @@ export class EngioPage implements OnInit {
   dataPatient: DossierModel;
   retunListeCR: EtabResponseData;
   itemsCR: any;
+  etabName: string;
+
   constructor(
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -80,9 +79,10 @@ export class EngioPage implements OnInit {
     });
   }
 
-  choixCr(idCr) {
+  choixCr(idCr, etabName) {
     console.log("idrc ====> ", idCr);
     this.idCr = idCr;
+    this.etabName = etabName;
   }
 
   async envoiCR() {
@@ -103,7 +103,9 @@ export class EngioPage implements OnInit {
       let msgAlert = "";
       // ----------- message dynamic ---------------
       msgAlert =
-        "Etes-vous sur de vouloire cloturer le dossier et envoyer le patient au CR ? ";
+        "Etes-vous sur de vouloire cloturer le dossier et envoyer le patient au CR " +
+        this.etabName +
+        "? ";
       this.stepId = 11;
 
       console.log("msgAlert ::::", msgAlert);

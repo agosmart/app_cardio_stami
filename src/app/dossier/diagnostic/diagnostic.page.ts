@@ -35,11 +35,10 @@ export class DiagnosticPage implements OnInit {
   stepId: number;
   patientId: number;
   returnDiag: DiagResponseData;
+  urlEcg: string;
 
   // -----------------------------
   msgAlert = "";
-
-  ecgImage = "/assets/images/ecg.jpg";
 
   constructor(
     private srv: ServiceAppService,
@@ -53,11 +52,6 @@ export class DiagnosticPage implements OnInit {
   ) {
     this.token = this.sglob.getToken();
     this.idUser = this.sglob.getIdUser();
-    // if (this.token === undefined || this.idUser === undefined) {
-
-    //   this.token = "I2zBaCRJhtW9F0brFd5bP4co8CdkmHlIYxsjtbsWPREhyCkxEZwBIvtxmRKu";
-    //   this.idUser = 61;
-    // }
   }
 
   ngOnInit() {
@@ -82,6 +76,8 @@ export class DiagnosticPage implements OnInit {
       } else {
         this.idDossier = +paramMap.get("idDossier");
         this.ecgTmp = this.dataPatient["ecgTmp"];
+        this.urlEcg = this.dataPatient["ecgImage"];
+        console.log(" urlEcg ::: ", this.urlEcg);
       }
     });
   }

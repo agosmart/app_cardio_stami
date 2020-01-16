@@ -7,6 +7,15 @@
 </ion-header>
 
 <ion-content fullscreen class="diag-info ion-no-padding">
+  <!-- {{urlhalim}}
+
+  <ion-item>
+    <img src="{{'http://cardio.cooffa.shop/show/ecg/' + urlhalim }}" />
+
+    <ion-card-title>
+      image salim
+    </ion-card-title>
+  </ion-item> -->
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
@@ -61,7 +70,7 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="openImageEcg(ecgImage)"
+                    (click)="openImageEcg(urlEcg)"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"
@@ -84,9 +93,7 @@
     </ion-row>
   </ion-grid>
 
-  <!-- ------------------- -->
   <ion-grid fixed class="diagnostic ion-margin-top ion-padding-top">
-    <!-- ------- -->
     <ion-row>
       <ion-col size="12">
         <ion-grid class="diagno-btn-group">

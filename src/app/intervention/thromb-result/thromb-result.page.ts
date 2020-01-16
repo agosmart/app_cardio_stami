@@ -1,16 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
-import { FormBuilder, Validators } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Observable } from "rxjs";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
-  ContreIndicListModel,
-  ContreIndicElmModel
-} from "src/app/models/contre.indic.list.model";
-import { PretreatmentResponseData } from "src/app/models/pretreatment.response";
-import { DossierResponseData } from "src/app/models/dossier.response";
+  ModalController,
+  LoadingController,
+  AlertController
+} from "@ionic/angular";
+import { ImagePage } from "src/app/modal/image/image.page";
 import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
@@ -25,17 +22,17 @@ export class ThrombResultPage implements OnInit {
   typeId: number;
   doctorId: number;
   resultatId: number;
-
+  urlEcg: string;
   //dataPatient: object;
   dataPatient: DossierModel;
   constructor(
-    private formBuilder: FormBuilder,
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
     private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -52,7 +49,8 @@ export class ThrombResultPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
-
+        this.urlEcg = this.dataPatient["ecgImage"];
+        console.log("IMAGE ECG :::", this.urlEcg);
         if (this.dataPatient["stepId"] !== 18) {
           this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token);
         }
@@ -104,5 +102,15 @@ export class ThrombResultPage implements OnInit {
       ]
     });
     await alert.present();
+  }
+
+  // ------------IMAGE ECG ---------------------
+  async openImageEcg(image: any) {
+    console.log("image ::::", image);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: image }
+    });
+    return await modal.present();
   }
 }
