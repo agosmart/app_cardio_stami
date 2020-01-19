@@ -10,12 +10,16 @@ import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 import { PretreatmentResponseData } from "../models/pretreatment.response";
 import { Observable } from "rxjs";
 import { ProtocolThromResponseData } from "../models/protocolThromb.response";
+import { EtabModel } from '../models/etab.model';
+import { EtabResponseData } from '../models/etab.response';
+import { ListeMedByCRResponseData } from '../models/listeMedByCr.response';
 
-interface ResponseEtab {
-  code: number;
-  data: DataListeEtab;
-  message: string;
-}
+// interface ResponseEtab {
+//   code: number;
+//   data: EtabModel;
+//   message: string;
+// }
+
 
 @Injectable({
   providedIn: "root"
@@ -23,8 +27,8 @@ interface ResponseEtab {
 export class ServiceAppService {
   baseUrl = "http://cardio.cooffa.shop/api";
 
-  private apiKey =
-    "b5e584c61-**--d@060357f33036@6412d16b30d1?cf47828f7f07fd6015a60d7";
+  // private apiKey =
+  //   "b5e584c61-**--d@060357f33036@6412d16b30d1?cf47828f7f07fd6015a60d7";
 
   extras: any;
   public setExtras(data) {
@@ -160,7 +164,7 @@ export class ServiceAppService {
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return this.http.get<ResponseEtab>(apiUrl, {
+    return this.http.get<ListeMedByCRResponseData>(apiUrl, {
       headers: myHeaders
     });
   }
@@ -257,7 +261,7 @@ export class ServiceAppService {
       Accept: "application/json"
     });
     const myBody: any = params; // username / password
-    return this.http.get<ResponseEtab>(apiUrl, {
+    return this.http.get<EtabResponseData>(apiUrl, {
       headers: myHeaders
     });
   }
@@ -269,7 +273,7 @@ export class ServiceAppService {
       Accept: "application/json"
     });
     const myBody: any = params; // username / password
-    return this.http.get<ResponseEtab>(apiUrl, {
+    return this.http.get<EtabResponseData>(apiUrl, {
       headers: myHeaders
     });
   }

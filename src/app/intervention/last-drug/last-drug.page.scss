@@ -1,8 +1,9 @@
 :host {
-  //background:#000;
+  background:#ffffff;
   ion-button {
     --border: none;
     --border-radius: 24px;
+    height: 64px;
     // --background :linear-gradient(202deg, #fd5f60 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
 
     //background: #516bf0;
@@ -18,48 +19,36 @@
     // --background: linear-gradient(202deg, rgba(1, 37, 142, 0.98) 0%, rgba(7, 133, 239, 0.85) 70%, rgba(4, 230, 247, 0.6));
   }
 
-  ion-button.md.button.button-medium.button-solid.ion-activatable.ion-focusable.hydrated {
-    height: 80px;
-  }
-  ion-button.ios.button.button-medium.button-round.button-solid.ion-activatable.ion-focusable.hydrated {
-    min-height: 80px;
-  }
+  // ion-button.md.button.button-medium.button-solid.ion-activatable.ion-focusable.hydrated {
+  //   height: 80px;
+  // }
+  // ion-button.ios.button.button-medium.button-round.button-solid.ion-activatable.ion-focusable.hydrated {
+  //   min-height: 80px;
+  // }
 
   ion-card {
     background-color: #ffffff;
     // margin-top: 150px;
+    ion-card-content{
+      margin: 24px 0 ;
+    }
   }
   ion-content {
-    --background: rgba(236, 240, 244, 0.35);
+    --background: #ecf0f459;
   }
-  ion-chip {
-    width: 92px;
-    height: 46px;
-    background: #f1f2f3;
-    padding: 5px 12px;
-    &.span {
-      font-size: 1.8rem;
-    }
-    ion-label {
-      width: 100%;
-      margin-bottom: 4px;
-    }
-    ion-note {
-      color: #134149;
-    }
+ 
 
-    ion-row {
-      padding: 0;
-    }
-    ion-col {
-      padding: 0;
-    }
+  ion-toggle{
+    padding: 16px;
+   // margin: 10px 0;
+    --handle-background-checked :#3853de;
   }
 
-  ion-item-divider {
-    ion-label {
-      padding-right: 4px;
-      padding-left: 0;
-    }
+  h2{
+    margin: 8px 0;
   }
+  // .drug-page{
+
+  //   background-color: #ffffff;
+  // }
 }

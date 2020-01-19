@@ -19,7 +19,7 @@ export class HomePage implements OnInit {
   token: string;
   pageStep: string;
   etatDossier: number;
-  isExistDossier: boolean;
+  isExistDossier = false;
   isLoading = false;
   objectDossiers: Array<DossierModel>;
   objectDossier: DossierModel;
@@ -48,7 +48,7 @@ export class HomePage implements OnInit {
     }
   }
   ngOnInit() {
-    this.etatDossier = 0; // dossier ouvert
+    this.etatDossier = 0; // dossiers ouverts
     this.listingDossier();
   }
   regrechListDossier() {

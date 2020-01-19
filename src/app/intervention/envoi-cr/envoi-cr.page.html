@@ -1,29 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title class="ion-text-center">
-      <div class="logo-header">
-        <ion-img
-          type="image/svg+xml"
-          src="../../../assets/images/logo-color.svg"
-        ></ion-img>
-      </div>
-    </ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
-
+<ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+  <!-- <div class="overly-gradian">&nbsp;</div> -->
+  <ion-row class="ion-no-padding ">
+    <ion-col size="12" class="icon-header">
+      <span class="icon-cr-orientation text-white text22"></span>
+    </ion-col>
+    <ion-col size="12" class="title-header ion-no-padding">ENVOYER LE PATIENT AU CR </ion-col>
+  </ion-row>
+</ion-grid>
 <!-- ------------------- -->
-<ion-content fullscreen class="cloture-info ion-no-padding">
-  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
-    <!-- <div class="overly-gradian">&nbsp;</div> -->
-    <ion-row class="ion-no-padding ">
-      <ion-col size="12" class="icon-header">
-        <span class="icon-cr-orientation text-white text22"></span>
-      </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >Envoi Patient AU CR</ion-col
-      >
-    </ion-row>
-  </ion-grid>
+<ion-content fullscreen class="envoie-cr ion-no-padding">
 
   <ion-grid class="form-bloc  bg-light ">
     <ion-row>
@@ -33,9 +26,7 @@
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium"
-                    >Dossier N°: {{dossierId}}</ion-badge
-                  >
+                  <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -66,15 +57,6 @@
                   </ion-col>
                 </ion-row>
               </ion-col>
-
-              <!-- <ion-col size="2" class="ion-no-padding">
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button  (click)="openImageEcg(ecgImage)" color="danger" class="ion-bt-padding "
-                    expand="full">                  
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>                  
-                  </ion-button>
-                </ion-col>
-              </ion-col> -->
             </ion-row>
           </ion-card-content>
         </ion-card>
@@ -84,124 +66,90 @@
   <!-- ------------------- -->
 
   <ion-grid>
-    <ion-row *ngIf="!afficheListeCr">
-      <ion-col size="12">
-        <ion-card class="list-CR" color="light">
-          <ion-card-content class="text09 ">
-            <ion-list class="ion-no-padding">
-              <ion-item-divider class="box-shadow">
-                <ion-label>
-                  <span class="icon-cr text-dark  text17 "></span>
-                  <b class="text-gray500 ">CENTRES DE REFERENCE</b>
-                </ion-label>
-              </ion-item-divider>
-              <!-- -->
-              <ion-item
-                detail
-                lines="full"
-                *ngFor="let item of itemsCR"
-                (click)="demandeAvisCr(item.etabId, item.etabName)"
-              >
-                <ion-label>
-                  <span class="icon-cudt-box-2  text-dark  text17"></span>
-                  {{item.etabName}}
-                </ion-label>
-                <ion-chip color="secondary">
-                  <ion-note>
-                    <span class="icon-duration-1 text-dark  "></span>
-                    <b> {{item.duration}}</b></ion-note
-                  >
-                </ion-chip>
-              </ion-item>
-              <!-- -->
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+    <ion-row *ngIf="!afficheMed" class="ion-no-padding">
+      <ion-col size="12" class="ion-no-margin">
+        <ion-list class="ion-no-padding">
+          <ion-item-divider>
+            <ion-label class="ion-text-wrap p-10-0">
+              <span class="icon-cr text-dark  text17 "></span>
+              <b class="text-gray500 text10">CENTRES DE RÉFÉRENCE</b>
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-item lines="full" *ngFor="let item of itemsCR; let i = index" tappable
+            (click)="demandeAvisCr(item.etabId, item.etabName , i)" color="tansparent"
+            [ngClass]="{'section-active': item.open, 'section': !item.open}">
+            <ion-label class="ion-text-wrap">
+              <h3>
+                <span class="icon-cudt-box-2  text-dark  text15"></span>{{item.etabName}}
+              </h3>
+            </ion-label>
+            <ion-chip color="secondary">
+              <ion-note>
+                <span class="icon-duration-1 text-dark  "></span>
+                <b> {{item.duration}}</b>
+              </ion-note>
+            </ion-chip>
+          </ion-item>
+          
+        </ion-list>
+
       </ion-col>
     </ion-row>
+  </ion-grid>
 
+
+  <ion-grid>
     <ion-row *ngIf="afficheReponseMed == 1">
       <ion-col size="12">
-        <ion-card class="list-CR" color="light">
-          <ion-card-content class="text09 ">
-            <ion-list class="ion-no-padding">
-              <ion-item-divider class="box-shadow">
-                <ion-text>
-                  <!-- <span class="icon-cr text-dark  text17 "></span> -->
-                  <b class="text-gray500 "
-                    >Aucune réponse pour l'instant, veuillez rafraichr la
-                    page</b
-                  >
-                </ion-text>
+        <ion-list class="ion-no-padding">
+          <ion-item-divider>
+            <ion-text>
+              <!-- <span class="icon-cr text-dark  text17 "></span> -->
+              <b class="text-gray500 ">Aucune réponse pour l'instant, veuillez rafraîchir la page</b>
+            </ion-text>
 
-                <ion-button
-                  slot="end"
-                  strong="true"
-                  (click)="reponseAvisCR(demandeAvisId)"
-                  shape="round"
-                >
-                  <ion-icon name="refresh"></ion-icon>
-                </ion-button>
-              </ion-item-divider>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+            <ion-button slot="end" strong="true" (click)="reponseAvisCR(demandeAvisId)" shape="round">
+              <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+          </ion-item-divider>
+        </ion-list>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="afficheReponseMed == 2">
       <ion-col size="12">
-        <ion-card class="list-CR" color="light">
-          <ion-card-content class="text09 ">
-            <ion-list class="ion-no-padding">
-              <ion-item-divider class="box-shadow">
-                <ion-text>
-                  <span class="icon-cr text-dark  text17 "></span>
-                  <b class="text-gray500 "
-                    >CENTRES DE REFERENCE : {{etabName}}</b
-                  >
-                </ion-text>
+        <ion-list class="ion-no-padding">
+          <ion-item-divider>
+            <ion-text>
+              <span class="icon-cr text-dark  text17 "></span>
+              <b class="text-gray500 ">CENTRES DE RÉFÉRENCE : {{etabName}}</b>
+            </ion-text>
 
-                <ion-button
-                  slot="end"
-                  strong="true"
-                  (click)="reponseAvisCR(demandeAvisId)"
-                  shape="round"
-                >
-                  <ion-icon name="refresh"></ion-icon>
-                </ion-button>
-              </ion-item-divider>
+            <ion-button slot="end" strong="true" (click)="reponseAvisCR(demandeAvisId)" shape="round">
+              <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+          </ion-item-divider>
 
-              <ion-item
-                lines="full"
-                *ngFor="let itemReponse of dataReponsesAvis"
-                class="ion-no-padding"
-              >
-                <ion-label>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                  {{itemReponse.doctor}}
-                </ion-label>
+          <ion-item lines="full" *ngFor="let itemReponse of dataReponsesAvis" class="ion-no-padding">
 
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span
-                    class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
-                  ></span>
+            <ion-label class="ion-text-wrap">
+              <h3><span class="icon-cudt-box-2  text-dark  text15"></span>{{itemReponse.doctor}}</h3>
+            </ion-label>
 
-                  <ion-note
-                    [ngClass]="{                    
+            <ion-chip color="secondary" slot="end" class="ion-no-padding">
+              <span
+                class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"></span>
+
+              <ion-note [ngClass]="{                    
                     'colorSt':itemReponse['reponse'] === 'ST',
-                    'colorRas':itemReponse['reponse']  === 'RAS' }"
-                  >
-                    <b
-                      >{{itemReponse["reponse"] === null? "PAS ENCORS" :
-                      itemReponse["reponse"] }}</b
-                    >
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+                    'colorRas':itemReponse['reponse']  === 'RAS' }">
+                <b>{{itemReponse["reponse"] === null? "PAS ENCORS" :
+                      itemReponse["reponse"] }}</b>
+              </ion-note>
+            </ion-chip>
+          </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -212,13 +160,7 @@
         <ion-grid class="interv-btn-group ion-text-left">
           <ion-row>
             <ion-col size="12">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="gocr"
-                tappable
-                (click)="showAlertConfirme('CR')"
-              >
+              <ion-button expand="block" fill="solid" class="gocr" tappable (click)="showAlertConfirme('CR')">
                 <span class="icon-int-ras "></span>
                 <ion-text>
                   Envoyer au CR

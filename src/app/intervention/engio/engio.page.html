@@ -1,24 +1,24 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/intervention"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
 </ion-header>
+<ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
+  <!-- <div class="overly-gradian">&nbsp;</div> -->
+  <ion-row class="ion-no-padding ">
+    <ion-col size="12" class="icon-header">
+      <span class="icon-int-engio text-white text22"></span>
+    </ion-col>
+    <ion-col size="12" class="title-header ion-no-padding"
+      >ENGIOPLASTIE</ion-col
+    >
+  </ion-row>
+</ion-grid>
 
-<ion-content fullscreen class="cloture-info ion-no-padding">
-  <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
-    <!-- <div class="overly-gradian">&nbsp;</div> -->
-    <ion-row class="ion-no-padding ">
-      <ion-col size="12" class="icon-header">
-        <span class="icon-int-engio text-white text22"></span>
-      </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding"
-        >ENGIOPLASTIE</ion-col
-      >
-    </ion-row>
-  </ion-grid>
+<ion-content fullscreen class=" ion-no-padding"> 
 
   <ion-grid class="form-bloc  bg-light ">
     <ion-row>
@@ -69,47 +69,43 @@
   </ion-grid>
   <!-- ------------------- -->
 
-  <ion-grid>
-    <ion-row *ngIf="!afficheMed">
-      <ion-col size="12">
-        <ion-card class="list-CR" color="light">
-          <ion-card-content class="text09 ">
-            <ion-list class="ion-no-padding">
-              <!---->
-              <ion-item-divider class="box-shadow">
-                <ion-label class="p-10-0">
-                  <span class="icon-cr text-dark  text17 "></span>
-                  <b class="text-gray500 text10">CENTRES DE REFERENCE</b>
-                  <!-- <p>{{resultName}}</p> -->
-                </ion-label>
-              </ion-item-divider>
-              <!---->
+  <ion-grid class="ion-no-padding">
+    <ion-row *ngIf="!afficheMed" class="ion-no-padding">
+      <ion-col size="12" class="ion-no-margin">
+        <ion-list>
+          <ion-item-divider>
+            <ion-label class="ion-text-wrap p-10-0" >
+              <span class="icon-cr text-dark  text17 "></span>
+              <b class="text-gray500 text10">CENTRES DE RÉFÉRENCE</b>
 
-              <ion-item
+            </ion-label>
+          </ion-item-divider>
+
+          <ion-item
                 lines="full"
-                *ngFor="let item of itemsCR"
-                (click)="choixCr(item.etabId,  item.etabName)"
+                *ngFor="let item of itemsCR; let i = index"
+                tappable (click)="toggleSelectionCr(item.etabId,  item.etabName , i)"   color="tansparent" 
+                [ngClass]="{'section-active': item.open, 'section': !item.open}" 
               >
-                <ion-label class="ion-text-wrap">
-                  <span class="icon-cudt-box-2  text-dark  text17"></span>
-                  {{item.etabName}}
+                <ion-label class="ion-text-wrap" >
+                  
+                 <h3><span class="icon-cudt-box-2  text-dark  text15"></span>{{item.etabName}}</h3>
                 </ion-label>
                 <ion-chip color="secondary">
                   <ion-note>
-                    <span class="icon-duration-1 text-dark  "></span>
-                    <b> {{item.duration}} < 120 min</b>
+                    <span class="icon-duration-1 text-dark  "  ></span>
+                    <b> {{item.duration}}</b>
+                    <!-- <b> {{item.duration}} &lt; 120 min</b> -->
                   </ion-note>
                 </ion-chip>
               </ion-item>
-              <!---->
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
+        </ion-list>
+        
       </ion-col>
     </ion-row>
   </ion-grid>
   <!-- ------------ -->
-  <ion-grid fixed class="intervention ion-no-margin ">
+  <ion-grid fixed class="intervention ion-no-margin " *ngIf ='itemsCR' >
     <ion-row>
       <ion-col size="12" class="ion-text-left">
         <ion-grid class="interv-btn-group ion-text-left">
@@ -135,7 +131,7 @@
                 fill="solid"
                 class="thrombo"
                 tappable
-                (click)="goToTromb()"
+                (click)="goToTrombo()"
               >
                 <span class="icon-int-thromb"></span>
                 <ion-text>

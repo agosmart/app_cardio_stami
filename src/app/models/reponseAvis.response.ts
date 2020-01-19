@@ -3,5 +3,5 @@ import { ReponseAvisModel } from "./reponseAvis.model";
 export interface ReponseAvisResponseData {
   code: number;
   message: string;
-  data: ReponseAvisModel;
+  data: Array<ReponseAvisModel>;
 }

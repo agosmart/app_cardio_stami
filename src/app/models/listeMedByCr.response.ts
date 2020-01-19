@@ -4,5 +4,5 @@ import { ListeMedByCRModel } from "./listeMedByCr.model";
 export interface ListeMedByCRResponseData {
   code: number;
   message: string;
-  data: ListeMedByCRModel;
+  data: Array<ListeMedByCRModel>;
 }

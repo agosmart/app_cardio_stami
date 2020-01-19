@@ -5,3 +5,4 @@ export interface EtabModel {
   longitude: string;
   latitude: string;
 }
+

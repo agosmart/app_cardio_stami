@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import {
   LoadingController,
   AlertController,
@@ -28,29 +29,46 @@ export class LastDrugPage implements OnInit {
   stepId: number;
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
-  dataPatient: object;
+  dataPatient: DossierModel;
   ecgTmp: string;
   isLoading = false;
   isCloture: boolean;
   returnClotureDossier: ClotureModel;
 
   ecgImage = "/assets/images/ecg.jpg";
+  patientFullName: string;
 
   constructor(
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
+    private formBuilder: FormBuilder,
     private activatedroute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private router: Router,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
+
+
+  get plavix() {
+    // console.log("PLAVIX :::", this.drugForm.get('plavix'));
+    return this.drugForm.get('plavix');
+  }
+  drugForm = this.formBuilder.group({
+    plavix: [false, [Validators.pattern]]
+  });
+  // public errorMessages = {
+  //   plavix: [{ type: 'pattern', message: 'Veuillez confirmer l\'administration du médicament' }]
+  // };
+
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.isCloture = false;
+
+
 
     console.log(" idUser ::: ", this.idUser);
 
@@ -60,10 +78,12 @@ export class LastDrugPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
-        this.idDossier = this.dataPatient["dossierId"];
-        this.resultId = this.dataPatient["resultId"];
-        this.stepId = this.dataPatient["stepId"];
-        this.resultName = this.dataPatient["resultName"];
+        this.idDossier = this.dataPatient.dossierId;
+        this.resultId = this.dataPatient.resultId;
+        this.stepId = this.dataPatient.stepId;
+        this.resultName = this.dataPatient.resultName;
+        this.patientFullName = this.dataPatient.lastName + ' ' + this.dataPatient.firstName;
+
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
         this.srvApp.stepUpdatePage(
@@ -74,7 +94,36 @@ export class LastDrugPage implements OnInit {
         );
       }
     });
+
+
+
   }
+
+  // changeToggle(event) {
+  //   console.log(event);
+
+
+  //   // if (!this.flag) {
+  //   //   event.stopImmediatePropagation();
+  //   //   event.stopPropagation();
+  //   //   event.preventDefault();
+
+  //   //   this.flag = true;
+
+  //   // }
+  // }
+
+
+  // submitForm() {
+  //   console.log(this.plavix.value);
+
+  //   if (this.plavix.value) {
+  //     console.log('Opération réussit, dossier en cours de Clôture');
+  //     this.clotureDossier();
+  //   } else {
+  //     this.sglob.showAlert("Erreur ", "Veuiller confirmer la fourniture du médicament au patient");
+  //   }
+  // }
 
   clotureDossier() {
     this.isLoading = true;
@@ -105,6 +154,11 @@ export class LastDrugPage implements OnInit {
             if (+resData.code === 201) {
               this.sglob.updateInitFetchHome(true);
               console.log(" diag getInitFetch ", this.sglob.getInitFetch());
+
+              const message = 'Le dossier du patient ' + this.patientFullName + ' a été clôturé avec succès';
+              this.sglob.presentToast(message);
+
+              // --------- Back to home ------------------
               this.router.navigate(["/home"]);
 
               //this.isCloture = true;

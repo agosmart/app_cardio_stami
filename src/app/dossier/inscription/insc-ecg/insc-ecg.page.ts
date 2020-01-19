@@ -117,7 +117,7 @@ export class InscEcgPage implements OnInit {
       } else {
         this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
         console.log(" recu set dataPatients:::", this.dataPatient);
-        this.gender = this.dataPatient["gender"];
+        this.gender = this.dataPatient.gender;
 
         console.log(" gender:::", this.gender);
       }

@@ -4,5 +4,5 @@ import { EtabModel } from "./etab.model";
 export interface EtabResponseData {
   code: number;
   message: string;
-  data: EtabModel;
+  data: Array<EtabModel>;
 }

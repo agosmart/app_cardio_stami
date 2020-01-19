@@ -139,7 +139,7 @@ export class ThrombRelativePage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController // private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     // this.hypertentionValue = 0;
@@ -179,55 +179,22 @@ export class ThrombRelativePage implements OnInit {
     console.log("isAlert :::", isAlert, " / ", "isChecked", isChecked);
 
     if (isChecked) {
-      if (isAlert) {
-        // # You must select one of value 'PAD' OR 'PAS' to submit form
-        this.presentAlertRadio();
-        this.isDisplayRadio = true;
-        this.isRequiredCheckBox = true;
-      } else {
-        if (
-          this.hypertentionValue === 0 &&
-          this.contreIndicForm.value.cia4 === true
-        ) {
-          this.isDisplayRadio = false;
-          this.isRequiredCheckBox = true;
-          console.log(
-            " 1 - this.isRequiredCheckBox :::>",
-            this.isRequiredCheckBox
-          );
-        } else {
-          this.isDisplayRadio = false;
-          this.isRequiredCheckBox = false;
-          console.log(
-            "2 - this.isRequiredCheckBox :::>",
-            this.isRequiredCheckBox
-          );
-        }
-        console.group("ENABLE / DESABLE FORM");
-        console.log(" this.hypertentionValue :::>", this.hypertentionValue);
-        console.log(" this.isRequiredCheckBox :::>", this.isRequiredCheckBox);
-        console.groupEnd();
-      }
-      // ---------------------------------
+      
+      if (isAlert) {       
+            this.presentAlertRadio();
+            //this.isDisplayRadio = true;
+           // this.isRequiredCheckBox = true;
+          }
+
       this.somCheck++;
     } else {
-      if (this.contreIndicForm.value.cia4 === false) {
-        console.log(
-          " 0 - this.isRequiredCheckBox :::>",
-          this.isRequiredCheckBox
-        );
-        console.log(
-          " 0-1 - this.isRequiredCheckBox :::>",
-          this.isRequiredCheckBox
-        );
-
-        //this.errorMessages = true;
-        this.isDisplayRadio = false;
-        this.isRequiredCheckBox = false;
-      }
-      // ---------------------------------
       this.somCheck--;
     }
+
+
+    // ------------------------------------------
+
+    console.log('this.somCheck!!!!', this.somCheck)
     this.somCheck ? (this.exitProcess = true) : (this.exitProcess = false);
   }
 
@@ -375,6 +342,12 @@ export class ThrombRelativePage implements OnInit {
           cssClass: "secondary",
           handler: () => {
             console.log("Confirm Cancel");
+            this.hypertentionValue = 0;
+            // this.listContIndicAbs[3].isChecked = false;
+
+            // this.isRequiredCheckBox = false;
+
+            // console.log("this.hypertentionValue ::", this.hypertentionValue);
           }
         },
         {
@@ -382,30 +355,40 @@ export class ThrombRelativePage implements OnInit {
           handler: data => {
             console.log("Confirm Ok");
             console.log(JSON.stringify(data));
+
+
+            // this.listContIndicAbs[3].isChecked = false;
             this.hypertentionValue = data; // JSON.stringify(data);
+            // this.isRequiredCheckBox = false;
+            console.log("this.hypertentionValue ::", this.hypertentionValue);
             // ------ ENABLE / DESABLE FORM ------
             // console.log('cia4:::',  this.contreIndicForm.value.cia4);
             // this.contreIndicForm.value.cia1 = false;
 
-            this.hypertentionValue === 0
-              ? (this.isRequiredCheckBox = true)
-              : (this.isRequiredCheckBox = false);
-            console.group("ON OK");
-            console.log("this.hypertentionValue ::", this.hypertentionValue);
-            console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
-            console.groupEnd();
+            // this.hypertentionValue === 0
+            //   ? (this.isRequiredCheckBox = true)
+            //   : (this.isRequiredCheckBox = false);
+            // console.group("ON OK");
+            // console.log("this.hypertentionValue ::", this.hypertentionValue);
+            // console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
+            // console.groupEnd();
+
           }
         }
       ]
     });
     await alert.present();
     await alert.onDidDismiss().then(data => {
+
       if (this.hypertentionValue === 0) {
-        this.isRequiredCheckBox = true;
-        // this.cia4.reset();
-      } else {
-        this.isRequiredCheckBox = false;
+
+        this.listContIndicAbs[3].isChecked = false;
+        //   // this.cia4.reset();
       }
+     // this.isRequiredCheckBox = true;
+
+      // this.isRequiredCheckBox = false;
+
     });
   }
   // ---------------------------------------
