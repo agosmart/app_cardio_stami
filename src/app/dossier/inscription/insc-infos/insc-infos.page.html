@@ -11,15 +11,15 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-doss-create text-white text20"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding">CREATION DU DOSSIER</ion-col>
+    <ion-col size="12" class="title-header ion-no-padding"
+      >CREATION DU DOSSIER</ion-col
+    >
   </ion-row>
 </ion-grid>
 
 <!-- -->
 
 <ion-content fullscreen class="insc-infos ion-no-padding">
- 
-
   <ion-grid class="form-bloc ion-no-padding">
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
@@ -28,7 +28,9 @@
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
-                  <ion-badge class="p-6-16 w100" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16 w100" slot="start" color="medium"
+                    >Dossier N°: {{idDossier}}</ion-badge
+                  >
                 </ion-label>
               </ion-col>
 
@@ -51,7 +53,12 @@
               <ion-col size="12" class="ion-no-margin ion-no-padding">
                 <ion-row class="ion-no-margin ion-no-padding">
                   <ion-col size="2" class="ion-no-margin ion-no-padding">
-                    <ion-button (click)="openImageEcg()" color="danger" tappable class="ion-bt-padding ">
+                    <ion-button
+                      (click)="openImageEcg()"
+                      color="danger"
+                      tappable
+                      class="ion-bt-padding "
+                    >
                       <ion-icon slot="icon-only" name="pulse"></ion-icon>
                     </ion-button>
                   </ion-col>
@@ -84,9 +91,17 @@
               </ion-list-header>
 
               <ion-item lines="full">
-                <ion-text  class="text-gray300" >Douleurs Thoraciques au moment </ion-text>
-                <ion-note slot="end" color="{{dataPatient['dThorasic']? 'danger':'secondary' }}">
-                  <b>{{dataPatient['dThorasic']==='1'?'OUI' :'NON' }}</b></ion-note>
+                <ion-text class="text-gray300"
+                  >Douleurs Thoraciques au moment
+                </ion-text>
+                <ion-note
+                  slot="end"
+                  color="{{dataPatient['dThorasic']? 'danger':'secondary' }}"
+                >
+                  <b
+                    >{{dataPatient['dThorasic']==='1'?'OUI' :'NON' }}</b
+                  ></ion-note
+                >
               </ion-item>
               <ion-item lines="full">
                 <ion-text class="text-gray300">Heure de début </ion-text>
@@ -99,8 +114,6 @@
         <!-- Facteurs de risque -->
         <ion-row class="ion-no-padding">
           <ion-col size="12" class="ion-no-padding ion-margin-top">
-           
-
             <!--Diabet -->
             <ion-list class="ion-no-padding">
               <ion-list-header class="ion-no-padding">
@@ -110,15 +123,21 @@
                 </div>
               </ion-list-header>
 
-               <!--hta-->
-            <ion-item>
-              <ion-label>HTA</ion-label>
-              <ion-checkbox checked="false" formControlName="hta"></ion-checkbox>
-            </ion-item>
-            <ion-item lines="_none" >
-              <ion-label>Tabac</ion-label>
-              <ion-checkbox checked="false" formControlName="tobacco"></ion-checkbox>
-            </ion-item>
+              <!--hta-->
+              <ion-item>
+                <ion-label>HTA</ion-label>
+                <ion-checkbox
+                  checked="false"
+                  formControlName="hta"
+                ></ion-checkbox>
+              </ion-item>
+              <ion-item lines="_none">
+                <ion-label>Tabac</ion-label>
+                <ion-checkbox
+                  checked="false"
+                  formControlName="tobacco"
+                ></ion-checkbox>
+              </ion-item>
 
               <ion-radio-group formControlName="diabetes">
                 <ion-list-header>
@@ -126,7 +145,12 @@
                 </ion-list-header>
                 <ion-item>
                   <ion-label>Non</ion-label>
-                  <ion-radio slot="start" color="primary" value="" checked></ion-radio>
+                  <ion-radio
+                    slot="start"
+                    color="primary"
+                    value=""
+                    checked
+                  ></ion-radio>
                 </ion-item>
                 <ion-item>
                   <ion-label>Type1</ion-label>
@@ -139,7 +163,9 @@
               </ion-radio-group>
               <!--== MESSAGE ==-->
               <div *ngFor="let error of errorMessages.diabetes">
-                <ng-container *ngIf="diabetes.hasError(error.type) && (diabetes.dirty || diabetes.touched)">
+                <ng-container
+                  *ngIf="diabetes.hasError(error.type) && (diabetes.dirty || diabetes.touched)"
+                >
                   <small class="error-message">{{error.message}}</small>
                 </ng-container>
               </div>
@@ -152,11 +178,16 @@
                 </ion-list-header>
                 <ion-item>
                   <ion-label>Aucun</ion-label>
-                  <ion-radio slot="start" color="primary" value="" checked></ion-radio>
+                  <ion-radio
+                    slot="start"
+                    color="primary"
+                    value=""
+                    checked
+                  ></ion-radio>
                 </ion-item>
                 <ion-item>
                   <ion-label>Poids</ion-label>
-                  <ion-radio slot="start" color="primary" checked value="1"></ion-radio>
+                  <ion-radio slot="start" color="primary" value="1"></ion-radio>
                 </ion-item>
                 <ion-item>
                   <ion-label>Taille</ion-label>
@@ -165,7 +196,9 @@
               </ion-radio-group>
               <!--== MESSAGE ==-->
               <div *ngFor="let error of errorMessages.dyslip">
-                <ng-container *ngIf="dyslip.hasError(error.type) && (dyslip.dirty || dyslip.touched)">
+                <ng-container
+                  *ngIf="dyslip.hasError(error.type) && (dyslip.dirty || dyslip.touched)"
+                >
                   <small class="error-message">{{error.message}}</small>
                 </ng-container>
               </div>
@@ -187,12 +220,18 @@
 
               <ion-item>
                 <ion-label>Insuffisance Cardiaque</ion-label>
-                <ion-checkbox checked="false" formControlName="insCardiaque"></ion-checkbox>
+                <ion-checkbox
+                  checked="false"
+                  formControlName="insCardiaque"
+                ></ion-checkbox>
               </ion-item>
 
               <ion-item>
                 <ion-label>Cardiopathie ischémique stable </ion-label>
-                <ion-checkbox checked="false" formControlName="cardIscStable"></ion-checkbox>
+                <ion-checkbox
+                  checked="false"
+                  formControlName="cardIscStable"
+                ></ion-checkbox>
               </ion-item>
             </ion-list>
           </ion-col>
@@ -204,11 +243,21 @@
               </ion-list-header>
               <ion-item>
                 <ion-label>Non</ion-label>
-                <ion-radio slot="start" color="primary" value="" checked></ion-radio>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value=""
+                  checked
+                ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>ST-</ion-label>
-                <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="1"
+                  checked
+                ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>ST+</ion-label>
@@ -217,7 +266,9 @@
             </ion-radio-group>
             <!--== MESSAGE ==-->
             <div *ngFor="let error of errorMessages.sca">
-              <ng-container *ngIf="sca.hasError(error.type) && (sca.dirty || sca.touched)">
+              <ng-container
+                *ngIf="sca.hasError(error.type) && (sca.dirty || sca.touched)"
+              >
                 <small class="error-message">{{error.message}}</small>
               </ng-container>
             </div>
@@ -228,8 +279,14 @@
           <ion-col size="12">
             <ion-item>
               <ion-label>Année de diagnostic</ion-label>
-              <ion-datetime displayFormat="YYYY" value="YYYY" picker-format="YYYY" value=""
-                placeholder="Selectionner l'année" formControlName="daignoDate"></ion-datetime>
+              <ion-datetime
+                displayFormat="YYYY"
+                value="YYYY"
+                picker-format="YYYY"
+                value=""
+                placeholder="Selectionner l'année"
+                formControlName="daignoDate"
+              ></ion-datetime>
             </ion-item>
 
             <ion-radio-group formControlName="angioCoran">
@@ -238,11 +295,21 @@
               </ion-list-header>
               <ion-item>
                 <ion-label>Non</ion-label>
-                <ion-radio slot="start" color="primary" value="" checked></ion-radio>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value=""
+                  checked
+                ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>TCG-</ion-label>
-                <ion-radio slot="start" color="primary" value="1" checked></ion-radio>
+                <ion-radio
+                  slot="start"
+                  color="primary"
+                  value="1"
+                  checked
+                ></ion-radio>
               </ion-item>
               <ion-item>
                 <ion-label>IVA</ion-label>
@@ -259,7 +326,9 @@
             </ion-radio-group>
             <!--== MESSAGE ==-->
             <div *ngFor="let error of errorMessages.angioCoran">
-              <ng-container *ngIf="angioCoran.hasError(error.type) && (angioCoran.dirty || angioCoran.touched)">
+              <ng-container
+                *ngIf="angioCoran.hasError(error.type) && (angioCoran.dirty || angioCoran.touched)"
+              >
                 <small class="error-message">{{error.message}}</small>
               </ng-container>
             </div>
@@ -268,17 +337,29 @@
             <!-- -->
             <ion-item>
               <ion-label>Année de l’ATL </ion-label>
-              <ion-datetime displayFormat="YYYY" value="YYYY" picker-format="YYYY" value=""
-                placeholder="Selectionner l'année" formControlName="atlDate"></ion-datetime>
+              <ion-datetime
+                displayFormat="YYYY"
+                value="YYYY"
+                picker-format="YYYY"
+                value=""
+                placeholder="Selectionner l'année"
+                formControlName="atlDate"
+              ></ion-datetime>
             </ion-item>
           </ion-col>
         </ion-row>
         <!-- Button Submit-->
-        <ion-row class="btn-submit" >
+        <ion-row class="btn-submit">
           <ion-col size="12">
             <div class="ion-margin-top">
-              <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark"
-                [disabled]="!inscriptionFormInfos.valid" type="submit">
+              <ion-button
+                shape="round"
+                expand="block"
+                class="ion-margin-top btn"
+                color="dark"
+                [disabled]="!inscriptionFormInfos.valid"
+                type="submit"
+              >
                 Valider
                 <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
               </ion-button>

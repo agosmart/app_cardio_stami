@@ -72,7 +72,7 @@ export class ThrombSosPage implements OnInit {
         }
         console.log("demandeAvisId", this.demandeAvisId);
         if (this.demandeAvisId > 0 && motifId === 2) {
-          this.afficheReponseMed = 2;
+          // this.afficheReponseMed = 2;
           this.afficheButtonCR = 1;
           this.lastCrName = this.dataPatient.lastCrName;
           this.reponseAvisCR(this.demandeAvisId);
@@ -170,6 +170,7 @@ export class ThrombSosPage implements OnInit {
     this.dataPatient.lastCrName = etabName;
     this.lastCrName = etabName;
     this.afficheButtonCR = 1;
+    this.afficheReponseMed = 1;
 
     this.loadingCtrl
       .create({ keyboardClose: true, message: "Opération  en cours..." })
@@ -198,11 +199,11 @@ export class ThrombSosPage implements OnInit {
             if (+resData.code === 201) {
               // ------------ DISPLAY BLOC  LIST CR -------------------
               this.afficheListeCr = false;
-              // ---------------------------------
-              this.afficheReponseMed = 1;
+              // --------------------------------
               console.log(" resData", resData.data);
               console.log(" resData demandeId", resData.data.demandeId);
               this.demandeAvisId = resData.data.demandeId;
+              this.afficheReponseMed = 1;
               //this.reponseAvisCR(this.demandeAvisId);
             } else {
               this.sglob.showAlert("Erreur ", resData.message);

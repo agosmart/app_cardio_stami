@@ -18,8 +18,8 @@
   </ion-row>
 </ion-grid>
 
-<!-- ------------------- -->
 <ion-content fullscreen class="thrombo-sos ion-no-padding">
+  <!-- --------- 1 ---------- -->
   <ion-grid class="form-bloc  bg-light ">
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="ion-no-padding">
@@ -29,7 +29,7 @@
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
                   <ion-badge class="p-6-16" slot="start" color="medium"
-                    >N°: 2001-00035</ion-badge
+                    >Dossier N°: {{dossierId}}</ion-badge
                   >
                 </ion-label>
               </ion-col>
@@ -68,8 +68,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- ------------------- -->
+  <!-- --------- 1 ---------- -->
 
+  <!-- --------- 2 ---------- -->
   <ion-grid>
     <ion-row *ngIf="afficheReponseMed == 0">
       <ion-col size="12">
@@ -110,12 +111,17 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <!-- --------- 2 ---------- -->
 
   <ion-grid>
     <!--- RESPONSE DOCTORS-->
-    <ion-row *ngIf="afficheReponseMed == 1">
+    <ion-row>
       <ion-col size="12">
-        <ion-list lines="none" class="ion-padding" *ngIf="!reviewsList">
+        <ion-list
+          lines="none"
+          class="ion-padding"
+          *ngIf="afficheReponseMed == 1"
+        >
           <ion-item-divider class="_box-shadow">
             <ion-avatar>
               <span class="icon-notif text-dark  text17 "></span>
@@ -145,8 +151,8 @@
 
         <!-- -->
 
-        <ion-list class="ion-no-padding">
-          <ion-item-divider *ngIf="afficheReponseMed == 2">
+        <ion-list class="ion-no-padding" *ngIf="afficheReponseMed == 2">
+          <ion-item-divider>
             <ion-text>
               <span class="icon-notif text-dark  text17 "></span>
               <b class="text-gray500 "
@@ -200,9 +206,9 @@
   </ion-grid>
 
   <ion-grid
+    *ngIf="afficheButtonCR == 1"
     fixed
     class="intervention ion-no-margin"
-    *ngIf="afficheButtonCR == 1"
   >
     <ion-row>
       <ion-col size="12" class="ion-text-left">
@@ -243,4 +249,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <!-- --------- 2 ---------- -->
 </ion-content>

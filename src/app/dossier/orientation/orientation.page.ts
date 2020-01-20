@@ -1,35 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ServiceAppService } from 'src/app/services/service-app.service';
-import { GlobalvarsService } from 'src/app/services/globalvars.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
-import { EtabResponseData } from 'src/app/models/etab.response';
+import { Component, OnInit } from "@angular/core";
+import { ServiceAppService } from "src/app/services/service-app.service";
+import { GlobalvarsService } from "src/app/services/globalvars.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LoadingController, AlertController } from "@ionic/angular";
+import { EtabResponseData } from "src/app/models/etab.response";
 
-import { ListeMedByCRModel } from 'src/app/models/listeMedByCr.model';
-import { Observable } from 'rxjs';
-import { DemandeAvisResponseData } from 'src/app/models/DemandeAvis.response';
-import { ReponseAvisResponseData } from 'src/app/models/reponseAvis.response';
-import { ReponseAvisModel } from 'src/app/models/reponseAvis.model';
-import { DossierModel } from 'src/app/models/dossier.model';
+import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
+import { Observable } from "rxjs";
+import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
+import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
+import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
+import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
-  selector: 'app-orientation',
-  templateUrl: './orientation.page.html',
-  styleUrls: ['./orientation.page.scss']
+  selector: "app-orientation",
+  templateUrl: "./orientation.page.html",
+  styleUrls: ["./orientation.page.scss"]
 })
 export class OrientationPage implements OnInit {
   idUser: number;
   idEtab: number;
   dossierId: number;
+  stepId: number;
   token: string;
   etabName: string;
   itemsCR: any;
   idCr: number;
+  lastCrName: string;
   itemsMeds: ListeMedByCRModel;
-  dataReponsesAvis:Array<ReponseAvisModel>;
+  dataReponsesAvis: Array<ReponseAvisModel>;
 
   reviewsList = 0;
   afficheListeCr = false;
+  reviewsDecision = false;
   afficheReponseMed = false;
 
   demandeAvisId = 0;
@@ -42,17 +45,18 @@ export class OrientationPage implements OnInit {
     private activatedroute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private router: Router,
-  ) { }
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('dataPatientObj')) {
-        this.router.navigate(['/home']);
+      if (!paramMap.has("dataPatientObj")) {
+        this.router.navigate(["/home"]);
       } else {
-        const dataObj = paramMap.get('dataPatientObj');
+        const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
@@ -63,6 +67,7 @@ export class OrientationPage implements OnInit {
         }
         if (this.demandeAvisId > 0) {
           this.afficheListeCr = true;
+          this.reviewsDecision = true;
           this.reponseAvisCR(this.demandeAvisId);
         } else {
           // this.listeCr();
@@ -72,12 +77,10 @@ export class OrientationPage implements OnInit {
     });
   }
 
-
   // ---------------------LIST CR------------------------------------------
   onGetlistCr() {
-
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Opération  en cours...' })
+      .create({ keyboardClose: true, message: "Opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -91,45 +94,50 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
             if (+resData.code === 200) {
               this.itemsCR = resData.data;
-              console.log('List Etab CR :', this.itemsCR);
+              console.log("List Etab CR :", this.itemsCR);
               // ---------- DEMO DURATION ----------
-              this.itemsCR.map((m: { duration: string; }) => m.duration = '00:35:00');
+              this.itemsCR.map(
+                (m: { duration: string }) => (m.duration = "00:35:00")
+              );
               // --------------------------------------
 
               // --------------DISPLAY CR LIST------------------------
               this.afficheListeCr = true;
-              console.group('==== DATA onGetlistCr ====');
-              console.log('this.afficheListeCr ::::', this.afficheListeCr);
-              console.log(' this.afficheReponseMed ::::', this.afficheReponseMed);
-              console.log(' this.reviewsList ::::', this.reviewsList);
+              console.group("==== DATA onGetlistCr ====");
+              console.log("this.afficheListeCr ::::", this.afficheListeCr);
+              console.log(
+                " this.afficheReponseMed ::::",
+                this.afficheReponseMed
+              );
+              console.log(" this.reviewsList ::::", this.reviewsList);
               console.groupEnd();
-
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
-
           },
           errRes => {
-            console.log('errRes :::>', errRes);
+            console.log("errRes :::>", errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur !', 'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur !",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
-          });
+          }
+        );
       });
   }
 
   // ---------------------------------------------------------------
 
   toggleSelectionCr(idCr: number, etabName: string, index: number) {
-    console.log('idrc ====> ', idCr);
-    console.log('index ====> ', index);
+    console.log("idrc ====> ", idCr);
+    console.log("index ====> ", index);
     this.etabName = etabName;
     this.idCr = idCr;
 
@@ -138,21 +146,23 @@ export class OrientationPage implements OnInit {
     if (this.itemsCR && this.itemsCR[index].open) {
       this.itemsCR
         .filter((item: any, itemIndex: any) => itemIndex !== index)
-        .map((item: any) => { item.open = false; });
+        .map((item: any) => {
+          item.open = false;
+        });
     }
   }
 
-
   demandeAvisCr(idCr: number, etabName: string, index: number) {
-
-    // console.log('afficheListeCr +++++++ ', this.afficheListeCr);
-    // # ====== Add color to selected CR item ==========
     this.toggleSelectionCr(idCr, etabName, index);
     // -------------------------------------------
-    console.log('demandeAvisCr idrc ===== ', idCr);
+    console.log("demandeAvisCr idrc ===== ", idCr);
+
+    this.dataPatient.lastCrName = etabName;
+    this.lastCrName = etabName;
+    this.reviewsDecision = true;
 
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Opération  en cours...' })
+      .create({ keyboardClose: true, message: "Opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -175,28 +185,12 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
 
             if (+resData.code === 201) {
-
-              // ------------ DISPLAY BLOC  LIST CR -------------------
-
               this.afficheListeCr = false;
               this.afficheReponseMed = true;
-              console.group('==== DATA demandeAvisCr ====');
-              console.log('this.afficheListeCr ::::', this.afficheListeCr);
-              console.log(' this.afficheReponseMed ::::', this.afficheReponseMed);
-              console.log(' this.reviewsList ::::', this.reviewsList);
-              console.groupEnd();
               // ------------------------------------------
-              /*
-               console.log(' resData ==== ', resData.data);
-               console.log(' resData demandeId ===', resData.data.demandeId);
-              */
               this.demandeAvisId = resData.data.demandeId;
-
-              // this.reponseAvisCR(this.demandeAvisId);
-             //  getListDoctorCr(idCr)
-
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -207,11 +201,11 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur ',
-                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
@@ -220,11 +214,10 @@ export class OrientationPage implements OnInit {
   }
 
   reponseAvisCR(demandeAvisId: number) {
-
-    console.log('*****reponseAvis cr ******', demandeAvisId);
+    console.log("*****reponseAvis cr ******", demandeAvisId);
 
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'opération  en cours...' })
+      .create({ keyboardClose: true, message: "opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
         // ---- Call reponseDemandeAvis API
@@ -241,23 +234,25 @@ export class OrientationPage implements OnInit {
             if (+resData.code === 200) {
               this.dataReponsesAvis = resData.data;
 
-              console.log("this.dataReponsesAvis === " ,this.dataReponsesAvis );
+              console.log("this.dataReponsesAvis === ", this.dataReponsesAvis);
 
               // ------- HIDE CR LIST / SHOW DOCTORS REVIEWS LIST-------
               this.afficheListeCr = false;
               this.afficheReponseMed = true;
               this.reviewsList = this.dataReponsesAvis.length;
 
-              console.group('==== DATA reponseAvisCR ====');
-              console.log('this.afficheListeCr ::::', this.afficheListeCr);
-              console.log(' this.afficheReponseMed ::::', this.afficheReponseMed);
-              console.log(' this.reviewsList ::::', this.reviewsList);
+              console.group("==== DATA reponseAvisCR ====");
+              console.log("this.afficheListeCr ::::", this.afficheListeCr);
+              console.log(
+                " this.afficheReponseMed ::::",
+                this.afficheReponseMed
+              );
+              console.log(" this.reviewsList ::::", this.reviewsList);
               console.groupEnd();
 
               // ------------------------------------------
-
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
           // ::::::::::::  ON ERROR ::::::::::::
@@ -267,11 +262,11 @@ export class OrientationPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur ',
-                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
@@ -279,8 +274,7 @@ export class OrientationPage implements OnInit {
       });
   }
 
-
-/*
+  /*
   getListDoctorCr(idCr: number) {
 
     // http://cardio.cooffa.shop/api/etablissements/1/medecins
@@ -328,10 +322,62 @@ export class OrientationPage implements OnInit {
       });
   }
 */
+
+  async showAlertConfirme(diag: string) {
+    let msgAlert = "";
+    // ----------- message dynamic ---------------
+
+    if (diag === "ST") {
+      this.stepId = 7;
+      msgAlert =
+        "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+    } else if (diag === "RAS") {
+      this.stepId = 10;
+      msgAlert =
+        "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+    }
+
+    console.log("DIAG ::::", msgAlert);
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: "Résultat d'authentication",
+      message: msgAlert,
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirme Annuler");
+          }
+        },
+        {
+          text: "Je confirme",
+          handler: async () => {
+            if (diag === "RAS") {
+              await this.router.navigate([
+                "/ras",
+                this.dossierId,
+                JSON.stringify(this.dataPatient)
+              ]);
+            } else {
+              await this.router.navigate([
+                "/pretreatment",
+                this.dossierId,
+                JSON.stringify(this.dataPatient)
+              ]);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
   decision() {
-    console.log('orientation vers datapatient diag ===>', this.dataPatient);
+    console.log("orientation vers datapatient diag ===>", this.dataPatient);
     this.router.navigate([
-      './diagnostic',
+      "./diagnostic",
       this.dossierId,
       JSON.stringify(this.dataPatient)
     ]);
