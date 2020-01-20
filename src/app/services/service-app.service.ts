@@ -10,16 +10,16 @@ import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 import { PretreatmentResponseData } from "../models/pretreatment.response";
 import { Observable } from "rxjs";
 import { ProtocolThromResponseData } from "../models/protocolThromb.response";
-import { EtabModel } from '../models/etab.model';
-import { EtabResponseData } from '../models/etab.response';
-import { ListeMedByCRResponseData } from '../models/listeMedByCr.response';
+import { EtabModel } from "../models/etab.model";
+import { EtabResponseData } from "../models/etab.response";
+import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
+import { ReponseAvisModel } from "../models/reponseAvis.model";
 
 // interface ResponseEtab {
 //   code: number;
 //   data: EtabModel;
 //   message: string;
 // }
-
 
 @Injectable({
   providedIn: "root"

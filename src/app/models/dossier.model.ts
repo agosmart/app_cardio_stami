@@ -19,9 +19,6 @@ export interface DossierModel {
   statusDossier: number;
   stepId: number;
 
-
- 
-
   // info dossier
   page: string;
   diagnostic: string;
@@ -43,12 +40,9 @@ export interface DossierModel {
   demandeAvisId?: number;
   demandes?: Array<DemandeAvisModel>;
   idCr?: number;
+  lastCrName?: string;
   // etabName?: string;
   // motifName?: number;
-
-
-
-
 }
 
 export interface DemandeAvisModel {

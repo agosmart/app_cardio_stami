@@ -12,12 +12,13 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-cr-orientation text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding">ENVOYER LE PATIENT AU CR </ion-col>
+    <ion-col size="12" class="title-header ion-no-padding"
+      >ENVOYER LE PATIENT AU CR
+    </ion-col>
   </ion-row>
 </ion-grid>
 <!-- ------------------- -->
 <ion-content fullscreen class="envoie-cr ion-no-padding">
-
   <ion-grid class="form-bloc  bg-light ">
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
@@ -26,7 +27,9 @@
             <ion-row class="ion-no-padding">
               <ion-col size="12" class="ion-no-padding">
                 <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium">N°: 2001-00035</ion-badge>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >Dosier N°: {{dossierId}}</ion-badge
+                  >
                 </ion-label>
               </ion-col>
             </ion-row>
@@ -65,8 +68,13 @@
   </ion-grid>
   <!-- ------------------- -->
 
+<<<<<<< HEAD
   <ion-grid  class="_m-buttom">
     <ion-row *ngIf="!afficheMed" class="ion-no-padding">
+=======
+  <ion-grid>
+    <ion-row *ngIf="afficheReponseMed == 0" class="ion-no-padding">
+>>>>>>> H: notification reception
       <ion-col size="12" class="ion-no-margin">
         <ion-list class="ion-no-padding">
           <ion-item-divider>
@@ -76,12 +84,18 @@
             </ion-label>
           </ion-item-divider>
 
-          <ion-item lines="full" *ngFor="let item of itemsCR; let i = index" tappable
-            (click)="demandeAvisCr(item.etabId, item.etabName , i)" color="tansparent"
-            [ngClass]="{'section-active': item.open, 'section': !item.open}">
+          <ion-item
+            lines="full"
+            *ngFor="let item of itemsCR; let i = index"
+            tappable
+            (click)="demandeAvisCr(item.etabId, item.etabName , i)"
+            color="tansparent"
+            [ngClass]="{'section-active': item.open, 'section': !item.open}"
+          >
             <ion-label class="ion-text-wrap">
               <h3>
-                <span class="icon-cudt-box-2  text-dark  text15"></span>{{item.etabName}}
+                <span class="icon-cudt-box-2  text-dark  text15"></span
+                >{{item.etabName}}
               </h3>
             </ion-label>
             <ion-chip color="secondary">
@@ -91,22 +105,34 @@
               </ion-note>
             </ion-chip>
           </ion-item>
-          
         </ion-list>
-
       </ion-col>
     </ion-row>
+<<<<<<< HEAD
  
+=======
+  </ion-grid>
+
+  <ion-grid>
+>>>>>>> H: notification reception
     <ion-row *ngIf="afficheReponseMed == 1">
       <ion-col size="12">
         <ion-list class="ion-no-padding">
           <ion-item-divider>
             <ion-text>
               <!-- <span class="icon-cr text-dark  text17 "></span> -->
-              <b class="text-gray500 ">Aucune réponse pour l'instant, veuillez rafraîchir la page</b>
+              <b class="text-gray500 "
+                >Centre : {{lastCrName}} Aucune réponse pour l'instant, veuillez
+                rafraîchir la page</b
+              >
             </ion-text>
 
-            <ion-button slot="end" strong="true" (click)="reponseAvisCR(demandeAvisId)" shape="round">
+            <ion-button
+              slot="end"
+              strong="true"
+              (click)="reponseAvisCR(demandeAvisId)"
+              shape="round"
+            >
               <ion-icon name="refresh"></ion-icon>
             </ion-button>
           </ion-item-divider>
@@ -120,29 +146,47 @@
           <ion-item-divider>
             <ion-text>
               <span class="icon-cr text-dark  text17 "></span>
-              <b class="text-gray500 ">CENTRES DE RÉFÉRENCE : {{etabName}}</b>
+              <b class="text-gray500 "
+                >CENTRES DE RÉFÉRENCE Choisi : {{lastCrName}}</b
+              >
             </ion-text>
 
-            <ion-button slot="end" strong="true" (click)="reponseAvisCR(demandeAvisId)" shape="round">
+            <ion-button
+              slot="end"
+              strong="true"
+              (click)="reponseAvisCR(demandeAvisId)"
+              shape="round"
+            >
               <ion-icon name="refresh"></ion-icon>
             </ion-button>
           </ion-item-divider>
 
-          <ion-item lines="full" *ngFor="let itemReponse of dataReponsesAvis" class="ion-no-padding">
-
+          <ion-item
+            lines="full"
+            *ngFor="let itemReponse of dataReponsesAvis"
+            class="ion-no-padding"
+          >
             <ion-label class="ion-text-wrap">
-              <h3><span class="icon-cudt-box-2  text-dark  text15"></span>{{itemReponse.doctor}}</h3>
+              <h3>
+                <span class="icon-cudt-box-2  text-dark  text15"></span
+                >{{itemReponse.doctor}}
+              </h3>
             </ion-label>
 
             <ion-chip color="secondary" slot="end" class="ion-no-padding">
               <span
-                class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"></span>
+                class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
+              ></span>
 
-              <ion-note [ngClass]="{                    
+              <ion-note
+                [ngClass]="{                    
                     'colorSt':itemReponse['reponse'] === 'ST',
-                    'colorRas':itemReponse['reponse']  === 'RAS' }">
-                <b>{{itemReponse["reponse"] === null? "PAS ENCORS" :
-                      itemReponse["reponse"] }}</b>
+                    'colorRas':itemReponse['reponse']  === 'RAS' }"
+              >
+                <b
+                  >{{itemReponse["reponse"] === null? "PAS ENCORS" :
+                  itemReponse["reponse"] }}</b
+                >
               </ion-note>
             </ion-chip>
           </ion-item>
@@ -157,7 +201,13 @@
         <ion-grid class="interv-btn-group ion-text-left">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="solid" class="gocr" tappable (click)="showAlertConfirme('CR')">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="gocr"
+                tappable
+                (click)="showAlertConfirme('CR')"
+              >
                 <span class="icon-int-ras "></span>
                 <ion-text>
                   Envoyer au CR

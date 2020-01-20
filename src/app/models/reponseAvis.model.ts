@@ -1,7 +1,7 @@
 export interface ReponseAvisModel {
   ReponseId: number;
   demandeId: number;
-  medecinId: number;
+  doctorId: number;
   Reponse: string;
-  medecin: string;
+  doctor: string;
 }

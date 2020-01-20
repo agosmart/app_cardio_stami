@@ -1,23 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ServiceAppService } from 'src/app/services/service-app.service';
-import { GlobalvarsService } from 'src/app/services/globalvars.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
-import { EtabResponseData } from 'src/app/models/etab.response';
+import { Component, OnInit } from "@angular/core";
+import { ServiceAppService } from "src/app/services/service-app.service";
+import { GlobalvarsService } from "src/app/services/globalvars.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { LoadingController, AlertController } from "@ionic/angular";
+import { EtabResponseData } from "src/app/models/etab.response";
 
-import { ListeMedByCRModel } from 'src/app/models/listeMedByCr.model';
-import { Observable } from 'rxjs';
-import { DemandeAvisResponseData } from 'src/app/models/DemandeAvis.response';
-import { ReponseAvisResponseData } from 'src/app/models/reponseAvis.response';
-import { ReponseAvisModel } from 'src/app/models/reponseAvis.model';
+import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
+import { Observable } from "rxjs";
+import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
+import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
+import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 
-import { DossierModel } from 'src/app/models/dossier.model';
-import { ClotureResponseData } from 'src/app/models/cloture.response';
+import { DossierModel } from "src/app/models/dossier.model";
+import { ClotureResponseData } from "src/app/models/cloture.response";
 
 @Component({
-  selector: 'app-envoi-cr',
-  templateUrl: './envoi-cr.page.html',
-  styleUrls: ['./envoi-cr.page.scss']
+  selector: "app-envoi-cr",
+  templateUrl: "./envoi-cr.page.html",
+  styleUrls: ["./envoi-cr.page.scss"]
 })
 export class EnvoiCrPage implements OnInit {
   idUser: number;
@@ -25,12 +25,18 @@ export class EnvoiCrPage implements OnInit {
   dossierId: number;
   token: string;
   etabName: string;
+  lastCrName: string;
   idCr: number;
+  motifId: number;
   itemsCR: any;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
+<<<<<<< HEAD
 
   afficheListeCr = false;
+=======
+  afficheListeCr = 0;
+>>>>>>> H: notification reception
   afficheReponseMed = 0;
   demandeAvisId = 0;
   dataPatient: DossierModel;
@@ -43,29 +49,30 @@ export class EnvoiCrPage implements OnInit {
     private activatedroute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('dataPatientObj')) {
-        this.router.navigate(['/home']);
+      if (!paramMap.has("dataPatientObj")) {
+        this.router.navigate(["/home"]);
       } else {
-        const dataObj = paramMap.get('dataPatientObj');
+        const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
-        const motifId = this.dataPatient.lastMotifId;
+        this.lastCrName = this.dataPatient.lastCrName;
+        this.motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 13) {
           this.srvApp.stepUpdatePage(this.dossierId, 13, 9, this.token);
         }
-        console.log('demandeAvisId', this.demandeAvisId);
-        if (this.demandeAvisId > 0 && motifId === 3) {
-          this.afficheListeCr = true;
+        console.log("demandeAvisId", this.demandeAvisId);
+        if (this.demandeAvisId > 0 && this.motifId === 3) {
+          this.afficheListeCr = 1;
           this.reponseAvisCR(this.demandeAvisId);
         } else {
           this.onGetlistCr();
@@ -76,9 +83,8 @@ export class EnvoiCrPage implements OnInit {
 
   // ---------------------LIST CR------------------------------------------
   onGetlistCr() {
-
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Opération  en cours...' })
+      .create({ keyboardClose: true, message: "Opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
         // 1 = CR / 2 = CUDT
@@ -90,65 +96,75 @@ export class EnvoiCrPage implements OnInit {
             loadingEl.dismiss();
             if (+resData.code === 200) {
               this.itemsCR = resData.data;
-              console.log('List Etab CR :', this.itemsCR);
+              console.log("List Etab CR :", this.itemsCR);
               // ---------- DEMO DURATION ----------
-              this.itemsCR.map((m: { duration: string; }) => m.duration = '00:35:00');
+              this.itemsCR.map(
+                (m: { duration: string }) => (m.duration = "00:35:00")
+              );
               // --------------------------------------
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
-
           },
           errRes => {
-            console.log('errRes :::>', errRes);
+            console.log("errRes :::>", errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur !', 'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur !",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
-
-          });
-
-
+          }
+        );
       });
-
   }
 
   // ---------------------------------------------------------------
 
   toggleSelectionCr(idCr: number, etabName: string, index: number) {
-    console.log('idrc ====> ', idCr);
-    console.log('index ====> ', index);
-    this.etabName = etabName;
-    this.idCr = idCr;
+    console.log("demandeAvisId ====> ", this.demandeAvisId);
 
-    // # ====== Add color to selected CR item ==========
-    this.itemsCR[index].open = !this.itemsCR[index].open;
-    if (this.itemsCR && this.itemsCR[index].open) {
-      this.itemsCR
-        .filter((item: any, itemIndex: any) => itemIndex !== index)
-        .map((item: any) => { item.open = false; });
+    if (this.demandeAvisId > 0 && this.motifId === 3) {
+      this.sglob.showAlert(
+        "Attention  !",
+        "Une demande d`avis pour réception a été déjà envoyé"
+      );
+    } else {
+      console.log("<==== demandeAvisId ====> ", this.demandeAvisId);
+      console.log("idrc ====> ", idCr);
+      console.log("index ====> ", index);
+      this.etabName = etabName;
+      this.idCr = idCr;
+
+      // # ====== Add color to selected CR item ==========
+      this.itemsCR[index].open = !this.itemsCR[index].open;
+      if (this.itemsCR && this.itemsCR[index].open) {
+        this.itemsCR
+          .filter((item: any, itemIndex: any) => itemIndex !== index)
+          .map((item: any) => {
+            item.open = false;
+          });
+      }
     }
   }
 
   demandeAvisCr(idCr: number, etabName: string, index: number) {
-
     // # ====== Add color to selected CR item ==========
     this.toggleSelectionCr(idCr, etabName, index);
     // --------------------------------------------
+    this.afficheListeCr = 1;
+    this.dataPatient.lastCrName = etabName;
+    this.lastCrName = etabName;
 
-
-    console.log('demandeAvisCr idrc ', idCr);
-
-
+    console.log("demandeAvisCr idrc ", idCr);
 
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'opération  en cours...' })
+      .create({ keyboardClose: true, message: "opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -157,7 +173,7 @@ export class EnvoiCrPage implements OnInit {
           cudtId: this.idEtab,
           crId: idCr,
           dossierId: this.dossierId,
-          motifId: '3'
+          motifId: "3"
         };
 
         const authObs: Observable<DemandeAvisResponseData> = this.srvApp.demandeAvis(
@@ -168,19 +184,18 @@ export class EnvoiCrPage implements OnInit {
         authObs.subscribe(
           // :::::::::::: ON RESULT ::::::::::
           resData => {
-
             // ----- Hide loader ------
             loadingEl.dismiss();
 
             if (+resData.code === 201) {
               // this.etabName = this.itemsMeds[0]["etabName"];
-              this.afficheListeCr = true;
-              console.log(' resData', resData.data);
-              console.log(' resData demandeId', resData.data.demandeId);
+              this.afficheReponseMed = 1;
+              console.log(" resData", resData.data);
+              console.log(" resData demandeId", resData.data.demandeId);
               this.demandeAvisId = resData.data.demandeId;
-              this.reponseAvisCR(this.demandeAvisId);
+              // this.reponseAvisCR(this.demandeAvisId);
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
 
@@ -191,10 +206,11 @@ export class EnvoiCrPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur !', 'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur !",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
@@ -204,10 +220,10 @@ export class EnvoiCrPage implements OnInit {
 
   reponseAvisCR(demandeAvisId) {
     this.afficheReponseMed = 1;
-    console.log('******************reponseAvis cr **', demandeAvisId);
+    console.log("******************reponseAvis cr **", demandeAvisId);
 
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'opération  en cours...' })
+      .create({ keyboardClose: true, message: "opération  en cours..." })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -219,25 +235,22 @@ export class EnvoiCrPage implements OnInit {
         authObs.subscribe(
           // :::::::::::: ON RESULT ::::::::::
           resData => {
-
             // const dataResponse: UserModel = JSON.stringify(resData.data);
             // ----- Hide loader ------
             loadingEl.dismiss();
 
             if (+resData.code === 200) {
-
-              if (+resData.code === 200) {
-                this.dataReponsesAvis = resData.data;
-
-                if (Object.keys(this.dataReponsesAvis).length > 0) {
-                  this.afficheReponseMed = 2;
-                }
-              } else {
-                this.sglob.showAlert('Erreur ', resData.message);
+              this.dataReponsesAvis = resData.data;
+              console.log("Response >>>>> ", this.dataReponsesAvis);
+              if (Object.keys(this.dataReponsesAvis).length > 0) {
+                console.log(
+                  "taille data >>>>> ",
+                  Object.keys(this.dataReponsesAvis).length
+                );
+                this.afficheReponseMed = 2;
               }
-
             } else {
-              this.sglob.showAlert('Erreur ', resData.message);
+              this.sglob.showAlert("Erreur ", resData.message);
             }
           },
           errRes => {
@@ -246,11 +259,11 @@ export class EnvoiCrPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur ',
-                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }
@@ -259,48 +272,49 @@ export class EnvoiCrPage implements OnInit {
   }
 
   async showAlertConfirme(decision: string) {
-    let msgAlert = '';
+    console.log("Confirme resultId ===>", this.dataPatient["resultId"]);
+    let msgAlert = "";
     // ----------- message dynamic ---------------
 
-    if (decision === 'THROMB') {
-      msgAlert = 'Etes-vous sur de vouloir faire une Thromobolyse au patient?';
-    } else if (decision === 'CR') {
+    if (decision === "THROMB") {
+      msgAlert = "Etes-vous sur de vouloir faire une Thromobolyse au patient?";
+    } else if (decision === "CR") {
       msgAlert =
-        'Etes-vous sur de vouloir envoyer le patient au CR  ' +
+        "Etes-vous sur de vouloir envoyer le patient au CR  " +
         this.etabName +
-        '? ';
+        "? ";
     }
 
     const alert = await this.alertCtrl.create({
-      header: 'Résultat d\'authentication',
+      header: "Résultat d'authentication",
       message: msgAlert,
-      cssClass: 'alert-css',
+      cssClass: "alert-css",
       buttons: [
         {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary',
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
           handler: () => {
-            console.log('Confirme Annuler');
+            console.log("Confirme Annuler");
           }
         },
         {
-          text: 'Je confirme',
+          text: "Je confirme",
           handler: async () => {
             if (
-              this.dataPatient['resultId'] === 8 ||
-              this.dataPatient['resultId'] === 9
+              this.dataPatient["resultId"] === 8 ||
+              this.dataPatient["resultId"] === 9
             ) {
               // this.dataPatient.stepId = 13;
 
               // this.dataPatient.resultId = this.resultId;
               this.router.navigate([
-                '/last-drug',
+                "/last-drug",
                 this.dossierId,
                 JSON.stringify(this.dataPatient)
               ]);
             } else {
-              this.clotureDossier(this.dataPatient['resultId']);
+              this.clotureDossier(this.dataPatient["resultId"]);
             }
           }
         }
@@ -310,18 +324,16 @@ export class EnvoiCrPage implements OnInit {
   }
 
   clotureDossier(resultatIdVal) {
-
-
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Clôture en cours...' })
+      .create({ keyboardClose: true, message: "Clôture en cours..." })
       .then(loadingEl => {
         loadingEl.present();
         const params = {
           dossierId: this.dossierId,
           resultatId: resultatIdVal,
           crId: this.idCr,
-          plavix: '0',
-          angio: '1',
+          plavix: "0",
+          angio: "1",
           doctorId: this.dataPatient.doctorId
         };
 
@@ -337,14 +349,14 @@ export class EnvoiCrPage implements OnInit {
 
             if (+resData.code === 201) {
               this.sglob.updateInitFetchHome(true);
-              console.log(' diag getInitFetch ', this.sglob.getInitFetch());
-              this.router.navigate(['/home']);
+              console.log(" diag getInitFetch ", this.sglob.getInitFetch());
+              this.router.navigate(["/home"]);
 
               // this.isCloture = true;
             } else {
               // ----- Hide loader ------
               loadingEl.dismiss();
-              this.sglob.showAlert('Erreur ', 'Problème intèrne !!!');
+              this.sglob.showAlert("Erreur ", "Problème intèrne !!!");
             }
           },
 
@@ -355,11 +367,11 @@ export class EnvoiCrPage implements OnInit {
             loadingEl.dismiss();
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
             } else {
               this.sglob.showAlert(
-                'Erreur ',
-                'Problème d\'accès au réseau, veillez vérifier votre connexion'
+                "Erreur ",
+                "Problème d'accès au réseau, veillez vérifier votre connexion"
               );
             }
           }

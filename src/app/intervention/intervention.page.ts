@@ -118,6 +118,10 @@ export class InterventionPage implements OnInit {
       case "GOCR":
         // ---- CR ---
         this.dataPatient.resultId = 6; // aucune intervention envoi direct au CR
+        console.log(
+          "setIntervention resultId ===>",
+          this.dataPatient["resultId"]
+        );
         await this.router.navigate([
           "/envoi-cr",
           this.idDossier,

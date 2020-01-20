@@ -47,12 +47,11 @@ export class LastDrugPage implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private modalCtrl: ModalController
-  ) { }
-
+  ) {}
 
   get plavix() {
     // console.log("PLAVIX :::", this.drugForm.get('plavix'));
-    return this.drugForm.get('plavix');
+    return this.drugForm.get("plavix");
   }
   drugForm = this.formBuilder.group({
     plavix: [false, [Validators.pattern]]
@@ -61,16 +60,11 @@ export class LastDrugPage implements OnInit {
   //   plavix: [{ type: 'pattern', message: 'Veuillez confirmer l\'administration du médicament' }]
   // };
 
-
   ngOnInit() {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.isCloture = false;
-
-
-
-    console.log(" idUser ::: ", this.idUser);
 
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
@@ -82,26 +76,27 @@ export class LastDrugPage implements OnInit {
         this.resultId = this.dataPatient.resultId;
         this.stepId = this.dataPatient.stepId;
         this.resultName = this.dataPatient.resultName;
-        this.patientFullName = this.dataPatient.lastName + ' ' + this.dataPatient.firstName;
+        console.log(" plavix stepId ::: ", this.stepId);
+        if (this.stepId !== 16) {
+          this.srvApp.stepUpdatePage(
+            this.idDossier,
+            16,
+            this.resultId,
+            this.token
+          );
+        }
+
+        this.patientFullName =
+          this.dataPatient.lastName + " " + this.dataPatient.firstName;
 
         //this.objectInsc = JSON.parse(dataObj);
         console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        this.srvApp.stepUpdatePage(
-          this.idDossier,
-          this.stepId,
-          this.resultId,
-          this.token
-        );
       }
     });
-
-
-
   }
 
   // changeToggle(event) {
   //   console.log(event);
-
 
   //   // if (!this.flag) {
   //   //   event.stopImmediatePropagation();
@@ -112,7 +107,6 @@ export class LastDrugPage implements OnInit {
 
   //   // }
   // }
-
 
   // submitForm() {
   //   console.log(this.plavix.value);
@@ -137,7 +131,7 @@ export class LastDrugPage implements OnInit {
           resultatId: this.resultId,
           plavix: "1",
           crId: this.idCr,
-          angio: 1,
+          angio: "1",
           doctorId: this.idUser
         };
 
@@ -155,7 +149,10 @@ export class LastDrugPage implements OnInit {
               this.sglob.updateInitFetchHome(true);
               console.log(" diag getInitFetch ", this.sglob.getInitFetch());
 
-              const message = 'Le dossier du patient ' + this.patientFullName + ' a été clôturé avec succès';
+              const message =
+                "Le dossier du patient " +
+                this.patientFullName +
+                " a été clôturé avec succès";
               this.sglob.presentToast(message);
 
               // --------- Back to home ------------------
