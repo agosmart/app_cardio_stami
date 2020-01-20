@@ -69,7 +69,7 @@
   </ion-grid>
   <!-- ------------------- -->
 
-  <ion-grid>
+  <ion-grid  class="m-buttom " >
     <ng-container *ngIf="afficheListeCr">
       <!-- LISTE DES CR-->
       <ion-row>
@@ -81,7 +81,7 @@
                 <span class="icon-notif text-dark  text17 "></span>
               </ion-avatar>
               <ion-text>
-                <b class="text-gray500 ">DEMANDER UN AVIS MEDICAL</b>
+                <b class="text-gray500 text09">DEMANDER UN AVIS MEDICAL</b>
               </ion-text>
             </ion-item-divider>
 
@@ -118,10 +118,10 @@
                 <span class="icon-cr text-dark  text17 "></span>
               </ion-avatar>
               <ion-text>
-                <b class="text-gray500 ">AVIS DES MEDECINS</b>
+                <b class="text-gray500 text09">AVIS DES MEDECINS</b>
               </ion-text>
-              <ion-button slot="end" strong="true" (click)="reponseAvisCR(demandeAvisId)" shape="round">
-                <ion-icon name="refresh"></ion-icon>
+              <ion-button slot="end"  (click)="reponseAvisCR(demandeAvisId)" shape="round">
+                <ion-icon name="refresh" ></ion-icon>
               </ion-button>
             </ion-item-divider>
             <!-- NO REVIEWS -->
@@ -137,16 +137,16 @@
             <!-- EXIST  REVIEWS -->
             <ng-container *ngIf='reviewsList'>
               <ion-item lines="full" *ngFor="let itemReponse of dataReponsesAvis" class="ion-no-padding">
-                <ion-label>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                  {{itemReponse.medecin}}
+                <ion-label class="ion-text-wrap">
+                  <span class="icon-doctor-men3  text-dark  text15"></span>
+                  {{itemReponse.doctor}}
                 </ion-label>
                 <ion-chip color="secondary" slot="end" class="ion-no-padding">
                   <span
                     class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"></span>
                   <ion-note
                     [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }">
-                    <b>{{itemReponse["reponse"] === null? "PAS ENCORS" : itemReponse["reponse"] }}</b>
+                    <b>{{itemReponse["reponse"] === null? "..." : itemReponse["reponse"] }}</b>
                   </ion-note>
                 </ion-chip>
               </ion-item>

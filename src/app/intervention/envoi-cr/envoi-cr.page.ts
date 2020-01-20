@@ -28,7 +28,7 @@ export class EnvoiCrPage implements OnInit {
   idCr: number;
   itemsCR: any;
   itemsMeds: ListeMedByCRModel;
-  dataReponsesAvis: ReponseAvisModel;
+  dataReponsesAvis: Array<ReponseAvisModel>;
 
   afficheListeCr = false;
   afficheReponseMed = 0;

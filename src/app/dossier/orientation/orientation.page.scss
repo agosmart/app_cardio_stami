@@ -45,7 +45,7 @@
   // -css ion list
 
   ion-list {
-    min-height: 180px;
+    min-height: 230px;
     padding: 4px;
     padding-bottom: 16px;
     margin-bottom: 10px;
@@ -74,6 +74,7 @@
         margin: 0 16px 0 0;
         height: 42px !important;
         width: 42px !important;
+        ion-icon{    position: absolute;}
       }
     }
     ion-item {
@@ -95,7 +96,7 @@
 
       ion-chip {
         background: #edf5f5;
-        min-width: 116px;
+        min-width: 92px;
         padding: 0 12px;
         margin: 0;
         &.span {
@@ -134,6 +135,10 @@
 
 /****************************/
 .cloture-info {
+
+  .m-buttom{
+    margin-bottom: 72px;
+  }
   .gradian {
     background: #3853de;
     background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);

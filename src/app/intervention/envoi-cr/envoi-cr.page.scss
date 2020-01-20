@@ -37,7 +37,7 @@
 
   // -css ion list
   ion-list {
-    min-height: 180px;
+    min-height: 230px;
     padding: 4px;
     padding-bottom: 16px;
     margin-bottom: 10px;
@@ -67,6 +67,7 @@
         height: 42px !important;
         width: 42px !important;
       }
+      ion-icon{    position: absolute;}
     }
     ion-item {
       --inner-padding-end: 8px;
@@ -87,7 +88,7 @@
 
       ion-chip {
         background: #edf5f5;
-        min-width: 116px;
+        min-width: 92px;
         padding: 0 12px;
         margin: 0;
         &.span {
@@ -115,4 +116,7 @@
 
 .envoie-cr {
   background-color: #ffffff;
+  .m-buttom{
+    margin-bottom: 72px;
+  }
 }
