@@ -59,7 +59,9 @@ export class OrientationPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
+
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+        console.log("*************demandeAvisId :", this.demandeAvisId);
         const motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 6) {
@@ -187,8 +189,10 @@ export class OrientationPage implements OnInit {
             if (+resData.code === 201) {
               this.afficheListeCr = false;
               this.afficheReponseMed = true;
+
               // ------------------------------------------
               this.demandeAvisId = resData.data.demandeId;
+              this.dataPatient["LastDemandeAvisId"] = this.demandeAvisId;
             } else {
               this.sglob.showAlert("Erreur ", resData.message);
             }

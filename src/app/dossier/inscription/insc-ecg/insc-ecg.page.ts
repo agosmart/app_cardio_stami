@@ -207,9 +207,14 @@ export class InscEcgPage implements OnInit {
     });
     await loading.present();
 
+    console.log("token", this.token);
+    console.log("formData", formData);
+
     let headers = new HttpHeaders();
     // headers = headers.set('Content-Type', 'application/json');
     headers = headers.set("Authorization", "" + this.token);
+
+    console.log("headers", headers);
 
     this.http
       .post("http://cardio.cooffa.shop/api/dossiers", formData, { headers })

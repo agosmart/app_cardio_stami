@@ -125,6 +125,19 @@ export class ThrombEcgPage implements OnInit {
         type: file.type
       });
 
+      //  formData.append("ecgImage", imgBlob, file.name);
+      // formData.append("etabId", this.idEtab.toString());
+      // formData.append("doctorId", this.idUser.toString());
+      // formData.append("dThorasic", dThorasic.toString());
+      // formData.append("weight", this.EcgForm.value.poids.toString());
+      // formData.append("stepId", this.stepId.toString());
+      // formData.append("patientId", this.idPatient.toString());
+      // formData.append("lastName", this.dataPatient["firstName"]);
+      // formData.append("firstName", this.dataPatient["lastName"]);
+      // formData.append("birthday", this.dataPatient["birthDay"]);
+      // formData.append("gender", this.gender.toString());
+      // this.uploadImageData(formData);
+
       const stepId = 17;
       formData.append("ecgImage", imgBlob, file.name);
       formData.append("dossierId", this.dossierId.toString());
@@ -144,7 +157,14 @@ export class ThrombEcgPage implements OnInit {
 
     let headers = new HttpHeaders();
     // headers = headers.set('Content-Type', 'application/json');
-    headers = headers.set("Authorization", "" + this.token);
+
+    console.log("token", this.token);
+    console.log("formData", formData);
+    headers = headers.set("Authorization", this.token);
+
+    //headers = headers.set("Authorization", "" + this.token);
+
+    console.log("headers", headers);
 
     this.http
       .post("http://cardio.cooffa.shop/api/ecgs", formData, { headers })
