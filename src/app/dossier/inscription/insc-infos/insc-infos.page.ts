@@ -113,6 +113,9 @@ export class InscInfosPage implements OnInit {
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.urlEcg = this.sglob.getUrlEcg();
+
+    this.sglob.updateInitFetchHome(true);
+
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================

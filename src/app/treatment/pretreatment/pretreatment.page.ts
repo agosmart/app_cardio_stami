@@ -152,6 +152,17 @@ export class PretreatmentPage implements OnInit {
   }
 
   submitFormInfos() {
+    // const bolus = this.pretreatmentFormInfos.value.bolus;
+    // if (!bolus) {
+    //   this.showAlertConfirme();
+    // } else {
+    //   this.sendFormInfos();
+    // }
+
+    this.showAlertConfirme();
+  }
+
+  sendFormInfos() {
     this.pretreatmentObj = {
       bolus: 0,
       dossierId: this.dossierId,
@@ -265,5 +276,30 @@ export class PretreatmentPage implements OnInit {
       });
 
     // -----------| END LOADING |----------
+  }
+
+  async showAlertConfirme() {
+    const alert = await this.alertCtrl.create({
+      header: "Confirmation",
+      message: "Etes-vous sur de la liste des médicament donné au patient ?",
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirme Annuler");
+          }
+        },
+        {
+          text: "Je confirme",
+          handler: async () => {
+            this.sendFormInfos();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

@@ -36,7 +36,7 @@ export class ThrombResultPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.hypertentionValue = 0;
+    this.sglob.updateInitFetchHome(true);
 
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();

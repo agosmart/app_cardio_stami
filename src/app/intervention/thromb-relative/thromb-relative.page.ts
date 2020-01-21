@@ -139,10 +139,10 @@ export class ThrombRelativePage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController // private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
-    // this.hypertentionValue = 0;
+    this.sglob.updateInitFetchHome(true);
 
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
@@ -179,22 +179,20 @@ export class ThrombRelativePage implements OnInit {
     console.log("isAlert :::", isAlert, " / ", "isChecked", isChecked);
 
     if (isChecked) {
-      
-      if (isAlert) {       
-            this.presentAlertRadio();
-            //this.isDisplayRadio = true;
-           // this.isRequiredCheckBox = true;
-          }
+      if (isAlert) {
+        this.presentAlertRadio();
+        //this.isDisplayRadio = true;
+        // this.isRequiredCheckBox = true;
+      }
 
       this.somCheck++;
     } else {
       this.somCheck--;
     }
 
-
     // ------------------------------------------
 
-    console.log('this.somCheck!!!!', this.somCheck)
+    console.log("this.somCheck!!!!", this.somCheck);
     this.somCheck ? (this.exitProcess = true) : (this.exitProcess = false);
   }
 
@@ -356,7 +354,6 @@ export class ThrombRelativePage implements OnInit {
             console.log("Confirm Ok");
             console.log(JSON.stringify(data));
 
-
             // this.listContIndicAbs[3].isChecked = false;
             this.hypertentionValue = data; // JSON.stringify(data);
             // this.isRequiredCheckBox = false;
@@ -372,23 +369,19 @@ export class ThrombRelativePage implements OnInit {
             // console.log("this.hypertentionValue ::", this.hypertentionValue);
             // console.log("this.isRequiredCheckBox ::", this.isRequiredCheckBox);
             // console.groupEnd();
-
           }
         }
       ]
     });
     await alert.present();
     await alert.onDidDismiss().then(data => {
-
       if (this.hypertentionValue === 0) {
-
         this.listContIndicAbs[3].isChecked = false;
         //   // this.cia4.reset();
       }
-     // this.isRequiredCheckBox = true;
+      // this.isRequiredCheckBox = true;
 
       // this.isRequiredCheckBox = false;
-
     });
   }
   // ---------------------------------------

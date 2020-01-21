@@ -48,6 +48,7 @@ export class EnvoiCrPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.sglob.updateInitFetchHome(true);
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
@@ -63,7 +64,12 @@ export class EnvoiCrPage implements OnInit {
         this.motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 13) {
-          this.srvApp.stepUpdatePage(this.dossierId, 13, 9, this.token);
+          this.srvApp.stepUpdatePage(
+            this.dossierId,
+            13,
+            this.dataPatient["resultId"],
+            this.token
+          );
         }
         console.log("demandeAvisId", this.demandeAvisId);
         if (this.demandeAvisId > 0 && this.motifId === 3) {

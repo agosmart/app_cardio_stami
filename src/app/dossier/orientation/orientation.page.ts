@@ -49,6 +49,7 @@ export class OrientationPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.sglob.updateInitFetchHome(true);
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();

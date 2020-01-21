@@ -55,6 +55,8 @@ export class DiagnosticPage implements OnInit {
   }
 
   ngOnInit() {
+    this.sglob.updateInitFetchHome(true);
+
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         this.router.navigate(["/home"]);

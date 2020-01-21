@@ -39,6 +39,7 @@ export class InterventionPage implements OnInit {
   }
 
   ngOnInit() {
+    this.sglob.updateInitFetchHome(true);
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         console.log("----AUCUNE DATA DISPO ----");

@@ -33,6 +33,7 @@ export class ThrombProtocPage implements OnInit {
   dataPatients: Array<DossierModel>;
   ecgTmp: string;
   isLoading = false;
+  showactilyse = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
   tnkTpaVal = "";
@@ -87,9 +88,10 @@ export class ThrombProtocPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.sglob.updateInitFetchHome(true);
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
-
+    this.showactilyse = false;
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         // this.router.navigate(['/home']);
@@ -110,16 +112,19 @@ export class ThrombProtocPage implements OnInit {
           this.tpaval2 + "mg IV en 30 minutes",
           0.5 * this.weight + "mg IV en 60 minutes"
         ];
+
+        console.log("weight ===>", this.weight);
+
         if (this.weight < 60) {
           this.tnkTpaValMg = 30;
           this.tnkTpaValUi = 6000;
-        } else if (this.weight < 70) {
+        } else if (this.weight <= 70) {
           this.tnkTpaValMg = 35;
           this.tnkTpaValUi = 7000;
-        } else if (this.weight < 80) {
+        } else if (this.weight <= 80) {
           this.tnkTpaValMg = 40;
           this.tnkTpaValUi = 8000;
-        } else if (this.weight < 90) {
+        } else if (this.weight <= 90) {
           this.tnkTpaValMg = 45;
           this.tnkTpaValUi = 9000;
         } else if (this.weight >= 100) {
@@ -134,7 +139,7 @@ export class ThrombProtocPage implements OnInit {
         this.tnkTpaVal =
           this.tnkTpaValMg + " MG   (  " + this.tnkTpaValUi + " UI) ";
 
-        console.log("weight ===>", this.weight);
+        console.log("weight ===>", this.tnkTpaValUi);
 
         console.log("tnkTpaVal ===>", this.tnkTpaVal);
       }
@@ -153,7 +158,7 @@ export class ThrombProtocPage implements OnInit {
           dossierId: this.idDossier,
           doctorId: this.idUser,
           alteplase: this.protocolFormInfos.value.tpa,
-          tenecteplase: this.protocolFormInfos.value.tnktpa,
+          tenecteplase: this.tnkTpaVal,
           signedDocuments: "1"
         };
         console.log("params register : ", params);

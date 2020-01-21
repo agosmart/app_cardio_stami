@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: ThrombProtocPage
+  },  {
+    path: 'dosage-infos',
+    loadChildren: () => import('./dosage-infos/dosage-infos.module').then( m => m.DosageInfosPageModule)
   }
+
 ];
 
 @NgModule({
