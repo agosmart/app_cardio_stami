@@ -56,7 +56,7 @@ export class DiagnosticPage implements OnInit {
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
-
+    console.log(" diag ionViewDidEnter after", this.sglob.getInitFetch());
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         this.router.navigate(["/home"]);
@@ -84,11 +84,11 @@ export class DiagnosticPage implements OnInit {
     });
   }
 
-  async openImageEcg(image: any) {
-    console.log("image ::::", image);
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: image }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

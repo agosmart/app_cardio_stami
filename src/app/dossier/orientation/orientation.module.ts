@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule } from "@ionic/angular";
 
-import { OrientationPageRoutingModule } from './orientation-routing.module';
+import { OrientationPageRoutingModule } from "./orientation-routing.module";
 
-import { OrientationPage } from './orientation.page';
+import { OrientationPage } from "./orientation.page";
+import { ImagePageModule } from "src/app/modal/image/image.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OrientationPageRoutingModule
+    OrientationPageRoutingModule,
+    ImagePageModule
   ],
   declarations: [OrientationPage]
 })

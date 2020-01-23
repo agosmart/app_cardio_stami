@@ -20,28 +20,61 @@
 <ion-content fullscreen class="form-infos ion-no-padding">
   <ion-grid class="form-bloc">
     <ion-row>
-      <ion-col size="12" class="p-0-16">
-        <ion-card class="_ion-margin " color="light">
-          <ion-card-content class="text09 ion-text-center ">
+      <ion-col size="12" class="ion-no-padding">
+        <ion-card class="ion-margin ion-text-left" color="light">
+          <ion-card-content class="text09 ">
             <ion-row class="ion-no-padding">
-              <ion-col size="12" class="ion-no-padding">
-                <span class="icon-man text-dark  text10"></span>
-                {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+              <ion-col size="10" class="ion-no-padding">
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-label>
+                      <ion-badge class="p-6-16" slot="start" color="medium"
+                        >Dossier N°: {{dossierId}}</ion-badge
+                      >
+                    </ion-label>
+                  </ion-col>
+                </ion-row>
+
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-man text-dark  text10"></span>
+                    {{dataPatient['lastName']}} {{dataPatient['firstName']}}
+                  </ion-col>
+                </ion-row>
+
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-calander  text-dark  text10"></span>
+                    {{dataPatient['birthDayFr']}}
+
+                    <ion-chip outline color="secondary">
+                      <ion-label class="bold"
+                        >{{dataPatient['age']}} ans
+                      </ion-label>
+                    </ion-chip>
+
+                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
+                  </ion-col>
+                </ion-row>
+                <ion-row class="ion-no-padding">
+                  <ion-col size="12" class="ion-no-padding">
+                    <span class="icon-weight  text-dark  text10"></span>
+                    {{dataPatient['weight'] + ' KG'}}
+                  </ion-col>
+                </ion-row>
               </ion-col>
-              <ion-col size="12" class="ion-no-padding">
-                {{dataPatient['birthDayFr']}}
-                <ion-chip outline color="secondary">
-                  <ion-label class="bold"
-                    >{{dataPatient['age']}} ans
-                  </ion-label>
-                </ion-chip>
-              </ion-col>
-              <ion-col size="12" class="ion-no-padding ">
-                <ion-label>
-                  <ion-badge class="p-6-16" slot="start" color="medium"
-                    >Dosier N°: {{dossierId}}</ion-badge
+
+              <ion-col size="2" class="ion-no-padding">
+                <ion-col size="12" class="ion-no-padding">
+                  <ion-button
+                    (click)="openImageEcg(urlEcg)"
+                    color="danger"
+                    class="ion-bt-padding "
+                    expand="full"
                   >
-                </ion-label>
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                  </ion-button>
+                </ion-col>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -82,67 +115,6 @@
                 </ion-item>
               </ng-container>
 
-              <!-- 
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Antécédent d’hémorragie intracrânienne ou d’accident vasculaire cérébral d’origine inconnue, quelle
-                    que soit l’ancienneté de l’antécédent </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia1" value="false" (ionChange)='ionChange()'>
-                </ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Accident vasculaire cérébral ischémique dans les 6 mois précédents </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia2" value="false"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Atteinte ou néoplasme ou malformation artério-veineuse du système nerveux central</p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia3" value="false"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Traumatisme majeur chirurgie / blessure céphalique dans le mois précédent </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia4"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Hémorragie gastro-intestinale dans le mois précédent </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia5"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Désordre hémorragique connu (hormis les menstrues) </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia6"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Dissection aortique </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia7"></ion-checkbox>
-              </ion-item>
-
-              <ion-item>
-                <ion-text color="primary">
-                  <p>Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie
-                    hépatique, ponction lombaire) </p>
-                </ion-text>
-                <ion-checkbox slot="end" checked="false" formControlName="cia8"></ion-checkbox>
-              </ion-item> -->
-
-              <!-- Button Submit-->
               <ion-row>
                 <ion-col size="12">
                   <div class="ion-margin-top">

@@ -1,3 +1,4 @@
+import { EcgData } from "./ecg.data.model";
 export interface DossierModel {
   dossierId: number;
   etabId: number;
@@ -39,6 +40,7 @@ export interface DossierModel {
   resultName?: string;
   demandeAvisId?: number;
   demandes?: Array<DemandeAvisModel>;
+  ecgData?: Array<EcgData>;
   idCr?: number;
   lastCrName?: string;
   // etabName?: string;

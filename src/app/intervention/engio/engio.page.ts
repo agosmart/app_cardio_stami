@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ImagePage } from "../../modal/image/image.page";
 import {
   LoadingController,
   AlertController,
@@ -30,6 +31,7 @@ export class EngioPage implements OnInit {
   retunListeCR: EtabResponseData;
   itemsCR: any;
   etabName: string;
+  urlEcg: string;
 
   constructor(
     private srvApp: ServiceAppService,
@@ -54,7 +56,7 @@ export class EngioPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
         this.resultName = this.dataPatient.resultName;
-
+        this.urlEcg = this.dataPatient["ecgImage"];
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
         console.log("resultName", this.resultName);
 
@@ -66,6 +68,15 @@ export class EngioPage implements OnInit {
       }
       // 1 c les CR  2 CUDT
     });
+  }
+
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
   }
 
   getlisteCrById() {

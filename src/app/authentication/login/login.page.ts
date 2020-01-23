@@ -108,8 +108,8 @@ export class LoginPage implements OnInit {
 
   // ------ Api service login ---------------
   submitLogin() {
-    this.getUidFcm();
-    this.uid = "111111111111111111111111";
+    //this.getUidFcm();
+    this.getUidFcm() == null ? (this.uid = "0123456789") : this.getUidFcm();
     this.isLoading = true;
     this.loadingCtrl
       .create({ keyboardClose: true, message: "Connexion en cours..." })

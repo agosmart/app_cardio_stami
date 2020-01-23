@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { ImagePage } from "../../modal/image/image.page";
 import {
   LoadingController,
   AlertController,
@@ -27,6 +28,7 @@ export class ThrombSosPage implements OnInit {
   idEtab: number;
   dossierId: number;
   token: string;
+  urlEcg: string;
   itemsCR: any;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
@@ -67,7 +69,7 @@ export class ThrombSosPage implements OnInit {
         this.dossierId = this.dataPatient.dossierId;
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         const motifId = this.dataPatient.lastMotifId;
-
+        this.urlEcg = this.dataPatient["ecgImage"];
         if (this.dataPatient.stepId !== 19) {
           this.srvApp.stepUpdatePage(this.dossierId, 19, 9, this.token);
         }
@@ -84,6 +86,15 @@ export class ThrombSosPage implements OnInit {
       }
       // 1 c les CR  2 CUDT
     });
+  }
+
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
   }
 
   /*listeCr() {

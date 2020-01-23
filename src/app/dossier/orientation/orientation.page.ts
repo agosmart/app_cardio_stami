@@ -2,9 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { LoadingController, AlertController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
 import { EtabResponseData } from "src/app/models/etab.response";
-
+import { ImagePage } from "../../modal/image/image.page";
 import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
 import { Observable } from "rxjs";
 import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
@@ -27,6 +31,7 @@ export class OrientationPage implements OnInit {
   itemsCR: any;
   idCr: number;
   lastCrName: string;
+  urlEcg: string;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
 
@@ -45,7 +50,8 @@ export class OrientationPage implements OnInit {
     private activatedroute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private router: Router,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -60,7 +66,7 @@ export class OrientationPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
-
+        this.urlEcg = this.dataPatient["ecgImage"];
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         console.log("*************demandeAvisId :", this.demandeAvisId);
         const motifId = this.dataPatient.lastMotifId;
@@ -78,6 +84,15 @@ export class OrientationPage implements OnInit {
         }
       }
     });
+  }
+
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
   }
 
   // ---------------------LIST CR------------------------------------------

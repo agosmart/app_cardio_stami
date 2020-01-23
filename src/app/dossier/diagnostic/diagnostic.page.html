@@ -38,7 +38,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <ion-label>
                       <ion-badge class="p-6-16" slot="start" color="medium"
-                        >N°: 2001-00035</ion-badge
+                        >Dossier N°: {{idDossier}}</ion-badge
                       >
                     </ion-label>
                   </ion-col>
@@ -54,14 +54,20 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
-
                     {{dataPatient['birthDayFr']}}
+
+                    <ion-chip outline color="secondary">
+                      <ion-label class="bold"
+                        >{{dataPatient['age']}} ans
+                      </ion-label>
+                    </ion-chip>
+
+                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
-
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
@@ -70,19 +76,12 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="openImageEcg(urlEcg)"
+                    (click)="openImageEcg()"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"
                   >
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                  </ion-button>
-                  <ion-button
-                    (click)="archive()"
-                    class="ion-bt-padding"
-                    expand="full"
-                  >
-                    <span class="icon-patient-historic fsize-20em"></span>
                   </ion-button>
                 </ion-col>
               </ion-col>

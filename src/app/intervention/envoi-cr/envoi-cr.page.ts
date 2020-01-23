@@ -2,9 +2,13 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceAppService } from "src/app/services/service-app.service";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { LoadingController, AlertController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
 import { EtabResponseData } from "src/app/models/etab.response";
-
+import { ImagePage } from "../../modal/image/image.page";
 import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
 import { Observable } from "rxjs";
 import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
@@ -28,6 +32,8 @@ export class EnvoiCrPage implements OnInit {
   lastCrName: string;
   idCr: number;
   motifId: number;
+  urlEcg: string;
+  urlEcg2: string;
   itemsCR: any;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
@@ -44,7 +50,8 @@ export class EnvoiCrPage implements OnInit {
     private activatedroute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private router: Router
+    private router: Router,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -62,7 +69,15 @@ export class EnvoiCrPage implements OnInit {
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         this.lastCrName = this.dataPatient.lastCrName;
         this.motifId = this.dataPatient.lastMotifId;
-
+        this.urlEcg = this.dataPatient["ecgImage"];
+        console.log("taille ecg", this.dataPatient.ecgData.length);
+        if (this.dataPatient.ecgData.length === 2) {
+          this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+          if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+            this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+          }
+          console.log("urlEcg2", this.urlEcg2);
+        }
         if (this.dataPatient.stepId !== 13) {
           this.srvApp.stepUpdatePage(
             this.dossierId,
@@ -80,6 +95,15 @@ export class EnvoiCrPage implements OnInit {
         }
       }
     });
+  }
+
+  async openImageEcg(image) {
+    console.log("image ::::", image);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: image }
+    });
+    return await modal.present();
   }
 
   // ---------------------LIST CR------------------------------------------

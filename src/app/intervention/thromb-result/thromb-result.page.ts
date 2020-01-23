@@ -9,6 +9,7 @@ import {
 } from "@ionic/angular";
 import { ImagePage } from "src/app/modal/image/image.page";
 import { DossierModel } from "src/app/models/dossier.model";
+import { EcgData } from "src/app/models/ecg.data.model";
 
 @Component({
   selector: "app-thromb-result",
@@ -23,8 +24,10 @@ export class ThrombResultPage implements OnInit {
   doctorId: number;
   resultatId: number;
   urlEcg: string;
-  //dataPatient: object;
+  urlEcg2: string;
+  // dataPatient: object;
   dataPatient: DossierModel;
+  EcgData: object;
   constructor(
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -46,11 +49,16 @@ export class ThrombResultPage implements OnInit {
         // this.router.navigate(['/home']);
       } else {
         const dataObj = paramMap.get("dataPatientObj");
+        //this.EcgData = dataObj
         this.dataPatient = JSON.parse(dataObj);
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
         this.urlEcg = this.dataPatient["ecgImage"];
-        console.log("IMAGE ECG :::", this.urlEcg);
+        this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+        console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
+        if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+          this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+        }
         if (this.dataPatient["stepId"] !== 18) {
           this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token);
         }
