@@ -54,10 +54,15 @@ export class ThrombResultPage implements OnInit {
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
         this.urlEcg = this.dataPatient["ecgImage"];
-        this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
-        console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
-        if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
-          this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+
+        if (!this.dataPatient.ecgImage2) {
+          this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+          console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
+          if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+            this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+          }
+        } else {
+          this.urlEcg2 = this.dataPatient.ecgImage2;
         }
         if (this.dataPatient["stepId"] !== 18) {
           this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token);

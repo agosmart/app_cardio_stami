@@ -27,6 +27,7 @@ export class LoginPage implements OnInit {
   token: string;
   showEye = false;
   loginForm: FormGroup;
+  dataResponse: UserModel;
   isLoading = false;
   isLogin = true;
   // ------------- CONSTRUCTOR ----------------------------
@@ -112,7 +113,11 @@ export class LoginPage implements OnInit {
     this.getUidFcm() == null ? (this.uid = "0123456789") : this.getUidFcm();
     this.isLoading = true;
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "Connexion en cours..." })
+      .create({
+        keyboardClose: true,
+        duration: 10000,
+        message: "Connexion en cours..."
+      })
       .then(loadingEl => {
         loadingEl.present();
 
@@ -133,26 +138,22 @@ export class LoginPage implements OnInit {
           resData => {
             this.isLoading = false;
             // const dataResponse: UserModel = JSON.stringify(resData.data);
-            const dataResponse: UserModel = resData.data;
+            this.dataResponse = resData.data;
             console.log("Response >>>>> ", resData);
             // ----- Hide loader ------
             loadingEl.dismiss();
 
             if (+resData.code === 200) {
-              this.idUser = dataResponse.id;
-              this.mobile = dataResponse.mobile;
-              this.token = dataResponse.apiToken;
-              this.idEtab = dataResponse.etablissment[0].etabId;
+              this.idUser = this.dataResponse.id;
+              this.mobile = this.dataResponse.mobile;
+              this.token = this.dataResponse.apiToken;
+              this.idEtab = this.dataResponse.etablissment[0].etabId;
               console.log("token login===>", this.token);
               console.log("idEtab login===>", this.idEtab);
               // ----- Set storage Data -----
               this.SetStorage();
               // -----  Update id Doctor value -----
               this.sglob.updateInfoUser(this.idUser, this.token, this.idEtab);
-              // ----- Retrive a value of uid -----
-              //this.getuidFcm();
-              // ----- Toast ------------
-              //this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
               this.router.navigate(["home"]);
             } else {

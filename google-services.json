@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "505299560993",
-    "firebase_url": "https://cardio-477a6.firebaseio.com",
-    "project_id": "cardio-477a6",
-    "storage_bucket": "cardio-477a6.appspot.com"
+    "project_number": "643142808192",
+    "firebase_url": "https://cardio-cudt.firebaseio.com",
+    "project_id": "cardio-cudt",
+    "storage_bucket": "cardio-cudt.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:505299560993:android:ab7dae272a84b8f5271160",
+        "mobilesdk_app_id": "1:643142808192:android:d479fc5d8b8f30d164ec65",
         "android_client_info": {
-          "package_name": "com.cardio.test"
+          "package_name": "com.cardio.cudt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "505299560993-av673aqgebt03sdbada3qmvak6jkl4tm.apps.googleusercontent.com",
+          "client_id": "643142808192-sk802uv7jm39v6qparrv874g8dqaukmc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDN-v7LuGT3cluCE4iiPkpCpMoTFymVMIs"
+          "current_key": "AIzaSyBZwjy2OQG-E43_s3PwKMXFYy_5kilmkMM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "505299560993-av673aqgebt03sdbada3qmvak6jkl4tm.apps.googleusercontent.com",
+              "client_id": "643142808192-sk802uv7jm39v6qparrv874g8dqaukmc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

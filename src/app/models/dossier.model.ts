@@ -15,6 +15,7 @@ export interface DossierModel {
   qrCode: string;
   weight: number;
   ecgImage: string;
+  ecgImage2?: string;
   ecgAfficher?: string;
   startAt: string;
   statusDossier: number;

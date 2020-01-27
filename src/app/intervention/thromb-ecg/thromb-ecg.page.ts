@@ -99,6 +99,7 @@ export class ThrombEcgPage implements OnInit {
     if (this.isEcg) {
       console.log("isEcg");
       this.startUpload();
+      //this.startUpload1();
     } else {
       this.sglob.showAlert("Erreur ", "veuiller faire un ECG");
     }
@@ -125,19 +126,6 @@ export class ThrombEcgPage implements OnInit {
         type: file.type
       });
 
-      //  formData.append("ecgImage", imgBlob, file.name);
-      // formData.append("etabId", this.idEtab.toString());
-      // formData.append("doctorId", this.idUser.toString());
-      // formData.append("dThorasic", dThorasic.toString());
-      // formData.append("weight", this.EcgForm.value.poids.toString());
-      // formData.append("stepId", this.stepId.toString());
-      // formData.append("patientId", this.idPatient.toString());
-      // formData.append("lastName", this.dataPatient["firstName"]);
-      // formData.append("firstName", this.dataPatient["lastName"]);
-      // formData.append("birthday", this.dataPatient["birthDay"]);
-      // formData.append("gender", this.gender.toString());
-      // this.uploadImageData(formData);
-
       const stepId = 17;
       formData.append("ecgImage", imgBlob, file.name);
       formData.append("dossierId", this.dossierId.toString());
@@ -146,6 +134,16 @@ export class ThrombEcgPage implements OnInit {
       this.uploadImageData(formData);
     };
     reader.readAsArrayBuffer(file);
+  }
+
+  startUpload1() {
+    this.dataPatient.ecgImage2 = "3_1577617035.png";
+    console.log("*****dataPatient***", this.dataPatient);
+    this.router.navigate([
+      "./thromb-protoc",
+      this.dossierId,
+      JSON.stringify(this.dataPatient)
+    ]);
   }
 
   async uploadImageData(formData: FormData) {
@@ -176,8 +174,10 @@ export class ThrombEcgPage implements OnInit {
       .subscribe((res: DossierResponseData) => {
         if (+res.code === 201) {
           console.log(" res", res.data);
-          this.dataPatient.ecgImage = this.imageData;
+          //this.dataPatient.ecgImage = this.imageData;
+          this.dataPatient.ecgImage2 = res.data["ecgImage"];
           this.dataPatient.ecgAfficher = this.ecgAfficher;
+
           this.router.navigate([
             "./thromb-protoc",
             this.dossierId,

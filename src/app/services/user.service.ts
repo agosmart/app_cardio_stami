@@ -7,6 +7,8 @@ import { AuthResponseData } from "../models/auth.response";
 })
 export class UserService {
   baseUrl = "http://cardio.cooffa.shop/api";
+
+  //baseUrl2 = "http://41.110.24.164";
   constructor(public http: HttpClient) {}
 
   loginDoctor(params: object) {

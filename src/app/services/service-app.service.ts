@@ -96,6 +96,18 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+  public showDossier(token: string, dossierID: number): any {
+    // console.log("token service ===>", token);
+    const apiUrl = this.baseUrl + "/dossiers/" + dossierID;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return this.http.get<DossierResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
 
   public listingDossier(params: number, token: string, idEtab: number): any {
     // console.log("token service ===>", token);
