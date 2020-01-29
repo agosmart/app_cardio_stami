@@ -92,10 +92,12 @@
               color="tansparent"
               [ngClass]="{'section-active': item.open, 'section': !item.open}"
             >
+            <ion-avatar>
+              <span class="icon-cudt-box-2  text-dark  text15"></span   >
+            </ion-avatar>
               <ion-label class="ion-text-wrap">
                 <h3>
-                  <span class="icon-cudt-box-2  text-dark  text15"></span
-                  >{{item.etabName}}
+                 {{item.etabName}}
                 </h3>
               </ion-label>
               <ion-chip color="secondary">
@@ -123,12 +125,6 @@
                 <span class="icon-cr text-dark  text17 "></span>
               </ion-avatar>
               <ion-text>
-<<<<<<< HEAD
-                <b class="text-gray500 text09">AVIS DES MEDECINS</b>
-              </ion-text>
-              <ion-button slot="end"  (click)="reponseAvisCR(demandeAvisId)" shape="round">
-                <ion-icon name="refresh" ></ion-icon>
-=======
                 <b class="text-gray500 "
                   >AVIS DES MEDECINS Centre: {{lastCrName}}</b
                 >
@@ -140,7 +136,6 @@
                 shape="round"
               >
                 <ion-icon name="refresh"></ion-icon>
->>>>>>> H: maj after test
               </ion-button>
             </ion-item-divider>
             <!-- NO REVIEWS -->
@@ -154,40 +149,29 @@
               </ion-item>
             </ng-container>
             <!-- EXIST  REVIEWS -->
-<<<<<<< HEAD
-            <ng-container *ngIf='reviewsList'>
-              <ion-item lines="full" *ngFor="let itemReponse of dataReponsesAvis" class="ion-no-padding">
-                <ion-label class="ion-text-wrap">
-                  <span class="icon-doctor-men3  text-dark  text15"></span>
-                  {{itemReponse.doctor}}
-=======
             <ng-container *ngIf="reviewsList">
               <ion-item
                 lines="full"
                 *ngFor="let itemReponse of dataReponsesAvis"
                 class="ion-no-padding"
               >
-                <ion-label>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
+              <ion-avatar>
+                <span class="icon-doctor-men3  text-dark  text17"></span>
+              </ion-avatar>
+                <ion-label>                 
                   {{itemReponse.medecin}}
->>>>>>> H: maj after test
                 </ion-label>
                 <ion-chip color="secondary" slot="end" class="ion-no-padding">
                   <span
                     class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
                   ></span>
                   <ion-note
-<<<<<<< HEAD
-                    [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }">
-                    <b>{{itemReponse["reponse"] === null? "..." : itemReponse["reponse"] }}</b>
-=======
                     [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }"
                   >
                     <b
                       >{{itemReponse["reponse"] === null? "PAS ENCORS" :
                       itemReponse["reponse"] }}</b
                     >
->>>>>>> H: maj after test
                   </ion-note>
                 </ion-chip>
               </ion-item>

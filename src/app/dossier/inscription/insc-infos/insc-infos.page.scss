@@ -13,27 +13,35 @@
   .header-ios ion-toolbar:last-child {
     --border-width: 0;
   }
-  .ion-bt-padding {
-    --padding-start: 5px;
-    --padding-end: 5px;
-    width: 42px;
+
+  ion-Button {
+    &.ion-bt-padding {
+      // --padding-start: 5px;
+      // --padding-end: 5px;
+      --padding-start: 0;
+      --padding-end: 0;
+      width: 42px;
+      height: 42px;
+       
+    }
   }
+
   ion-icon {
     // margin-right: 5px;
     // font-size: 1.4em;
     // float: left;
     // width: 1.4em;
-    margin-right: 5px;    
+    margin-right: 5px;
     padding: 0;
     margin: 0;
   }
   ion-icon.i-card {
     color: #929eaa;
   }
-  
-  button.button-native {
-    padding: 0 5px !important;
-  }
+
+  // button.button-native {
+  //   padding: 0 5px !important;
+  // }
   ion-card {
     ion-col {
       padding: 2px 2px;
@@ -42,7 +50,7 @@
 }
 
 .insc-infos {
-   ion-card-content.md.card-content-md.hydrated {
+  ion-card-content.md.card-content-md.hydrated {
     //padding: 10px 24px 10px 10px;
     padding: 10px;
   }
@@ -55,8 +63,7 @@
   ion-list.info ion-label {
     font-size: 0.9rem;
   }
-  .btn-submit{
-
+  .btn-submit {
     position: fixed;
     bottom: 0;
     z-index: 1000;
@@ -68,6 +75,4 @@
     background: #fff;
     padding-bottom: 16px;
   }
-
-  
 }

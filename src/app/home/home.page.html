@@ -9,8 +9,8 @@
 </ion-header>
 
 <ion-content class="ion-no-padding  ion-no-margin ion-text-center home-page">
-  <ion-grid class="ion-no-padding ">
 
+  <ion-grid class="ion-no-padding ">
     <ion-row class=" bg-light  ion-no-padding  block-add-dossier ">
       <ion-col size="12" class="ion-padding-top ion-padding-bottom">
         <ion-button size="medium" shape="round" tappable [routerLink]="['../inscription']">
@@ -20,76 +20,136 @@
           </ion-icon>
         </ion-button>
       </ion-col>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-item-divider class="box-shadow">
+
+          <ion-avatar>
+            <span class="icon-doss-edit text-dark  text17 "></span>
+          </ion-avatar>
+          <ion-label class="p-10-0">
+            <b class="text-gray500 text09">DOSSIER(S) EN COURS</b>
+          </ion-label>
+
+          <ion-button slot="end" strong="true" shape='round' tappable (click)="refrechListDossier()" type="button">
+            <ion-icon slot="icon-only" name="refresh"></ion-icon>
+          </ion-button>
+
+        </ion-item-divider>
+      </ion-col>
     </ion-row>
+  </ion-grid>
+
+
+  <ion-grid class="ion-no-padding ">
+    <!-- REFRESH-->
+    <!-- <ion-refresher slot="fixed" (ionRefresh)="refrechListDossier($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
+        refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
+      </ion-refresher-content>
+    </ion-refresher> -->
+
     <!-- is exist dossier-->
+
     <ion-row *ngIf="isExistDossier">
       <ion-col class="ion-no-padding">
-        <ion-list class="list-dossier-cours">
-          <ion-item-divider class="box-shadow">
-            <ion-label class="p-10-0">
-              <span class="icon-doss-edit text-dark  text14 "></span>
-              <b class="text-gray500 text10">DOSSIER(S) EN COURS</b>
-            </ion-label>
-            <ion-button slot="end" strong="true" (click)="regrechListDossier()" shape="round">
-              <ion-icon name="refresh"></ion-icon>
-            </ion-button>
-          </ion-item-divider>
+        <ion-card class="ion-margin">
+          <ion-card-content class="ion-no-padding">
+            <ion-list class="list-dossier-cours">
 
-          <div *ngFor="let dossier of objectDossiers">
-            <ion-item detail (click)="goToStep(dossier.dossierId)">
-              <ion-label>
-                <ion-badge class="p-6-16" slot="start" color="medium" class="color-num-dossier">N°:
-                  ({{dossier["dossierId"]}})
-                </ion-badge>
-                <h2>
-                  <span class="icon-man text-dark  fsize14"></span>{{dossier["lastName"]}} {{dossier["firstName"]}}
-                </h2>
-              </ion-label>
-              <!-- <ion-button slot="end" strong="true" shape="round">
+
+              <div *ngFor="let dossier of objectDossiers">
+                <ion-item detail (click)="goToStep(dossier.dossierId)">
+                  <ion-avatar>
+                    <span class="icon-man text-dark  fsize14"></span>
+                  </ion-avatar>
+                  <ion-label>
+
+                    <h3>{{dossier["lastName"]}} {{dossier["firstName"]}} </h3>
+                    <ion-badge class="p-6-16" slot="start" color="medium" class="color-num-dossier">N°:
+                      00000{{dossier["dossierId"]}}
+                    </ion-badge>
+                  </ion-label>
+                  <!-- <ion-button slot="end" strong="true" shape="round">
                 <ion-icon name="refresh"></ion-icon>dfsdfsd
               </ion-button> -->
-              <ion-chip>
-                <ion-row>
-                  <ion-col size="12"><small>STATUS</small></ion-col>
-                  <ion-col size="12">
-                    <span [ngClass]="{ 
+                  <ion-chip>
+                    <ion-row>
+                      <ion-col size="12"><small>STATUS</small></ion-col>
+                      <ion-col size="12">
+                        <span [ngClass]="{ 
                   'icon-doctor-sos-2':dossier['diagnostic']=== 'SOS',
                   'icon-heart-st':dossier['diagnostic'] === 'ST',
                   'icon-doss-edit':dossier['diagnostic'] === 'RAS' 
                 }" class="text-dark  fsize14"></span>
 
-                    <ion-note [ngClass]="{ 
+                        <ion-note [ngClass]="{ 
+                    'colorNo':dossier['diagnostic'] === null,
                     'colorSos':dossier['diagnostic'] === 'SOS',
                     'colorSt':dossier['diagnostic'] === 'ST',
                     'colorRas':dossier['diagnostic'] === 'RAS' }">
-                      <b>
-                        {{dossier["diagnostic"] === null? "EN COURS" :
+                          <b>
+                            {{dossier["diagnostic"] === null? "EN COURS" :
                         dossier["diagnostic"] }}</b>
-                    </ion-note>
-                  </ion-col>
-                </ion-row>
-              </ion-chip>
-            </ion-item>
-          </div>
-        </ion-list>
+                        </ion-note>
+                      </ion-col>
+                    </ion-row>
+                  </ion-chip>
+                </ion-item>
+              </div>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
 
-    <!-- is not exist dossier-->
 
-    <ion-row *ngIf="!isExistDossier">
+    <!-- INFO EMPTY DOSSIER-->
+
+    <ion-row *ngIf="!isExistDossier" class="info-empty-dossier">
       <ion-col class="ion-no-padding">
-        <ion-card class="ion-margin">
-          <ion-card-content class="ion-padding ion-margin text-gray300">
-            <span class="icon-diagnostic  fsize-40em"></span>
-            <h3 class="fsize-12em">
-              Vous n'avez aucun patient en attente de diagnostic.
-            </h3>
-            <ion-button slot="end" strong="true" (click)="regrechListDossier()" shape="round">
+        <ion-card class="ion-margin ">
+          <ion-card-content class="">
+            <ion-list lines="none" class="">
+              <ion-item>
+                <ion-avatar slot="start">
+                  <span class="icon-diagnostic  fsize-30em"></span>
+                </ion-avatar>
+                <ion-label class="ion-text-wrap">
+                  <ion-text>
+                    <h3>
+                      Pour l'instant vous n'avez aucun patient en attente de diagnostic.
+                    </h3>
+                  </ion-text>
+
+                  <ion-text>
+                    <h6 class="error-message"> Veuillez rafraîchir pour actualiser les données</h6>
+                  </ion-text>
+
+
+                </ion-label>
+              </ion-item>
+              <!-- <ion-button slot="end" strong="true" (click)="refrechListDossier()" shape="round">
               <ion-icon name="refresh"></ion-icon>
-            </ion-button>
+            </ion-button> -->
+
+              <!-- <ion-item>              
+                <ion-button slot="end" Fill='solid' shape='round' tappable  class="icon-detail"
+                (click)="refrechListDossier()" type="button" >
+                  <ion-icon slot="icon-only" name="refresh"></ion-icon>
+                </ion-button>
+               
+                <ion-label class="ion-text-wrap">
+                  <ion-text>
+                    <h6 class="error-message"> Veuillez rafraîchir pour actualiser les données</h6>
+                  </ion-text>
+                </ion-label>
+              </ion-item> -->
+
+            </ion-list>
           </ion-card-content>
         </ion-card>
+
+
       </ion-col>
     </ion-row>
 

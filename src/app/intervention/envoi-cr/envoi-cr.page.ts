@@ -31,12 +31,7 @@ export class EnvoiCrPage implements OnInit {
   itemsCR: any;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
-<<<<<<< HEAD
-
-  afficheListeCr = false;
-=======
   afficheListeCr = 0;
->>>>>>> H: notification reception
   afficheReponseMed = 0;
   demandeAvisId = 0;
   dataPatient: DossierModel;

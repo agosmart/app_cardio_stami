@@ -23,6 +23,8 @@ export class HomePage implements OnInit {
   isLoading = false;
   objectDossiers: Array<DossierModel>;
   objectDossier: DossierModel;
+
+  isRefresh = false;
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -42,23 +44,26 @@ export class HomePage implements OnInit {
     if (this.sglob.getInitFetch()) {
       this.objectDossiers = [];
       this.isExistDossier = false;
-      this.listingDossier();
+      this.listingDossier(event);
       this.sglob.updateInitFetchHome(false);
       console.log(" home ionViewDidEnter after", this.sglob.getInitFetch());
     }
   }
   ngOnInit() {
     this.etatDossier = 0; // dossiers ouverts
-    this.listingDossier();
+    this.listingDossier(event);
   }
-  regrechListDossier() {
+  refrechListDossier() {
     this.objectDossiers = [];
+    this.isRefresh = true;
     this.listingDossier();
   }
 
+ 
+
   goToAddDossier() {
     // console.log("go to add");
-    this.router.navigate(["inscription"]);
+    this.router.navigate(['inscription']);
   }
 
   // ------ Api service login ---------------

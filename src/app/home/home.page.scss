@@ -27,7 +27,9 @@
 
   ion-card {
     background-color: #ffffff;
-    margin-top: 150px;
+   // margin-top: 198px;
+   margin: 0;
+   margin-bottom: 50px;
   }
   ion-content {
     --background: rgba(236, 240, 244, 0.35);
@@ -46,6 +48,7 @@
     }
     ion-note {
       color: #134149;
+      
     }
 
     ion-row{
@@ -57,24 +60,69 @@
   }
 
   ion-item-divider {
+    --inner-padding-end: 16px;
     ion-label {
       padding-right: 4px;
       padding-left: 0;
     }
+    ion-avatar{
+      height: auto;
+      width: auto;
+      display: inherit;
+    }
+    ion-button {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      width: 42px;
+      height: 42px;
+     
+      &.icon-detail {
+        //--background: #fff;
+        ion-icon {
+          padding: 0;
+        }
+      }       
+    }
   }
+  
 }
 
 .home-page {
+
+  .bgNo{
+    background:#f1f2f3;
+  }
+  .bgSos{
+    background:#f9f1f0;
+  }
+  .bgRas {
+    background:#e9f7ee;
+  }
+  .bgSt {
+    background:#eaf5f4;
+  }
+
+
+
+  .colorNo{
+    color: #134149;
+    font-size: 0.75rem;
+  }
   .colorSos {
     color: #01a5c1;
+    font-size: 0.85rem;
   }
   .colorRas {
     color: #009444;
+    font-size: 0.85rem;
   }
   .colorSt {
     color: #ef4136;
+    font-size: 0.85rem;
   }
 
+  
   background: #fff;
   .block-add-dossier {
     position: fixed;
@@ -83,6 +131,67 @@
   }
   .list-dossier-cours {
     // margin-top: 115px;
-    margin-top: 120px;
+   // margin-top: 180px;
+    margin: 180px 0 0 0;
+    ion-item{
+      --padding-start: 0;
+      ion-avatar{
+        width: 32px;
+        margin-left: 16px;
+      }
+    }
+  
+   
+  }
+}
+
+.info-empty-dossier{
+  padding: 20px 0;
+  margin: 0;
+  ion-card{
+    margin-top: 150px;
+    padding: 16px;
+  }
+  ion-card-content {
+    padding: 16px 0;
+
+    
+  }
+  // ion-chip {
+  //   height: 62px;
+  //   ion-icon {
+  //     width: 42px;
+  //     height: 42px;
+  //     color: #95a5a7;
+  //   }
+  // }
+  h3{
+    padding: 8px 10px;
+  }
+  ion-item {
+    --inner-padding-end: 0;
+    color: #4d5867;
+    ion-label {
+      margin: 0;
+      h6{
+        text-align: center;
+        padding: 0;
+      }
+    }
+    // ion-button {
+    //   margin: 8px;
+    //   padding: 0;
+    //   text-align: center;
+    //   width: 42px;
+    //   height: 42px;
+      
+    //   &.icon-detail {
+    //     //--background: #fff;
+    //     ion-icon {
+    //       padding: 0;
+    //     }
+    //   }       
+    // }
+    
   }
 }
