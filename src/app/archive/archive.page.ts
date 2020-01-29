@@ -89,6 +89,8 @@ export class ArchivePage implements OnInit {
     });
   }
 
+  openImageEcg() {}
+
   infoPatientDossier(idPatient) {
     this.loadingCtrl
       .create({ keyboardClose: true, message: "Opération en cours..." })

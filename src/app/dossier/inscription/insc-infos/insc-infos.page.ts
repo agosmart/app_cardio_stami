@@ -27,10 +27,8 @@ export class InscInfosPage implements OnInit {
   idEtab: number;
   token: string;
   idDossier: number;
-  stepId = 5; // etape Infos Dossier
+  stepId = 5;
   objectInsc: Array<object>;
-  //dataPatient: DossierModel;
-  //dataPatient: DossierModel;
   dataPatient: object;
   objectRecu: object;
   idDossierToGet: any;
@@ -39,6 +37,7 @@ export class InscInfosPage implements OnInit {
   isLoading = false;
   returnAddInfoDossier: Array<DossierModel>;
   urlEcg: string;
+  dThorasicVal = 0;
 
   get diabetes() {
     return this.inscriptionFormInfos.get("diabetes");
@@ -126,9 +125,12 @@ export class InscInfosPage implements OnInit {
         // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
         this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
         this.dataPatient = this.objectRecu;
+        if (this.dataPatient["dThorasic"] === true) {
+          this.dThorasicVal = 1;
+        }
         console.log("===== dataPatient recu infos  ===", this.dataPatient);
+        console.log("===== dThorasicVal recu infos  ===", this.dThorasicVal);
         this.urlEcg = this.dataPatient["ecgImage"];
-        console.log("===== url oninit", this.urlEcg);
       }
       //idDossier
       if (!paramMap.has("idDossier")) {
@@ -152,7 +154,7 @@ export class InscInfosPage implements OnInit {
   }
   radioChecked() {
     // this.cheked = this.pretreatmentFormInfos.value.bolus;
-    console.log(this.inscriptionFormInfos.value.bolus);
+    //  console.log(this.inscriptionFormInfos.value.bolus);
   }
   // ===============  PUBLIC FUNCTIONS ===============
 
@@ -236,22 +238,18 @@ export class InscInfosPage implements OnInit {
         }
 
         if (this.inscriptionFormInfos.value.diabetes === "") {
-          console.log("diabet vide");
           this.inscriptionFormInfos.value.diabetes = "0";
         }
 
         if (this.inscriptionFormInfos.value.dyslip === "") {
-          console.log("dyslip vide");
           this.inscriptionFormInfos.value.dyslip = "0";
         }
 
         if (this.inscriptionFormInfos.value.sca === "") {
-          console.log("sca vide");
           this.inscriptionFormInfos.value.sca = "0";
         }
 
         if (this.inscriptionFormInfos.value.angioCoran === "") {
-          console.log("angioCoran vide");
           this.inscriptionFormInfos.value.angioCoran = "0";
         }
 
@@ -279,7 +277,6 @@ export class InscInfosPage implements OnInit {
           resData => {
             this.isLoading = false;
             this.returnAddInfoDossier = resData.data;
-            console.log("envoie vers diag >>>>> ", this.dataPatient);
             loadingEl.dismiss();
             if (+resData.code === 201) {
               this.router.navigate([

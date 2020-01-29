@@ -43,4 +43,6 @@ export class DetailArchivePage implements OnInit {
       }
     });
   }
+
+  openImageEcg() {}
 }

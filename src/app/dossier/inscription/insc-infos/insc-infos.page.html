@@ -104,11 +104,9 @@
                 </ion-text>
                 <ion-note
                   slot="end"
-                  color="{{dataPatient['dThorasic']? 'danger':'secondary' }}"
+                  color="{{dThorasicVal === 0? 'danger':'secondary' }}"
                 >
-                  <b
-                    >{{dataPatient['dThorasic']==='1'?'OUI' :'NON' }}</b
-                  ></ion-note
+                  <b>{{dThorasicVal=== 1 ?'OUI' :'NON' }}</b></ion-note
                 >
               </ion-item>
               <ion-item lines="full">

@@ -11,6 +11,9 @@ import {
 import { EtabResponseData } from "src/app/models/etab.response";
 import { DossierModel } from "src/app/models/dossier.model";
 import { Observable } from "rxjs";
+import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
+import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
+import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 
 @Component({
   selector: "app-engio",
@@ -32,6 +35,14 @@ export class EngioPage implements OnInit {
   itemsCR: any;
   etabName: string;
   urlEcg: string;
+  lastCrName: string;
+  reviewsDecision = false;
+  demandeAvisId = 0;
+  afficheListeCr = false;
+  afficheReponseMed = false;
+  reviewsList = 0;
+  thromb = true;
+  dataReponsesAvis: Array<ReponseAvisModel>;
 
   constructor(
     private srvApp: ServiceAppService,
@@ -54,6 +65,8 @@ export class EngioPage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
+        this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+
         this.dossierId = this.dataPatient.dossierId;
         this.resultName = this.dataPatient.resultName;
         this.idCr = this.dataPatient.lastCrId;
@@ -65,7 +78,15 @@ export class EngioPage implements OnInit {
           this.srvApp.stepUpdatePage(this.dossierId, 15, 14, this.token);
         }
 
-        this.getlisteCrById();
+        if (this.demandeAvisId > 0) {
+          this.afficheListeCr = false;
+          this.reviewsDecision = true;
+          this.thromb = false;
+          this.reponseAvisCR(this.demandeAvisId);
+        } else {
+          // this.listeCr();
+          this.getlisteCrById();
+        }
       }
       // 1 c les CR  2 CUDT
     });
@@ -93,6 +114,7 @@ export class EngioPage implements OnInit {
           resData => {
             loadingEl.dismiss();
             if (+resData.code === 200) {
+              this.afficheListeCr = true;
               this.itemsCR = resData.data;
               console.log("List Etab CR :", this.itemsCR);
               // ---------- DEMO DURATION ----------
@@ -167,6 +189,136 @@ export class EngioPage implements OnInit {
           item.open = false;
         });
     }
+  }
+
+  demandeAvisCr(idCr: number, etabName: string, index: number) {
+    if (this.idCr > 0) {
+      this.sglob.showAlert("Erreur ", "Une demande avis a été déjà envoyé");
+    } else {
+      this.toggleSelectionCr(idCr, etabName, index);
+      // -------------------------------------------
+      console.log("demandeAvisCr idrc ===== ", idCr);
+
+      this.dataPatient.lastCrName = etabName;
+      this.lastCrName = etabName;
+      this.reviewsDecision = true;
+
+      this.loadingCtrl
+        .create({ keyboardClose: true, message: "Opération  en cours..." })
+        .then(loadingEl => {
+          loadingEl.present();
+
+          const params = {
+            doctorId: this.idUser,
+            cudtId: this.idEtab,
+            crId: idCr,
+            dossierId: this.dossierId,
+            motifId: 3
+          };
+          // ---- Call demandeAvis API
+          const authObs: Observable<DemandeAvisResponseData> = this.srvApp.demandeAvis(
+            params,
+            this.token
+          );
+          authObs.subscribe(
+            // :::::::::::: ON RESULT ::::::::::
+            resData => {
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+              if (+resData.code === 201) {
+                this.afficheListeCr = false;
+                this.afficheReponseMed = true;
+                this.thromb = false;
+
+                // ------------------------------------------
+                this.demandeAvisId = resData.data.demandeId;
+                this.dataPatient["LastDemandeAvisId"] = this.demandeAvisId;
+              } else {
+                this.sglob.showAlert("Erreur ", resData.message);
+              }
+            },
+
+            // ::::::::::::  ON ERROR ::::::::::::
+            errRes => {
+              console.log(errRes);
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+              // --------- Show Alert --------
+              if (errRes.error.errors != null) {
+                this.sglob.showAlert("Erreur ", errRes.error.errors.email);
+              } else {
+                this.sglob.showAlert(
+                  "Erreur ",
+                  "Prblème d'accès au réseau, veillez vérifier votre connexion"
+                );
+              }
+            }
+          );
+        });
+    }
+
+    //0
+  }
+
+  reponseAvisCR(demandeAvisId: number) {
+    console.log("*****reponseAvis cr ******", demandeAvisId);
+
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: "opération  en cours..." })
+      .then(loadingEl => {
+        loadingEl.present();
+        // ---- Call reponseDemandeAvis API
+        const authObs: Observable<ReponseAvisResponseData> = this.srvApp.reponseDemandeAvis(
+          demandeAvisId,
+          this.token
+        );
+        authObs.subscribe(
+          // :::::::::::: ON RESULT ::::::::::
+          resData => {
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            if (+resData.code === 200) {
+              this.dataReponsesAvis = resData.data;
+
+              console.log("this.dataReponsesAvis === ", this.dataReponsesAvis);
+
+              // ------- HIDE CR LIST / SHOW DOCTORS REVIEWS LIST-------
+              this.afficheListeCr = false;
+              this.afficheReponseMed = true;
+              this.reviewsList = this.dataReponsesAvis.length;
+
+              console.group("==== DATA reponseAvisCR ====");
+              console.log("this.afficheListeCr ::::", this.afficheListeCr);
+              console.log(
+                " this.afficheReponseMed ::::",
+                this.afficheReponseMed
+              );
+              console.log(" this.reviewsList ::::", this.reviewsList);
+              console.groupEnd();
+
+              // ------------------------------------------
+            } else {
+              this.sglob.showAlert("Erreur ", resData.message);
+            }
+          },
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.sglob.showAlert("Erreur ", errRes.error.errors.email);
+            } else {
+              this.sglob.showAlert(
+                "Erreur ",
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+          }
+        );
+      });
   }
 
   async goToCR() {

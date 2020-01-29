@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
-  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "", redirectTo: "onboard", pathMatch: "full" },
   {
     path: "home",
     loadChildren: () => import("./home/home.module").then(m => m.HomePageModule)
@@ -192,10 +192,6 @@ const routes: Routes = [
       import("./archive/detail-archive/detail-archive.module").then(
         m => m.DetailArchivePageModule
       )
-  },
-  {
-    path: "test",
-    loadChildren: () => import("./test/test.module").then(m => m.TestPageModule)
   }
 ];
 

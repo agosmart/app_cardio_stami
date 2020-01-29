@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
@@ -86,7 +86,7 @@
   <!-- ------------------- -->
 
   <ion-grid class="ion-no-padding">
-    <ion-row *ngIf="!afficheMed" class="ion-no-padding">
+    <ion-row *ngIf="afficheListeCr" class="ion-no-padding">
       <ion-col size="12" class="ion-no-margin">
         <ion-list>
           <ion-item-divider>
@@ -100,7 +100,7 @@
             lines="full"
             *ngFor="let item of itemsCR; let i = index"
             tappable
-            (click)="toggleSelectionCr(item.etabId,  item.etabName , i)"
+            (click)="demandeAvisCr(item.etabId, item.etabName , i)"
             color="tansparent"
             [ngClass]="{'section-active': item.open, 'section': !item.open}"
           >
@@ -121,9 +121,73 @@
         </ion-list>
       </ion-col>
     </ion-row>
+
+    <!-- LISTE DES  DOCTORS'S REVIEWS -->
+
+    <ng-container *ngIf="afficheReponseMed">
+      <ion-row>
+        <ion-col size="12">
+          <!-- -->
+          <ion-list class="ion-padding">
+            <ion-item-divider>
+              <ion-avatar>
+                <span class="icon-cr text-dark  text17 "></span>
+              </ion-avatar>
+              <ion-text>
+                <b class="text-gray500 text09">AVIS DES MEDECINS</b>
+              </ion-text>
+              <ion-button
+                slot="end"
+                (click)="reponseAvisCR(demandeAvisId)"
+                shape="round"
+              >
+                <ion-icon name="refresh"></ion-icon>
+              </ion-button>
+            </ion-item-divider>
+            <!-- NO REVIEWS -->
+            <ng-container *ngIf="!reviewsList">
+              <ion-item lines="none" class="ion-padding">
+                <ion-text class="ion-text-center">
+                  <span class="icon-conditions text-dark text17"></span>
+                  Pour l'instant, vous n'avez reçu aucune réponse à votre
+                  demande, veuillez rafraîchir pour actualiser les données.
+                </ion-text>
+              </ion-item>
+            </ng-container>
+            <!-- EXIST  REVIEWS -->
+            <ng-container *ngIf="reviewsList">
+              <ion-item
+                lines="full"
+                *ngFor="let itemReponse of dataReponsesAvis"
+                class="ion-no-padding"
+              >
+                <ion-label class="ion-text-wrap">
+                  <span class="icon-doctor-men3  text-dark  text15"></span>
+                  {{itemReponse.doctor}}
+                </ion-label>
+                <ion-chip color="secondary" slot="end" class="ion-no-padding">
+                  <span
+                    class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
+                  ></span>
+                  <ion-note
+                    [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }"
+                  >
+                    <b
+                      >{{itemReponse["reponse"] === null? "..." :
+                      itemReponse["reponse"] }}</b
+                    >
+                  </ion-note>
+                </ion-chip>
+              </ion-item>
+            </ng-container>
+            <!-- -->
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ng-container>
   </ion-grid>
   <!-- ------------ -->
-  <ion-grid fixed class="intervention ion-no-margin " *ngIf="itemsCR">
+  <ion-grid fixed class="intervention ion-no-margin ">
     <ion-row>
       <ion-col size="12" class="ion-text-left">
         <ion-grid class="interv-btn-group ion-text-left">
@@ -134,7 +198,7 @@
                 fill="solid"
                 class="gocr"
                 tappable
-                (click)="showAlertConfirme('CR')"
+                (click)="showAlertConfirme()"
               >
                 <span class="icon-int-ras "></span>
                 <ion-text>
@@ -143,7 +207,7 @@
               </ion-button>
             </ion-col>
 
-            <ion-col size="12">
+            <ion-col size="12" *ngIf="thromb">
               <ion-button
                 expand="block"
                 fill="solid"

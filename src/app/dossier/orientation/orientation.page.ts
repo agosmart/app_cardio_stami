@@ -31,11 +31,11 @@ export class OrientationPage implements OnInit {
   itemsCR: any;
   idCr: number;
   lastCrName: string;
+  reviewsList = 0;
   urlEcg: string;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
 
-  reviewsList = 0;
   afficheListeCr = false;
   reviewsDecision = false;
   afficheReponseMed = false;

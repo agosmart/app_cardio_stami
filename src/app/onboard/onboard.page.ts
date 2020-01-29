@@ -39,7 +39,17 @@ export class OnboardPage implements OnInit {
   }
 
   goToHome(data: any) {
-    this.sglob.updateInfoUser(data.IdUser, data.token, data.idEtab);
+    /*idUser: 95, token: "mqKcny0Mmk9zXqPXJLr0n8uZ8yNUnxZzyYNTKVatuErUuXzgyxg45wdxrB20", idEtab: 3}
+idEtab: 3
+idUser: 95
+token: "mqKcny0Mmk9zXqPXJLr0n8uZ8yNUnxZzyYNTKVatuErUuXzgyxg45wdxrB20"
+    console.log("idEtab", data.idEtab);
+    console.log("idUser", data.IdUser);
+    console.log("token", data.token);
+
+    console.log("data", data);*/
+
+    this.sglob.updateInfoUser(data.idUser, data.token, data.idEtab);
     this.router.navigate(["home"]);
   }
 
