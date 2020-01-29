@@ -68,6 +68,7 @@ export class OrientationPage implements OnInit {
         this.dossierId = this.dataPatient.dossierId;
         this.urlEcg = this.dataPatient["ecgImage"];
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+        this.idCr = this.dataPatient.lastCrId;
         console.log("*************demandeAvisId :", this.demandeAvisId);
         const motifId = this.dataPatient.lastMotifId;
 
@@ -158,6 +159,7 @@ export class OrientationPage implements OnInit {
     console.log("index ====> ", index);
     this.etabName = etabName;
     this.idCr = idCr;
+    this.dataPatient.lastCrId = idCr;
 
     // # ====== Add color to selected CR item ==========
     this.itemsCR[index].open = !this.itemsCR[index].open;

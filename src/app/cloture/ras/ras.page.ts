@@ -31,7 +31,7 @@ export class RasPage implements OnInit {
   isCloture: boolean;
   returnClotureDossier: ClotureModel;
 
-  ecgImage = "/assets/images/ecg.jpg";
+  urlEcg: string;
 
   constructor(
     private srvApp: ServiceAppService,
@@ -61,6 +61,7 @@ export class RasPage implements OnInit {
           " DIAGNOSTIC >>>>> dataPatients ::: ",
           this.dataPatient["lastName"]
         );
+        this.urlEcg = this.dataPatient["ecgImage"];
       }
       if (!paramMap.has("idDossier")) {
         this.router.navigate(["/home"]);
@@ -126,11 +127,10 @@ export class RasPage implements OnInit {
       });
   }
 
-  async openImageEcg(image: any, event) {
-    console.log("image ::::", image);
+  async openImageEcg() {
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: image }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

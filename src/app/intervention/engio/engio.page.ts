@@ -56,6 +56,7 @@ export class EngioPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
         this.resultName = this.dataPatient.resultName;
+        this.idCr = this.dataPatient.lastCrId;
         this.urlEcg = this.dataPatient["ecgImage"];
         console.log(" gocr  >>>>> dataPatients ::: ", this.dataPatient);
         console.log("resultName", this.resultName);
@@ -155,6 +156,7 @@ export class EngioPage implements OnInit {
 
     this.etabName = etabName;
     this.idCr = idCr;
+    this.dataPatient.lastCrId = idCr;
 
     // # ====== Add color to selected CR item ==========
     this.itemsCR[index].open = !this.itemsCR[index].open;

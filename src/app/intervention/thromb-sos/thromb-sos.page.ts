@@ -35,7 +35,7 @@ export class ThrombSosPage implements OnInit {
   afficheReponseMed = 0;
   afficheButtonCR = 0;
   lastCrName: string;
-  //isLoading = false;
+  idCr: number;
 
   demandeAvisId = 0;
   etabName = "abc";
@@ -68,6 +68,7 @@ export class ThrombSosPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.dossierId = this.dataPatient.dossierId;
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+        this.idCr = this.dataPatient.lastCrId;
         const motifId = this.dataPatient.lastMotifId;
         this.urlEcg = this.dataPatient["ecgImage"];
         if (this.dataPatient.stepId !== 19) {
@@ -179,6 +180,8 @@ export class ThrombSosPage implements OnInit {
     this.toggleSelectionCr(index);
     // -------------------------------------------
     console.log("demandeAvisCr idrc ", idCr);
+
+    this.dataPatient.lastCrId = idCr;
     this.dataPatient.lastCrName = etabName;
     this.lastCrName = etabName;
     this.afficheButtonCR = 1;

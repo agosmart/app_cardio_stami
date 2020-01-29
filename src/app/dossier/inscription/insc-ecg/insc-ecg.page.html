@@ -115,7 +115,7 @@
               <ion-icon slot="start" name="pulse"></ion-icon>Ajouter ECG
             </ion-button> -->
 
-            <ion-row class=" bg-light  ion-padding ">
+            <ion-row class=" bg-light  ion-padding " *ngIf="!isEcg">
               <ion-col
                 size="12"
                 class="ion-padding-top ion-padding-bottom ion-text-center"
@@ -133,6 +133,7 @@
               </ion-col>
             </ion-row>
 
+            <!-- <div class="ion-margin-top" *ngIf="isEcg"> -->
             <div class="ion-margin-top">
               <ion-button
                 shape="round"

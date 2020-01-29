@@ -69,8 +69,8 @@ export class ThrombProtocPage implements OnInit {
 
   // -------------------------------------
   protocolFormInfos = this.formBuilder.group({
-    tpa: ["", [Validators.required]],
-    tnktpa: ["", [Validators.required]],
+    tpa: ["", ""],
+    tnktpa: ["", ""],
     consentement: [true, [Validators.pattern("true")]]
   });
 

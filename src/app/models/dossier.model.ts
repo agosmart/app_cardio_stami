@@ -20,7 +20,7 @@ export interface DossierModel {
   startAt: string;
   statusDossier: number;
   stepId: number;
-
+  lastCrId: number;
   // info dossier
   page: string;
   diagnostic: string;

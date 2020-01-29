@@ -96,13 +96,25 @@ export class ThrombEcgPage implements OnInit {
 
   valider() {
     console.log(" test ===========>isEcg");
-    if (this.isEcg) {
+    if (!this.isEcg) {
       console.log("isEcg");
-      this.startUpload();
+      //  this.startUpload();
+      this.fortesting();
       //this.startUpload1();
     } else {
       this.sglob.showAlert("Erreur ", "veuiller faire un ECG");
     }
+  }
+
+  fortesting() {
+    this.dataPatient.ecgImage2 = "11_1577693063.png";
+    this.dataPatient.ecgAfficher = "11_1577693063.png";
+
+    this.router.navigate([
+      "./thromb-protoc",
+      this.dossierId,
+      JSON.stringify(this.dataPatient)
+    ]);
   }
 
   startUpload() {

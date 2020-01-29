@@ -75,6 +75,7 @@ export class LastDrugPage implements OnInit {
         this.idDossier = this.dataPatient.dossierId;
         this.resultId = this.dataPatient.resultId;
         this.stepId = this.dataPatient.stepId;
+        this.idCr = this.dataPatient.lastCrId;
         this.resultName = this.dataPatient.resultName;
         console.log(" plavix stepId ::: ", this.stepId);
         if (this.stepId !== 16) {

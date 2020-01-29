@@ -69,14 +69,19 @@ export class EnvoiCrPage implements OnInit {
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         this.lastCrName = this.dataPatient.lastCrName;
         this.motifId = this.dataPatient.lastMotifId;
+        this.idCr = this.dataPatient.lastCrId;
         this.urlEcg = this.dataPatient["ecgImage"];
-        console.log("taille ecg", this.dataPatient.ecgData.length);
-        if (this.dataPatient.ecgData.length === 2) {
-          this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
-          if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
-            this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+        if (this.dataPatient.ecgData) {
+          console.log("taille ecg", this.dataPatient.ecgData.length);
+          if (this.dataPatient.ecgData.length === 2) {
+            this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+            if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+              this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+            }
+            console.log("urlEcg2", this.urlEcg2);
           }
-          console.log("urlEcg2", this.urlEcg2);
+        } else {
+          this.urlEcg2 = this.dataPatient.ecgImage2;
         }
         if (this.dataPatient.stepId !== 13) {
           this.srvApp.stepUpdatePage(
@@ -165,6 +170,7 @@ export class EnvoiCrPage implements OnInit {
       console.log("index ====> ", index);
       this.etabName = etabName;
       this.idCr = idCr;
+      this.dataPatient.lastCrId = this.idCr;
 
       // # ====== Add color to selected CR item ==========
       this.itemsCR[index].open = !this.itemsCR[index].open;
@@ -332,7 +338,6 @@ export class EnvoiCrPage implements OnInit {
             ) {
               // this.dataPatient.stepId = 13;
 
-              // this.dataPatient.resultId = this.resultId;
               this.router.navigate([
                 "/last-drug",
                 this.dossierId,

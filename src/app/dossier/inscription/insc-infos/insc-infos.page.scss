@@ -23,14 +23,14 @@
     // font-size: 1.4em;
     // float: left;
     // width: 1.4em;
-    margin-right: 5px;    
+    margin-right: 5px;
     padding: 0;
     margin: 0;
   }
   ion-icon.i-card {
     color: #929eaa;
   }
-  
+
   button.button-native {
     padding: 0 5px !important;
   }
@@ -42,9 +42,13 @@
 }
 
 .insc-infos {
-   ion-card-content.md.card-content-md.hydrated {
+  ion-card-content.md.card-content-md.hydrated {
     //padding: 10px 24px 10px 10px;
     padding: 10px;
+  }
+
+  .bloc {
+    margin-bottom: 100px;
   }
 
   ion-list.info ion-note {
@@ -55,8 +59,7 @@
   ion-list.info ion-label {
     font-size: 0.9rem;
   }
-  .btn-submit{
-
+  .btn-submit {
     position: fixed;
     bottom: 0;
     z-index: 1000;
@@ -68,6 +71,4 @@
     background: #fff;
     padding-bottom: 16px;
   }
-
-  
 }

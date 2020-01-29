@@ -67,7 +67,7 @@
                 </ion-row>
               </ion-col>
 
-              <ion-col size="2" class="ion-no-padding">
+              <!-- <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
                     (click)="openImageEcg(urlEcg)"
@@ -78,7 +78,7 @@
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                 </ion-col>
-              </ion-col>
+              </ion-col> -->
             </ion-row>
           </ion-card-content>
         </ion-card>
@@ -88,15 +88,25 @@
     <ion-row class="ion-no-padding">
       <ion-col size="12">
         <ion-list class="ion-no-padding">
-          <ion-item *ngIf="isEcg">
+          <!-- <ion-item *ngIf="isEcg">
             <ion-thumbnail slot="start">
               <ion-img [src]="ecgAfficher"></ion-img>
             </ion-thumbnail>
             <ion-button slot="end" fill="clear" (click)="deleteImage()">
               <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-button>
+          </ion-item> -->
+
+          <ion-item *ngIf="isEcg">
+            <ion-thumbnail slot="start">
+              <ion-img [src]="ecgAfficher"></ion-img>
+            </ion-thumbnail>
+            <ion-button slot="end" fill="clear" (click)="deleteImage()">
+              <ion-icon slot="_icon-only" name="trash"> </ion-icon>
+            </ion-button>
           </ion-item>
-          <ion-row class=" bg-light  ion-padding ">
+
+          <ion-row class=" bg-light  ion-padding " *ngIf="!isEcg">
             <ion-col
               size="12"
               class="ion-padding-top ion-padding-bottom ion-text-center"
@@ -114,6 +124,7 @@
             </ion-col>
           </ion-row>
 
+          <!-- <div class="ion-margin-top" *ngIf="isEcg"> -->
           <div class="ion-margin-top">
             <ion-button
               shape="round"

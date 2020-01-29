@@ -154,11 +154,36 @@ export class InscEcgPage implements OnInit {
     // }
   }
   submitEcg() {
-    if (this.isEcg) {
-      this.startUpload();
+    if (!this.isEcg) {
+      //this.startUpload();
+      this.fortesting();
     } else {
       this.sglob.showAlert("Erreur ", "veuiller faire l'ECG");
     }
+  }
+
+  fortesting() {
+    this.idDossier = 122;
+    // this.idDossier = res.data[0]["idDossier"];
+    this.dataPatient.dossierId = this.idDossier;
+    this.dataPatient.weight = this.EcgForm.value.poids;
+    this.dataPatient.doctorId = this.idUser;
+    this.dataPatient.dThorasic = this.EcgForm.value.dThorasic;
+    this.dataPatient.patientId = 78;
+    this.dataPatient.etabId = this.idEtab;
+    this.dataPatient.ecgImage = "107_1580293391.png";
+    this.dataPatient.ecgAfficher = "107_1580293391.png";
+    this.dataPatient.startAt = this.startAt;
+    this.dataPatient.birthDay = "2017-01-28";
+    this.dataPatient.birthDayFr = "28-01-2017";
+    this.dataPatient.age = 3;
+    console.log(" idDossier", this.idDossier);
+    console.log(" dataPatient", this.dataPatient);
+    this.router.navigate([
+      "./insc-infos",
+      this.idDossier,
+      JSON.stringify(this.dataPatient)
+    ]);
   }
   startUpload() {
     this.file
@@ -237,6 +262,9 @@ export class InscEcgPage implements OnInit {
           this.dataPatient.ecgImage = this.imageData;
           this.dataPatient.ecgAfficher = this.ecgAfficher;
           this.dataPatient.startAt = this.startAt;
+          this.dataPatient.birthDay = res.data["birthDay"];
+          this.dataPatient.birthDayFr = res.data["birthDayFr"];
+          this.dataPatient.age = res.data["age"];
           console.log(" idDossier", this.idDossier);
           console.log(" dataPatient", this.dataPatient);
           this.router.navigate([
