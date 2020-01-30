@@ -222,8 +222,8 @@ export class InscEcgPage implements OnInit {
       formData.append("weight", this.EcgForm.value.poids.toString());
       formData.append("stepId", this.stepId.toString());
       formData.append("patientId", this.idPatient.toString());
-      formData.append("lastName", this.dataPatient["firstName"]);
-      formData.append("firstName", this.dataPatient["lastName"]);
+      formData.append("lastName", this.dataPatient["lastName"]);
+      formData.append("firstName", this.dataPatient["firstName"]);
       formData.append("birthday", this.dataPatient["birthDay"]);
       formData.append("gender", this.gender.toString());
       this.uploadImageData(formData);
