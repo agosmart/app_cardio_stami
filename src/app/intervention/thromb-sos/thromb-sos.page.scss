@@ -79,14 +79,25 @@
         width: auto;
         height: auto;
       }
-
+      ion-text{
+        h6{
+          padding: 0;
+          margin: 0;
+          font-size: 0.9rem;
+          color: #1194c6;
+        }
+  
+      }
 
       ion-button{
         width: 42px;
         height: 42px;
         margin-left: 10px;
       }
+      ion-icon{    position: absolute;}
     }
+
+
     ion-item {
       padding: 0;
       --inner-padding-end : 8px;
@@ -102,6 +113,16 @@
         //   --ion-color-contrast: #bee3ef;
         ion-chip {
           background-color: #ffffff;
+        }
+      }
+
+      ion-text{
+        color: #4e5967;
+        h6{
+          padding: 0;
+          margin: 0;
+          font-size: 0.9rem;
+          
         }
       }
 

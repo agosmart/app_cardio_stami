@@ -31,7 +31,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <ion-label>
                       <ion-badge class="p-6-16" slot="start" color="medium"
-                        >Dossier N°: {{dossierId}}</ion-badge
+                        >N°: 2001-00035</ion-badge
                       >
                     </ion-label>
                   </ion-col>
@@ -39,6 +39,7 @@
 
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
+                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
                     {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
@@ -47,20 +48,15 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
                     {{dataPatient['birthDayFr']}}
-
-                    <ion-chip outline color="secondary">
-                      <ion-label class="bold"
-                        >{{dataPatient['age']}} ans
-                      </ion-label>
-                    </ion-chip>
-
-                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
+                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
@@ -77,7 +73,7 @@
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                   <ion-button
-                    (click)="openImageEcg(urlEcg2)"
+                    (click)="openImageEcg(urlEcg)"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"

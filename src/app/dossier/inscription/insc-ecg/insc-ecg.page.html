@@ -26,7 +26,7 @@
         <ion-col size="12" class="ion-no-padding">
           <ion-card class="ion-margin" color="light">
             <ion-card-content class="text10 ">
-              <!-- <ion-row class="ion-no-padding">
+              <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-label>
                     <ion-badge class="p-6-16" slot="start" color="medium"
@@ -34,7 +34,7 @@
                     >
                   </ion-label>
                 </ion-col>
-              </ion-row> -->
+              </ion-row>
 
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
@@ -115,7 +115,7 @@
               <ion-icon slot="start" name="pulse"></ion-icon>Ajouter ECG
             </ion-button> -->
 
-            <ion-row class=" bg-light  ion-padding " *ngIf="!isEcg">
+            <ion-row class=" bg-light  ion-padding ">
               <ion-col
                 size="12"
                 class="ion-padding-top ion-padding-bottom ion-text-center"
@@ -133,8 +133,7 @@
               </ion-col>
             </ion-row>
 
-            <div class="ion-margin-top" *ngIf="isEcg">
-              <!-- <div class="ion-margin-top"> -->
+            <div class="ion-margin-top">
               <ion-button
                 shape="round"
                 expand="block"

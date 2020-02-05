@@ -78,6 +78,7 @@ export class OrientationPage implements OnInit {
         if (this.demandeAvisId > 0) {
           this.afficheListeCr = true;
           this.reviewsDecision = true;
+          this.lastCrName = this.dataPatient["lastCrName"];
           this.reponseAvisCR(this.demandeAvisId);
         } else {
           // this.listeCr();

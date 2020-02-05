@@ -30,7 +30,7 @@
                   <ion-col size="12" class="ion-no-padding">
                     <ion-label>
                       <ion-badge class="p-6-16" slot="start" color="medium"
-                        >Dossier N°: {{dossierId}}</ion-badge
+                        >N°: {{dossierId}}</ion-badge
                       >
                     </ion-label>
                   </ion-col>
@@ -75,15 +75,6 @@
                   >
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
-                  <ion-button
-                    (click)="openImageEcg(urlEcg2)"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                    *ngIf="urlEcg2"
-                  >
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                  </ion-button>
                 </ion-col>
               </ion-col>
             </ion-row>
@@ -98,13 +89,30 @@
     <ion-row *ngIf="afficheReponseMed == 0" class="ion-no-padding">
       <ion-col size="12" class="ion-no-margin">
         <ion-list class="ion-no-padding">
-          <ion-item-divider>
-            <ion-label class="ion-text-wrap p-10-0">
+          <!-- <ion-item-divider>
+            <ion-avatar>
               <span class="icon-cr text-dark  text17 "></span>
+            </ion-avatar>   
+            <ion-label class="ion-text-wrap p-10-0">             
               <b class="text-gray500 text10">CENTRES DE RÉFÉRENCE</b>
             </ion-label>
+          </ion-item-divider> -->
+
+          <ion-item-divider>
+            <ion-avatar>
+              <span class="icon-cr text-dark  text17 "></span>
+            </ion-avatar>
+            <ion-text>
+              <b class="text-gray500 ">CENTRES DE REFERENCE</b>
+              <!-- <h6>{{lastCrName}}</h6> -->
+            </ion-text>
           </ion-item-divider>
 
+          <ion-item class="info-message ">
+            <small>
+              Séléctionnez un centre parmis la liste suivante:
+            </small>
+          </ion-item>
           <ion-item
             lines="full"
             *ngFor="let item of itemsCR; let i = index"
@@ -134,16 +142,15 @@
   <ion-grid>
     <ion-row *ngIf="afficheReponseMed == 1">
       <ion-col size="12">
-        <ion-list class="ion-no-padding">
+        <ion-list class="ion-no-padding" lines="none">
           <ion-item-divider>
+            <ion-avatar>
+              <span class="icon-cr text-dark  text17 "></span>
+            </ion-avatar>
             <ion-text>
-              <!-- <span class="icon-cr text-dark  text17 "></span> -->
-              <b class="text-gray500 "
-                >Centre : {{lastCrName}} Aucune réponse pour l'instant, veuillez
-                rafraîchir la page</b
-              >
+              <b class="text-gray500 ">CENTRES DE REFERENCE</b>
+              <h6>{{lastCrName}}</h6>
             </ion-text>
-
             <ion-button
               slot="end"
               strong="true"
@@ -153,6 +160,13 @@
               <ion-icon name="refresh"></ion-icon>
             </ion-button>
           </ion-item-divider>
+
+          <ion-item>
+            <ion-text
+              >Pour l'instant, vous n'avez reçu aucune réponse à votre demande,
+              veuillez rafraîchir pour actualiser les données</ion-text
+            >
+          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>
@@ -161,13 +175,13 @@
       <ion-col size="12">
         <ion-list class="ion-no-padding">
           <ion-item-divider>
-            <ion-text>
+            <ion-avatar>
               <span class="icon-cr text-dark  text17 "></span>
-              <b class="text-gray500 "
-                >CENTRES DE RÉFÉRENCE Choisi : {{lastCrName}}</b
-              >
+            </ion-avatar>
+            <ion-text>
+              <b class="text-gray500 ">CENTRES DE REFERENCE</b>
+              <h6>{{lastCrName}}</h6>
             </ion-text>
-
             <ion-button
               slot="end"
               strong="true"

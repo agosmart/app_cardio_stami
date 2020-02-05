@@ -24,19 +24,20 @@
         <ion-card class="ion-margin ion-text-left" color="light">
           <ion-card-content class="text09 ">
             <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <ion-label>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >Dossier N°: {{idDossier}}</ion-badge
+                  >
+                </ion-label>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-no-padding">
               <ion-col size="10" class="ion-no-padding">
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <ion-label>
-                      <ion-badge class="p-6-16" slot="start" color="medium"
-                        >Dossier N°: {{idDossier}}</ion-badge
-                      >
-                    </ion-label>
-                  </ion-col>
-                </ion-row>
-
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
+                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
                     {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
@@ -45,37 +46,20 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
-                    {{dataPatient['birthDayFr']}}
-
-                    <ion-chip outline color="secondary">
-                      <ion-label class="bold"
-                        >{{dataPatient['age']}} ans
-                      </ion-label>
-                    </ion-chip>
-
-                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
+                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                    {{dataPatient['age']}} ans
+                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
+
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
               </ion-col>
-
-              <!-- <ion-col size="2" class="ion-no-padding">
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="openImageEcg(urlEcg)"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                  </ion-button>
-                </ion-col>
-              </ion-col> -->
             </ion-row>
           </ion-card-content>
         </ion-card>
@@ -133,14 +117,6 @@
                           ></ion-radio>
                         </ion-item>
                       </ion-radio-group>
-                      <ion-note>
-                        <small> DOSE :</small><br />
-                        <small>15 MG BOLUS IV </small><br />
-                        <small
-                          >- 0,75 MG/KG IV EN 30 MINUTES (JUSQU’À 50 MG)</small
-                        ><br />
-                        <small>- PUIS 0,5 MG/KG IV EN 60 MINUTES</small>
-                      </ion-note>
                     </ion-card-content>
                   </ion-card>
                 </ion-col>
@@ -160,29 +136,13 @@
                       <ion-radio-group formControlName="tnktpa">
                         <ion-item>
                           <ion-label>{{tnkTpaVal}}</ion-label>
-                          <ion-checkbox
+                          <ion-radio
                             slot="end"
                             color="primary"
-                            checked="false"
-                            formControlName="tnktpa"
-                          ></ion-checkbox>
+                            value="{{tnkTpaVal}}"
+                          ></ion-radio>
                         </ion-item>
                       </ion-radio-group>
-
-                      <ion-note>
-                        <small> DOSE :</small><br />
-                        <small
-                          >- BOLUS IV UNIQUE : < 60 KG : 30 MG (6 000 UI)</small
-                        ><br />
-                        <small>- 60-70 KG : 35 MG (7 000 UI)</small><br />
-                        <small>- 70-80 KG : 40 MG (8 000 UI)</small><br />
-                        <small>- 80-90 KG : 45 MG (9 000 UI)</small><br />
-                        <small>- ≥ 100 KG : 50 MG (10 000 UI)</small><br />
-                        <small
-                          >- DIVISER LA DOSE PAR 2 CHEZ LES PATIENTS ÂGÉS PLUS
-                          75 ANS</small
-                        >
-                      </ion-note>
                     </ion-card-content>
                   </ion-card>
                 </ion-col>
@@ -192,12 +152,11 @@
             <!-- consentement-->
             <ion-item class="ion-margin-top" lines="full">
               <ion-label color="primary"
-                >Patient a signé le consentement</ion-label
+                >J'accepte les conditions d'utilisations</ion-label
               >
               <ion-checkbox
                 color="primary"
                 checked="true"
-                slot="start"
                 formControlName="consentement"
               ></ion-checkbox>
             </ion-item>
@@ -213,6 +172,29 @@
               </ng-container>
             </div>
 
+            <!-- <ion-item class="ion-margin-top" lines="full">
+              <ion-label color="primary"
+                >Patient a signé le consentement</ion-label
+              >
+              <ion-checkbox
+                color="primary"
+                checked="false"
+                formControlName="consentement"
+              ></ion-checkbox>
+            </ion-item>
+
+            <div *ngFor="let error of errorMessages.consentement">
+              <ng-container
+                *ngIf="consentement.hasError(error.type) && (consentement.dirty || consentement.touched)"
+              >
+                <small class="message  error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  {{error.message}}
+                </small>
+              </ng-container>
+            </div> -->
+
+            <!--Button Submit-->
             <ion-row>
               <ion-col size="12">
                 <div class="ion-margin-top">

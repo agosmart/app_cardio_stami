@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button [routerLink]="['/home']"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
@@ -18,26 +18,28 @@
   </ion-row>
 </ion-grid>
 
-<ion-content fullscreen class=" ion-no-padding">
+<ion-content fullscreen class=" ion-no-padding"> 
+
   <ion-grid class="form-bloc  bg-light ">
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
         <ion-card class="ion-margin ion-text-left" color="light">
           <ion-card-content class="text09 ">
             <ion-row class="ion-no-padding">
+              <ion-col size="12" class="ion-no-padding">
+                <ion-label>
+                  <ion-badge class="p-6-16" slot="start" color="medium"
+                    >N°: 2001-00035</ion-badge
+                  >
+                </ion-label>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-no-padding">
               <ion-col size="10" class="ion-no-padding">
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
-                    <ion-label>
-                      <ion-badge class="p-6-16" slot="start" color="medium"
-                        >Dossier N°: {{dossierId}}</ion-badge
-                      >
-                    </ion-label>
-                  </ion-col>
-                </ion-row>
-
-                <ion-row class="ion-no-padding">
-                  <ion-col size="12" class="ion-no-padding">
+                    <!-- <ion-icon class="i-card" name="person"></ion-icon>  -->
                     <span class="icon-man text-dark  text10"></span>
                     {{dataPatient['lastName']}} {{dataPatient['firstName']}}
                   </ion-col>
@@ -46,36 +48,18 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-calander  text-dark  text10"></span>
-                    {{dataPatient['birthDayFr']}}
-
-                    <ion-chip outline color="secondary">
-                      <ion-label class="bold"
-                        >{{dataPatient['age']}} ans
-                      </ion-label>
-                    </ion-chip>
-
-                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
+                    <!-- <ion-icon class="i-card" name="calendar"></ion-icon>  -->
+                    {{dataPatient['birthDay']}}
+                    <!-- <ion-badge color="medium" mode="md"> 45 ans </ion-badge> -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <span class="icon-weight  text-dark  text10"></span>
+                    <!-- <ion-icon class="i-card" name="speedometer"></ion-icon>  -->
                     {{dataPatient['weight'] + ' KG'}}
                   </ion-col>
                 </ion-row>
-              </ion-col>
-
-              <ion-col size="2" class="ion-no-padding">
-                <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="openImageEcg()"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
-                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                  </ion-button>
-                </ion-col>
               </ion-col>
             </ion-row>
           </ion-card-content>
@@ -86,108 +70,42 @@
   <!-- ------------------- -->
 
   <ion-grid class="ion-no-padding">
-    <ion-row *ngIf="afficheListeCr" class="ion-no-padding">
+    <ion-row *ngIf="!afficheMed" class="ion-no-padding">
       <ion-col size="12" class="ion-no-margin">
         <ion-list>
           <ion-item-divider>
-            <ion-label class="ion-text-wrap p-10-0">
+            <ion-label class="ion-text-wrap p-10-0" >
               <span class="icon-cr text-dark  text17 "></span>
               <b class="text-gray500 text10">CENTRES DE RÉFÉRENCE</b>
+
             </ion-label>
           </ion-item-divider>
 
           <ion-item
-            lines="full"
-            *ngFor="let item of itemsCR; let i = index"
-            tappable
-            (click)="demandeAvisCr(item.etabId, item.etabName , i)"
-            color="tansparent"
-            [ngClass]="{'section-active': item.open, 'section': !item.open}"
-          >
-            <ion-label class="ion-text-wrap">
-              <h3>
-                <span class="icon-cudt-box-2  text-dark  text15"></span
-                >{{item.etabName}}
-              </h3>
-            </ion-label>
-            <ion-chip color="secondary">
-              <ion-note>
-                <span class="icon-duration-1 text-dark  "></span>
-                <b> {{item.duration}}</b>
-                <!-- <b> {{item.duration}} &lt; 120 min</b> -->
-              </ion-note>
-            </ion-chip>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-
-    <!-- LISTE DES  DOCTORS'S REVIEWS -->
-
-    <ng-container *ngIf="afficheReponseMed">
-      <ion-row>
-        <ion-col size="12">
-          <!-- -->
-          <ion-list class="ion-padding">
-            <ion-item-divider>
-              <ion-avatar>
-                <span class="icon-cr text-dark  text17 "></span>
-              </ion-avatar>
-              <ion-text>
-                <b class="text-gray500 text09">AVIS DES MEDECINS</b>
-              </ion-text>
-              <ion-button
-                slot="end"
-                (click)="reponseAvisCR(demandeAvisId)"
-                shape="round"
-              >
-                <ion-icon name="refresh"></ion-icon>
-              </ion-button>
-            </ion-item-divider>
-            <!-- NO REVIEWS -->
-            <ng-container *ngIf="!reviewsList">
-              <ion-item lines="none" class="ion-padding">
-                <ion-text class="ion-text-center">
-                  <span class="icon-conditions text-dark text17"></span>
-                  Pour l'instant, vous n'avez reçu aucune réponse à votre
-                  demande, veuillez rafraîchir pour actualiser les données.
-                </ion-text>
-              </ion-item>
-            </ng-container>
-            <!-- EXIST  REVIEWS -->
-            <ng-container *ngIf="reviewsList">
-              <ion-item
                 lines="full"
-                *ngFor="let itemReponse of dataReponsesAvis"
-                class="ion-no-padding"
+                *ngFor="let item of itemsCR; let i = index"
+                tappable (click)="toggleSelectionCr(item.etabId,  item.etabName , i)"   color="tansparent" 
+                [ngClass]="{'section-active': item.open, 'section': !item.open}" 
               >
-                <ion-label class="ion-text-wrap">
-                  <span class="icon-doctor-men3  text-dark  text15"></span>
-                  {{itemReponse.doctor}}
+                <ion-label class="ion-text-wrap" >
+                  
+                 <h3><span class="icon-cudt-box-2  text-dark  text15"></span>{{item.etabName}}</h3>
                 </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span
-                    class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
-                  ></span>
-                  <ion-note
-                    [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }"
-                  >
-                    <b
-                      >{{itemReponse["reponse"] === null? "..." :
-                      itemReponse["reponse"] }}</b
-                    >
+                <ion-chip color="secondary">
+                  <ion-note>
+                    <span class="icon-duration-1 text-dark  "  ></span>
+                    <b> {{item.duration}}</b>
+                    <!-- <b> {{item.duration}} &lt; 120 min</b> -->
                   </ion-note>
                 </ion-chip>
               </ion-item>
-            </ng-container>
-            <!-- -->
-          </ion-list>
-        </ion-col>
-      </ion-row>
-    </ng-container>
+        </ion-list>
+        
+      </ion-col>
+    </ion-row>
   </ion-grid>
   <!-- ------------ -->
-  <ion-grid fixed class="intervention ion-no-margin ">
+  <ion-grid fixed class="intervention ion-no-margin " *ngIf ='itemsCR' >
     <ion-row>
       <ion-col size="12" class="ion-text-left">
         <ion-grid class="interv-btn-group ion-text-left">
@@ -198,7 +116,7 @@
                 fill="solid"
                 class="gocr"
                 tappable
-                (click)="showAlertConfirme()"
+                (click)="showAlertConfirme('CR')"
               >
                 <span class="icon-int-ras "></span>
                 <ion-text>
@@ -207,7 +125,7 @@
               </ion-button>
             </ion-col>
 
-            <ion-col size="12" *ngIf="thromb">
+            <ion-col size="12">
               <ion-button
                 expand="block"
                 fill="solid"

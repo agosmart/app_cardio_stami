@@ -178,7 +178,7 @@ export class HomePage implements OnInit {
         );
       });
   }
-  regrechListDossier() {
+  refrechListDossier() {
     this.objectDossiers = [];
     this.listingDossier();
   }
