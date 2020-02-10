@@ -163,11 +163,11 @@ export class InterventionPage implements OnInit {
   }
 
   // ------------IMAGE ECG ---------------------
-  async openImageEcg(image: any) {
-    console.log("image ::::", image);
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
     const modal = await this.modalCtrl.create({
       component: ImagePage,
-      componentProps: { value: image }
+      componentProps: { value: this.urlEcg }
     });
     return await modal.present();
   }

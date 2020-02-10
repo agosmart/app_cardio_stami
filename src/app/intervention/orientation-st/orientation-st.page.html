@@ -12,7 +12,9 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-cr-orientation text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding">ORIENTATION</ion-col>
+    <ion-col size="12" class="title-header ion-no-padding"
+      >ORIENTATION ST</ion-col
+    >
   </ion-row>
 </ion-grid>
 
@@ -67,7 +69,7 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="openImageEcg(urlEcg)"
+                    (click)="openImageEcg()"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"
@@ -198,7 +200,7 @@
     </ng-container>
   </ion-grid>
 
-  <div class=" btn-submit " *ngIf="reviewsDecision">
+  <!-- <div class=" btn-submit " *ngIf="reviewsDecision">
     <ion-button
       expand="block"
       shape="round"
@@ -218,5 +220,46 @@
       ST
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
-  </div>
+  </div> -->
+
+  <ion-grid fixed class="intervention ion-no-margin " *ngIf="itemsCR">
+    <ion-row>
+      <ion-col size="12" class="ion-text-left">
+        <ion-grid class="interv-btn-group ion-text-left">
+          <ion-row>
+            <!-- <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="engio"
+                tappable
+                (click)="showAlertConfirme('ENGIO')"
+              >
+
+                <span class="icon-int-engio "></span>
+                <ion-text>
+                  Engioplastie
+                </ion-text>
+              </ion-button>
+            </ion-col> -->
+
+            <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="thrombo"
+                tappable
+                (click)="goToTrombo()"
+              >
+                <span class="icon-int-thromb"></span>
+                <ion-text>
+                  Thrombolyse
+                </ion-text>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

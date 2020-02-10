@@ -182,6 +182,13 @@ const routes: Routes = [
       )
   },
   {
+    path: "orientation-st/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/orientation-st/orientation-st.module").then(
+        m => m.OrientationStPageModule
+      )
+  },
+  {
     path: "archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
     loadChildren: () =>
       import("./archive/archive.module").then(m => m.ArchivePageModule)
@@ -191,6 +198,20 @@ const routes: Routes = [
     loadChildren: () =>
       import("./archive/detail-archive/detail-archive.module").then(
         m => m.DetailArchivePageModule
+      )
+  },
+  {
+    path: "treatment-engio/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./treatment/treatment-engio/treatment-engio.module").then(
+        m => m.TreatmentEngioPageModule
+      )
+  },
+  {
+    path: "treatment-thromb/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./treatment/treatment-thromb/treatment-thromb.module").then(
+        m => m.TreatmentThrombPageModule
       )
   }
 ];

@@ -153,7 +153,7 @@ export class DiagnosticPage implements OnInit {
     // ----------- message dynamic ---------------
 
     if (diag === "ST") {
-      this.stepId = 7;
+      this.stepId = 20;
       msgAlert =
         "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
     } else if (diag === "RAS") {
@@ -228,8 +228,9 @@ export class DiagnosticPage implements OnInit {
           "dataPatientObj ::::----> ST DIAGNOSTIC ",
           this.dataPatient
         );
+        console.log("st..........................");
         await this.router.navigate([
-          "/pretreatment",
+          "/orientation-st",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
