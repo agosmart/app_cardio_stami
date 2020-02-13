@@ -4,5 +4,6 @@ export interface EtabModel {
   etabName: string;
   longitude: string;
   latitude: string;
+  distance: string;
+  duration: string;
 }
-

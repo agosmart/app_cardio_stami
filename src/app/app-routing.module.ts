@@ -201,7 +201,7 @@ const routes: Routes = [
       )
   },
   {
-    path: "treatment-engio/:idDossier/:dataPatientObj",
+    path: "treatment-engio/:idDossier/:dataPatientObj/:dataModalAvis",
     loadChildren: () =>
       import("./treatment/treatment-engio/treatment-engio.module").then(
         m => m.TreatmentEngioPageModule
@@ -213,6 +213,21 @@ const routes: Routes = [
       import("./treatment/treatment-thromb/treatment-thromb.module").then(
         m => m.TreatmentThrombPageModule
       )
+  },
+  {
+    path: "list-cr",
+    loadChildren: () =>
+      import("./modal/list-cr/list-cr.module").then(m => m.ListCrPageModule)
+  },
+  {
+    path: "avis-med",
+    loadChildren: () =>
+      import("./modal/avis-med/avis-med.module").then(m => m.AvisMedPageModule)
+  },
+  {
+    path: "st/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./cloture/st/st.module").then(m => m.StPageModule)
   }
 ];
 

@@ -1,0 +1,55 @@
+<ion-content fullscreen class="cloture-info ion-no-padding">
+  <ion-grid class="m-buttom ">
+    <ng-container>
+      <!-- LISTE DES CR-->
+      <ion-row>
+        <ion-col size="12">
+          <!-- -->
+          <ion-list class="ion-no-padding">
+            <ion-item-divider>
+              <ion-avatar>
+                <span class="icon-notif text-dark  text17 "></span>
+              </ion-avatar>
+              <ion-text>
+                <b class="text-gray500 text09">DEMANDER UN AVIS MEDICAL</b>
+              </ion-text>
+            </ion-item-divider>
+
+            <ion-item
+              lines="full"
+              *ngFor="let item of itemsCR; let i = index"
+              tappable
+              (click)="demandeAvisCr(item.etabId, item.etabName , i)"
+              color="tansparent"
+              [ngClass]="{'section-active': item.open, 'section': !item.open}"
+            >
+              <ion-avatar>
+                <span class="icon-cudt-box-2  text-dark  text15"></span>
+              </ion-avatar>
+              <ion-label class="ion-text-wrap">
+                <h3>
+                  {{item.etabName}}
+                </h3>
+              </ion-label>
+              <ion-chip color="secondary">
+                <ion-note>
+                  <span class="icon-duration-1 text-dark  "></span>
+                  <b> {{item.duration}}</b>
+                </ion-note>
+              </ion-chip>
+            </ion-item>
+          </ion-list>
+          <!-- -->
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="closeModal()">Fermer</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

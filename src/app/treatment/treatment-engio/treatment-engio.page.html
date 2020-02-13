@@ -238,6 +238,7 @@
                     <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
                   </ion-button> -->
                   <ion-button
+                    [disabled]="!pretreatmentFormInfos.valid"
                     shape="round"
                     expand="block"
                     class="ion-margin-top btn"

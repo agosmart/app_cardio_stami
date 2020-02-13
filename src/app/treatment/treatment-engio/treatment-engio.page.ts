@@ -26,6 +26,7 @@ export class TreatmentEngioPage implements OnInit {
   pretreatmentObj: PretreatmentModel;
   treatment: TreatmentModel;
   dataPatient: DossierModel;
+  dataReponse: object;
 
   toggled = false;
   doseHeparine = 0;
@@ -41,9 +42,9 @@ export class TreatmentEngioPage implements OnInit {
   // birthdate: string;
   // age: string;
   pretreatmentFormInfos = this.formBuilder.group({
-    aspegic: ["", ""],
-    plavix: ["", ""],
-    heparine: ["", ""]
+    aspegic: ["", [Validators.required]],
+    plavix: ["", [Validators.required]],
+    heparine: ["", [Validators.required]]
     // bolus: [false, [Validators.pattern]]
   });
 
@@ -79,16 +80,28 @@ export class TreatmentEngioPage implements OnInit {
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
+    console.log("::::debut");
+    // console.log("::::dataPatientObj", paramMap.get("dataPatientObj"));
     this.activatedroute.paramMap.subscribe(paramMap => {
+      console.log("::::dataPatientObj 0000001", paramMap.get("dataPatientObj"));
       if (!paramMap.has("dataPatientObj")) {
         this.router.navigate(["/home"]);
+        console.log("::::dataPatientObj", paramMap.get("dataPatientObj"));
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
+
+        const dataObj2 = paramMap.get("dataModalAvis");
+        this.dataReponse = JSON.parse(dataObj2);
+        console.log("::::dataReponse", this.dataReponse);
         // =================================================
         this.doctorId = this.dataPatient.doctorId;
         this.dossierId = this.dataPatient.dossierId;
         this.urlEcg = this.dataPatient["ecgImage"];
+
+        if (this.dataPatient.stepId !== 21) {
+          this.srvApp.stepUpdatePage(this.dossierId, 21, 0, this.token);
+        }
 
         // # Calculate Heparine DOSE
         const weight = this.dataPatient.weight;
@@ -106,6 +119,8 @@ export class TreatmentEngioPage implements OnInit {
         console.groupEnd();
       }
     });
+
+    //dataModalAvis;
   }
 
   // myChange($event) {
@@ -137,7 +152,9 @@ export class TreatmentEngioPage implements OnInit {
     this.pretreatmentObj = {
       dossierId: this.dossierId,
       doctorId: this.doctorId,
-      stepId: 8,
+      stepId: 23,
+      resultId: 6,
+      crId: this.dataReponse["idEtab"],
       treatments: []
     };
     const treatmentsArr: Array<TreatmentModel> = [];
@@ -212,8 +229,11 @@ export class TreatmentEngioPage implements OnInit {
             if (+this.returnData.code === 201) {
               loadingEl.dismiss();
 
+              this.dataPatient["resultId"] = 6;
+              this.dataPatient["lastCrId"] = this.dataReponse["idEtab"];
+
               this.router.navigate([
-                "/intervention",
+                "/st",
                 this.dossierId,
                 JSON.stringify(this.dataPatient)
               ]);

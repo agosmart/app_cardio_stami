@@ -157,8 +157,20 @@ export class ServiceAppService {
     });
   }
 
-  reponseDemandeAvis(idAvis: number, token: string) {
+  reponseDemandeAvis___old(idAvis: number, token: string) {
     const apiUrl = this.baseUrl + "/demande/" + idAvis + "/reponse";
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    return this.http.get<ReponseAvisResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+  // http://cardio.cooffa.shop/api/demandeGlobal/171
+  reponseDemandeAvis(idDossier: number, token: string) {
+    const apiUrl = this.baseUrl + "/demandeGlobal/" + idDossier;
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -271,6 +283,18 @@ export class ServiceAppService {
     const apiUrl = this.baseUrl + "/etablissements/" + params;
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json"
+    });
+    const myBody: any = params; // username / password
+    return this.http.get<EtabResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+  getListeCRTime(params: number, token: string) {
+    const apiUrl = this.baseUrl + "/cr/" + params;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      Authorization: "Bearer " + token
     });
     const myBody: any = params; // username / password
     return this.http.get<EtabResponseData>(apiUrl, {
