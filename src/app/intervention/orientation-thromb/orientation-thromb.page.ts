@@ -19,14 +19,15 @@ import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
-  selector: "app-orientation-st",
-  templateUrl: "./orientation-st.page.html",
-  styleUrls: ["./orientation-st.page.scss"]
+  selector: "app-orientation-thromb",
+  templateUrl: "./orientation-thromb.page.html",
+  styleUrls: ["./orientation-thromb.page.scss"]
 })
-export class OrientationStPage implements OnInit {
+export class OrientationThrombPage implements OnInit {
   idUser: number;
   idEtab: number;
   dossierId: number;
+  lastMotifId: number;
   stepId: number;
   token: string;
   etabName: string;
@@ -75,6 +76,7 @@ export class OrientationStPage implements OnInit {
         this.dossierId = this.dataPatient.dossierId;
         this.urlEcg = this.dataPatient["ecgImage"];
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+        this.lastMotifId = this.dataPatient.lastMotifId;
         this.idCr = this.dataPatient.lastCrId;
         console.log("*************dataPatient :", this.dataPatient);
         const motifId = this.dataPatient.lastMotifId;
@@ -82,7 +84,7 @@ export class OrientationStPage implements OnInit {
         if (this.dataPatient.stepId !== 20) {
           this.srvApp.stepUpdatePage(this.dossierId, 20, 0, this.token);
         }
-        if (this.demandeAvisId > 0) {
+        if (this.demandeAvisId > 0 && this.lastMotifId === 6) {
           this.afficheReponseMed = 1;
           this.reviewsDecision = true;
           this.lastCrName = this.dataPatient["lastCrName"];
@@ -108,8 +110,8 @@ export class OrientationStPage implements OnInit {
       componentProps: {
         idUser: this.idUser,
         idEtab: this.idEtab,
+        idMotif: 6,
         dossierId: this.dossierId,
-        idMotif: 3,
         token: this.token
       }
     });
@@ -146,6 +148,7 @@ export class OrientationStPage implements OnInit {
 
   reponseAvisCR() {
     this.dataModalAvis = [];
+    this.afficheReponseMed = 1;
     this.loadingCtrl
       .create({ keyboardClose: true, message: "opération  en cours..." })
       .then(loadingEl => {

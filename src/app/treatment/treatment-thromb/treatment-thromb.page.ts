@@ -143,6 +143,8 @@ export class TreatmentThrombPage implements OnInit {
       dossierId: this.dossierId,
       doctorId: this.doctorId,
       stepId: 8,
+      resultId: 6,
+      crId: 1,
       treatments: []
     };
     const treatmentsArr: Array<TreatmentModel> = [];
@@ -210,7 +212,7 @@ export class TreatmentThrombPage implements OnInit {
               loadingEl.dismiss();
 
               this.router.navigate([
-                "/intervention",
+                "/thromb-absolut",
                 this.dossierId,
                 JSON.stringify(this.dataPatient)
               ]);

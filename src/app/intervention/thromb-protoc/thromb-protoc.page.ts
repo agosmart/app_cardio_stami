@@ -40,15 +40,17 @@ export class ThrombProtocPage implements OnInit {
   tnkTpaValMg: number;
   tnkTpaValUi: number;
   tpaVal = [];
+  tpaVal1: string;
   weight: number;
+  tpaLabel = "aucun";
 
   get tpa() {
     return this.protocolFormInfos.get("tpa");
   }
 
-  get tnktpa() {
-    return this.protocolFormInfos.get("tnktpa");
-  }
+  // get tnktpa() {
+  //   return this.protocolFormInfos.get("tnktpa");
+  // }
 
   get consentement() {
     // console.log(this.protocolFormInfos.get("consentement"));
@@ -57,7 +59,7 @@ export class ThrombProtocPage implements OnInit {
 
   public errorMessages = {
     tpa: [{ type: "required", message: "" }],
-    tnktpa: [{ type: "required", message: "" }],
+    //  tnktpa: [{ type: "required", message: "" }],
 
     consentement: [
       {
@@ -69,8 +71,8 @@ export class ThrombProtocPage implements OnInit {
 
   // -------------------------------------
   protocolFormInfos = this.formBuilder.group({
-    tpa: ["", ""],
-    tnktpa: ["", ""],
+    tpa: ["", [Validators.required]],
+    //tnktpa: ["", ""],
     consentement: [true, [Validators.pattern("true")]]
   });
 
@@ -147,6 +149,24 @@ export class ThrombProtocPage implements OnInit {
   }
 
   submitFormInfos() {
+    console.log(this.protocolFormInfos.value.tpa);
+    let params = {};
+    if (this.protocolFormInfos.value.tpa === "0") {
+      params = {
+        dossierId: this.idDossier,
+        doctorId: this.idUser,
+        alteplase: this.tpaLabel,
+        signedDocuments: "1"
+      };
+    } else {
+      params = {
+        dossierId: this.idDossier,
+        doctorId: this.idUser,
+        tenecteplase: this.tnkTpaVal,
+        signedDocuments: "1"
+      };
+    }
+
     console.log(this.protocolFormInfos.value);
     this.isLoading = true;
     this.loadingCtrl
@@ -154,13 +174,8 @@ export class ThrombProtocPage implements OnInit {
       .then(loadingEl => {
         loadingEl.present();
 
-        const params = {
-          dossierId: this.idDossier,
-          doctorId: this.idUser,
-          alteplase: this.protocolFormInfos.value.tpa,
-          tenecteplase: this.tnkTpaVal,
-          signedDocuments: "1"
-        };
+        console.log("params register : ", this.tpaLabel);
+
         console.log("params register : ", params);
         const authObs: Observable<ProtocolThromResponseData> = this.srvApp.addProtocThromb(
           params,
@@ -202,5 +217,81 @@ export class ThrombProtocPage implements OnInit {
           }
         );
       });
+  }
+
+  async onCheckBoxChange() {
+    //this.hypertentionValue = 0;
+
+    console.log("onCheckBoxChange");
+    const alert = await this.alertCtrl.create({
+      header: "Radio",
+      inputs: [
+        {
+          name: "tpa0",
+          type: "radio",
+          label: "15 mg bolus IV",
+          value: 0,
+          checked: true
+        },
+        {
+          name: "tpa1",
+          type: "radio",
+          label: "60 mg IV en 30 minutes",
+          value: 1,
+          checked: false
+        },
+        {
+          name: "tpa02",
+          type: "radio",
+          label: "40 mg IV en 60 minutes",
+          value: 2,
+          checked: false
+        }
+      ],
+      buttons: [
+        {
+          text: "Cancel",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirm Cancel");
+            //this.hypertentionValue = 0;
+            // this.listContIndicAbs[3].isChecked = false;
+
+            // this.isRequiredCheckBox = false;
+
+            // console.log("this.hypertentionValue ::", this.hypertentionValue);
+          }
+        },
+        {
+          text: "Ok",
+          handler: data => {
+            console.log("Confirm Ok");
+            console.log(JSON.stringify(data));
+            switch (data) {
+              case 0:
+                this.tpaLabel = "15 mg bolus IV";
+                break;
+              case 1:
+                this.tpaLabel = "60 mg IV en 30 minutes";
+                break;
+              case 2:
+                this.tpaLabel = "40 mg IV en 60 minutes";
+            }
+
+            console.log("data : ", this.tpaLabel);
+          }
+        }
+      ]
+    });
+    await alert.present();
+    await alert.onDidDismiss().then(data => {
+      // if (this.hypertentionValue === 0) {
+      //   this.listContIndicAbs[3].isChecked = false;
+      //   //   // this.cia4.reset();
+      // }
+      // this.isRequiredCheckBox = true;
+      // this.isRequiredCheckBox = false;
+    });
   }
 }

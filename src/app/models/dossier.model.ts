@@ -44,6 +44,7 @@ export interface DossierModel {
   ecgData?: Array<EcgData>;
   idCr?: number;
   lastCrName?: string;
+  duration_secondes: number;
   // etabName?: string;
   // motifName?: number;
 }

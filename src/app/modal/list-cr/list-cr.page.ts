@@ -25,6 +25,7 @@ export class ListCrPage implements OnInit {
   idUser: number;
   idEtab: number;
   dossierId: number;
+  idMotif: number;
   token: string;
   itemsCR: any;
   etabName: string;
@@ -44,6 +45,7 @@ export class ListCrPage implements OnInit {
     this.idUser = this.navParams.data.idUser;
     this.idEtab = this.navParams.data.idEtab;
     this.dossierId = this.navParams.data.dossierId;
+    this.idMotif = this.navParams.data.idMotif;
     this.token = this.navParams.data.token;
 
     console.log("token", this.token);
@@ -126,7 +128,7 @@ export class ListCrPage implements OnInit {
           cudtId: this.idEtab,
           crId: idCr,
           dossierId: this.dossierId,
-          motifId: 3
+          motifId: this.idMotif
         };
         // ---- Call demandeAvis API
         const authObs: Observable<DemandeAvisResponseData> = this.srvApp.demandeAvis(

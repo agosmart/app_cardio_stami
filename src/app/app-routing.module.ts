@@ -189,6 +189,13 @@ const routes: Routes = [
       )
   },
   {
+    path: "orientation-thromb/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import(
+        "./intervention/orientation-thromb/orientation-thromb.module"
+      ).then(m => m.OrientationThrombPageModule)
+  },
+  {
     path: "archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
     loadChildren: () =>
       import("./archive/archive.module").then(m => m.ArchivePageModule)

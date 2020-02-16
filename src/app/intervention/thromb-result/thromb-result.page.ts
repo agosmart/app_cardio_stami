@@ -106,7 +106,7 @@ export class ThrombResultPage implements OnInit {
           handler: async () => {
             this.dataPatient.resultId = resultatId;
             this.router.navigate([
-              "/envoi-cr",
+              "/orientation-thromb",
               this.dossierId,
               JSON.stringify(this.dataPatient)
             ]);
