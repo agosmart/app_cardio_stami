@@ -249,7 +249,7 @@ export class ThrombRelativePage implements OnInit {
 
           // ************ REDIRECTION TO GOCR PAGE ****************
           this.router.navigate([
-            "/thromb-sos",
+            "/orientation-relative",
             this.dossierId,
             JSON.stringify(this.dataPatient)
           ]);

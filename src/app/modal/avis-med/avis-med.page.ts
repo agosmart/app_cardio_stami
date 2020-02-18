@@ -23,7 +23,8 @@ export class AvisMedPage implements OnInit {
   constructor(
     private router: Router,
     private modalCtrl: ModalController,
-    private navParams: NavParams
+    private navParams: NavParams,
+    private alertCtrl: AlertController
   ) {}
 
   ngOnInit() {
@@ -49,7 +50,6 @@ export class AvisMedPage implements OnInit {
     this.modalCtrl.dismiss(true);
   }
 
-  showAlertConfirme() {}
   closeModal() {
     this.modalCtrl.dismiss(true);
   }
@@ -61,5 +61,59 @@ export class AvisMedPage implements OnInit {
       JSON.stringify(this.dataPatient)
     ]);
     this.modalCtrl.dismiss(true);
+  }
+
+  async showAlertConfirme(diag: string) {
+    let msgAlert = "";
+    // ----------- message dynamic ---------------
+
+    if (diag === "ST") {
+      //this.stepId = 7;
+      msgAlert =
+        "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+    } else if (diag === "RAS") {
+      // this.stepId = 10;
+      msgAlert =
+        "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+    }
+
+    console.log("DIAG ::::", msgAlert);
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: "Résultat d'authentication",
+      message: msgAlert,
+      cssClass: "alert-css",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: () => {
+            console.log("Confirme Annuler");
+          }
+        },
+        {
+          text: "Je confirme",
+          handler: async () => {
+            if (diag === "RAS") {
+              await this.router.navigate([
+                "/ras",
+                this.dataModalAvis["idDossier"],
+                JSON.stringify(this.dataPatient)
+              ]);
+              this.closeModal();
+            } else {
+              await this.router.navigate([
+                "/treatment-thromb",
+                this.dataModalAvis["idDossier"],
+                JSON.stringify(this.dataPatient)
+              ]);
+              this.closeModal();
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

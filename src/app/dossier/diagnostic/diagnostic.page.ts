@@ -216,7 +216,7 @@ export class DiagnosticPage implements OnInit {
         );
         // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
         await this.router.navigate([
-          "/orientation",
+          "/orientation-sos",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);

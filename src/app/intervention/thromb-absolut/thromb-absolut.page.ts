@@ -225,7 +225,7 @@ export class ThrombAbsolutPage implements OnInit {
       this.dataPatient.resultId = 8;
       // ************ REDIRECTION TO GOCR PAGE ****************
       this.router.navigate([
-        "/envoi-cr",
+        "/orientation-absolu",
         this.dossierId,
         JSON.stringify(this.dataPatient)
       ]);

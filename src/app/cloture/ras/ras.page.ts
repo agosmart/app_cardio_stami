@@ -25,7 +25,7 @@ export class RasPage implements OnInit {
   idDossier: number;
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
-  dataPatient: object;
+  dataPatient: DossierModel;
   ecgTmp: string;
   isLoading = false;
   isCloture: boolean;
@@ -56,17 +56,16 @@ export class RasPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         //this.objectInsc = JSON.parse(dataObj);
-        console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        console.log(
-          " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatient["lastName"]
-        );
+
         this.urlEcg = this.dataPatient["ecgImage"];
       }
       if (!paramMap.has("idDossier")) {
         this.router.navigate(["/home"]);
       } else {
         this.idDossier = +paramMap.get("idDossier");
+        if (this.dataPatient.stepId !== 10) {
+          this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token);
+        }
         console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
         this.ecgTmp = this.dataPatient["ecgTmp"];
       }

@@ -235,6 +235,27 @@ const routes: Routes = [
     path: "st/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/st/st.module").then(m => m.StPageModule)
+  },
+  {
+    path: "orientation-sos/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./dossier/orientation-sos/orientation-sos.module").then(
+        m => m.OrientationSosPageModule
+      )
+  },
+  {
+    path: "orientation-absolu/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import(
+        "./intervention/orientation-absolu/orientation-absolu.module"
+      ).then(m => m.OrientationAbsoluPageModule)
+  },
+  {
+    path: "orientation-relative/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import(
+        "./intervention/orientation-relative/orientation-relative.module"
+      ).then(m => m.OrientationRelativePageModule)
   }
 ];
 

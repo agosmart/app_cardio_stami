@@ -88,6 +88,10 @@ export class TreatmentThrombPage implements OnInit {
         this.dossierId = this.dataPatient.dossierId;
         this.urlEcg = this.dataPatient["ecgImage"];
 
+        if (this.dataPatient.stepId !== 22) {
+          this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token);
+        }
+
         // # Calculate Heparine DOSE
         const weight = this.dataPatient.weight;
         // console.log("weight ::: ", weight);
