@@ -22,6 +22,7 @@ import { DossierModel } from "src/app/models/dossier.model";
   styleUrls: ["./list-cr.page.scss"]
 })
 export class ListCrPage implements OnInit {
+  idCr = 0;
   idUser: number;
   idEtab: number;
   dossierId: number;
@@ -146,6 +147,7 @@ export class ListCrPage implements OnInit {
             if (+resData.code === 201) {
               // ------------------------------------------
               // this.dataPatient["LastDemandeAvisId"] = resData.data.demandeId;
+              this.idCr = idCr;
               this.sglob.presentToast(
                 "la demande avis médical vers a été envoyé au CR " +
                   this.etabName
@@ -175,6 +177,7 @@ export class ListCrPage implements OnInit {
   }
 
   closeModal() {
-    this.modalCtrl.dismiss(true);
+    console.log("this.idCr", this.idCr);
+    this.modalCtrl.dismiss(this.idCr);
   }
 }

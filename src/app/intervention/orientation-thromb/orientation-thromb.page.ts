@@ -35,6 +35,7 @@ export class OrientationThrombPage implements OnInit {
   idCr: number;
   lastCrName: string;
   reviewsList = 0;
+  nbRep: number;
   urlEcg: string;
   itemsMeds: ListeMedByCRModel;
   dataReponsesAvis: Array<ReponseAvisModel>;
@@ -81,8 +82,13 @@ export class OrientationThrombPage implements OnInit {
         console.log("*************dataPatient :", this.dataPatient);
         const motifId = this.dataPatient.lastMotifId;
 
-        if (this.dataPatient.stepId !== 20) {
-          this.srvApp.stepUpdatePage(this.dossierId, 20, 0, this.token);
+        if (this.dataPatient.stepId !== 24) {
+          this.srvApp.stepUpdatePage(
+            this.dossierId,
+            24,
+            this.dataPatient.resultId,
+            this.token
+          );
         }
         if (this.demandeAvisId > 0 && this.lastMotifId === 6) {
           this.afficheReponseMed = 1;
@@ -115,6 +121,13 @@ export class OrientationThrombPage implements OnInit {
         token: this.token
       }
     });
+
+    modal.onDidDismiss().then(data => {
+      console.log("data ::::", data["data"]);
+      if (data["data"] > 0) {
+        this.reponseAvisCR();
+      }
+    });
     return await modal.present();
   }
 
@@ -125,7 +138,6 @@ export class OrientationThrombPage implements OnInit {
       let objectAvisEtab = [];
       objectAvisEtab = this.getobjectDossier(idEtab);
       console.log("objectAvisEtab ::::", objectAvisEtab);
-      //console.log("laReponse ::::", this.dataModalAvis.laReponse);
       const modal = await this.modalCtrl.create({
         component: AvisMedPage,
         componentProps: {
@@ -137,6 +149,12 @@ export class OrientationThrombPage implements OnInit {
     } else {
       this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
     }
+
+    // const modal = await modalController.create({ component: UploadPage });
+    // const { data } = await modal.onDidDismiss();
+    // if (data) {
+    //   console.log("::::::onDidDismiss ::::");
+    // }
   }
 
   getobjectDossier(id: any) {
@@ -149,6 +167,7 @@ export class OrientationThrombPage implements OnInit {
   reponseAvisCR() {
     this.dataModalAvis = [];
     this.afficheReponseMed = 1;
+    this.nbRep = 0;
     this.loadingCtrl
       .create({ keyboardClose: true, message: "opération  en cours..." })
       .then(loadingEl => {
@@ -167,24 +186,11 @@ export class OrientationThrombPage implements OnInit {
             if (+resData.code === 200) {
               this.dataReponsesAvis = resData.data;
               if (Object.keys(this.dataReponsesAvis).length > 0) {
-                console.log(
-                  "this.dataReponsesAvis === ",
-                  this.dataReponsesAvis
-                );
-
                 this.dataReponsesAvis.forEach(element => {
-                  console.log("element ", element.demandeId);
-
-                  console.log("reponses ", element.reponses);
                   const motifId = element.motifId;
-                  console.log("motifId ", motifId);
-
-                  if (motifId === 3) {
-                    console.log("element222 ", element.demandeId);
-                    console.log(
-                      "================ length",
-                      Object.keys(element.reponses).length
-                    );
+                  if (motifId === 6) {
+                    this.nbRep =
+                      this.nbRep + Object.keys(element.reponses).length;
                     this.dataModalAvis.push({
                       demandeId: element.demandeId,
                       etabName: element.demandeToCr.etabName,
@@ -192,21 +198,14 @@ export class OrientationThrombPage implements OnInit {
                       nbReponse: Object.keys(element.reponses).length,
                       idDossier: this.dossierId,
                       motifId: element.motifId,
-                      idResultat: 6,
+                      idResultat: this.dataPatient.resultId,
                       laReponse: element.reponses
                     });
                   }
                 });
-
-                // ------- HIDE CR LIST / SHOW DOCTORS REVIEWS LIST-------
-                // this.afficheListeCr = false;
-                //this.reviewsList = this.dataReponsesAvis.length;
                 this.afficheReponseMed = 2;
 
-                console.group("==== DATA reponseAvisCR ====");
-                console.log("this.afficheListeCr ::::", this.afficheListeCr);
-                console.log(" this.reviewsList ::::", this.reviewsList);
-                console.groupEnd();
+                console.log("afficheReponseMed", this.afficheReponseMed);
               }
 
               // ------------------------------------------

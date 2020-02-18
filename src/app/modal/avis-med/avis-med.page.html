@@ -66,73 +66,7 @@
         </ion-col>
       </ion-row>
     </ng-container>
-
-    <!-- <ng-container>
-      <ion-row>
-        <ion-col size="12">
-          <ion-list class="ion-padding">
-            <ion-item-divider>
-              <ion-avatar>
-                <span class="icon-cr text-dark  text17 "></span>
-              </ion-avatar>
-              <ion-text>
-                <b class="text-gray500 ">AVIS DES MEDECINS </b>
-              </ion-text>
-              <ion-button
-                slot="end"
-                strong="true"
-                (click)="reponseAvisCR(demandeAvisId)"
-                shape="round"
-              >
-                <ion-icon name="refresh"></ion-icon>
-              </ion-button>
-            </ion-item-divider>
-            <ng-container>
-              <ion-item
-                lines="full"
-                *ngFor="let itemReponse of dataReponsesAvis"
-                class="ion-no-padding"
-              >
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  {{itemReponse.doctor}}
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span
-                    class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
-                  ></span>
-                  <ion-note
-                    [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }"
-                  >
-                    <b
-                      >{{itemReponse["reponse"] === null? "PAS ENCORS" :
-                      itemReponse["reponse"] }}</b
-                    >
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
-            </ng-container>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-    </ng-container> -->
   </ion-grid>
-
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col text-center>
-        <ion-button (click)="closeModal()">Fermer</ion-button>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col text-center>
-        <ion-button (click)="closeModal()">Fermer</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
 
   <ion-grid fixed class="intervention ion-margin-top ">
     <!-- ------- -->
@@ -140,22 +74,9 @@
       <ion-col size="12" class="ion-text-left">
         <ion-grid class="interv-btn-group ion-text-left">
           <ion-row>
-            <!-- <ion-col size="12">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="gocr"
-                tappable
-                (click)="closeModal()"
-              >
-                <span class="icon-int-ras "></span>
-                <ion-text>
-                  Engioplastie Envoyer au CR
-                </ion-text>
-              </ion-button>
-            </ion-col> -->
             <ion-col size="12">
               <ion-button
+                *ngIf="motifId== 3"
                 expand="block"
                 fill="solid"
                 class="engio"
@@ -163,28 +84,40 @@
                 (click)="treatmentEngio()"
               >
                 <!-- <span class="icon-doctor-sos-2 fsize-22em"></span> -->
-                <span class="icon-int-engio "></span>
+                <span class="icon-int-engio"></span>
+                <ion-text>
+                  Envoyer au CR
+                </ion-text>
+              </ion-button>
+              <ion-button
+                *ngIf="motifId== 6"
+                expand="block"
+                fill="solid"
+                class="thromb"
+                tappable
+                (click)="cloture()"
+              >
+                <!-- <span class="icon-doctor-sos-2 fsize-22em"></span> -->
+                <span class="icon-int-thromb"></span>
                 <ion-text>
                   Envoyer au CR
                 </ion-text>
               </ion-button>
             </ion-col>
-            <!-- <ion-col size="12">
+
+            <ion-col size="12">
               <ion-button
                 expand="block"
                 fill="solid"
-                class="thrombo"
+                class="gocr"
                 tappable
-                (click)="showAlertConfirme()"
+                (click)="closeModal()"
               >
-                <span class="icon-int-thromb"></span>
+                <span class="icon-remove-outline "></span>
                 <ion-text>
-                  Thrombolyse
+                  Fermer
                 </ion-text>
               </ion-button>
-            </ion-col> -->
-            <ion-col text-center>
-              <ion-button (click)="closeModal()">Fermer</ion-button>
             </ion-col>
           </ion-row>
         </ion-grid>

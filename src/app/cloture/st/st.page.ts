@@ -71,7 +71,12 @@ export class StPage implements OnInit {
         this.ecgTmp = this.dataPatient["ecgTmp"];
 
         if (this.dataPatient.stepId !== 23) {
-          this.srvApp.stepUpdatePage(this.idDossier, 23, 0, this.token);
+          this.srvApp.stepUpdatePage(
+            this.idDossier,
+            23,
+            this.dataPatient.resultId,
+            this.token
+          );
         }
       }
     });

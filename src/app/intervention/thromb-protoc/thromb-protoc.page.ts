@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DossierModel } from "src/app/models/dossier.model";
+import { ImagePage } from "src/app/modal/image/image.page";
 import {
   LoadingController,
   AlertController,
@@ -101,6 +102,7 @@ export class ThrombProtocPage implements OnInit {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
         console.log("dataPatient protocol ===>", this.dataPatient);
+        this.urlEcg = this.dataPatient["ecgImage"];
         this.idDossier = this.dataPatient["dossierId"];
         const age = this.dataPatient["age"];
         this.weight = this.dataPatient["weight"];
@@ -224,7 +226,7 @@ export class ThrombProtocPage implements OnInit {
 
     console.log("onCheckBoxChange");
     const alert = await this.alertCtrl.create({
-      header: "Radio",
+      header: "ALTÉPLASE (TPA) ACTILYSE",
       inputs: [
         {
           name: "tpa0",
@@ -293,5 +295,14 @@ export class ThrombProtocPage implements OnInit {
       // this.isRequiredCheckBox = true;
       // this.isRequiredCheckBox = false;
     });
+  }
+
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
   }
 }

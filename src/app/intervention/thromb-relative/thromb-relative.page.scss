@@ -44,7 +44,7 @@
         font-weight: 600;
       }
 
-      ul{
+      ul {
         padding: 0px 0 0 20px;
         margin: 8px 0;
       }
@@ -58,26 +58,24 @@
 
   ion-footer {
     background: #f32051;
-    ion-toolbar{
-        padding-bottom: 0;
+    ion-toolbar {
+      padding-bottom: 0;
     }
   }
 }
 
-.form-infos {
-  margin-bottom: 50px;
-
+.form-relative {
   ion-card-content.md.card-content-md.hydrated {
     //padding: 10px 24px 10px 10px;
     padding: 10px;
   }
 
-  // ion-list.info ion-note {
-  //   font-size: 0.9em;
-  //   margin: 0;
-  //   padding-left: 0;
-  // }
-  // ion-list.info ion-label {
-  //   font-size: 0.9rem;
-  // }
+  ion-list.info ion-note {
+    font-size: 0.9em;
+    margin: 0;
+    padding-left: 0;
+  }
+  ion-list.info ion-label {
+    font-size: 0.9rem;
+  }
 }

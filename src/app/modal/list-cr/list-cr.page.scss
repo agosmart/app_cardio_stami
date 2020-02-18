@@ -152,7 +152,8 @@
 /****************************/
 .cloture-info {
   .m-buttom {
-    margin-bottom: 72px;
+    margin-bottom: 92px;
+    margin-top: 75px;
   }
   .gradian {
     background: #3853de;
@@ -173,5 +174,21 @@
     ion-button {
       margin: 24px 24px;
     }
+  }
+
+  ion-button.gocr {
+    --border-radius: 16px;
+    --border-width: 2em !important;
+    float: left;
+    height: 80px;
+    width: 100%;
+    span {
+      font-size: 2.1rem !important;
+    }
+    //--background: #ecfcf2;
+    --color-activated: #ef4136;
+    // --border-color: #009444;
+    // --color: #009444;
+    //border: 1px solid #009444;
   }
 }

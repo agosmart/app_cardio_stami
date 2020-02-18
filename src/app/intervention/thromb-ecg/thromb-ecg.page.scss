@@ -89,3 +89,20 @@
 
 .insc-ecg {
 }
+
+/****************************/
+.insc-ecg {
+  ion-card-content.md.card-content-md.hydrated {
+    //padding: 10px 24px 10px 10px;
+    padding: 10px;
+  }
+
+  ion-list.info ion-note {
+    font-size: 0.9em;
+    margin: 0;
+    padding-left: 0;
+  }
+  ion-list.info ion-label {
+    font-size: 0.9rem;
+  }
+}

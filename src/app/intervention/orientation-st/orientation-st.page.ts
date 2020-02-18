@@ -113,6 +113,14 @@ export class OrientationStPage implements OnInit {
         token: this.token
       }
     });
+
+    modal.onDidDismiss().then(data => {
+      console.log("user ::::", data["data"]);
+      if (data["data"] > 0) {
+        this.reponseAvisCR();
+      }
+    });
+
     return await modal.present();
   }
 

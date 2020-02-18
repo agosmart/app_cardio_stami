@@ -53,4 +53,13 @@ export class AvisMedPage implements OnInit {
   closeModal() {
     this.modalCtrl.dismiss(true);
   }
+
+  cloture() {
+    this.router.navigate([
+      "/st",
+      this.dataModalAvis["idDossier"],
+      JSON.stringify(this.dataPatient)
+    ]);
+    this.modalCtrl.dismiss(true);
+  }
 }

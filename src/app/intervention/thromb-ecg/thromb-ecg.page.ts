@@ -3,7 +3,12 @@ import { ServiceAppService } from "src/app/services/service-app.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import { ImagePage } from "src/app/modal/image/image.page";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { File, FileEntry } from "@ionic-native/file/ngx";
 import { LoadingService } from "src/app/services/loading.service";
@@ -30,6 +35,7 @@ export class ThrombEcgPage implements OnInit {
   doctorId: number;
   isEcg: boolean;
   ecgAfficher: string;
+  urlEcg: string;
   imageData: any;
   //dataPatient: object;
   dataPatient: DossierModel;
@@ -46,7 +52,8 @@ export class ThrombEcgPage implements OnInit {
     private file: File,
     private transfer: FileTransfer,
     public http: HttpClient,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
@@ -63,6 +70,7 @@ export class ThrombEcgPage implements OnInit {
         this.dataPatient = JSON.parse(dataObj);
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
+        this.urlEcg = this.dataPatient["ecgImage"];
         if (this.dataPatient["stepId"] !== 14) {
           this.srvApp.stepUpdatePage(this.dossierId, 14, 11, this.token);
         }
@@ -200,5 +208,14 @@ export class ThrombEcgPage implements OnInit {
           this.sglob.showAlert("Erreur ", "Erreur interne, veuillez réessayer");
         }
       });
+  }
+
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
   }
 }

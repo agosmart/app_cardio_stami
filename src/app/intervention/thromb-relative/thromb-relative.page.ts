@@ -4,7 +4,12 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { GlobalvarsService } from "src/app/services/globalvars.service";
-import { LoadingController, AlertController } from "@ionic/angular";
+import {
+  LoadingController,
+  AlertController,
+  ModalController
+} from "@ionic/angular";
+import { ImagePage } from "src/app/modal/image/image.page";
 import {
   ContreIndicListModel,
   ContreIndicElmModel
@@ -39,21 +44,9 @@ export class ThrombRelativePage implements OnInit {
   isRequiredCheckBox = false;
   hypertentionValue = 0;
   errorMessages = false;
+  urlEcg: string;
 
-  // -------------------------
-  // listContIndicAbsText = [
-  //   'Antécédent d’hémorragie intracrânienne ou d’accident vasculaire cérébral d’origine inconnue, quelle que soit l’ancienneté de l’antécédent',
-  //   'Accident vasculaire cérébral ischémique dans les 6 mois précédents ',
-  //   'Atteinte ou néoplasme ou malformation artério-veineuse du système nerveux central',
-  //   'Traumatisme majeur/chirurgie/blessure céphalique dans le mois précédent ',
-  //   'Hémorragie gastro-intestinale dans le mois précédent ',
-  //   'Désordre hémorragique connu (hormis les menstrues)',
-  //   'Dissection aortique ',
-  //   'Points de ponction non compressibles dans les 24 heures précédentes (par exemple, biopsie hépatique, ponction lombaire)',
-  //   'Si au moins un de ces pathologies exist c’est une indication de l’Angioplastie primaire'
-  // ];
   listContIndicAbs = [
-    // tslint:disable-next-line: max-line-length
     {
       text: "Accident ischémique transitoire dans les 6 mois précédents",
       isChecked: false,
@@ -138,6 +131,7 @@ export class ThrombRelativePage implements OnInit {
     private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private modalCtrl: ModalController,
     private alertCtrl: AlertController // private modalCtrl: ModalController
   ) {}
 
@@ -153,7 +147,7 @@ export class ThrombRelativePage implements OnInit {
       } else {
         const dataObj = paramMap.get("dataPatientObj");
         this.dataPatient = JSON.parse(dataObj);
-
+        this.urlEcg = this.dataPatient["ecgImage"];
         // =================================================
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
@@ -385,4 +379,12 @@ export class ThrombRelativePage implements OnInit {
     });
   }
   // ---------------------------------------
+  async openImageEcg() {
+    console.log("image ::::", this.urlEcg);
+    const modal = await this.modalCtrl.create({
+      component: ImagePage,
+      componentProps: { value: this.urlEcg }
+    });
+    return await modal.present();
+  }
 }

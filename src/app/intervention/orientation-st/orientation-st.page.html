@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-back-button [routerLink]="['/home']"></ion-back-button>
     </ion-buttons>
     <!-- <ion-title>insc-infos</ion-title> -->
   </ion-toolbar>
@@ -190,7 +190,7 @@
                 (click)="afficherListeCrModal()"
               >
                 <!-- <span class="icon-doctor-sos-2 fsize-22em"></span> -->
-                <span class="icon-int-engio "></span>
+                <span class="icon-int-engio"></span>
                 <ion-text>
                   Choix CR Engioplastie
                 </ion-text>

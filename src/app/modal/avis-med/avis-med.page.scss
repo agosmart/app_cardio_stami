@@ -151,15 +151,9 @@
 
 /****************************/
 .cloture-info {
-  .text-dark1 {
-    padding-left: 40px !important;
-  }
   .m-buttom {
-    margin-bottom: 100px !important;
-  }
-
-  .md100 {
-    margin-top: 100px !important;
+    margin-bottom: 55px;
+    margin-top: 100px;
   }
   .gradian {
     background: #3853de;
@@ -182,49 +176,35 @@
     }
   }
 
-  .interv-btn-group {
-    ion-button span {
-      // padding: 0;
-      // margin: 0;
-      font-size: 2em;
+  ion-button.thromb {
+    --border-radius: 16px;
+    border-radius: 16px;
+    --border-width: 2em !important;
+    float: left;
+    height: 80px;
+    width: 100%;
+    --color-activated: #bcf0f3;
+    --border-color: #00a79d;
+    --color: #00a79d;
+    --background: #ecfbfd;
+    span {
+      font-size: 2.1rem !important;
     }
-    // ion-button h3 {
-    //   margin-top: 4px;
-    // }
-    ion-text {
-      font-size: 1.1em;
-      letter-spacing: 0.08rem;
-    }
-    ion-button.thrombo,
-    ion-button.engio {
-      --border-radius: 16px;
-      border-radius: 16px;
-      --border-width: 2em !important;
-      float: left;
-      /* padding: 8px; */
-      /* margin: 5px; */
-      height: 80px;
-      width: 100%;
-      span {
-        font-size: 2.1rem !important;
-      }
-    }
+  }
 
-    ion-button.engio {
-      --background: #fef0f0;
-      // --background-activated: ;
-      --border-color: #ef4136;
-      --color-activated: #f0cbcb;
-      --color: #b72222;
-      border: 1px solid #ef4136;
+  ion-button.gocr {
+    --border-radius: 16px;
+    --border-width: 2em !important;
+    float: left;
+    height: 80px;
+    width: 100%;
+    span {
+      font-size: 2.1rem !important;
     }
-    ion-button.thrombo {
-      --background: #ecfbfd;
-      // --background-activated :;
-      --color-activated: #bcf0f3;
-      --border-color: #00a79d;
-      --color: #00a79d;
-      border: 1px solid #00a79d;
-    }
+    //--background: #ecfcf2;
+    --color-activated: #ef4136;
+    // --border-color: #009444;
+    // --color: #009444;
+    //border: 1px solid #009444;
   }
 }
