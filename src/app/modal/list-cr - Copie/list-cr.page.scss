@@ -149,14 +149,14 @@
   }
 }
 
+.header {
+  background: #3853de;
+  background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+}
 /****************************/
 .cloture-info {
   .text-dark1 {
     padding-left: 40px !important;
-  }
-  .text-dark2 {
-    padding-left: 13px !important;
-    color: white !important;
   }
   .m-buttom {
     margin-bottom: 0px;
@@ -195,7 +195,7 @@
       font-size: 1.1em;
       letter-spacing: 0.08rem;
     }
-    ion-button.thromb,
+    ion-button.thrombo,
     ion-button.engio {
       --border-radius: 16px;
       border-radius: 16px;

@@ -149,11 +149,15 @@
   }
 }
 
+.header {
+  background: #3853de;
+  background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+}
 /****************************/
 .cloture-info {
   .m-buttom {
-    margin-bottom: 55px;
-    margin-top: 100px;
+    // margin-bottom: 55px;
+    // margin-top: 100px;
   }
   .gradian {
     background: #3853de;
@@ -219,6 +223,7 @@
 }
 
 .decision {
+  margin-top: 30px;
   ion-card-content.md.card-content-md.hydrated {
     //padding: 10px 24px 10px 10px;
     padding: 10px;
@@ -307,6 +312,22 @@
         font-size: 2.1rem !important;
       }
       --color-activated: #ef4136;
+    }
+  }
+
+  .btn-submit {
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    /* display: inline-block; */
+    padding: 0;
+    margin: 0;
+    _background: #fff;
+
+    ion-button {
+      margin: 24px 24px;
     }
   }
 }

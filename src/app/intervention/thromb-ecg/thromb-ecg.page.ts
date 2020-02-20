@@ -104,10 +104,10 @@ export class ThrombEcgPage implements OnInit {
 
   valider() {
     console.log(" test ===========>isEcg");
-    if (!this.isEcg) {
+    if (this.isEcg) {
       console.log("isEcg");
-      // this.startUpload();
-      this.fortesting();
+      this.startUpload();
+      //this.fortesting();
       //this.startUpload1();
     } else {
       this.sglob.showAlert("Erreur ", "veuiller faire un ECG");

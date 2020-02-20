@@ -104,7 +104,7 @@ export class AvisMedPage implements OnInit {
               this.closeModal();
             } else {
               await this.router.navigate([
-                "/treatment-thromb",
+                "/orientation-st",
                 this.dataModalAvis["idDossier"],
                 JSON.stringify(this.dataPatient)
               ]);

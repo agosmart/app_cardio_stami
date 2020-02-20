@@ -36,6 +36,7 @@ export class ThrombSosPage implements OnInit {
   afficheButtonCR = 0;
   lastCrName: string;
   idCr: number;
+  gender: number;
 
   demandeAvisId = 0;
   etabName = "abc";
@@ -70,6 +71,7 @@ export class ThrombSosPage implements OnInit {
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         this.idCr = this.dataPatient.lastCrId;
         const motifId = this.dataPatient.lastMotifId;
+        this.gender = this.dataPatient.gender;
         this.urlEcg = this.dataPatient["ecgImage"];
         if (this.dataPatient.stepId !== 19) {
           this.srvApp.stepUpdatePage(this.dossierId, 19, 9, this.token);

@@ -68,7 +68,7 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="openImageEcg(urlEcg)"
+                    (click)="openImageEcg()"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"
@@ -84,7 +84,8 @@
     </ion-row>
   </ion-grid>
   <ion-grid class="ion-no-padding">
-    <ion-row *ngIf="!afficheMed" class="ion-no-padding">
+    <ion-row class="ion-no-padding">
+      <!-- <ion-row *ngIf="!afficheMed" class="ion-no-padding"> -->
       <ion-col size="12" class="ion-no-margin">
         <ion-list>
           <ion-item-divider>
@@ -132,7 +133,7 @@
                 fill="solid"
                 class="engio"
                 tappable
-                (click)="showAlertConfirme('ENGIO')"
+                (click)="showAlertConfirme()"
               >
                 <!-- <span class="icon-doctor-sos-2 fsize-22em"></span> -->
                 <span class="icon-int-engio "></span>

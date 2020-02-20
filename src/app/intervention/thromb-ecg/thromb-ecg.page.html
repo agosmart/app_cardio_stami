@@ -68,7 +68,7 @@
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
                   <ion-button
-                    (click)="openImageEcg(urlEcg)"
+                    (click)="openImageEcg()"
                     color="danger"
                     class="ion-bt-padding "
                     expand="full"
@@ -96,7 +96,7 @@
               <ion-icon slot="icon-only" name="trash"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-row class=" bg-light  ion-padding ">
+          <ion-row class=" bg-light  ion-padding " *ngIf="!isEcg">
             <ion-col
               size="12"
               class="ion-padding-top ion-padding-bottom ion-text-center"
@@ -114,7 +114,7 @@
             </ion-col>
           </ion-row>
 
-          <div class="ion-margin-top">
+          <div class="ion-margin-top" *ngIf="isEcg">
             <ion-button
               shape="round"
               expand="block"

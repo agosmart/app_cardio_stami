@@ -28,16 +28,6 @@
             <ion-card-content class="text10 ">
               <ion-row class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-label>
-                    <ion-badge class="p-6-16" slot="start" color="medium"
-                      >N°: 2001-00035</ion-badge
-                    >
-                  </ion-label>
-                </ion-col>
-              </ion-row>
-
-              <ion-row class="ion-no-padding">
-                <ion-col size="12" class="ion-no-padding">
                   <h2>
                     <span
                       class='{{ gender === 1 ? "icon-woman fsize-18em" : "icon-man fsize-18em" }} text-dark  text10'
@@ -56,14 +46,6 @@
                   </h2>
                 </ion-col>
               </ion-row>
-
-              <!-- <ion-row class="ion-no-padding">
-            <ion-col size="12" class="ion-no-padding">
-              <span class="icon-weight  text-dark  text10"></span>
-              
-              {{weight + ' KG'}}
-            </ion-col>
-          </ion-row> -->
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -115,7 +97,7 @@
               <ion-icon slot="start" name="pulse"></ion-icon>Ajouter ECG
             </ion-button> -->
 
-            <ion-row class=" bg-light  ion-padding ">
+            <ion-row class=" bg-light  ion-padding " *ngIf="!isEcg">
               <ion-col
                 size="12"
                 class="ion-padding-top ion-padding-bottom ion-text-center"
@@ -133,7 +115,7 @@
               </ion-col>
             </ion-row>
 
-            <div class="ion-margin-top">
+            <div class="ion-margin-top" *ngIf="isEcg">
               <ion-button
                 shape="round"
                 expand="block"
