@@ -84,6 +84,20 @@
               ></ion-toggle>
             </ion-item>
 
+            <ion-item lines="full">
+              <ion-label position="floating">Douleurs Thoracique depuis: </ion-label>
+              <ion-input inputmode="number" type="number" placeholder="00 Heures" formControlName="hdouleur" class="fsize-20em">
+              </ion-input>
+            </ion-item>
+            <div *ngFor="let error of errorMessages.hdouleur">
+              <ng-container *ngIf="hdouleur.hasError(error.type) && (hdouleur.dirty || hdouleur.touched)">
+                <small class="error-message">
+                  <ion-icon name="information-circle-outline"></ion-icon>
+                  <p>{{error.message}}</p>
+                </small>
+              </ng-container>
+            </div>
+
             <ion-item *ngIf="isEcg">
               <ion-thumbnail slot="start">
                 <ion-img [src]="ecgAfficher"></ion-img>

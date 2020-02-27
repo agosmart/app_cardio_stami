@@ -72,6 +72,9 @@ export class InscEcgPage implements OnInit {
   get poids() {
     return this.EcgForm.get("poids");
   }
+  get hdouleur() {
+    return this.EcgForm.get("hdouleur");
+  }
   get dThorasic() {
     return this.EcgForm.get("dThorasic");
   }
@@ -82,6 +85,8 @@ export class InscEcgPage implements OnInit {
       { type: "minLength", message: "2 characters au min" },
       { type: "pattern", message: "caractères numéric seulement" }
     ],
+    hdouleur: [{ type: "pattern", message: "caractères numéric seulement" }],
+
     dThorasic: [{ type: "", message: "veuillez faire un choix" }]
   };
   EcgForm = this.formBuilder.group({
@@ -90,11 +95,11 @@ export class InscEcgPage implements OnInit {
       [
         Validators.required,
         Validators.maxLength(3),
-        Validators.required,
         Validators.minLength(2),
         Validators.pattern("^[0-9]+$")
       ]
     ],
+    hdouleur: ["", [Validators.pattern("^[0-9]+$")]],
     dThorasic: [false, [Validators.pattern]]
   });
 
@@ -221,6 +226,7 @@ export class InscEcgPage implements OnInit {
       formData.append("dThorasic", dThorasic.toString());
       formData.append("weight", this.EcgForm.value.poids.toString());
       formData.append("stepId", this.stepId.toString());
+      //formData.append("hdouleur", this.EcgForm.value.hdouleur.toString());
       formData.append("patientId", this.idPatient.toString());
       formData.append("lastName", this.dataPatient["lastName"]);
       formData.append("firstName", this.dataPatient["firstName"]);
@@ -291,7 +297,7 @@ export class InscEcgPage implements OnInit {
   takePicture() {
     console.log("======n0=======");
     const options: CameraOptions = {
-      quality: 75,
+      quality: 50,
       sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,

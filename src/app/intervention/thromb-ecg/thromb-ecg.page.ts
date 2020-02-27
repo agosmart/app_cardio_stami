@@ -84,7 +84,7 @@ export class ThrombEcgPage implements OnInit {
   takePicture() {
     console.log("======n0=======");
     const options: CameraOptions = {
-      quality: 75,
+      quality: 50,
       sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
@@ -104,10 +104,10 @@ export class ThrombEcgPage implements OnInit {
 
   valider() {
     console.log(" test ===========>isEcg");
-    if (this.isEcg) {
+    if (!this.isEcg) {
       console.log("isEcg");
-      this.startUpload();
-      //this.fortesting();
+      //this.startUpload();
+      this.fortesting();
       //this.startUpload1();
     } else {
       this.sglob.showAlert("Erreur ", "veuiller faire un ECG");

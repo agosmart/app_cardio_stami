@@ -1,8 +1,6 @@
 <ion-header class="header">
   <ion-toolbar color="dark">
     <ion-title>Liste CR</ion-title>
-    <!-- <ion-icon slot="end" name="close-circle" (click)="closeModal()"></ion-icon> -->
-
     <ion-button
       slot="end"
       strong="true"
@@ -11,205 +9,12 @@
       (click)="closeModal()"
       type="button"
     >
-      <!-- <ion-icon slot="icon-only" name="close-circle"></ion-icon> -->
-      Fermer
+      <span class="icon-remove-outline fsize-20em"></span>
     </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen class="cloture-info ion-no-padding">
-  <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 4  || motifId== 6 "
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="12">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="gocr"
-                tappable
-                (click)="cloture()"
-              >
-                <div>
-                  <h3>
-                    <span class="icon-cr-orientation fsize-20em"></span>
-                  </h3>
-                  <ion-text color="_primary">
-                    Transfert
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 3"
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="12">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="engio"
-                tappable
-                (click)="treatmentEngio()"
-              >
-                <div>
-                  <h3><span class="icon-int-engio fsize-20em"></span></h3>
-                  <ion-text color="_primary"> Transfert Engioplastie</ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 1"
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="6">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="st"
-                tappable
-                (click)="showAlertConfirme('ST')"
-              >
-                <div>
-                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    ST
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <!-- <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="sos"
-                tappable
-                (click)="closeModal()"
-              >
-                <div>
-                  <h3>
-                    <span class="icon-remove-outline fsize-22em"></span>
-                  </h3>
-                  <ion-text color="_primary">
-                    FERMER
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col> -->
-            <ion-col size="6">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="ras"
-                tappable
-                (click)="showAlertConfirme('RAS')"
-              >
-                <div>
-                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    RAS
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 5"
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="st"
-                tappable
-                (click)="showAlertConfirme('ST')"
-              >
-                <div>
-                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    ST
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="sos"
-                tappable
-                (click)="closeModal()"
-              >
-                <div>
-                  <h3>
-                    <span class="icon-remove-outline fsize-22em"></span>
-                  </h3>
-                  <ion-text color="_primary">
-                    FERMER
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <ion-col size="4">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="ras"
-                tappable
-                (click)="cloture()"
-              >
-                <div>
-                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    Transfert
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
   <ion-grid class="m-buttom md100">
     <ng-container>
       <ion-row>
@@ -251,118 +56,13 @@
                   </ion-note>
                 </ion-chip>
               </ion-item>
-              <ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
-              <ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
-              <ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
-              <ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip> </ion-item
-              ><ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip> </ion-item
-              ><ion-item lines="full" class="ion-no-padding">
-                <ion-avatar>
-                  <span class="icon-doctor-men3  text-dark  text17"></span>
-                </ion-avatar>
-                <ion-label>
-                  aaaaaaa
-                </ion-label>
-                <ion-chip color="secondary" slot="end" class="ion-no-padding">
-                  <span class="icon-heart-st text-dark  fsize14"></span>
-                  <ion-note [ngClass]="ST">
-                    <b>PAS ENCORS</b>
-                  </ion-note>
-                </ion-chip>
-              </ion-item>
             </ng-container>
           </ion-list>
         </ion-col>
       </ion-row>
     </ng-container>
   </ion-grid>
-</ion-content>
 
-<!-- <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 3"
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-button
-          expand="block"
-          fill="solid"
-          class="engio"
-          tappable
-          (click)="treatmentEngio()"
-        >
-          <div>
-            <h3><span class="icon-int-engio fsize-20em"></span></h3>
-            <ion-text color="_primary"> Transfert Engioplastie</ion-text>
-          </div>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
   <ion-grid
     fixed
     class="decision ion-margin-top ion-padding-top"
@@ -370,22 +70,152 @@
   >
     <ion-row>
       <ion-col size="12">
-        <ion-button
-          expand="block"
-          fill="solid"
-          class="gocr"
-          tappable
-          (click)="cloture()"
-        >
-          <div>
-            <h3>
-              <span class="icon-cr-orientation fsize-20em"></span>
-            </h3>
-            <ion-text color="_primary">
-              Transfert
-            </ion-text>
-          </div>
-        </ion-button>
+        <ion-grid class="diagno-btn-group">
+          <ion-row>
+            <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="gocr"
+                tappable
+                (click)="cloture()"
+              >
+                <div>
+                  <h3>
+                    <span class="icon-int-ras fsize-20em"></span>
+                  </h3>
+                  <ion-text color="_primary">
+                    Transfert
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-col>
     </ion-row>
-  </ion-grid> -->
+  </ion-grid>
+
+  <ion-grid
+    fixed
+    class="decision ion-margin-top ion-padding-top"
+    *ngIf="motifId== 3"
+  >
+    <ion-row>
+      <ion-col size="12">
+        <ion-grid class="diagno-btn-group">
+          <ion-row>
+            <ion-col size="12">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="engio"
+                tappable
+                (click)="treatmentEngio()"
+              >
+                <div>
+                  <h3><span class="icon-int-ras fsize-20em"></span></h3>
+                  <ion-text color="_primary"> Transfert Engioplastie</ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid
+    fixed
+    class="decision ion-margin-top ion-padding-top"
+    *ngIf="motifId== 1"
+  >
+    <ion-row>
+      <ion-col size="12">
+        <ion-grid class="diagno-btn-group">
+          <ion-row>
+            <ion-col size="6">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="st"
+                tappable
+                (click)="showAlertConfirme('ST')"
+              >
+                <div>
+                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    ST
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="ras"
+                tappable
+                (click)="showAlertConfirme('RAS')"
+              >
+                <div>
+                  <h3><span class="icon-heart-checked fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    RAS
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid
+    fixed
+    class="decision ion-margin-top ion-padding-top"
+    *ngIf="motifId== 2"
+  >
+    <ion-row>
+      <ion-col size="12">
+        <ion-grid class="diagno-btn-group">
+          <ion-row>
+            <ion-col size="6">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="st"
+                tappable
+                (click)="showAlertConfirme('THROMB')"
+              >
+                <div>
+                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    Thrombolyse
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button
+                expand="block"
+                fill="solid"
+                class="ras"
+                tappable
+                (click)="cloture()"
+              >
+                <div>
+                  <h3><span class="icon-int-ras fsize-20em"></span></h3>
+                  <ion-text color="_primary">
+                    Transfert
+                  </ion-text>
+                </div>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -55,6 +55,7 @@ export class AvisMedPage implements OnInit {
   }
 
   cloture() {
+    this.dataPatient["lastCrId"] = this.dataModalAvis["idEtab"];
     this.router.navigate([
       "/st",
       this.dataModalAvis["idDossier"],
@@ -75,6 +76,10 @@ export class AvisMedPage implements OnInit {
       // this.stepId = 10;
       msgAlert =
         "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+    } else {
+      //THROMB;
+      msgAlert =
+        "Etes-vous sur que  ce patient doit subir une thromobolyse local ? ";
     }
 
     console.log("DIAG ::::", msgAlert);
@@ -103,12 +108,21 @@ export class AvisMedPage implements OnInit {
               ]);
               this.closeModal();
             } else {
-              await this.router.navigate([
-                "/orientation-st",
-                this.dataModalAvis["idDossier"],
-                JSON.stringify(this.dataPatient)
-              ]);
-              this.closeModal();
+              if (diag == "THROMB") {
+                await this.router.navigate([
+                  "/thromb-ecg",
+                  this.dataModalAvis["idDossier"],
+                  JSON.stringify(this.dataPatient)
+                ]);
+                this.closeModal();
+              } else {
+                await this.router.navigate([
+                  "/treatment-thromb",
+                  this.dataModalAvis["idDossier"],
+                  JSON.stringify(this.dataPatient)
+                ]);
+                this.closeModal();
+              }
             }
           }
         }

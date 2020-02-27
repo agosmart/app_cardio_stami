@@ -241,7 +241,7 @@ export class ThrombRelativePage implements OnInit {
         console.groupEnd();
         // ############# END / VARIABLS FORM ###############
 
-        if (this.exitProcess) {
+        if (!this.exitProcess) {
           loadingEl.dismiss();
           this.dataPatient.resultId = 9; //   Le THROMBOLYSE a été jugée risquée
 
@@ -249,7 +249,7 @@ export class ThrombRelativePage implements OnInit {
 
           // ************ REDIRECTION TO GOCR PAGE ****************
           this.router.navigate([
-            "/orientation-relative",
+            "/thromb-ecg",
             this.dossierId,
             JSON.stringify(this.dataPatient)
           ]);
@@ -273,7 +273,7 @@ export class ThrombRelativePage implements OnInit {
 
                 // ************ REDIRECTION TO PICK PHOTO ECG 2  ****************
                 this.router.navigate([
-                  "/thromb-ecg",
+                  "/orientation-relative",
                   this.dossierId,
                   JSON.stringify(this.dataPatient)
                 ]);

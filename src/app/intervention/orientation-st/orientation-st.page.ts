@@ -81,7 +81,7 @@ export class OrientationStPage implements OnInit {
         const motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 20) {
-          this.srvApp.stepUpdatePage(this.dossierId, 20, 0, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 20, 6, this.token);
         }
         if (this.demandeAvisId > 0) {
           this.afficheReponseMed = 1;

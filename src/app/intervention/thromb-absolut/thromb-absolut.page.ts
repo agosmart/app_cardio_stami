@@ -220,12 +220,12 @@ export class ThrombAbsolutPage implements OnInit {
   }
 
   checkContreIndication(loadingEl) {
-    if (this.exitProcess) {
+    if (!this.exitProcess) {
       loadingEl.dismiss();
       this.dataPatient.resultId = 8;
       // ************ REDIRECTION TO GOCR PAGE ****************
       this.router.navigate([
-        "/orientation-absolu",
+        "/thromb-relative",
         this.dossierId,
         JSON.stringify(this.dataPatient)
       ]);
@@ -248,7 +248,7 @@ export class ThrombAbsolutPage implements OnInit {
             loadingEl.dismiss();
             // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
             this.router.navigate([
-              "/thromb-relative",
+              "/orientation-absolu",
               this.dossierId,
               JSON.stringify(this.dataPatient)
             ]);

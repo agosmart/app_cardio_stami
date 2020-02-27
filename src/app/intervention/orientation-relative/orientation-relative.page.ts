@@ -85,7 +85,7 @@ export class OrientationRelativePage implements OnInit {
         if (this.dataPatient.stepId !== 26) {
           this.srvApp.stepUpdatePage(this.dossierId, 26, 9, this.token);
         }
-        if (this.demandeAvisId > 0 && this.lastMotifId === 5) {
+        if (this.demandeAvisId > 0 && this.lastMotifId === 2) {
           this.afficheReponseMed = 1;
           this.reviewsDecision = true;
           this.lastCrName = this.dataPatient["lastCrName"];
@@ -111,7 +111,7 @@ export class OrientationRelativePage implements OnInit {
       componentProps: {
         idUser: this.idUser,
         idEtab: this.idEtab,
-        idMotif: 5,
+        idMotif: 2,
         dossierId: this.dossierId,
         token: this.token
       }
@@ -183,7 +183,7 @@ export class OrientationRelativePage implements OnInit {
               if (Object.keys(this.dataReponsesAvis).length > 0) {
                 this.dataReponsesAvis.forEach(element => {
                   const motifId = element.motifId;
-                  if (motifId === 5) {
+                  if (motifId === 2) {
                     this.nbRep =
                       this.nbRep + Object.keys(element.reponses).length;
                     this.dataModalAvis.push({
