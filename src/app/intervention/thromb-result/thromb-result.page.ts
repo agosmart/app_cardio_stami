@@ -105,8 +105,10 @@ export class ThrombResultPage implements OnInit {
           text: "Je confirme",
           handler: async () => {
             this.dataPatient.resultId = resultatId;
+            this.dataPatient.lastMotifId = 6;
+            // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
             this.router.navigate([
-              "/orientation-thromb",
+              "/orientation-st",
               this.dossierId,
               JSON.stringify(this.dataPatient)
             ]);

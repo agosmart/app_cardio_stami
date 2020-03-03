@@ -12,9 +12,7 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-cr-orientation text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding"
-      >ORIENTATION SOS</ion-col
-    >
+    <ion-col size="12" class="title-header ion-no-padding">SOS</ion-col>
   </ion-row>
 </ion-grid>
 
@@ -147,13 +145,14 @@
                 <ion-label>
                   {{itemReponse.etabName}}
                 </ion-label>
-                <ion-chip
+                <!-- <ion-chip
                   color="secondary"
                   slot="end"
                   class="ion-no-padding text-dark1"
-                >
-                  {{itemReponse.nbReponse}}
-                </ion-chip>
+                > -->
+                <span class="icon-doctor-sos-2 medsos text22"></span>
+                <sup>({{itemReponse.nbReponse}})</sup>
+                <!-- </ion-chip> -->
               </ion-item>
             </ng-container>
           </ion-list>

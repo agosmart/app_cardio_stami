@@ -39,6 +39,7 @@ export class OrientationStPage implements OnInit {
   dataReponsesAvis: Array<ReponseAvisModel>;
   dataModalAvis = [];
   currentModal: any;
+  motifId: number;
 
   afficheListeCr = false;
   reviewsDecision = false;
@@ -78,10 +79,10 @@ export class OrientationStPage implements OnInit {
         this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
         this.idCr = this.dataPatient.lastCrId;
         console.log("*************dataPatient :", this.dataPatient);
-        const motifId = this.dataPatient.lastMotifId;
+        this.motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 20) {
-          this.srvApp.stepUpdatePage(this.dossierId, 20, 6, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 20, 15, this.token);
         }
         if (this.demandeAvisId > 0) {
           this.afficheReponseMed = 1;
@@ -92,6 +93,7 @@ export class OrientationStPage implements OnInit {
       }
     });
   }
+  gg;
 
   async openImageEcg() {
     console.log("image ::::", this.urlEcg);
@@ -111,7 +113,7 @@ export class OrientationStPage implements OnInit {
         idUser: this.idUser,
         idEtab: this.idEtab,
         dossierId: this.dossierId,
-        idMotif: 3,
+        idMotif: this.motifId,
         token: this.token
       }
     });
@@ -135,23 +137,23 @@ export class OrientationStPage implements OnInit {
 
   async listeReponseCR(nbReponse, idEtab) {
     console.log("idEtab ::::", idEtab);
-    if (nbReponse > 0) {
-      console.log("dataModalAvis ::::", this.dataModalAvis);
-      let objectAvisEtab = [];
-      objectAvisEtab = this.getobjectDossier(idEtab);
-      console.log("objectAvisEtab ::::", objectAvisEtab);
-      //console.log("laReponse ::::", this.dataModalAvis.laReponse);
-      const modal = await this.modalCtrl.create({
-        component: AvisMedPage,
-        componentProps: {
-          dataPatient: this.dataPatient,
-          dataModalAvis: objectAvisEtab
-        }
-      });
-      return await modal.present();
-    } else {
-      this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
-    }
+    //   if (nbReponse > 0) {
+    console.log("dataModalAvis ::::", this.dataModalAvis);
+    let objectAvisEtab = [];
+    objectAvisEtab = this.getobjectDossier(idEtab);
+    console.log("objectAvisEtab ::::", objectAvisEtab);
+    //console.log("laReponse ::::", this.dataModalAvis.laReponse);
+    const modal = await this.modalCtrl.create({
+      component: AvisMedPage,
+      componentProps: {
+        dataPatient: this.dataPatient,
+        dataModalAvis: objectAvisEtab
+      }
+    });
+    return await modal.present();
+    // } else {
+    //   this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
+    // }
   }
 
   getobjectDossier(id: any) {
@@ -193,7 +195,7 @@ export class OrientationStPage implements OnInit {
                   const motifId = element.motifId;
                   console.log("motifId ", motifId);
 
-                  if (motifId === 3) {
+                  if (motifId === this.motifId) {
                     console.log("element222 ", element.demandeId);
                     console.log(
                       "================ length",
@@ -357,7 +359,7 @@ export class OrientationStPage implements OnInit {
   }
 
   async goToTrombo() {
-    this.dataPatient.resultId = 13;
+    this.dataPatient.resultId = 15;
     await this.router.navigate([
       "/treatment-thromb",
       this.dossierId,

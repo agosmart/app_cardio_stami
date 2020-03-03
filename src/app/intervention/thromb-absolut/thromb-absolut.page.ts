@@ -245,10 +245,12 @@ export class ThrombAbsolutPage implements OnInit {
           );
 
           if (+this.returnData.code === 201) {
+            this.dataPatient.lastMotifId = 4;
+            this.dataPatient.resultId = 8;
             loadingEl.dismiss();
             // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
             this.router.navigate([
-              "/orientation-absolu",
+              "/orientation-st",
               this.dossierId,
               JSON.stringify(this.dataPatient)
             ]);

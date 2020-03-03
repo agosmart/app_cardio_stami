@@ -19,7 +19,7 @@ export class AvisMedPage implements OnInit {
   dataModalAvis: [];
   dataReponsesAvis: [];
   dataPatient: DossierModel;
-  isLoading = false;
+  haseResponse = true;
   constructor(
     private router: Router,
     private modalCtrl: ModalController,
@@ -36,6 +36,11 @@ export class AvisMedPage implements OnInit {
     this.crName = this.dataModalAvis["etabName"];
     this.motifId = this.dataModalAvis["motifId"];
     console.log("dataReponsesAvis===>", this.dataReponsesAvis);
+
+    console.log(this.dataReponsesAvis.length);
+    if (this.dataReponsesAvis.length === 0) {
+      this.haseResponse = false;
+    }
   }
 
   treatmentEngio() {

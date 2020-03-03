@@ -116,23 +116,6 @@ const routes: Routes = [
       )
   },
   {
-    path: "gocr/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import("./intervention/gocr/gocr.module").then(m => m.GocrPageModule)
-  },
-  {
-    path: "envoi-cr/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import("./intervention/envoi-cr/envoi-cr.module").then(
-        m => m.EnvoiCrPageModule
-      )
-  },
-  {
-    path: "engio/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import("./intervention/engio/engio.module").then(m => m.EngioPageModule)
-  },
-  {
     path: "thromb-absolut/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/thromb-absolut/thromb-absolut.module").then(
@@ -189,13 +172,6 @@ const routes: Routes = [
       )
   },
   {
-    path: "orientation-thromb/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import(
-        "./intervention/orientation-thromb/orientation-thromb.module"
-      ).then(m => m.OrientationThrombPageModule)
-  },
-  {
     path: "archive/:patientId/:pageOrig/:idDossierOrig/:dataPatientObj",
     loadChildren: () =>
       import("./archive/archive.module").then(m => m.ArchivePageModule)
@@ -235,27 +211,6 @@ const routes: Routes = [
     path: "st/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/st/st.module").then(m => m.StPageModule)
-  },
-  {
-    path: "orientation-sos/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import("./dossier/orientation-sos/orientation-sos.module").then(
-        m => m.OrientationSosPageModule
-      )
-  },
-  {
-    path: "orientation-absolu/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import(
-        "./intervention/orientation-absolu/orientation-absolu.module"
-      ).then(m => m.OrientationAbsoluPageModule)
-  },
-  {
-    path: "orientation-relative/:idDossier/:dataPatientObj",
-    loadChildren: () =>
-      import(
-        "./intervention/orientation-relative/orientation-relative.module"
-      ).then(m => m.OrientationRelativePageModule)
   }
 ];
 

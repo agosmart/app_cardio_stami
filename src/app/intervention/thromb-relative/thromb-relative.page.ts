@@ -272,11 +272,16 @@ export class ThrombRelativePage implements OnInit {
                 loadingEl.dismiss();
 
                 // ************ REDIRECTION TO PICK PHOTO ECG 2  ****************
+                this.dataPatient.lastMotifId = 2;
+                this.dataPatient.resultId = 9;
+                loadingEl.dismiss();
+                // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
                 this.router.navigate([
-                  "/orientation-relative",
+                  "/orientation-st",
                   this.dossierId,
                   JSON.stringify(this.dataPatient)
                 ]);
+                // ****************************
 
                 // ****************************
               } else {

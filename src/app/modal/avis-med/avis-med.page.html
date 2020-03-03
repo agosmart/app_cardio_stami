@@ -1,16 +1,11 @@
 <ion-header class="header">
   <ion-toolbar color="dark">
     <ion-title>Liste CR</ion-title>
-    <ion-button
+    <span
       slot="end"
-      strong="true"
-      shape="round"
-      tappable
+      class="icon-remove-outline fsize-20em"
       (click)="closeModal()"
-      type="button"
-    >
-      <span class="icon-remove-outline fsize-20em"></span>
-    </ion-button>
+    ></span>
   </ion-toolbar>
 </ion-header>
 
@@ -29,8 +24,16 @@
                 <h6>{{crName}}</h6>
               </ion-text>
             </ion-item-divider>
-
-            <ng-container>
+            <ng-container *ngIf="!haseResponse">
+              <ion-item lines="none" class="ion-padding">
+                <ion-text class="ion-text-center">
+                  <span class="icon-conditions text-dark text17"></span>
+                  Pour l'instant, vous n'avez reçu aucune réponse à votre
+                  demande, veuillez rafraîchir pour actualiser les données.
+                </ion-text>
+              </ion-item>
+            </ng-container>
+            <ng-container *ngIf="haseResponse">
               <ion-item
                 lines="full"
                 *ngFor="let itemReponse of dataReponsesAvis"
@@ -66,7 +69,7 @@
   <ion-grid
     fixed
     class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 4  || motifId== 6 "
+    *ngIf="motifId== 2  || motifId== 4  || motifId== 6 "
   >
     <ion-row>
       <ion-col size="12">
@@ -162,53 +165,6 @@
                   <h3><span class="icon-heart-checked fsize-20em"></span></h3>
                   <ion-text color="_primary">
                     RAS
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid
-    fixed
-    class="decision ion-margin-top ion-padding-top"
-    *ngIf="motifId== 2"
-  >
-    <ion-row>
-      <ion-col size="12">
-        <ion-grid class="diagno-btn-group">
-          <ion-row>
-            <ion-col size="6">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="st"
-                tappable
-                (click)="showAlertConfirme('THROMB')"
-              >
-                <div>
-                  <h3><span class="icon-heart-st fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    Thrombolyse
-                  </ion-text>
-                </div>
-              </ion-button>
-            </ion-col>
-            <ion-col size="6">
-              <ion-button
-                expand="block"
-                fill="solid"
-                class="ras"
-                tappable
-                (click)="cloture()"
-              >
-                <div>
-                  <h3><span class="icon-int-ras fsize-20em"></span></h3>
-                  <ion-text color="_primary">
-                    Transfert
                   </ion-text>
                 </div>
               </ion-button>

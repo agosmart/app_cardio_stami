@@ -26,7 +26,7 @@ export class DiagnosticPage implements OnInit {
   idDossierToGet: number;
   dataPatients: Array<DossierModel>;
   hasHistoric = false;
-  dataPatient: object;
+  dataPatient: DossierModel;
   ecgTmp: string;
   idDossier: number;
   token: string;
@@ -215,8 +215,11 @@ export class DiagnosticPage implements OnInit {
           this.dataPatient["demandeAvisId"]
         );
         // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
-        await this.router.navigate([
-          "/orientation-sos",
+        this.dataPatient.lastMotifId = 1;
+        this.dataPatient.resultId = 15;
+        // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
+        this.router.navigate([
+          "/orientation-st",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);
@@ -229,6 +232,7 @@ export class DiagnosticPage implements OnInit {
           this.dataPatient
         );
         console.log("st..........................");
+        this.dataPatient.lastMotifId = 3;
         await this.router.navigate([
           "/orientation-st",
           this.idDossier,

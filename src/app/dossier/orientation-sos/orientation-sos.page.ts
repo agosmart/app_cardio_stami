@@ -128,27 +128,21 @@ export class OrientationSosPage implements OnInit {
 
   async listeReponseCR(nbReponse, idEtab) {
     console.log("idEtab ::::", idEtab);
-    if (nbReponse > 0) {
-      console.log("dataModalAvis ::::", this.dataModalAvis);
-      let objectAvisEtab = [];
-      objectAvisEtab = this.getobjectDossier(idEtab);
-      console.log("objectAvisEtab ::::", objectAvisEtab);
-      const modal = await this.modalCtrl.create({
-        component: AvisMedPage,
-        componentProps: {
-          dataPatient: this.dataPatient,
-          dataModalAvis: objectAvisEtab
-        }
-      });
-      return await modal.present();
-    } else {
-      this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
-    }
-
-    // const modal = await modalController.create({ component: UploadPage });
-    // const { data } = await modal.onDidDismiss();
-    // if (data) {
-    //   console.log("::::::onDidDismiss ::::");
+    // if (nbReponse > 0) {
+    console.log("dataModalAvis ::::", this.dataModalAvis);
+    let objectAvisEtab = [];
+    objectAvisEtab = this.getobjectDossier(idEtab);
+    console.log("objectAvisEtab ::::", objectAvisEtab);
+    const modal = await this.modalCtrl.create({
+      component: AvisMedPage,
+      componentProps: {
+        dataPatient: this.dataPatient,
+        dataModalAvis: objectAvisEtab
+      }
+    });
+    return await modal.present();
+    // } else {
+    //   this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
     // }
   }
 
