@@ -4,7 +4,7 @@ import { FormsModule } from "@angular/forms";
 import { IonicModule } from "@ionic/angular";
 
 import { OrientationStPageRoutingModule } from "./orientation-st-routing.module";
-import { ImagePageModule } from "src/app/modal/image/image.module";
+//import { ImagePageModule } from "src/app/modal/image/image.module";
 import { AvisMedPageModule } from "src/app/modal/avis-med/avis-med.module";
 import { ListCrPageModule } from "src/app/modal/list-cr/list-cr.module";
 import { OrientationStPage } from "./orientation-st.page";
@@ -15,7 +15,7 @@ import { OrientationStPage } from "./orientation-st.page";
     FormsModule,
     IonicModule,
     OrientationStPageRoutingModule,
-    ImagePageModule,
+    // ImagePageModule,
     ListCrPageModule,
     AvisMedPageModule
   ],

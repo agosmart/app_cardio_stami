@@ -115,6 +115,9 @@ export class InscInfosPage implements OnInit {
 
     this.sglob.updateInitFetchHome(true);
 
+    // this.dataPatient = this.srvApp.getExtras();
+    //console.log("===== dataPatient get  ===", this.dataPatient);
+
     this.activatedroute.paramMap.subscribe(paramMap => {
       if (!paramMap.has("dataPatientObj")) {
         /* ========================================
@@ -156,64 +159,6 @@ export class InscInfosPage implements OnInit {
     // this.cheked = this.pretreatmentFormInfos.value.bolus;
     //  console.log(this.inscriptionFormInfos.value.bolus);
   }
-  // ===============  PUBLIC FUNCTIONS ===============
-
-  // submitFormInfos() {
-  //   let valHta = "0";
-  //   if (this.inscriptionFormInfos.value.hta === true) {
-  //     valHta = "1";
-  //   }
-  //   let valtobacco = "0";
-  //   if (this.inscriptionFormInfos.value.tobacco === true) {
-  //     valtobacco = "1";
-  //   }
-  //   let valinsCardiaque = "0";
-  //   if (this.inscriptionFormInfos.value.insCardiaque === true) {
-  //     valinsCardiaque = "1";
-  //   }
-  //   let valcardIscStable = "0";
-  //   if (this.inscriptionFormInfos.value.cardIscStable === true) {
-  //     valcardIscStable = "1";
-  //   }
-
-  //   if (this.inscriptionFormInfos.value.diabetes === "") {
-  //     console.log("diabet vide");
-  //     this.inscriptionFormInfos.value.diabetes = "0";
-  //   }
-
-  //   if (this.inscriptionFormInfos.value.dyslip === "") {
-  //     console.log("dyslip vide");
-  //     this.inscriptionFormInfos.value.dyslip = "0";
-  //   }
-
-  //   if (this.inscriptionFormInfos.value.sca === "") {
-  //     console.log("sca vide");
-  //     this.inscriptionFormInfos.value.sca = "0";
-  //   }
-
-  //   if (this.inscriptionFormInfos.value.angioCoran === "") {
-  //     console.log("angioCoran vide");
-  //     this.inscriptionFormInfos.value.angioCoran = "0";
-  //   }
-
-  //   const params = {
-  //     dossierId: this.idDossier,
-  //     doctorId: this.idUser,
-  //     diabetes: this.inscriptionFormInfos.value.diabetes,
-  //     dyslip: this.inscriptionFormInfos.value.dyslip,
-  //     sca: this.inscriptionFormInfos.value.sca,
-  //     angioCoran: this.inscriptionFormInfos.value.angioCoran,
-  //     hta: valHta,
-  //     tobacco: valtobacco,
-  //     insCardiaque: valinsCardiaque,
-  //     cardIscStable: valcardIscStable,
-  //     daignoDate: this.inscriptionFormInfos.value.daignoDate.substr(0, 4),
-  //     atlDate: this.inscriptionFormInfos.value.atlDate.substr(0, 4),
-  //     stepId: this.stepId
-  //   };
-
-  //   console.log("params >>>>> ", params);
-  // }
   submitFormInfos() {
     this.isLoading = true;
     this.loadingCtrl

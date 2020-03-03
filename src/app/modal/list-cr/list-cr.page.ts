@@ -15,6 +15,7 @@ import { DemandeAvisResponseData } from "src/app/models/DemandeAvis.response";
 import { ReponseAvisResponseData } from "src/app/models/reponseAvis.response";
 import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 import { DossierModel } from "src/app/models/dossier.model";
+import { StPageRoutingModule } from "src/app/cloture/st/st-routing.module";
 
 @Component({
   selector: "app-list-cr",
@@ -31,6 +32,7 @@ export class ListCrPage implements OnInit {
   itemsCR: any;
   etabName: string;
   dataPatient: DossierModel;
+  avisMotif: string;
   constructor(
     private srvApp: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -47,6 +49,27 @@ export class ListCrPage implements OnInit {
     this.idEtab = this.navParams.data.idEtab;
     this.dossierId = this.navParams.data.dossierId;
     this.idMotif = this.navParams.data.idMotif;
+    switch (this.idMotif) {
+      case 1:
+        this.avisMotif = "DEMANDER UN AVIS MEDICAL ST ou RAS";
+        break;
+      case 2:
+        this.avisMotif = "DEMANDER UN AVIS MEDICAL THROMBOLYSE";
+        break;
+      case 3:
+        this.avisMotif = "DEMANDER UN AVIS MEDICAL RECEPTION POUR ENGIOPLASTIE";
+        break;
+      case 4:
+        this.avisMotif = "DEMANDER UN AVIS MEDICAL RECEPTION CI ABSOLU";
+        break;
+      case 5:
+        this.avisMotif = "DEMANDER UN AVIS MEDICAL RECEPTION CI RELATIVE";
+        break;
+      default:
+        this.avisMotif =
+          "DEMANDER UN AVIS MEDICAL RECEPTION APRES THROMOBOLYSE";
+    }
+
     this.token = this.navParams.data.token;
 
     console.log("token", this.token);

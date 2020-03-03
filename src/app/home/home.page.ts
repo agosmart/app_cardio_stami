@@ -75,109 +75,6 @@ export class HomePage implements OnInit {
     this.listingDossier();
   }
 
-  // async onNotifReceived(data) {
-  //   console.log("onNotifReceived data ==>", data);
-  //   console.log("onNotifReceived etabname  ==>", JSON.stringify(data.etabName));
-  //   const etabName = JSON.stringify(data.etabName);
-  //   // console.log("onNotifReceived etab name point ==>", data.etabName);
-  //   // -----------END  message dynamic ---------------
-  //   const alert = await this.alertCtrl.create({
-  //     header: "Résultat d'authentication",
-  //     message:
-  //       "vos avez reçu une réponse d`avis medicale provenant du centre CR" +
-  //       etabName,
-  //     cssClass: "alert-css",
-  //     buttons: [
-  //       {
-  //         text: "Annuler",
-  //         role: "cancel",
-  //         cssClass: "secondary",
-  //         handler: () => {
-  //           console.log("Confirme Annuler");
-  //         }
-  //       },
-  //       {
-  //         text: "Je consulte",
-  //         handler: async () => {
-  //           this.goToNotif(1, 2);
-  //           // this.router.navigate([
-  //           //   "/dossier-infos",
-  //           //   JSON.stringify(data.idDossier)
-  //           // ]);
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   await alert.present();
-  // }
-
-  // goToNotif(dossierId, motifId) {
-  //   let pageToLoad;
-
-  //   switch (motifId) {
-  //     case 1:
-  //       pageToLoad = "orientation";
-  //       break;
-  //     case 2:
-  //       pageToLoad = "thromb-sos";
-  //       break;
-  //     default:
-  //       pageToLoad = "envoi-cr";
-  //   }
-
-  //   this.isLoading = true;
-  //   this.loadingCtrl
-  //     .create({ keyboardClose: true, message: "opération en cours..." })
-  //     .then(loadingEl => {
-  //       loadingEl.present();
-
-  //       const params = this.etatDossier;
-
-  //       //   console.log("params======>", params);
-  //       const authObs: Observable<DossierResponseData> = this.srv.showDossier(
-  //         this.token,
-  //         dossierId
-  //       );
-  //       // ---- Call Login function
-  //       authObs.subscribe(
-  //         // :::::::::::: ON RESULT ::::::::::
-  //         resData => {
-  //           this.isLoading = false;
-  //           console.log("<<<<<<<<<<<<<<<<<<<<<<Response >>>>> ", resData);
-  //           // ----- Hide loader ------
-  //           loadingEl.dismiss();
-  //           if (resData.data.length > 0) {
-  //             console.log("resData", resData);
-  //             this.objectDossiers = resData.data;
-  //             this.router.navigate([
-  //               "/" + pageToLoad,
-  //               dossierId,
-  //               JSON.stringify(this.objectDossiers)
-  //             ]);
-  //           } else {
-  //             // --------- Show Alert --------
-  //             // this.showAlert(resData.message);
-  //           }
-  //         },
-
-  //         // ::::::::::::  ON ERROR ::::::::::::
-  //         errRes => {
-  //           //console.log(errRes);
-  //           // ----- Hide loader ------
-  //           loadingEl.dismiss();
-  //           // --------- Show Alert --------
-  //           if (errRes.error.errors != null) {
-  //             this.sglob.showAlert("Erreur ", errRes.error.errors.email);
-  //           } else {
-  //             this.sglob.showAlert(
-  //               "Erreur ",
-  //               "Prblème d'accès au réseau, veillez vérifier votre connexion"
-  //             );
-  //           }
-  //         }
-  //       );
-  //     });
-  // }
   refrechListDossier() {
     this.objectDossiers = [];
     this.listingDossier();
@@ -255,17 +152,12 @@ export class HomePage implements OnInit {
   }
 
   goToStep(idDossier) {
+    //this.srv.setExtras(this.objectDossier);
+
     this.objectDossier = this.getobjectDossier(idDossier);
     this.pageStep = this.objectDossier["page"];
 
-    // this.objectDossier.ecgData[1]["dossierId"] = 300;
-    // this.objectDossier.ecgData[1]["ecgImage"] = "a.jpg";
-    // this.objectDossier.ecgData[1]["etape"] = "Thrombolyse";
-    // this.objectDossier.ecgData[1]["createdAt"] = "datecrea";
-
     console.log(" addd ecg===>", this.objectDossier);
-    //this.objectDossier.resultatId = 66;
-    // this.objectDossier.stepId = 12;
     this.router.navigate([
       "/" + this.pageStep,
       idDossier,
