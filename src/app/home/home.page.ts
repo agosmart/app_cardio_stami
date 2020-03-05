@@ -85,6 +85,8 @@ export class HomePage implements OnInit {
     this.router.navigate(["inscription"]);
   }
 
+
+
   // ------ Api service login ---------------
   listingDossier() {
     this.isLoading = true;
@@ -116,6 +118,7 @@ export class HomePage implements OnInit {
               //console.log("resData", resData);
               this.isExistDossier = true;
               this.objectDossiers = resData.data;
+              this.objectDossiers.reverse();
               //  this.objectDossiers['diagnostique'];
               //const dataResponse: DossierResponseData = resData;
               //  console.log("dataResponse", this.objectDossiers.length);

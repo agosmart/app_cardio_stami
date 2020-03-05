@@ -12,14 +12,12 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-cr-orientation text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding"
-      >ORIENTATION ST</ion-col
-    >
+    <ion-col size="12" class="title-header ion-no-padding">ORIENTATION ST</ion-col>
   </ion-row>
 </ion-grid>
 
 <!-- ------------------- -->
-<ion-content fullscreen class="cloture-info ion-no-padding">
+<ion-content fullscreen class="orientation-info ion-no-padding">
   <ion-grid class="form-bloc  bg-light ">
     <ion-row>
       <ion-col size="12" class="ion-no-padding">
@@ -30,9 +28,7 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <ion-label>
-                      <ion-badge class="p-6-16" slot="start" color="medium"
-                        >N°: {{dossierId}}</ion-badge
-                      >
+                      <ion-badge class="p-6-16" slot="start" color="medium">N°: {{dossierId}}</ion-badge>
                     </ion-label>
                   </ion-col>
                 </ion-row>
@@ -50,8 +46,7 @@
                     {{dataPatient['birthDayFr']}}
 
                     <ion-chip outline color="secondary">
-                      <ion-label class="bold"
-                        >{{dataPatient['age']}} ans
+                      <ion-label class="bold">{{dataPatient['age']}} ans
                       </ion-label>
                     </ion-chip>
 
@@ -68,12 +63,7 @@
 
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="openImageEcg()"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
+                  <ion-button (click)="openImageEcg()" color="danger" class="ion-bt-padding " expand="full">
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -99,20 +89,8 @@
               <ion-text>
                 <b class="text-gray500 ">AVIS DES MEDECINS </b>
               </ion-text>
-              <ion-button
-                slot="end"
-                strong="true"
-                (click)="afficherListeCrModal()"
-                shape="round"
-              >
-                <span class="icon-cr-orientation text-dark2 text17"></span>
-              </ion-button>
-              <ion-button
-                slot="end"
-                strong="true"
-                (click)="reponseAvisCR()"
-                shape="round"
-              >
+
+              <ion-button slot="end" strong="true" (click)="reponseAvisCR()" shape="round" class="bt-refresh">
                 <ion-icon name="refresh"></ion-icon>
               </ion-button>
             </ion-item-divider>
@@ -120,7 +98,7 @@
               <ion-item lines="none" class="ion-padding">
                 <ion-text class="ion-text-center">
                   <span class="icon-conditions text-dark text17"></span>
-                  Vus n'avez aucune demande en cours pour ce dossier. veuillez
+                  Vous n'avez reçu aucune demande pour ce dossier. veuillez
                   choisir un CR
                 </ion-text>
               </ion-item>
@@ -135,20 +113,18 @@
               </ion-item>
             </ng-container>
             <ng-container *ngIf="afficheReponseMed== 2">
-              <ion-item
-                lines="full"
-                *ngFor="let itemReponse of dataModalAvis"
-                class="ion-no-padding"
-                (click)="listeReponseCR(itemReponse.nbReponse, itemReponse.idEtab)"
-              >
+              <ion-item detail lines="full" *ngFor="let itemReponse of dataModalAvis" class="ion-no-padding"
+                (click)="listeReponseCR(itemReponse.nbReponse, itemReponse.idEtab)">
                 <ion-avatar>
                   <span class="icon-cr text-dark  text17"></span>
                 </ion-avatar>
                 <ion-label>
                   {{itemReponse.etabName}}
                 </ion-label>
-                <span class="icon-doctor-sos-2 medsos text22"></span>
-                <sup>({{itemReponse.nbReponse}})</sup>
+                <ion-badge color='{{itemReponse.nbReponse == 0 ? "light-2" :"success2" }}' class="badge-1">
+                  {{itemReponse.nbReponse}}</ion-badge>
+                <!-- <span class="icon-doctor-sos-2 medsos text22"></span> -->
+                <!-- <sup>({{itemReponse.nbReponse}})</sup> -->
               </ion-item>
             </ng-container>
           </ion-list>
@@ -180,20 +156,61 @@
   </div> -->
   <ion-grid fixed class="interv-btn-group ion-no-margin ">
     <ion-row>
-      <ion-col size="12" class="ion-text-left">
-        <ion-button
-          expand="block"
-          fill="solid"
-          class="thromb"
-          tappable
-          (click)="goToTrombo()"
-        >
+
+      <!-- <ion-col size="12" class="ion-text-left">
+        <ion-button expand="block" fill="solid" class="thromb" tappable (click)="goToTrombo()">
           <span class="icon-int-thromb"></span>
           <ion-text>
             Thrombolyse
           </ion-text>
         </ion-button>
-      </ion-col>
+      </ion-col> -->
+      <ng-container *ngIf='motifId == 0 || motifId == 3  '>
+
+        <!-- <ion-col size="6" class="ion-text-left">
+          <ion-button expand="block" fill="solid" class="list-cr btn-2-fixed" tappable (click)="afficherListeCrModal()">
+            <span class="icon-cr-orientation text17"></span>
+            <ion-text>
+              List CR
+            </ion-text>
+          </ion-button>
+        </ion-col> -->
+
+        <ion-col size="6" class="ion-text-left">
+          <ion-button expand="block" fill="solid" class="engio btn-2-fixed" tappable (click)="afficherListeCrModal()">
+            <span class="icon-int-engio text17"></span>
+            <ion-text>
+              ENGIOPLASTIE
+            </ion-text>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6" class="ion-text-left">
+          <ion-button expand="block" fill="solid" class="thromb btn-2-fixed" tappable (click)="goToTrombo()">
+            <span class="icon-int-thromb "></span>
+            <ion-text>
+              Thrombolyse
+            </ion-text>
+          </ion-button>
+        </ion-col>
+
+      </ng-container>
+
+      <ng-container *ngIf='motifId == 1  || motifId == 2|| motifId == 4  || motifId == 6 '>
+
+        <ion-col size="12" class="ion-text-left">
+          <ion-button expand="block" fill="solid" class="list-cr btn-fixed " tappable (click)="afficherListeCrModal()">
+            <span class="icon-cr-orientation text17"></span>
+            <ion-text>
+              List CR
+            </ion-text>
+          </ion-button>
+        </ion-col>
+
+      </ng-container>
+
+
+
     </ion-row>
   </ion-grid>
 </ion-content>

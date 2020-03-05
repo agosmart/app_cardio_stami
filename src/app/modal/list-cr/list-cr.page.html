@@ -3,11 +3,7 @@
     <ion-title>Liste CR</ion-title>
     <!-- <ion-icon slot="end" name="close-circle" (click)="closeModal()"></ion-icon> -->
 
-    <span
-      slot="end"
-      class="icon-remove-outline fsize-20em"
-      (click)="closeModal()"
-    ></span>
+    <span slot="end" class="icon-remove-outline fsize-20em" (click)="closeModal()"></span>
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen class="cloture-info ion-no-padding">
@@ -27,14 +23,9 @@
               </ion-text>
             </ion-item-divider>
 
-            <ion-item
-              lines="full"
-              *ngFor="let item of itemsCR; let i = index"
-              tappable
-              (click)="demandeAvisCr(item.etabId, item.etabName , i)"
-              color="tansparent"
-              [ngClass]="{'section-active': item.open, 'section': !item.open}"
-            >
+            <ion-item lines="full" *ngFor="let item of itemsCR; let i = index" tappable
+              (click)="demandeAvisCr(item.etabId, item.etabName , i)" color="tansparent"
+              [ngClass]="{'section-active': item.open, 'section': !item.open}">
               <ion-avatar>
                 <span class="icon-cudt-box-2  text-dark  text15"></span>
               </ion-avatar>
@@ -44,8 +35,8 @@
                 </h3>
               </ion-label>
               <ion-chip color="secondary">
-                <ion-note>
-                  <span class="icon-duration-1 text-dark  "></span>
+                <ion-note> <span class="icon-duration-1 text-dark  "></span></ion-note>
+                <ion-note color="{{item.duration_secondes >= 7200 ? 'danger':'newcolor' }}">
                   <b> {{item.duration}}</b>
                 </ion-note>
               </ion-chip>

@@ -12,9 +12,7 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-drogs text-white text20"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding"
-      >PROTOCOLE DE THROMBOLYSE</ion-col
-    >
+    <ion-col size="12" class="title-header ion-no-padding">PROTOCOLE DE THROMBOLYSE</ion-col>
   </ion-row>
 </ion-grid>
 <ion-content fullscreen class="pretreatment-infos ion-no-padding">
@@ -28,9 +26,7 @@
                 <ion-row class="ion-no-padding">
                   <ion-col size="12" class="ion-no-padding">
                     <ion-label>
-                      <ion-badge class="p-6-16" slot="start" color="medium"
-                        >N°: {{idDossier}}</ion-badge
-                      >
+                      <ion-badge class="p-6-16" slot="start" color="medium">N°: {{idDossier}}</ion-badge>
                     </ion-label>
                   </ion-col>
                 </ion-row>
@@ -48,8 +44,7 @@
                     {{dataPatient['birthDayFr']}}
 
                     <ion-chip outline color="secondary">
-                      <ion-label class="bold"
-                        >{{dataPatient['age']}} ans
+                      <ion-label class="bold">{{dataPatient['age']}} ans
                       </ion-label>
                     </ion-chip>
 
@@ -66,20 +61,10 @@
 
               <ion-col size="2" class="ion-no-padding">
                 <ion-col size="12" class="ion-no-padding">
-                  <ion-button
-                    (click)="openImageEcg()"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
+                  <ion-button (click)="openImageEcg()" color="danger" class="ion-bt-padding " expand="full">
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
-                  <ion-button
-                    (click)="openImageEcg()"
-                    color="danger"
-                    class="ion-bt-padding "
-                    expand="full"
-                  >
+                  <ion-button (click)="openImageEcg()" color="danger" class="ion-bt-padding " expand="full">
                     <ion-icon slot="icon-only" name="pulse"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -99,15 +84,27 @@
             <!-- pretreatment-bolus -->
             <ion-list-header class="ion-no-padding">
               <div class="ion-text-center back-light">
-                L’ECG DOIT SE FAIRE OBLIGATOIREMENT AVANT LE DÉBUT DE LA
-                THROMBOLYSE
+                Prétraitement THROMBOLYSE.
                 <span class="small-border">&nbsp;</span>
               </div>
             </ion-list-header>
+            <small class="message error-message error-message-border">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              L’ECG doit se faire obligatoirement avant le début de la thrombolyse.
+            </small>
+
+            <!-- <ion-chip color="danger" style="height: 62px;">
+              <ion-label>
+                <ion-icon name="information-circle-outline"></ion-icon> L’ECG doit se faire obligatoirement avant le
+                début de la thrombolyse.
+              </ion-label>
+            </ion-chip> -->
+
+
             <!--tpa-->
             <ng-container>
               <ion-radio-group formControlName="tpa">
-                <ion-row class="ion-no-padding ion-margin-top">
+                <ion-row class="ion-no-padding ">
                   <ion-col size="12" class="ion-no-padding">
                     <ion-card class="_ion-no-margin" color="light">
                       <ion-card-header>
@@ -119,17 +116,8 @@
 
                       <ion-card-content class="text09 ">
                         <ion-item>
-                          <ion-label
-                            >15 mg bolus IV<br />
-                            60 mg IV en 30 minutes<br />
-                            40 mg IV en 60 minutes</ion-label
-                          >
-                          <ion-radio
-                            slot="end"
-                            color="primary"
-                            value="0"
-                            (ionSelect)="onCheckBoxChange()"
-                          ></ion-radio>
+                          <ion-label> Choisir le dosage ALTÉPLASE</ion-label>
+                          <ion-radio slot="end" color="primary" value="0" (ionSelect)="onCheckBoxChange()"></ion-radio>
                         </ion-item>
                       </ion-card-content>
                     </ion-card>
@@ -149,12 +137,9 @@
                       </ion-card-header>
                       <ion-card-content class="text09 ">
                         <ion-item>
-                          <ion-label>{{tnkTpaVal}}</ion-label>
-                          <ion-radio
-                            slot="end"
-                            color="primary"
-                            value="1"
-                          ></ion-radio>
+                          <!-- <ion-label>{{tnkTpaVal}}</ion-label> -->
+                          <ion-note slot="start" class=" fsize-12em">{{tnkTpaVal}}</ion-note>
+                          <ion-radio slot="end" color="primary" value="1"></ion-radio>
                         </ion-item>
                       </ion-card-content>
                     </ion-card>
@@ -165,21 +150,13 @@
 
             <!-- consentement-->
             <ion-item class="ion-margin-top" lines="full">
-              <ion-label color="primary"
-                >J'accepte les conditions d'utilisations</ion-label
-              >
-              <ion-checkbox
-                color="primary"
-                checked="true"
-                formControlName="consentement"
-              ></ion-checkbox>
+              <ion-label color="primary">J'accepte les conditions d'utilisations</ion-label>
+              <ion-checkbox color="primary" checked="true" formControlName="consentement"></ion-checkbox>
             </ion-item>
 
             <div *ngFor="let error of errorMessages.consentement">
-              <ng-container
-                *ngIf="consentement.hasError(error.type) && (consentement.dirty || consentement.touched)"
-              >
-                <small class="message  error-message">
+              <ng-container *ngIf="consentement.hasError(error.type) && (consentement.dirty || consentement.touched)">
+                <small class="message error-message-inverse">
                   <ion-icon name="information-circle-outline"></ion-icon>
                   {{error.message}}
                 </small>
@@ -212,19 +189,10 @@
             <ion-row>
               <ion-col size="12">
                 <div class="ion-margin-top">
-                  <ion-button
-                    shape="round"
-                    expand="block"
-                    class="ion-margin-top btn"
-                    color="dark"
-                    type="submit"
-                    [disabled]="!protocolFormInfos.valid"
-                  >
+                  <ion-button shape="round" expand="block" class="ion-margin-top btn" color="dark" type="submit"
+                    [disabled]="!protocolFormInfos.valid">
                     Valider
-                    <ion-icon
-                      slot="end"
-                      name="checkmark-circle-outline"
-                    ></ion-icon>
+                    <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
                   </ion-button>
                 </div>
               </ion-col>

@@ -31,8 +31,7 @@
   src: url("./assets/fonts/icomoon-cardio.eot");
   src: url("./assets/fonts/icomoon-cardio.eot") format("embedded-opentype"),
     url("./assets/fonts/icomoon-cardio.ttf") format("truetype"),
-    url("./assets/fonts/icomoon-cardio.woff") format("woff"),
-    url("./assets/fonts/icomoon-cardio.svg") format("svg");
+    url("./assets/fonts/icomoon-cardio.woff") format("woff"), url("./assets/fonts/icomoon-cardio.svg") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -51,6 +50,25 @@
   }
   div#alert-2-msg {
     font-size: 1.2em;
+  }
+}
+.alert-2-css {
+  .alert-title.sc-ion-alert-md {
+    color: #fd5f60;
+    font-weight: 500;
+    font-size: 1.1em;
+    text-align: center;
+    border-bottom: 0;
+    padding: 8px;
+  }
+  .alert-radio-label.sc-ion-alert-md {
+    padding: 16px 36px;
+  }
+  div#alert-2-msg {
+    font-size: 1.2em;
+  }
+  h2#alert-3-hdr {
+    font-size: 1rem;
   }
 }
 
@@ -105,19 +123,11 @@ ion-button.btn {
 }
 
 .bg-profile {
-  background-image: linear-gradient(
-    135deg,
-    var(--ion-color-dark),
-    var(--ion-color-primary)
-  );
+  background-image: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
 }
 
 .bg-main {
-  background-image: linear-gradient(
-    -135deg,
-    var(--ion-color-medium),
-    var(--ion-color-light)
-  );
+  background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
 }
 // Helpers //
 .w100 {
@@ -315,6 +325,10 @@ ion-button.btn {
 .form-bloc {
   margin-top: 92px;
 }
+.form-bloc-button {
+  margin-bottom: 92px;
+}
+
 // Toolbar transparent
 .icon-header {
   text-align: center;
@@ -377,6 +391,12 @@ ion-button {
   --background: #3853de;
   --background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
 }
+
+.badge-1 {
+  padding: 4px 8px;
+  margin-right: 10px;
+}
+
 .info-message,
 .error-message {
   color: #f32051; //white;
@@ -392,7 +412,9 @@ ion-button {
   font-size: 0.9em;
   height: auto;
 }
-
+.error-message-border {
+  border: 1px solid #f32051;
+}
 .info-message {
   padding: 5px 16px;
   background: #ecf0f4;
@@ -412,4 +434,33 @@ ion-button {
   line-height: 20px;
   font-size: 0.9em;
   height: auto;
+}
+.error-message-alert {
+  box-shadow: 2px 2px 5px #778288;
+  background: #e1f3f7;
+  color: #092a6e;
+  font-weight: 500;
+}
+
+.btn-fixed {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  width: 95% !important;
+  text-align: center;
+  display: inline-block;
+  padding: 0;
+  margin: 24px auto;
+  background: #fff;
+}
+.btn-2-fixed {
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  width: 46% !important;
+  text-align: center;
+  display: inline-block;
+  padding: 0;
+  margin: 24px auto;
+  background: #fff;
 }

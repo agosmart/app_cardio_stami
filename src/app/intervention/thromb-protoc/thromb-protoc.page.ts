@@ -88,7 +88,7 @@ export class ThrombProtocPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
@@ -222,11 +222,12 @@ export class ThrombProtocPage implements OnInit {
   }
 
   async onCheckBoxChange() {
-    //this.hypertentionValue = 0;
+
 
     console.log("onCheckBoxChange");
     const alert = await this.alertCtrl.create({
       header: "ALTÉPLASE (TPA) ACTILYSE",
+      cssClass: "alert-2-css",
       inputs: [
         {
           name: "tpa0",
@@ -256,6 +257,7 @@ export class ThrombProtocPage implements OnInit {
           role: "cancel",
           cssClass: "secondary",
           handler: () => {
+
             console.log("Confirm Cancel");
             //this.hypertentionValue = 0;
             // this.listContIndicAbs[3].isChecked = false;

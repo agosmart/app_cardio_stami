@@ -18,13 +18,10 @@
     width: 42px;
   }
   ion-icon {
-    // margin-right: 5px;
-    // font-size: 1.4em;
-    // float: left;
-    // width: 1.4em;
     margin-right: 5px;
-    padding: 0;
-    margin: 0;
+    font-size: 1.4em;
+    float: left;
+    width: 1.4em;
   }
   ion-icon.i-card {
     color: #929eaa;
@@ -34,6 +31,7 @@
     padding: 0 5px !important;
   }
   ion-card {
+    margin: 16px 0;
     ion-col {
       padding: 2px 2px;
     }
@@ -41,9 +39,47 @@
 }
 
 .pretreatment-infos {
-  ion-card-content.md.card-content-md.hydrated {
+  ion-card-header {
+    padding: 6px 10px 6px 16px !important;
+    ion-card-title {
+      color: #0d9bc3;
+      span {
+        display: inline-block;
+        color: #4d5867;
+        /* width: 42px; */
+        float: left;
+        padding-right: 8px;
+      }
+    }
+  }
+
+  ion-card-content {
     //padding: 10px 24px 10px 10px;
     padding: 10px;
+
+    ion-note {
+      font-size: 0.85rem;
+      display: block;
+      padding: 12px 5px;
+      font-weight: 500;
+      color: #47525d;
+      display: block;
+
+      &.note {
+        padding: 16px 5px;
+      }
+      small {
+        display: block;
+      }
+    }
+  }
+
+  ion-item {
+    --inner-padding-start: 0.1em;
+
+    ion-radio {
+      margin-right: 16px;
+    }
   }
 
   ion-list.info ion-note {

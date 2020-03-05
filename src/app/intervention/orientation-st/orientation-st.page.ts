@@ -57,7 +57,7 @@ export class OrientationStPage implements OnInit {
     private router: Router,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
@@ -93,7 +93,7 @@ export class OrientationStPage implements OnInit {
       }
     });
   }
-  gg;
+  ;
 
   async openImageEcg() {
     console.log("image ::::", this.urlEcg);
