@@ -209,6 +209,8 @@
       letter-spacing: 0.08rem;
     }
     ion-button.list-cr,
+    ion-button.ras,
+    ion-button.st,
     ion-button.thromb,
     ion-button.engio {
       --border-radius: 16px;
@@ -247,6 +249,23 @@
       --border-color: #a4d0ed;
       --color: #1d81cd;
       border: 1px solid #1d81cd;
+    }
+
+    ion-button.st {
+      --background: #fef0f0;
+      // --background-activated: ;
+      --border-color: #ef4136;
+      --color-activated: #f0cbcb;
+      --color: #b72222;
+      border: 1px solid #ef4136;
+    }
+    ion-button.ras {
+      --background: #ecfcf2;
+      // --background-activated: ;
+      --color-activated: #adf0be;
+      --border-color: #009444;
+      --color: #009444;
+      border: 1px solid #009444;
     }
   }
 }

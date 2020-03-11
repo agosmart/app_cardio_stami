@@ -9,7 +9,7 @@ import {
 } from "@ionic/angular";
 import { EtabResponseData } from "src/app/models/etab.response";
 import { ImagePage } from "src/app/modal/image/image.page";
-import { AvisMedPage } from "src/app/modal/avis-med/avis-med.page";
+import { AvisSosPage } from "src/app/modal/avis-sos/avis-sos.page";
 import { ListCrPage } from "src/app/modal/list-cr/list-cr.page";
 import { ListeMedByCRModel } from "src/app/models/listeMedByCr.model";
 import { Observable } from "rxjs";
@@ -19,11 +19,11 @@ import { ReponseAvisModel } from "src/app/models/reponseAvis.model";
 import { DossierModel } from "src/app/models/dossier.model";
 
 @Component({
-  selector: "app-orientation-st",
-  templateUrl: "./orientation-st.page.html",
-  styleUrls: ["./orientation-st.page.scss"]
+  selector: "app-orientation-sos",
+  templateUrl: "./orientation-sos.page.html",
+  styleUrls: ["./orientation-sos.page.scss"]
 })
-export class OrientationStPage implements OnInit {
+export class OrientationSosPage implements OnInit {
   idUser: number;
   idEtab: number;
   dossierId: number;
@@ -82,13 +82,7 @@ export class OrientationStPage implements OnInit {
         this.motifId = this.dataPatient.lastMotifId;
 
         if (this.dataPatient.stepId !== 20) {
-          this.srvApp.stepUpdatePage(
-            this.dossierId,
-            20,
-            15,
-            this.token,
-            this.motifId
-          );
+          this.srvApp.stepUpdatePage(this.dossierId, 27, 15, this.token, 20);
         }
         if (this.demandeAvisId > 0) {
           this.afficheReponseMed = 1;
@@ -123,10 +117,7 @@ export class OrientationStPage implements OnInit {
     });
 
     modal.onDidDismiss().then(data => {
-      // if (data) {
-      //   console.log("user ::::", data["data"]);
-      //   this.motifId = 3;
-      // }
+      console.log("user ::::", data["data"]);
       this.reponseAvisCR();
     });
 
@@ -149,23 +140,14 @@ export class OrientationStPage implements OnInit {
     let objectAvisEtab = [];
     objectAvisEtab = this.getobjectDossier(idEtab);
     console.log("objectAvisEtab ::::", objectAvisEtab);
-    // console.log("laReponse ::::", this.dataModalAvis.laReponse);
+    //console.log("laReponse ::::", this.dataModalAvis.laReponse);
     const modal = await this.modalCtrl.create({
-      component: AvisMedPage,
+      component: AvisSosPage,
       componentProps: {
         dataPatient: this.dataPatient,
         dataModalAvis: objectAvisEtab
       }
     });
-
-    modal.onDidDismiss().then(data => {
-      if (data) {
-        console.log("user ::::", data["data"]);
-        // this.motifId = 3;
-      }
-      this.reponseAvisCR();
-    });
-
     return await modal.present();
     // } else {
     //   this.sglob.presentToast("Vous n`avez aucune réponse dans cet CR!");
@@ -173,7 +155,7 @@ export class OrientationStPage implements OnInit {
   }
 
   getobjectDossier(id: any) {
-    // console.log(this.dataModalAvis);
+    //console.log(this.dataModalAvis);
     return this.dataModalAvis.find(dossier => {
       return dossier["idEtab"] === id;
     });
@@ -230,7 +212,15 @@ export class OrientationStPage implements OnInit {
                   }
                 });
 
+                // ------- HIDE CR LIST / SHOW DOCTORS REVIEWS LIST-------
+                // this.afficheListeCr = false;
+                //this.reviewsList = this.dataReponsesAvis.length;
                 this.afficheReponseMed = 2;
+
+                console.group("==== DATA reponseAvisCR ====");
+                console.log("this.afficheListeCr ::::", this.afficheListeCr);
+                console.log(" this.reviewsList ::::", this.reviewsList);
+                console.groupEnd();
               }
 
               // ------------------------------------------
@@ -256,6 +246,55 @@ export class OrientationStPage implements OnInit {
         );
       });
   }
+
+  /*
+  getListDoctorCr(idCr: number) {
+
+    // http://cardio.cooffa.shop/api/etablissements/1/medecins
+    console.log('*****getListDoctorCr ID CR = ******', idCr);
+
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: 'opération  en cours...' })
+      .then(loadingEl => {
+        loadingEl.present();
+        // ---- Call reponseDemandeAvis API
+        const authObs: Observable<ListeMedByCRResponseData> = this.srvApp.listeMedByCr(
+          idCr,
+          this.token
+        );
+        authObs.subscribe(
+          // :::::::::::: ON RESULT ::::::::::
+          resData => {
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            if (+resData.code === 200) {
+              this.dataReponsesMedCr = resData.data;
+              // ------------------------------------------
+            } else {
+              loadingEl.dismiss();
+              this.sglob.showAlert('Erreur ', resData.message);
+            }
+          },
+          // ::::::::::::  ON ERROR ::::::::::::
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.sglob.showAlert('Erreur ', errRes.error.errors.email);
+            } else {
+              this.sglob.showAlert(
+                'Erreur ',
+                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+              );
+            }
+          }
+        );
+      });
+  }
+*/
 
   async showAlertConfirme(diag: string) {
     let msgAlert = "";

@@ -21,13 +21,13 @@
     width: 42px;
   }
 
-  // ion-button {
-  //   --border: none;
-  //   --border-radius: 24px;
-  //   --background: #3853de;
-  //   --background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
-  // }
-  ion-button.bt-refresh,
+  ion-button {
+    --border: none;
+    --border-radius: 24px;
+    --background: #3853de;
+    --background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+  }
+
   ion-button.bt-cloture {
     --border: none;
     --border-radius: 24px;
@@ -149,36 +149,21 @@
   }
 }
 
+.header {
+  background: #3853de;
+  background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+}
 /****************************/
-.orientation-info {
-  .text-dark1 {
-    padding-left: 40px !important;
-  }
-  .text-dark2 {
-    padding-left: 13px !important;
-    color: white !important;
-  }
+.avis-info {
   .m-buttom {
-    margin-bottom: 0px;
+    margin-bottom: 70px;
+    margin-top: 58px;
   }
   .gradian {
     background: #3853de;
     background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
   }
 
-  sup {
-    top: -0.5em;
-    color: #2672d3;
-  }
-
-  .medsos {
-    color: #276fd3;
-  }
-
-  .text22 {
-    font-size: 2.2rem;
-    color: #0f97c4 !important;
-  }
   .btn-submit {
     position: fixed;
     bottom: 0;
@@ -195,22 +180,61 @@
     }
   }
 
-  .interv-btn-group {
-    ion-button span {
-      // padding: 0;
-      // margin: 0;
-      font-size: 2em;
+  ion-button.thromb {
+    --border-radius: 16px;
+    border-radius: 16px;
+    --border-width: 2em !important;
+    float: left;
+    height: 80px;
+    width: 100%;
+    --color-activated: #bcf0f3;
+    --border-color: #00a79d;
+    --color: #00a79d;
+    --background: #ecfbfd;
+    span {
+      font-size: 2.1rem !important;
     }
-    // ion-button h3 {
-    //   margin-top: 4px;
-    // }
-    ion-text {
-      font-size: 1em;
-      letter-spacing: 0.08rem;
+  }
+
+  ion-button.gocr {
+    --border-radius: 16px;
+    --border-width: 2em !important;
+    float: left;
+    height: 80px;
+    width: 100%;
+    span {
+      font-size: 2.1rem !important;
     }
-    ion-button.list-cr,
-    ion-button.thromb,
-    ion-button.engio {
+    //--background: #ecfcf2;
+    --color-activated: #ef4136;
+    // --border-color: #009444;
+    // --color: #009444;
+    //border: 1px solid #009444;
+  }
+
+  ion-button.engio {
+    --background: #fef0f0;
+    // --background-activated: ;
+    --border-color: #ef4136;
+    --color-activated: #f0cbcb;
+    --color: #b72222;
+    border: 1px solid #ef4136;
+  }
+}
+
+.decision {
+  margin-top: 30px;
+  ion-card-content.md.card-content-md.hydrated {
+    //padding: 10px 24px 10px 10px;
+    padding: 10px;
+  }
+
+  /********* DIAGNOSTIC BOTTONS ***********/
+  .diagno-btn-group {
+    ion-button.ras,
+    ion-button.st,
+    ion-button.engio,
+    ion-button.gocr {
       --border-radius: 16px;
       border-radius: 16px;
       --border-width: 2em !important;
@@ -232,7 +256,32 @@
       --color: #b72222;
       border: 1px solid #ef4136;
     }
-    ion-button.thromb {
+    ion-button.gocr {
+      --background: #ecfcf2;
+      // --background-activated: ;
+      --color-activated: #adf0be;
+      --border-color: #009444;
+      --color: #009444;
+      border: 1px solid #009444;
+    }
+
+    ion-button.st {
+      --background: #fef0f0;
+      // --background-activated: ;
+      --border-color: #ef4136;
+      --color-activated: #f0cbcb;
+      --color: #b72222;
+      border: 1px solid #ef4136;
+    }
+    ion-button.ras {
+      --background: #ecfcf2;
+      // --background-activated: ;
+      --color-activated: #adf0be;
+      --border-color: #009444;
+      --color: #009444;
+      border: 1px solid #009444;
+    }
+    /*  ion-button.thrombo {
       --background: #ecfbfd;
       // --background-activated :;
       --color-activated: #bcf0f3;
@@ -241,12 +290,85 @@
       border: 1px solid #00a79d;
     }
 
-    ion-button.list-cr {
-      --background: #e8f4ff;
-      --color-activated: #a4d0ed;
-      --border-color: #a4d0ed;
-      --color: #1d81cd;
-      border: 1px solid #1d81cd;
+     ion-button span {
+      padding: 0;
+      margin: 0;
+      font-size: 2em;
+    }
+    ion-button h3 {
+      margin-top: 4px;
+    }
+    ion-button.sos,
+    ion-button.engio,
+    ion-button.ras,
+    ion-button.gocr,
+    ion-button.st {
+      --border-radius: 16px;
+
+      border-radius: 16px;
+      --border-width: 2em !important;
+      float: left;
+     
+      height: 110px;
+      width: 100%;
+      // font-size: 10px !important;
+    }
+
+    
+    ion-button.sos {
+      --background: #ecfbfd;
+      // --background-activated :;
+      --color-activated: #bcf0f3;
+      --border-color: #00a79d;
+      --color: #00a79d;
+      border: 1px solid #00a79d;
+      font-size: 12px;
+    }
+
+    ion-button.engio {
+      --background: #fef0f0;
+      // --background-activated: ;
+      --border-color: #ef4136;
+      --color-activated: #f0cbcb;
+      --color: #b72222;
+      border: 1px solid #ef4136;
+    }
+
+    ion-button.gocr {
+      --background: #fef0f0;
+      // --background-activated: ;
+      --border-color: #ef4136;
+      --color-activated: #f0cbcb;
+      --color: #b72222;
+      border: 1px solid #ef4136;
+    }
+
+    ion-button.gocr1 {
+      --border-radius: 16px;
+      --border-width: 2em !important;
+      float: left;
+      height: 80px;
+      width: 100%;
+      span {
+        font-size: 2.1rem !important;
+      }
+      --color-activated: #ef4136;
+    }*/
+  }
+
+  .btn-submit {
+    position: fixed;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    /* display: inline-block; */
+    padding: 0;
+    margin: 0;
+    _background: #fff;
+
+    ion-button {
+      margin: 24px 24px;
     }
   }
 }

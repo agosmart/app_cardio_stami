@@ -151,6 +151,13 @@ const routes: Routes = [
       )
   },
   {
+    path: "orientation-sos/:idDossier/:dataPatientObj",
+    loadChildren: () =>
+      import("./intervention/orientation-sos/orientation-sos.module").then(
+        m => m.OrientationSosPageModule
+      )
+  },
+  {
     path: "thromb-result/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./intervention/thromb-result/thromb-result.module").then(
@@ -204,7 +211,11 @@ const routes: Routes = [
     path: "st/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/st/st.module").then(m => m.StPageModule)
+  },  {
+    path: 'avis-sos',
+    loadChildren: () => import('./modal/avis-sos/avis-sos.module').then( m => m.AvisSosPageModule)
   }
+
 ];
 
 @NgModule({

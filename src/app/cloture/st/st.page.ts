@@ -75,7 +75,8 @@ export class StPage implements OnInit {
             this.idDossier,
             23,
             this.dataPatient.resultId,
-            this.token
+            this.token,
+            20
           );
         }
       }

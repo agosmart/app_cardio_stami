@@ -152,7 +152,7 @@ export class ThrombRelativePage implements OnInit {
         this.doctorId = this.dataPatient["doctorId"];
         this.dossierId = this.dataPatient["dossierId"];
         if (this.dataPatient["stepId"] !== 12) {
-          this.srvApp.stepUpdatePage(this.dossierId, 12, 9, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 12, 9, this.token, 2);
         }
         // # typeId = 1 : Formulaire de contre indications Absolus;
         this.typeId = 1;

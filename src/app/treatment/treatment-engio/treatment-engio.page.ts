@@ -100,7 +100,7 @@ export class TreatmentEngioPage implements OnInit {
         this.urlEcg = this.dataPatient["ecgImage"];
 
         if (this.dataPatient.stepId !== 21) {
-          this.srvApp.stepUpdatePage(this.dossierId, 21, 6, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 21, 6, this.token, 3);
         }
 
         // # Calculate Heparine DOSE

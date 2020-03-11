@@ -64,7 +64,7 @@ export class RasPage implements OnInit {
       } else {
         this.idDossier = +paramMap.get("idDossier");
         if (this.dataPatient.stepId !== 10) {
-          this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token);
+          this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token, 1);
         }
         console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
         this.ecgTmp = this.dataPatient["ecgTmp"];

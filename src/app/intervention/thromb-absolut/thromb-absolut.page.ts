@@ -151,7 +151,7 @@ export class ThrombAbsolutPage implements OnInit {
         this.dossierId = this.dataPatient["dossierId"];
         this.resultId = this.dataPatient["resultId"];
         if (this.dataPatient["stepId"] !== 9) {
-          this.srvApp.stepUpdatePage(this.dossierId, 9, 8, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 9, 8, this.token, 4);
         }
         this.typeId = 1;
       }

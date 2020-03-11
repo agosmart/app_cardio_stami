@@ -41,12 +41,13 @@ export class ServiceAppService {
 
   constructor(public http: HttpClient) {}
 
-  stepUpdatePage(dossierIdVal, stepIdVal, resultIdVal, token) {
+  stepUpdatePage(dossierIdVal, stepIdVal, resultIdVal, token, motifId) {
     console.log("first update step");
     const params = {
       dossierId: dossierIdVal,
       resultId: resultIdVal,
-      stepId: stepIdVal
+      stepId: stepIdVal,
+      motifId
     };
 
     const authObs: Observable<DossierResponseData> = this.stepUpdateService(

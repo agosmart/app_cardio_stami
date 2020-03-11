@@ -1,0 +1,106 @@
+<ion-header class="header">
+  <ion-toolbar color="dark">
+    <ion-title>AVIS MEDICAL</ion-title>
+    <span
+      slot="end"
+      class="icon-remove-outline fsize-20em"
+      (click)="closeModal()"
+    ></span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="avis-info ion-no-padding">
+  <ion-grid class="m-buttom md100">
+    <ng-container>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list class="ion-padding">
+            <ion-item-divider>
+              <ion-avatar>
+                <span class="icon-cr text-dark  text17 "></span>
+              </ion-avatar>
+              <ion-text>
+                <b class="text-gray500 ">AVIS DES MEDECINS DU CR: </b>
+                <h6>{{crName}}</h6>
+              </ion-text>
+            </ion-item-divider>
+            <ng-container *ngIf="!haseResponse">
+              <ion-item lines="none" class="ion-padding">
+                <ion-text class="ion-text-center">
+                  <span class="icon-conditions text-dark text17"></span>
+                  Pour l'instant, vous n'avez reçu aucune réponse à votre
+                  demande, veuillez rafraîchir pour actualiser les données.
+                </ion-text>
+              </ion-item>
+            </ng-container>
+            <ng-container *ngIf="haseResponse">
+              <ion-item
+                lines="full"
+                *ngFor="let itemReponse of dataReponsesAvis"
+                class="ion-no-padding"
+              >
+                <ion-avatar>
+                  <span class="icon-doctor-men3  text-dark  text17"></span>
+                </ion-avatar>
+                <ion-label>
+                  {{itemReponse.doctor}}
+                </ion-label>
+                <ion-chip color="secondary" slot="end" class="ion-no-padding">
+                  <span
+                    class=" {{ itemReponse['reponse'] === 'ST' ? 'icon-heart-st' :  'icon-heart-checked'}}  text-dark  fsize14"
+                  ></span>
+                  <ion-note
+                    [ngClass]="{ 'colorSt':itemReponse['reponse'] === 'ST', 'colorRas':itemReponse['reponse']  === 'RAS' }"
+                  >
+                    <b
+                      >{{itemReponse["reponse"] === null? "PAS ENCORS" :
+                      itemReponse["reponse"] }}</b
+                    >
+                  </ion-note>
+                </ion-chip>
+              </ion-item>
+            </ng-container>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+
+  <ion-grid fixed class="decision ion-margin-top ion-padding-top">
+    <ion-row class="diagno-btn-group">
+      <ion-col size="6">
+        <ion-button
+          expand="block"
+          fill="solid"
+          class="st btn-2-fixed"
+          tappable
+          (click)="showAlertConfirme('ST')"
+        >
+          <div style="    height: 88px;">
+            <h3><span class="icon-heart-st fsize-20em"></span></h3>
+            <ion-text color="_primary">
+              ST
+            </ion-text>
+          </div>
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button
+          expand="block"
+          fill="solid"
+          class="ras btn-2-fixed"
+          tappable
+          (click)="showAlertConfirme('RAS')"
+        >
+          <div style="    height: 88px;">
+            <h3><span class="icon-heart-checked fsize-20em"></span></h3>
+            <ion-text color="_primary">
+              RAS
+            </ion-text>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

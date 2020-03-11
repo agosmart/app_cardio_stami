@@ -12,9 +12,7 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-cr-orientation text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding"
-      >ORIENTATION ST</ion-col
-    >
+    <ion-col size="12" class="title-header ion-no-padding">SOS</ion-col>
   </ion-row>
 </ion-grid>
 
@@ -54,8 +52,6 @@
                         >{{dataPatient['age']}} ans
                       </ion-label>
                     </ion-chip>
-
-                    <!-- <ion-badge color="medium" mode="md">{{dataPatient['age']}} ans  </ion-badge>  -->
                   </ion-col>
                 </ion-row>
                 <ion-row class="ion-no-padding">
@@ -87,7 +83,6 @@
   <!-- ------------------- -->
 
   <ion-grid class="m-buttom ">
-    <!-- LISTE DES  DOCTORS'S REVIEWS -->
     <ng-container>
       <ion-row>
         <ion-col size="12">
@@ -158,41 +153,7 @@
 
   <ion-grid fixed class="interv-btn-group ion-no-margin ">
     <ion-row>
-      <ng-container *ngIf="motifId == 0 || motifId == 3  ">
-        <ion-col size="6" class="ion-text-left">
-          <ion-button
-            expand="block"
-            fill="solid"
-            class="engio btn-2-fixed"
-            tappable
-            (click)="afficherListeCrModal()"
-          >
-            <span class="icon-int-engio text17"></span>
-            <ion-text>
-              ENGIOPLASTIE
-            </ion-text>
-          </ion-button>
-        </ion-col>
-
-        <ion-col size="6" class="ion-text-left">
-          <ion-button
-            expand="block"
-            fill="solid"
-            class="thromb btn-2-fixed"
-            tappable
-            (click)="goToTrombo()"
-          >
-            <span class="icon-int-thromb "></span>
-            <ion-text>
-              Thrombolyse
-            </ion-text>
-          </ion-button>
-        </ion-col>
-      </ng-container>
-
-      <ng-container
-        *ngIf="motifId == 1  || motifId == 2|| motifId == 4  || motifId == 6 "
-      >
+      <ng-container>
         <ion-col size="12" class="ion-text-left">
           <ion-button
             expand="block"

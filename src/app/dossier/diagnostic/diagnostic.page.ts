@@ -219,7 +219,7 @@ export class DiagnosticPage implements OnInit {
         this.dataPatient.resultId = 15;
         // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
         this.router.navigate([
-          "/orientation-st",
+          "/orientation-sos",
           this.idDossier,
           JSON.stringify(this.dataPatient)
         ]);

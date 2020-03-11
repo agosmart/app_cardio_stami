@@ -13,11 +13,11 @@ import { DiagResponseData } from "src/app/models/diag.response";
 import { Observable } from "rxjs";
 
 @Component({
-  selector: "app-avis-med",
-  templateUrl: "./avis-med.page.html",
-  styleUrls: ["./avis-med.page.scss"]
+  selector: "app-avis-sos",
+  templateUrl: "./avis-sos.page.html",
+  styleUrls: ["./avis-sos.page.scss"]
 })
-export class AvisMedPage implements OnInit {
+export class AvisSosPage implements OnInit {
   token: string;
   idUser: number;
   crName: string;
@@ -129,22 +129,15 @@ export class AvisMedPage implements OnInit {
               ]);
               this.closeModal();
             } else {
-              if (diag == "THROMB") {
-                await this.router.navigate([
-                  "/thromb-ecg",
-                  this.dataModalAvis["idDossier"],
-                  JSON.stringify(this.dataPatient)
-                ]);
-                this.closeModal();
-              } else {
-                // await this.router.navigate([
-                //   "/treatment-thromb",
-                //   this.dataModalAvis["idDossier"],
-                //   JSON.stringify(this.dataPatient)
-                // ]);
-                await this.SetDiagnostic("ST");
-                this.closeModalST();
-              }
+              await this.SetDiagnostic("ST");
+              this.dataPatient.lastMotifId = 3;
+              await this.router.navigate([
+                "/orientation-st",
+                this.dataModalAvis["idDossier"],
+                JSON.stringify(this.dataPatient)
+              ]);
+
+              this.closeModalST();
             }
           }
         }

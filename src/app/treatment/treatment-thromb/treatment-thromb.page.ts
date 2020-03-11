@@ -89,7 +89,7 @@ export class TreatmentThrombPage implements OnInit {
         this.urlEcg = this.dataPatient["ecgImage"];
 
         if (this.dataPatient.stepId !== 22) {
-          this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token, 4);
         }
 
         // # Calculate Heparine DOSE

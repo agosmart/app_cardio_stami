@@ -74,7 +74,7 @@ export class ThrombSosPage implements OnInit {
         this.gender = this.dataPatient.gender;
         this.urlEcg = this.dataPatient["ecgImage"];
         if (this.dataPatient.stepId !== 19) {
-          this.srvApp.stepUpdatePage(this.dossierId, 19, 9, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 19, 9, this.token, 20);
         }
         console.log("demandeAvisId", this.demandeAvisId);
         if (this.demandeAvisId > 0 && motifId === 2) {

@@ -65,7 +65,7 @@ export class ThrombResultPage implements OnInit {
           this.urlEcg2 = this.dataPatient.ecgImage2;
         }
         if (this.dataPatient["stepId"] !== 18) {
-          this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token);
+          this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token, 6);
         }
       }
     });

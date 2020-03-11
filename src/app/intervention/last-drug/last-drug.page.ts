@@ -83,7 +83,8 @@ export class LastDrugPage implements OnInit {
             this.idDossier,
             16,
             this.resultId,
-            this.token
+            this.token,
+            20
           );
         }
 
