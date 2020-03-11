@@ -64,34 +64,55 @@ export class OrientationSosPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      console.log(
-        "*************dataPatientObj :",
-        paramMap.get("dataPatientObj")
-      );
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        this.dossierId = this.dataPatient.dossierId;
-        this.urlEcg = this.dataPatient["ecgImage"];
-        this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
-        this.idCr = this.dataPatient.lastCrId;
-        console.log("*************dataPatient :", this.dataPatient);
-        this.motifId = this.dataPatient.lastMotifId;
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   console.log(
+    //     "*************dataPatientObj :",
+    //     paramMap.get("dataPatientObj")
+    //   );
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     this.dossierId = this.dataPatient.dossierId;
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //     this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+    //     this.idCr = this.dataPatient.lastCrId;
+    //     console.log("*************dataPatient :", this.dataPatient);
+    //     this.motifId = this.dataPatient.lastMotifId;
 
-        if (this.dataPatient.stepId !== 20) {
-          this.srvApp.stepUpdatePage(this.dossierId, 27, 15, this.token, 20);
-        }
-        if (this.demandeAvisId > 0) {
-          this.afficheReponseMed = 1;
-          this.reviewsDecision = true;
-          this.lastCrName = this.dataPatient["lastCrName"];
-          this.reponseAvisCR();
-        }
+    //     if (this.dataPatient.stepId !== 20) {
+    //       this.srvApp.stepUpdatePage(this.dossierId, 27, 15, this.token, 20);
+    //     }
+    //     if (this.demandeAvisId > 0) {
+    //       this.afficheReponseMed = 1;
+    //       this.reviewsDecision = true;
+    //       this.lastCrName = this.dataPatient["lastCrName"];
+    //       this.reponseAvisCR();
+    //     }
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.dossierId = this.dataPatient["dossierId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      this.demandeAvisId = this.dataPatient.LastDemandeAvisId;
+      this.idCr = this.dataPatient.lastCrId;
+      console.log("*************dataPatient :", this.dataPatient);
+      this.motifId = this.dataPatient.lastMotifId;
+      if (this.dataPatient.stepId !== 20) {
+        this.srvApp.stepUpdatePage(this.dossierId, 27, 15, this.token, 20);
       }
-    });
+      if (this.demandeAvisId > 0) {
+        this.afficheReponseMed = 1;
+        this.reviewsDecision = true;
+        this.lastCrName = this.dataPatient["lastCrName"];
+        this.reponseAvisCR();
+      }
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
   async openImageEcg() {
     console.log("image ::::", this.urlEcg);
@@ -296,72 +317,72 @@ export class OrientationSosPage implements OnInit {
   }
 */
 
-  async showAlertConfirme(diag: string) {
-    let msgAlert = "";
-    // ----------- message dynamic ---------------
+  // async showAlertConfirme(diag: string) {
+  //   let msgAlert = "";
+  //   // ----------- message dynamic ---------------
 
-    if (diag === "ST") {
-      this.stepId = 7;
-      msgAlert =
-        "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
-    } else if (diag === "RAS") {
-      this.stepId = 10;
-      msgAlert =
-        "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
-    }
+  //   if (diag === "ST") {
+  //     this.stepId = 7;
+  //     msgAlert =
+  //       "Etes-vous sur qu'il existe un facteur de risque d'infarctus connu au moment de diagnostic?";
+  //   } else if (diag === "RAS") {
+  //     this.stepId = 10;
+  //     msgAlert =
+  //       "Etes-vous sur qu'il n'existe aucun facteur de risque d'infarctus connu au moment de diagnostic ? ";
+  //   }
 
-    console.log("DIAG ::::", msgAlert);
-    // -----------END  message dynamic ---------------
-    const alert = await this.alertCtrl.create({
-      header: "Résultat d'authentication",
-      message: msgAlert,
-      cssClass: "alert-css",
-      buttons: [
-        {
-          text: "Annuler",
-          role: "cancel",
-          cssClass: "secondary",
-          handler: () => {
-            console.log("Confirme Annuler");
-          }
-        },
-        {
-          text: "Je confirme",
-          handler: async () => {
-            if (diag === "RAS") {
-              await this.router.navigate([
-                "/ras",
-                this.dossierId,
-                JSON.stringify(this.dataPatient)
-              ]);
-            } else {
-              await this.router.navigate([
-                "/pretreatment",
-                this.dossierId,
-                JSON.stringify(this.dataPatient)
-              ]);
-            }
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-  decision() {
-    console.log("orientation vers datapatient diag ===>", this.dataPatient);
-    this.router.navigate([
-      "./diagnostic",
-      this.dossierId,
-      JSON.stringify(this.dataPatient)
-    ]);
-  }
+  //   console.log("DIAG ::::", msgAlert);
+  //   // -----------END  message dynamic ---------------
+  //   const alert = await this.alertCtrl.create({
+  //     header: "Résultat d'authentication",
+  //     message: msgAlert,
+  //     cssClass: "alert-css",
+  //     buttons: [
+  //       {
+  //         text: "Annuler",
+  //         role: "cancel",
+  //         cssClass: "secondary",
+  //         handler: () => {
+  //           console.log("Confirme Annuler");
+  //         }
+  //       },
+  //       {
+  //         text: "Je confirme",
+  //         handler: async () => {
+  //           if (diag === "RAS") {
+  //             await this.router.navigate([
+  //               "/ras",
+  //               this.dossierId,
+  //               JSON.stringify(this.dataPatient)
+  //             ]);
+  //           } else {
+  //             await this.router.navigate([
+  //               "/pretreatment",
+  //               this.dossierId,
+  //               JSON.stringify(this.dataPatient)
+  //             ]);
+  //           }
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   await alert.present();
+  // }
+  // decision() {
+  //   console.log("orientation vers datapatient diag ===>", this.dataPatient);
+  //   this.router.navigate([
+  //     "./diagnostic",
+  //     this.dossierId,
+  //     JSON.stringify(this.dataPatient)
+  //   ]);
+  // }
 
-  async goToTrombo() {
-    this.dataPatient.resultId = 15;
-    await this.router.navigate([
-      "/treatment-thromb",
-      this.dossierId,
-      JSON.stringify(this.dataPatient)
-    ]);
-  }
+  // async goToTrombo() {
+  //   this.dataPatient.resultId = 15;
+  //   await this.router.navigate([
+  //     "/treatment-thromb",
+  //     this.dossierId,
+  //     JSON.stringify(this.dataPatient)
+  //   ]);
+  // }
 }

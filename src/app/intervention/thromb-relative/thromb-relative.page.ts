@@ -141,24 +141,40 @@ export class ThrombRelativePage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        // this.router.navigate(['/home']);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        this.urlEcg = this.dataPatient["ecgImage"];
-        // =================================================
-        this.doctorId = this.dataPatient["doctorId"];
-        this.dossierId = this.dataPatient["dossierId"];
-        if (this.dataPatient["stepId"] !== 12) {
-          this.srvApp.stepUpdatePage(this.dossierId, 12, 9, this.token, 2);
-        }
-        // # typeId = 1 : Formulaire de contre indications Absolus;
-        this.typeId = 1;
-        // =================================================
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     // this.router.navigate(['/home']);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //     // =================================================
+    //     this.doctorId = this.dataPatient["doctorId"];
+    //     this.dossierId = this.dataPatient["dossierId"];
+    //     if (this.dataPatient["stepId"] !== 12) {
+    //       this.srvApp.stepUpdatePage(this.dossierId, 12, 9, this.token, 2);
+    //     }
+    //     // # typeId = 1 : Formulaire de contre indications Absolus;
+    //     this.typeId = 1;
+    //     // =================================================
+    //   }
+    // });
+
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.dossierId = this.dataPatient["dossierId"];
+      this.doctorId = this.dataPatient["doctorId"];
+
+      this.urlEcg = this.dataPatient["ecgImage"];
+      if (this.dataPatient["stepId"] !== 12) {
+        this.srvApp.stepUpdatePage(this.dossierId, 12, 9, this.token, 2);
       }
-    });
+      // # typeId = 1 : Formulaire de contre indications Absolus;
+      this.typeId = 1;
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   initContIndAbsObject() {
@@ -248,11 +264,8 @@ export class ThrombRelativePage implements OnInit {
           // ************ REDIRECTION TO GOCR PAGE ****************
 
           // ************ REDIRECTION TO GOCR PAGE ****************
-          this.router.navigate([
-            "/thromb-ecg",
-            this.dossierId,
-            JSON.stringify(this.dataPatient)
-          ]);
+          this.srvApp.setExtras(this.dataPatient);
+          this.router.navigate(["/thromb-ecg"]);
           // ****************************
         } else {
           const authObs: Observable<PretreatmentResponseData> = this.srvApp.addContreIndiAbs(
@@ -274,13 +287,10 @@ export class ThrombRelativePage implements OnInit {
                 // ************ REDIRECTION TO PICK PHOTO ECG 2  ****************
                 this.dataPatient.lastMotifId = 2;
                 this.dataPatient.resultId = 9;
+                this.srvApp.setExtras(this.dataPatient);
                 loadingEl.dismiss();
                 // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
-                this.router.navigate([
-                  "/orientation-st",
-                  this.dossierId,
-                  JSON.stringify(this.dataPatient)
-                ]);
+                this.router.navigate(["/orientation-st"]);
                 // ****************************
 
                 // ****************************

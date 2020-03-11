@@ -57,31 +57,43 @@ export class DiagnosticPage implements OnInit {
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
     console.log(" diag ionViewDidEnter after", this.sglob.getInitFetch());
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        console.log(" dataObj >>>>> dataPatient ::: ", dataObj);
-        this.dataPatient = JSON.parse(dataObj);
-        this.patientId = this.dataPatient["patientId"];
-        this.pageOrig = this.dataPatient["page"];
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     console.log(" dataObj >>>>> dataPatient ::: ", dataObj);
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     this.patientId = this.dataPatient["patientId"];
+    //     this.pageOrig = this.dataPatient["page"];
 
-        console.log(
-          " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
-          this.dataPatient
-        );
-      }
+    //     console.log(
+    //       " DIAGNOSTIC  recu diag >>>>> dataPatient ::: ",
+    //       this.dataPatient
+    //     );
+    //   }
 
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        this.ecgTmp = this.dataPatient["ecgTmp"];
-        this.urlEcg = this.dataPatient["ecgImage"];
-        console.log(" urlEcg ::: ", this.urlEcg);
-      }
-    });
+    //   if (!paramMap.has("idDossier")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     this.idDossier = +paramMap.get("idDossier");
+    //     this.ecgTmp = this.dataPatient["ecgTmp"];
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //     console.log(" urlEcg ::: ", this.urlEcg);
+    //   }
+    // });
+    this.dataPatient = this.srv.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.patientId = this.dataPatient["patientId"];
+      this.pageOrig = this.dataPatient["page"];
+      this.idDossier = this.dataPatient["dossierId"];
+      this.ecgTmp = this.dataPatient["ecgTmp"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      // tslint:disable-next-line:align
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   async openImageEcg() {
@@ -201,11 +213,7 @@ export class DiagnosticPage implements OnInit {
       case "RAS":
         // ---- RAS ---
         console.log("dataPatientObj ::::----> RAS", this.dataPatient);
-        await this.router.navigate([
-          "/ras",
-          this.idDossier,
-          JSON.stringify(this.dataPatient)
-        ]);
+        await this.router.navigate(["/ras"]);
         break;
 
       case "SOS":
@@ -217,12 +225,9 @@ export class DiagnosticPage implements OnInit {
         // console.log("demandeAvisId ::::----> SOS", this.demandeAvisId);
         this.dataPatient.lastMotifId = 1;
         this.dataPatient.resultId = 15;
+        this.srv.setExtras(this.dataPatient);
         // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
-        this.router.navigate([
-          "/orientation-sos",
-          this.idDossier,
-          JSON.stringify(this.dataPatient)
-        ]);
+        this.router.navigate(["/orientation-sos"]);
         break;
 
       case "ST":
@@ -233,11 +238,8 @@ export class DiagnosticPage implements OnInit {
         );
         console.log("st..........................");
         this.dataPatient.lastMotifId = 3;
-        await this.router.navigate([
-          "/orientation-st",
-          this.idDossier,
-          JSON.stringify(this.dataPatient)
-        ]);
+        this.srv.setExtras(this.dataPatient);
+        await this.router.navigate(["/orientation-st"]);
         break;
 
       default:

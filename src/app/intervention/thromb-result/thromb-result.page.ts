@@ -44,31 +44,52 @@ export class ThrombResultPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        // this.router.navigate(['/home']);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        //this.EcgData = dataObj
-        this.dataPatient = JSON.parse(dataObj);
-        this.doctorId = this.dataPatient["doctorId"];
-        this.dossierId = this.dataPatient["dossierId"];
-        this.urlEcg = this.dataPatient["ecgImage"];
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     // this.router.navigate(['/home']);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     //this.EcgData = dataObj
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     this.doctorId = this.dataPatient["doctorId"];
+    //     this.dossierId = this.dataPatient["dossierId"];
+    //     this.urlEcg = this.dataPatient["ecgImage"];
 
-        if (!this.dataPatient.ecgImage2) {
-          this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
-          console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
-          if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
-            this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
-          }
-        } else {
-          this.urlEcg2 = this.dataPatient.ecgImage2;
+    //     if (!this.dataPatient.ecgImage2) {
+    //       this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+    //       console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
+    //       if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+    //         this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
+    //       }
+    //     } else {
+    //       this.urlEcg2 = this.dataPatient.ecgImage2;
+    //     }
+    //     if (this.dataPatient["stepId"] !== 18) {
+    //       this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token, 6);
+    //     }
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.dossierId = this.dataPatient["dossierId"];
+      this.doctorId = this.dataPatient["doctorId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      if (!this.dataPatient.ecgImage2) {
+        this.urlEcg2 = this.dataPatient.ecgData[0]["ecgImage"];
+        console.log("dataObj :::", this.dataPatient.ecgData[0]["etape"]);
+        if (this.dataPatient.ecgData[1]["etape"] === "Thrombolyse") {
+          this.urlEcg2 = this.dataPatient.ecgData[1]["ecgImage"];
         }
-        if (this.dataPatient["stepId"] !== 18) {
-          this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token, 6);
-        }
+      } else {
+        this.urlEcg2 = this.dataPatient.ecgImage2;
       }
-    });
+      if (this.dataPatient["stepId"] !== 18) {
+        this.srvApp.stepUpdatePage(this.dossierId, 18, 11, this.token, 6);
+      }
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   // --------- ALERT CONFIRME -----------
@@ -106,12 +127,9 @@ export class ThrombResultPage implements OnInit {
           handler: async () => {
             this.dataPatient.resultId = resultatId;
             this.dataPatient.lastMotifId = 6;
+            this.srvApp.setExtras(this.dataPatient);
             // ************ REDIRECTION TO CONTRE INDICATIONS RELATIVES ****************
-            this.router.navigate([
-              "/orientation-st",
-              this.dossierId,
-              JSON.stringify(this.dataPatient)
-            ]);
+            this.router.navigate(["/orientation-st"]);
           }
         }
       ]

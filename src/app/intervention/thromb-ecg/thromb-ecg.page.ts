@@ -62,20 +62,32 @@ export class ThrombEcgPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        // this.router.navigate(['/home']);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        this.doctorId = this.dataPatient["doctorId"];
-        this.dossierId = this.dataPatient["dossierId"];
-        this.urlEcg = this.dataPatient["ecgImage"];
-        if (this.dataPatient["stepId"] !== 14) {
-          this.srvApp.stepUpdatePage(this.dossierId, 14, 11, this.token, 6);
-        }
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     // this.router.navigate(['/home']);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     this.doctorId = this.dataPatient["doctorId"];
+    //     this.dossierId = this.dataPatient["dossierId"];
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //     if (this.dataPatient["stepId"] !== 14) {
+    //       this.srvApp.stepUpdatePage(this.dossierId, 14, 11, this.token, 6);
+    //     }
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.dossierId = this.dataPatient["dossierId"];
+      this.doctorId = this.dataPatient["doctorId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      if (this.dataPatient["stepId"] !== 14) {
+        this.srvApp.stepUpdatePage(this.dossierId, 14, 11, this.token, 6);
       }
-    });
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   deleteImage() {
@@ -117,12 +129,9 @@ export class ThrombEcgPage implements OnInit {
   fortesting() {
     this.dataPatient.ecgImage2 = "11_1577693063.png";
     this.dataPatient.ecgAfficher = "11_1577693063.png";
+    this.srvApp.setExtras(this.dataPatient);
 
-    this.router.navigate([
-      "./thromb-protoc",
-      this.dossierId,
-      JSON.stringify(this.dataPatient)
-    ]);
+    this.router.navigate(["./thromb-protoc"]);
   }
 
   startUpload() {
@@ -159,11 +168,8 @@ export class ThrombEcgPage implements OnInit {
   startUpload1() {
     this.dataPatient.ecgImage2 = "3_1577617035.png";
     console.log("*****dataPatient***", this.dataPatient);
-    this.router.navigate([
-      "./thromb-protoc",
-      this.dossierId,
-      JSON.stringify(this.dataPatient)
-    ]);
+    this.srvApp.setExtras(this.dataPatient);
+    this.router.navigate(["./thromb-protoc"]);
   }
 
   async uploadImageData(formData: FormData) {
@@ -197,12 +203,8 @@ export class ThrombEcgPage implements OnInit {
           //this.dataPatient.ecgImage = this.imageData;
           this.dataPatient.ecgImage2 = res.data["ecgImage"];
           this.dataPatient.ecgAfficher = this.ecgAfficher;
-
-          this.router.navigate([
-            "./thromb-protoc",
-            this.dossierId,
-            JSON.stringify(this.dataPatient)
-          ]);
+          this.srvApp.setExtras(this.dataPatient);
+          this.router.navigate(["./thromb-protoc"]);
           // this.presentToast("File upload complete.");
         } else {
           this.sglob.showAlert("Erreur ", "Erreur interne, veuillez réessayer");

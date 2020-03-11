@@ -77,42 +77,66 @@ export class TreatmentThrombPage implements OnInit {
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        // =================================================
-        this.doctorId = this.dataPatient.doctorId;
-        this.dossierId = this.dataPatient.dossierId;
-        this.urlEcg = this.dataPatient["ecgImage"];
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     // =================================================
+    //     this.doctorId = this.dataPatient.doctorId;
+    //     this.dossierId = this.dataPatient.dossierId;
+    //     this.urlEcg = this.dataPatient["ecgImage"];
 
-        if (this.dataPatient.stepId !== 22) {
-          this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token, 4);
-        }
+    //     if (this.dataPatient.stepId !== 22) {
+    //       this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token, 4);
+    //     }
 
-        // # Calculate Heparine DOSE
-        const weight = this.dataPatient.weight;
-        // console.log("weight ::: ", weight);
+    //     // # Calculate Heparine DOSE
+    //     const weight = this.dataPatient.weight;
+    //     // console.log("weight ::: ", weight);
 
-        const age = this.dataPatient["age"];
-        if (age <= 75) {
-          this.doseEnoxaparine = weight * 0.75;
-        } else {
-          this.doseEnoxaparine = 30;
-        }
+    //     const age = this.dataPatient["age"];
+    //     if (age <= 75) {
+    //       this.doseEnoxaparine = weight * 0.75;
+    //     } else {
+    //       this.doseEnoxaparine = 30;
+    //     }
 
-        console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
-        console.group();
-        console.log(this.dataPatient);
-        console.group();
-        console.log("::: weight ::: ", weight);
-        console.log("::: PRETREATMENT ::::");
-        console.groupEnd();
-        console.groupEnd();
+    //     console.log(":::: PRETEATMENT sent from DIAGNOSTIC -> dataPatient");
+    //     console.group();
+    //     console.log(this.dataPatient);
+    //     console.group();
+    //     console.log("::: weight ::: ", weight);
+    //     console.log("::: PRETREATMENT ::::");
+    //     console.groupEnd();
+    //     console.groupEnd();
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.dossierId = this.dataPatient["dossierId"];
+      this.doctorId = this.dataPatient.doctorId;
+      this.urlEcg = this.dataPatient["ecgImage"];
+
+      if (this.dataPatient.stepId !== 22) {
+        this.srvApp.stepUpdatePage(this.dossierId, 22, 8, this.token, 4);
       }
-    });
+
+      // # Calculate Heparine DOSE
+      const weight = this.dataPatient.weight;
+      // console.log("weight ::: ", weight);
+
+      const age = this.dataPatient["age"];
+      if (age <= 75) {
+        this.doseEnoxaparine = weight * 0.75;
+      } else {
+        this.doseEnoxaparine = 30;
+      }
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   // myChange($event) {
@@ -215,11 +239,7 @@ export class TreatmentThrombPage implements OnInit {
             if (+this.returnData.code === 201) {
               loadingEl.dismiss();
 
-              this.router.navigate([
-                "/thromb-absolut",
-                this.dossierId,
-                JSON.stringify(this.dataPatient)
-              ]);
+              this.router.navigate(["/thromb-absolut"]);
             } else {
               loadingEl.dismiss();
               this.sglob.showAlert(

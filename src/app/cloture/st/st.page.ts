@@ -49,38 +49,56 @@ export class StPage implements OnInit {
     this.token = this.sglob.getToken();
     this.isCloture = false;
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        //this.objectInsc = JSON.parse(dataObj);
-        console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
-        console.log(
-          " DIAGNOSTIC >>>>> dataPatients ::: ",
-          this.dataPatient["lastName"]
-        );
-        this.urlEcg = this.dataPatient["ecgImage"];
-      }
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
-        this.ecgTmp = this.dataPatient["ecgTmp"];
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     //this.objectInsc = JSON.parse(dataObj);
+    //     console.log(" DIAGNOSTIC >>>>> dataPatients ::: ", this.dataPatient);
+    //     console.log(
+    //       " DIAGNOSTIC >>>>> dataPatients ::: ",
+    //       this.dataPatient["lastName"]
+    //     );
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //   }
+    //   if (!paramMap.has("idDossier")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     this.idDossier = +paramMap.get("idDossier");
+    //     console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
+    //     this.ecgTmp = this.dataPatient["ecgTmp"];
 
-        if (this.dataPatient.stepId !== 23) {
-          this.srvApp.stepUpdatePage(
-            this.idDossier,
-            23,
-            this.dataPatient.resultId,
-            this.token,
-            20
-          );
-        }
+    //     if (this.dataPatient.stepId !== 23) {
+    //       this.srvApp.stepUpdatePage(
+    //         this.idDossier,
+    //         23,
+    //         this.dataPatient.resultId,
+    //         this.token,
+    //         20
+    //       );
+    //     }
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.idDossier = this.dataPatient["dossierId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      this.ecgTmp = this.dataPatient["ecgTmp"];
+      if (this.dataPatient.stepId !== 23) {
+        this.srvApp.stepUpdatePage(
+          this.idDossier,
+          23,
+          this.dataPatient.resultId,
+          this.token,
+          20
+        );
       }
-    });
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   clotureDossier() {

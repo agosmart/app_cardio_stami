@@ -29,7 +29,7 @@ export class InscInfosPage implements OnInit {
   idDossier: number;
   stepId = 5;
   objectInsc: Array<object>;
-  dataPatient: object;
+  dataPatient: DossierModel;
   objectRecu: object;
   idDossierToGet: any;
   dataPatients: Array<DossierModel>;
@@ -115,37 +115,48 @@ export class InscInfosPage implements OnInit {
 
     this.sglob.updateInitFetchHome(true);
 
-    // this.dataPatient = this.srvApp.getExtras();
-    //console.log("===== dataPatient get  ===", this.dataPatient);
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     /* ========================================
+    //               Redirection to Home
+    //    =========================================== */
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
+    //     this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
+    //     this.dataPatient = this.objectRecu;
+    //     if (this.dataPatient["dThorasic"] === true) {
+    //       this.dThorasicVal = 1;
+    //     }
+    //     console.log("===== dataPatient recu infos  ===", this.dataPatient);
+    //     console.log("===== dThorasicVal recu infos  ===", this.dThorasicVal);
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //   }
+    //   //idDossier
+    //   if (!paramMap.has("idDossier")) {
+    //     /* ========================================
+    //               Redirection to Home
+    //    =========================================== */
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     this.idDossier = +paramMap.get("idDossier");
+    //     this.ecgTmp = this.dataPatient["ecgTmp"];
+    //   }
+    // });
+    console.log("===== dataPatient get 000  ===", this.dataPatient);
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        /* ========================================
-                  Redirection to Home
-       =========================================== */
-        this.router.navigate(["/home"]);
-      } else {
-        // this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
-        this.objectRecu = JSON.parse(paramMap.get("dataPatientObj"));
-        this.dataPatient = this.objectRecu;
-        if (this.dataPatient["dThorasic"] === true) {
-          this.dThorasicVal = 1;
-        }
-        console.log("===== dataPatient recu infos  ===", this.dataPatient);
-        console.log("===== dThorasicVal recu infos  ===", this.dThorasicVal);
-        this.urlEcg = this.dataPatient["ecgImage"];
+    if (this.dataPatient) {
+      if (this.dataPatient["dThorasic"] === "1") {
+        this.dThorasicVal = 1;
       }
-      //idDossier
-      if (!paramMap.has("idDossier")) {
-        /* ========================================
-                  Redirection to Home
-       =========================================== */
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        this.ecgTmp = this.dataPatient["ecgTmp"];
-      }
-    });
+      this.idDossier = this.dataPatient["dossierId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      this.ecgTmp = this.dataPatient["ecgTmp"];
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   async openImageEcg() {
@@ -224,11 +235,8 @@ export class InscInfosPage implements OnInit {
             this.returnAddInfoDossier = resData.data;
             loadingEl.dismiss();
             if (+resData.code === 201) {
-              this.router.navigate([
-                "./diagnostic",
-                this.idDossier,
-                JSON.stringify(this.dataPatient)
-              ]);
+              console.log("infos set", this.dataPatient);
+              this.router.navigate(["./diagnostic"]);
             } else {
               // ----- Hide loader ------
               loadingEl.dismiss();

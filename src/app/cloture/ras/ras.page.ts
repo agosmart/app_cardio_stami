@@ -49,27 +49,39 @@ export class RasPage implements OnInit {
     this.token = this.sglob.getToken();
     this.isCloture = false;
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        this.router.navigate(["/home"]);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        //this.objectInsc = JSON.parse(dataObj);
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     //this.objectInsc = JSON.parse(dataObj);
 
-        this.urlEcg = this.dataPatient["ecgImage"];
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //   }
+    //   if (!paramMap.has("idDossier")) {
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     this.idDossier = +paramMap.get("idDossier");
+    //     if (this.dataPatient.stepId !== 10) {
+    //       this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token, 1);
+    //     }
+    //     console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
+    //     this.ecgTmp = this.dataPatient["ecgTmp"];
+    //   }
+    // });
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.idDossier = this.dataPatient["dossierId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+      if (this.dataPatient.stepId !== 10) {
+        this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token, 1);
       }
-      if (!paramMap.has("idDossier")) {
-        this.router.navigate(["/home"]);
-      } else {
-        this.idDossier = +paramMap.get("idDossier");
-        if (this.dataPatient.stepId !== 10) {
-          this.srvApp.stepUpdatePage(this.idDossier, 10, 1, this.token, 1);
-        }
-        console.log(" DIAGNOSTIC >>>>> idDossier  halim ::: ", this.idDossier);
-        this.ecgTmp = this.dataPatient["ecgTmp"];
-      }
-    });
+      this.ecgTmp = this.dataPatient["ecgTmp"];
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   clotureDossier() {

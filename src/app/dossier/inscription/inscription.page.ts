@@ -228,7 +228,9 @@ export class InscriptionPage implements OnInit {
       gender: genre,
       patientId: idPatient
     };
+    this.srv.setExtras(this.dataPatientObj);
     this.inscriptionDossier.reset();
-    this.router.navigate(["./insc-ecg", JSON.stringify(this.dataPatientObj)]);
+    // this.router.navigate(["./insc-ecg", JSON.stringify(this.dataPatientObj)]);
+    this.router.navigate(["./insc-ecg"]);
   }
 }

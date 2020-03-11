@@ -58,8 +58,6 @@ export class AvisMedPage implements OnInit {
     console.log("dataPatient", this.dataPatient);
     this.router.navigate([
       "/treatment-engio",
-      this.dataModalAvis["idDossier"],
-      JSON.stringify(this.dataPatient),
       JSON.stringify(this.dataModalAvis)
     ]);
 
@@ -76,11 +74,8 @@ export class AvisMedPage implements OnInit {
 
   cloture() {
     this.dataPatient["lastCrId"] = this.dataModalAvis["idEtab"];
-    this.router.navigate([
-      "/st",
-      this.dataModalAvis["idDossier"],
-      JSON.stringify(this.dataPatient)
-    ]);
+    this.srv.setExtras(this.dataPatient);
+    this.router.navigate(["/st"]);
     this.modalCtrl.dismiss(true);
   }
 
@@ -122,19 +117,11 @@ export class AvisMedPage implements OnInit {
           handler: async () => {
             if (diag === "RAS") {
               await this.SetDiagnostic("RAS");
-              await this.router.navigate([
-                "/ras",
-                this.dataModalAvis["idDossier"],
-                JSON.stringify(this.dataPatient)
-              ]);
+              await this.router.navigate(["/ras"]);
               this.closeModal();
             } else {
               if (diag == "THROMB") {
-                await this.router.navigate([
-                  "/thromb-ecg",
-                  this.dataModalAvis["idDossier"],
-                  JSON.stringify(this.dataPatient)
-                ]);
+                await this.router.navigate(["/thromb-ecg"]);
                 this.closeModal();
               } else {
                 // await this.router.navigate([

@@ -54,17 +54,17 @@ export class AvisSosPage implements OnInit {
     }
   }
 
-  treatmentEngio() {
-    console.log("dataPatient", this.dataPatient);
-    this.router.navigate([
-      "/treatment-engio",
-      this.dataModalAvis["idDossier"],
-      JSON.stringify(this.dataPatient),
-      JSON.stringify(this.dataModalAvis)
-    ]);
+  // treatmentEngio() {
+  //   console.log("dataPatient", this.dataPatient);
+  //   this.router.navigate([
+  //     "/treatment-engio",
+  //     this.dataModalAvis["idDossier"],
+  //     JSON.stringify(this.dataPatient),
+  //     JSON.stringify(this.dataModalAvis)
+  //   ]);
 
-    this.modalCtrl.dismiss(true);
-  }
+  //   this.modalCtrl.dismiss(true);
+  // }
 
   closeModal() {
     this.modalCtrl.dismiss(true);
@@ -74,15 +74,15 @@ export class AvisSosPage implements OnInit {
     this.modalCtrl.dismiss(3);
   }
 
-  cloture() {
-    this.dataPatient["lastCrId"] = this.dataModalAvis["idEtab"];
-    this.router.navigate([
-      "/st",
-      this.dataModalAvis["idDossier"],
-      JSON.stringify(this.dataPatient)
-    ]);
-    this.modalCtrl.dismiss(true);
-  }
+  // cloture() {
+  //   this.dataPatient["lastCrId"] = this.dataModalAvis["idEtab"];
+  //   this.router.navigate([
+  //     "/st",
+  //     this.dataModalAvis["idDossier"],
+  //     JSON.stringify(this.dataPatient)
+  //   ]);
+  //   this.modalCtrl.dismiss(true);
+  // }
 
   async showAlertConfirme(diag: string) {
     let msgAlert = "";
@@ -122,20 +122,12 @@ export class AvisSosPage implements OnInit {
           handler: async () => {
             if (diag === "RAS") {
               await this.SetDiagnostic("RAS");
-              await this.router.navigate([
-                "/ras",
-                this.dataModalAvis["idDossier"],
-                JSON.stringify(this.dataPatient)
-              ]);
+              await this.router.navigate(["/ras"]);
               this.closeModal();
             } else {
               await this.SetDiagnostic("ST");
               this.dataPatient.lastMotifId = 3;
-              await this.router.navigate([
-                "/orientation-st",
-                this.dataModalAvis["idDossier"],
-                JSON.stringify(this.dataPatient)
-              ]);
+              await this.router.navigate(["/orientation-st"]);
 
               this.closeModalST();
             }

@@ -88,66 +88,118 @@ export class ThrombProtocPage implements OnInit {
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.sglob.updateInitFetchHome(true);
     this.idUser = this.sglob.getIdUser();
     this.token = this.sglob.getToken();
     this.showactilyse = false;
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        // this.router.navigate(['/home']);
-      } else {
-        const dataObj = paramMap.get("dataPatientObj");
-        this.dataPatient = JSON.parse(dataObj);
-        console.log("dataPatient protocol ===>", this.dataPatient);
-        this.urlEcg = this.dataPatient["ecgImage"];
-        this.idDossier = this.dataPatient["dossierId"];
-        const age = this.dataPatient["age"];
-        this.weight = this.dataPatient["weight"];
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     // this.router.navigate(['/home']);
+    //   } else {
+    //     const dataObj = paramMap.get("dataPatientObj");
+    //     this.dataPatient = JSON.parse(dataObj);
+    //     console.log("dataPatient protocol ===>", this.dataPatient);
+    //     this.urlEcg = this.dataPatient["ecgImage"];
+    //     this.idDossier = this.dataPatient["dossierId"];
+    //     const age = this.dataPatient["age"];
+    //     this.weight = this.dataPatient["weight"];
 
-        this.tpaval2 = 0.75 * this.weight;
-        if (this.tpaval2 > 50) {
-          this.tpaval2 = 50;
-        }
-        this.tpaVal = [
-          "15 MG BOLUS IV",
-          this.tpaval2 + "mg IV en 30 minutes",
-          0.5 * this.weight + "mg IV en 60 minutes"
-        ];
+    //     this.tpaval2 = 0.75 * this.weight;
+    //     if (this.tpaval2 > 50) {
+    //       this.tpaval2 = 50;
+    //     }
+    //     this.tpaVal = [
+    //       "15 MG BOLUS IV",
+    //       this.tpaval2 + "mg IV en 30 minutes",
+    //       0.5 * this.weight + "mg IV en 60 minutes"
+    //     ];
 
-        console.log("weight ===>", this.weight);
+    //     console.log("weight ===>", this.weight);
 
-        if (this.weight < 60) {
-          this.tnkTpaValMg = 30;
-          this.tnkTpaValUi = 6000;
-        } else if (this.weight <= 70) {
-          this.tnkTpaValMg = 35;
-          this.tnkTpaValUi = 7000;
-        } else if (this.weight <= 80) {
-          this.tnkTpaValMg = 40;
-          this.tnkTpaValUi = 8000;
-        } else if (this.weight <= 90) {
-          this.tnkTpaValMg = 45;
-          this.tnkTpaValUi = 9000;
-        } else if (this.weight >= 100) {
-          this.tnkTpaValMg = 50;
-          this.tnkTpaValUi = 10000;
-        }
+    //     if (this.weight < 60) {
+    //       this.tnkTpaValMg = 30;
+    //       this.tnkTpaValUi = 6000;
+    //     } else if (this.weight <= 70) {
+    //       this.tnkTpaValMg = 35;
+    //       this.tnkTpaValUi = 7000;
+    //     } else if (this.weight <= 80) {
+    //       this.tnkTpaValMg = 40;
+    //       this.tnkTpaValUi = 8000;
+    //     } else if (this.weight <= 90) {
+    //       this.tnkTpaValMg = 45;
+    //       this.tnkTpaValUi = 9000;
+    //     } else if (this.weight >= 100) {
+    //       this.tnkTpaValMg = 50;
+    //       this.tnkTpaValUi = 10000;
+    //     }
 
-        if (age >= 75) {
-          this.tnkTpaValMg = this.tnkTpaValMg / 2;
-          this.tnkTpaValUi = this.tnkTpaValUi / 2;
-        }
-        this.tnkTpaVal =
-          this.tnkTpaValMg + " MG   (  " + this.tnkTpaValUi + " UI) ";
+    //     if (age >= 75) {
+    //       this.tnkTpaValMg = this.tnkTpaValMg / 2;
+    //       this.tnkTpaValUi = this.tnkTpaValUi / 2;
+    //     }
+    //     this.tnkTpaVal =
+    //       this.tnkTpaValMg + " MG   (  " + this.tnkTpaValUi + " UI) ";
 
-        console.log("weight ===>", this.tnkTpaValUi);
+    //     console.log("weight ===>", this.tnkTpaValUi);
 
-        console.log("tnkTpaVal ===>", this.tnkTpaVal);
+    //     console.log("tnkTpaVal ===>", this.tnkTpaVal);
+    //   }
+    // });
+
+    this.dataPatient = this.srvApp.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.idDossier = this.dataPatient["dossierId"];
+      this.urlEcg = this.dataPatient["ecgImage"];
+
+      const age = this.dataPatient["age"];
+      this.weight = this.dataPatient["weight"];
+
+      this.tpaval2 = 0.75 * this.weight;
+      if (this.tpaval2 > 50) {
+        this.tpaval2 = 50;
       }
-    });
+      this.tpaVal = [
+        "15 MG BOLUS IV",
+        this.tpaval2 + "mg IV en 30 minutes",
+        0.5 * this.weight + "mg IV en 60 minutes"
+      ];
+
+      console.log("weight ===>", this.weight);
+
+      if (this.weight < 60) {
+        this.tnkTpaValMg = 30;
+        this.tnkTpaValUi = 6000;
+      } else if (this.weight <= 70) {
+        this.tnkTpaValMg = 35;
+        this.tnkTpaValUi = 7000;
+      } else if (this.weight <= 80) {
+        this.tnkTpaValMg = 40;
+        this.tnkTpaValUi = 8000;
+      } else if (this.weight <= 90) {
+        this.tnkTpaValMg = 45;
+        this.tnkTpaValUi = 9000;
+      } else if (this.weight >= 100) {
+        this.tnkTpaValMg = 50;
+        this.tnkTpaValUi = 10000;
+      }
+
+      if (age >= 75) {
+        this.tnkTpaValMg = this.tnkTpaValMg / 2;
+        this.tnkTpaValUi = this.tnkTpaValUi / 2;
+      }
+      this.tnkTpaVal =
+        this.tnkTpaValMg + " MG   (  " + this.tnkTpaValUi + " UI) ";
+
+      console.log("weight ===>", this.tnkTpaValUi);
+
+      console.log("tnkTpaVal ===>", this.tnkTpaVal);
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   submitFormInfos() {
@@ -192,11 +244,7 @@ export class ThrombProtocPage implements OnInit {
             loadingEl.dismiss();
             if (+resData.code === 201) {
               // ------- Reset Form -------
-              this.router.navigate([
-                "/thromb-result",
-                this.idDossier,
-                JSON.stringify(this.dataPatient)
-              ]);
+              this.router.navigate(["/thromb-result"]);
             } else {
               this.sglob.showAlert("Erreur ", resData.message);
             }
@@ -222,8 +270,6 @@ export class ThrombProtocPage implements OnInit {
   }
 
   async onCheckBoxChange() {
-
-
     console.log("onCheckBoxChange");
     const alert = await this.alertCtrl.create({
       header: "ALTÉPLASE (TPA) ACTILYSE",
@@ -257,7 +303,6 @@ export class ThrombProtocPage implements OnInit {
           role: "cancel",
           cssClass: "secondary",
           handler: () => {
-
             console.log("Confirm Cancel");
             //this.hypertentionValue = 0;
             // this.listContIndicAbs[3].isChecked = false;

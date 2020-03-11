@@ -113,20 +113,27 @@ export class InscEcgPage implements OnInit {
     // toString(new Date().getMinutes());
     console.log("Current Date ", this.startAt);
 
-    this.activatedroute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has("dataPatientObj")) {
-        /* ========================================
-                  Redirection to Home
-       =========================================== */
-        this.router.navigate(["/home"]);
-      } else {
-        this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
-        console.log(" recu set dataPatients:::", this.dataPatient);
-        this.gender = this.dataPatient.gender;
+    // this.activatedroute.paramMap.subscribe(paramMap => {
+    //   if (!paramMap.has("dataPatientObj")) {
+    //     /* ========================================
+    //               Redirection to Home
+    //    =========================================== */
+    //     this.router.navigate(["/home"]);
+    //   } else {
+    //     this.dataPatient = JSON.parse(paramMap.get("dataPatientObj"));
+    //     console.log(" recu set dataPatients:::", this.dataPatient);
+    //     this.gender = this.dataPatient.gender;
 
-        console.log(" gender:::", this.gender);
-      }
-    });
+    //     console.log(" gender:::", this.gender);
+    //   }
+    // });
+    this.dataPatient = this.srv.getExtras();
+    console.log("===== dataPatient get  ===", this.dataPatient);
+    if (this.dataPatient) {
+      this.gender = this.dataPatient.gender;
+    } else {
+      this.router.navigate(["/home"]);
+    }
   }
 
   // without upload
@@ -185,11 +192,8 @@ export class InscEcgPage implements OnInit {
     this.dataPatient.age = 3;
     console.log(" idDossier", this.idDossier);
     console.log(" dataPatient", this.dataPatient);
-    this.router.navigate([
-      "./insc-infos",
-      this.idDossier,
-      JSON.stringify(this.dataPatient)
-    ]);
+    this.srv.setExtras(this.dataPatient);
+    this.router.navigate(["./insc-infos"]);
   }
   startUpload() {
     this.file
@@ -279,11 +283,8 @@ export class InscEcgPage implements OnInit {
           this.dataPatient.age = res.data["age"];
           console.log(" idDossier", this.idDossier);
           console.log(" dataPatient", this.dataPatient);
-          this.router.navigate([
-            "./insc-infos",
-            this.idDossier,
-            JSON.stringify(this.dataPatient)
-          ]);
+          this.srv.setExtras(this.dataPatient);
+          this.router.navigate(["./insc-infos"]);
           // this.presentToast("File upload complete.");
         } else {
           this.sglob.showAlert("Erreur ", "Erreur interne, veuillez réessayer");

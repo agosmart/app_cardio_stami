@@ -85,8 +85,6 @@ export class HomePage implements OnInit {
     this.router.navigate(["inscription"]);
   }
 
-
-
   // ------ Api service login ---------------
   listingDossier() {
     this.isLoading = true;
@@ -155,17 +153,11 @@ export class HomePage implements OnInit {
   }
 
   goToStep(idDossier) {
-    //this.srv.setExtras(this.objectDossier);
-
     this.objectDossier = this.getobjectDossier(idDossier);
     this.pageStep = this.objectDossier["page"];
-
+    this.srv.setExtras(this.objectDossier);
     console.log(" addd ecg===>", this.objectDossier);
-    this.router.navigate([
-      "/" + this.pageStep,
-      idDossier,
-      JSON.stringify(this.objectDossier)
-    ]);
+    this.router.navigate(["/" + this.pageStep]);
     // this.router.navigate([
     //   "./" + this.pageStep, JSON.stringify([this.objectDossier])
     // ]);

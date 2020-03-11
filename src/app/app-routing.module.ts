@@ -57,16 +57,14 @@ const routes: Routes = [
     path: "",
     children: [
       {
-        path: "insc-ecg/:dataPatientObj",
+        path: "insc-ecg",
         loadChildren: () =>
           import("./dossier/inscription/insc-ecg/insc-ecg.module").then(
             m => m.InscEcgPageModule
           )
       },
       {
-        // path: 'insc-infos/:objetInsc',
-        //path: "insc-infos/:idDossier",
-        path: "insc-infos/:idDossier/:dataPatientObj",
+        path: "insc-infos",
         loadChildren: () =>
           import("./dossier/inscription/insc-infos/insc-infos.module").then(
             m => m.InscInfosPageModule
@@ -76,7 +74,7 @@ const routes: Routes = [
   },
   // # 3 - DIAGNOSTIC
   {
-    path: "diagnostic/:idDossier/:dataPatientObj",
+    path: "diagnostic",
     loadChildren: () =>
       import("./dossier/diagnostic/diagnostic.module").then(
         m => m.DiagnosticPageModule
@@ -84,7 +82,7 @@ const routes: Routes = [
   },
   // # 4 - ORIENTATION
   {
-    path: "ras/:idDossier/:dataPatientObj",
+    path: "ras/:idDossier",
     loadChildren: () =>
       import("./cloture/ras/ras.module").then(m => m.RasPageModule)
   },
@@ -94,14 +92,14 @@ const routes: Routes = [
       import("./modal/image/image.module").then(m => m.ImagePageModule)
   },
   {
-    path: "pretreatment/:idDossier/:dataPatientObj",
+    path: "pretreatment",
     loadChildren: () =>
       import("./treatment/pretreatment/pretreatment.module").then(
         m => m.PretreatmentPageModule
       )
   },
   {
-    path: "intervention/:idDossier/:dataPatientObj",
+    path: "intervention",
     // path: "intervention",
     loadChildren: () =>
       import("./intervention/intervention.module").then(
@@ -109,63 +107,63 @@ const routes: Routes = [
       )
   },
   {
-    path: "thromb-absolut/:idDossier/:dataPatientObj",
+    path: "thromb-absolut",
     loadChildren: () =>
       import("./intervention/thromb-absolut/thromb-absolut.module").then(
         m => m.ThrombAbsolutPageModule
       )
   },
   {
-    path: "thromb-relative/:idDossier/:dataPatientObj",
+    path: "thromb-relative",
     loadChildren: () =>
       import("./intervention/thromb-relative/thromb-relative.module").then(
         m => m.ThrombRelativePageModule
       )
   },
   {
-    path: "thromb-sos/:idDossier/:dataPatientObj",
+    path: "thromb-sos",
     loadChildren: () =>
       import("./intervention/thromb-sos/thromb-sos.module").then(
         m => m.ThrombSosPageModule
       )
   },
   {
-    path: "last-drug/:idDossier/:dataPatientObj",
+    path: "last-drug",
     loadChildren: () =>
       import("./intervention/last-drug/last-drug.module").then(
         m => m.LastDrugPageModule
       )
   },
   {
-    path: "thromb-ecg/:idDossier/:dataPatientObj",
+    path: "thromb-ecg",
     loadChildren: () =>
       import("./intervention/thromb-ecg/thromb-ecg.module").then(
         m => m.ThrombEcgPageModule
       )
   },
   {
-    path: "thromb-protoc/:idDossier/:dataPatientObj",
+    path: "thromb-protoc",
     loadChildren: () =>
       import("./intervention/thromb-protoc/thromb-protoc.module").then(
         m => m.ThrombProtocPageModule
       )
   },
   {
-    path: "orientation-sos/:idDossier/:dataPatientObj",
+    path: "orientation-sos",
     loadChildren: () =>
       import("./intervention/orientation-sos/orientation-sos.module").then(
         m => m.OrientationSosPageModule
       )
   },
   {
-    path: "thromb-result/:idDossier/:dataPatientObj",
+    path: "thromb-result",
     loadChildren: () =>
       import("./intervention/thromb-result/thromb-result.module").then(
         m => m.ThrombResultPageModule
       )
   },
   {
-    path: "orientation-st/:idDossier/:dataPatientObj",
+    path: "orientation-st",
     loadChildren: () =>
       import("./intervention/orientation-st/orientation-st.module").then(
         m => m.OrientationStPageModule
@@ -184,14 +182,14 @@ const routes: Routes = [
       )
   },
   {
-    path: "treatment-engio/:idDossier/:dataPatientObj/:dataModalAvis",
+    path: "treatment-engio/:dataModalAvis",
     loadChildren: () =>
       import("./treatment/treatment-engio/treatment-engio.module").then(
         m => m.TreatmentEngioPageModule
       )
   },
   {
-    path: "treatment-thromb/:idDossier/:dataPatientObj",
+    path: "treatment-thromb",
     loadChildren: () =>
       import("./treatment/treatment-thromb/treatment-thromb.module").then(
         m => m.TreatmentThrombPageModule
@@ -211,11 +209,12 @@ const routes: Routes = [
     path: "st/:idDossier/:dataPatientObj",
     loadChildren: () =>
       import("./cloture/st/st.module").then(m => m.StPageModule)
-  },  {
-    path: 'avis-sos',
-    loadChildren: () => import('./modal/avis-sos/avis-sos.module').then( m => m.AvisSosPageModule)
+  },
+  {
+    path: "avis-sos",
+    loadChildren: () =>
+      import("./modal/avis-sos/avis-sos.module").then(m => m.AvisSosPageModule)
   }
-
 ];
 
 @NgModule({
